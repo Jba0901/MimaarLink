@@ -55,7 +55,6 @@ export default function AdminPage() {
             <Lock className="w-5 h-5 text-white" />
           </div>
           <h1 className="text-xl font-bold text-navy text-center">{t('adminTitle')}</h1>
-          <p className="text-xs text-muted-foreground text-center mt-1">{t('seedNotice')}</p>
           <div className="mt-5 space-y-3">
             <div>
               <Label>{t('adminPassword')}</Label>
