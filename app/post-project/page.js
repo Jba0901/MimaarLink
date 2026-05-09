@@ -113,7 +113,7 @@ function PostProjectInner() {
             <Input value={data.budgetRange} onChange={e => update('budgetRange', e.target.value)} placeholder={t('budgetPh')} className="h-11 mt-1.5" />
           </div>
           <div>
-            <Label className="text-sm">{t('uploadFiles')}</Label>
+            <Label className="text-sm">{t('uploadFilesLabel')}</Label>
             <div className="text-[11px] text-muted-foreground mb-2">{t('uploadHint')}</div>
             <label className="flex items-center justify-center gap-2 h-20 rounded-xl border-2 border-dashed border-border hover:border-navy/40 cursor-pointer bg-secondary/50">
               <Upload className="w-4 h-4 text-navy" />
