@@ -301,3 +301,32 @@ export async function PATCH(request, { params }) {
     return err(e.message || 'Server error', 500);
   }
 }
+
+export async function DELETE(request, { params }) {
+  try {
+    const db = await getDb();
+    const path = (params?.path || []).join('/');
+
+    if (path.startsWith('projects/')) {
+      const id = path.split('/')[1];
+      await db.collection('projects').deleteOne({ id });
+      await db.collection('bids').deleteMany({ projectId: id });
+      await db.collection('bidinvites').deleteMany({ projectId: id });
+      await db.collection('adminnotes').deleteMany({ projectId: id });
+      return ok({ ok: true });
+    }
+    if (path.startsWith('contractors/')) {
+      const id = path.split('/')[1];
+      await db.collection('contractors').deleteOne({ id });
+      await db.collection('bids').deleteMany({ contractorId: id });
+      await db.collection('bidinvites').deleteMany({ contractorId: id });
+      await db.collection('adminnotes').deleteMany({ contractorId: id });
+      return ok({ ok: true });
+    }
+    return err('Not found', 404);
+  } catch (e) {
+    console.error('DELETE error', e);
+    return err(e.message || 'Server error', 500);
+  }
+}
+

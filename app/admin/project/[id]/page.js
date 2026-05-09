@@ -12,7 +12,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
-import { ArrowLeft, ArrowRight, Plus, ShieldCheck, FileText, Loader2, ExternalLink } from 'lucide-react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { ArrowLeft, ArrowRight, Plus, ShieldCheck, FileText, Loader2, ExternalLink, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function AdminProjectPage() {
@@ -70,6 +71,12 @@ export default function AdminProjectPage() {
     if (!assignContractor) return;
     await fetch('/api/bidinvites', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId: id, contractorId: assignContractor }) });
     toast.success(t('invited')); setOpenAssign(false); setAssignContractor(''); load();
+  };
+
+  const deleteProject = async () => {
+    const res = await fetch(`/api/projects/${id}`, { method: 'DELETE' });
+    if (res.ok) { toast.success(t('deleted')); router.push('/admin'); }
+    else toast.error('Failed');
   };
 
   const Back = dir === 'rtl' ? ArrowRight : ArrowLeft;
@@ -201,6 +208,24 @@ export default function AdminProjectPage() {
           </div>
         </CardContent>
       </Card>
+
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="outline" className="w-full mt-4 h-11 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700">
+            <Trash2 className="w-4 h-4 me-1.5" />{t('deleteProject')}
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent dir={dir}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('deleteConfirmTitle')}</AlertDialogTitle>
+            <AlertDialogDescription>{t('deleteConfirmDesc')}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+            <AlertDialogAction onClick={deleteProject} className="bg-red-600 hover:bg-red-700">{t('delete')}</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AppShell>
   );
 }

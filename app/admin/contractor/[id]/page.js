@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ArrowLeft, ArrowRight, Loader2, FileText, ShieldCheck } from 'lucide-react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { ArrowLeft, ArrowRight, Loader2, FileText, ShieldCheck, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function AdminContractorPage() {
@@ -31,6 +32,12 @@ export default function AdminContractorPage() {
   const change = async (v) => {
     await fetch(`/api/contractors/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ verificationStatus: v }) });
     toast.success(t('statusUpdated')); load();
+  };
+
+  const deleteContractor = async () => {
+    const res = await fetch(`/api/contractors/${id}`, { method: 'DELETE' });
+    if (res.ok) { toast.success(t('deleted')); router.push('/admin'); }
+    else toast.error('Failed');
   };
 
   const Back = dir === 'rtl' ? ArrowRight : ArrowLeft;
@@ -86,6 +93,24 @@ export default function AdminContractorPage() {
           </CardContent>
         </Card>
       )}
+
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="outline" className="w-full mt-4 h-11 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700">
+            <Trash2 className="w-4 h-4 me-1.5" />{t('deleteContractor')}
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent dir={dir}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('deleteConfirmTitle')}</AlertDialogTitle>
+            <AlertDialogDescription>{t('deleteConfirmDesc')}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+            <AlertDialogAction onClick={deleteContractor} className="bg-red-600 hover:bg-red-700">{t('delete')}</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </AppShell>
   );
 }
