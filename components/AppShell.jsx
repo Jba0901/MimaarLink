@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLang } from '@/lib/LangContext';
-import { Globe, Home, Shield, Hammer } from 'lucide-react';
+import { Globe, Home, Hammer, FilePlus } from 'lucide-react';
 
 export default function AppShell({ children, hideNav = false }) {
   const { t, lang, setLang } = useLang();
@@ -30,8 +30,8 @@ export default function AppShell({ children, hideNav = false }) {
         <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 safe-pad-bottom">
           <div className="flex items-center gap-1 navy rounded-full px-1.5 py-1.5 shadow-soft border border-white/5">
             <NavBtn href="/" icon={Home} label={t('home')} />
+            <NavBtn href="/post-project" icon={FilePlus} label={t('postProject')} />
             <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} />
-            <NavBtn href="/admin" icon={Shield} label={t('admin')} />
           </div>
         </nav>
       )}

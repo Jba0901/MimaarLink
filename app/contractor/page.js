@@ -108,31 +108,38 @@ export default function ContractorPage() {
         </div>
 
         {[
-          { key: 'cr', label: t('uploadCR') },
-          { key: 'trade', label: t('uploadTrade') },
-          { key: 'past', label: t('uploadPast') },
-          { key: 'cert', label: t('uploadCert') },
-        ].map(it => (
-          <div key={it.key}>
-            <Label className="text-sm">{it.label}</Label>
-            <label className="mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed border-border hover:border-navy/40 cursor-pointer bg-secondary/50">
-              <Upload className="w-4 h-4 text-navy" />
-              <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
-              <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />
-            </label>
-            <div className="mt-1 space-y-1">
-              {data.documents.filter(d => d.label === it.key).map((f, i) => (
-                <div key={i} className="flex items-center justify-between text-xs bg-secondary rounded-lg px-3 py-1.5">
-                  <span className="truncate">{f.name}</span>
-                  <button onClick={() => update('documents', data.documents.filter(x => x !== f))} className="text-muted-foreground"><X className="w-3.5 h-3.5" /></button>
-                </div>
-              ))}
+          { key: 'cr', label: t('uploadCR'), required: true },
+          { key: 'trade', label: t('uploadTrade'), required: false },
+          { key: 'past', label: t('uploadPast'), required: false },
+          { key: 'cert', label: t('uploadCert'), required: false },
+        ].map(it => {
+          const filesForLabel = data.documents.filter(d => d.label === it.key);
+          const missing = it.required && filesForLabel.length === 0;
+          return (
+            <div key={it.key}>
+              <Label className="text-sm">
+                {it.label}{it.required && <span className="text-red-600 ms-1">*</span>}
+              </Label>
+              <label className={`mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${missing ? 'border-red-300' : 'border-border hover:border-navy/40'}`}>
+                <Upload className="w-4 h-4 text-navy" />
+                <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
+                <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />
+              </label>
+              {missing && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+              <div className="mt-1 space-y-1">
+                {filesForLabel.map((f, i) => (
+                  <div key={i} className="flex items-center justify-between text-xs bg-secondary rounded-lg px-3 py-1.5">
+                    <span className="truncate">{f.name}</span>
+                    <button onClick={() => update('documents', data.documents.filter(x => x !== f))} className="text-muted-foreground"><X className="w-3.5 h-3.5" /></button>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
 
-        <Button onClick={submit} disabled={!data.companyName || !data.crNumber || !data.contactPerson || !data.whatsapp || data.categories.length === 0 || submitting}
-          className="w-full h-12 text-base mt-2" style={{ background: '#0D1F3C' }}>
+        <Button onClick={submit} disabled={!data.companyName || !data.crNumber || !data.contactPerson || !data.whatsapp || data.categories.length === 0 || data.documents.filter(d => d.label === 'cr').length === 0 || submitting}
+          className="w-full h-12 text-base mt-2" style={{ background: '#142A44' }}>
           {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-2" />{t('submitting')}</> : t('submit')}
         </Button>
       </div>
