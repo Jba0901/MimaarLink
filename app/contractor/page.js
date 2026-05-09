@@ -18,6 +18,7 @@ export default function ContractorPage() {
   const { t } = useLang();
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [triedSubmit, setTriedSubmit] = useState(false);
   const [data, setData] = useState({
     companyName: '', crNumber: '', contactPerson: '', whatsapp: '', email: '',
     categories: [], serviceAreas: '', projectSizeRange: '', documents: [],
@@ -38,7 +39,15 @@ export default function ContractorPage() {
     e.target.value = '';
   };
 
+  const hasCR = data.documents.filter(d => d.label === 'cr').length > 0;
+  const formValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && data.categories.length > 0 && hasCR;
+
   const submit = async () => {
+    setTriedSubmit(true);
+    if (!formValid) {
+      if (!hasCR) toast.error(t('uploadCR') + ' — ' + t('requireField'));
+      return;
+    }
     setSubmitting(true);
     try {
       const res = await fetch('/api/contractors', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
@@ -114,18 +123,18 @@ export default function ContractorPage() {
           { key: 'cert', label: t('uploadCert'), required: false },
         ].map(it => {
           const filesForLabel = data.documents.filter(d => d.label === it.key);
-          const missing = it.required && filesForLabel.length === 0;
+          const showError = it.required && triedSubmit && filesForLabel.length === 0;
           return (
             <div key={it.key}>
               <Label className="text-sm">
                 {it.label}{it.required && <span className="text-red-600 ms-1">*</span>}
               </Label>
-              <label className={`mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${missing ? 'border-red-300' : 'border-border hover:border-navy/40'}`}>
+              <label className={`mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${showError ? 'border-red-400' : 'border-border hover:border-navy/40'}`}>
                 <Upload className="w-4 h-4 text-navy" />
                 <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
                 <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />
               </label>
-              {missing && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+              {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
               <div className="mt-1 space-y-1">
                 {filesForLabel.map((f, i) => (
                   <div key={i} className="flex items-center justify-between text-xs bg-secondary rounded-lg px-3 py-1.5">
@@ -138,7 +147,7 @@ export default function ContractorPage() {
           );
         })}
 
-        <Button onClick={submit} disabled={!data.companyName || !data.crNumber || !data.contactPerson || !data.whatsapp || data.categories.length === 0 || data.documents.filter(d => d.label === 'cr').length === 0 || submitting}
+        <Button onClick={submit} disabled={submitting}
           className="w-full h-12 text-base mt-2" style={{ background: '#142A44' }}>
           {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-2" />{t('submitting')}</> : t('submit')}
         </Button>
