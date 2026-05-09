@@ -22,14 +22,14 @@ export default function HomePage() {
 
   return (
     <AppShell>
-      {/* HERO — dark navy card, app-like */}
-      <section className="relative overflow-hidden rounded-[28px] navy grain text-white px-5 pt-6 pb-7 mb-4 shadow-soft">
-        <div className="absolute -top-16 -end-16 w-44 h-44 rounded-full" style={{ background: 'radial-gradient(circle, rgba(14,158,137,0.35), transparent 70%)' }} />
-        <div className="absolute -bottom-20 -start-20 w-52 h-52 rounded-full" style={{ background: 'radial-gradient(circle, rgba(14,158,137,0.18), transparent 70%)' }} />
+      {/* HERO — softer navy gradient card */}
+      <section className="relative overflow-hidden rounded-[28px] navy-deep text-white px-5 pt-6 pb-7 mb-4 shadow-soft">
+        <div className="absolute -top-20 -end-20 w-56 h-56 rounded-full opacity-60" style={{ background: 'radial-gradient(circle, rgba(20,168,142,0.30), transparent 70%)' }} />
+        <div className="absolute -bottom-24 -start-24 w-60 h-60 rounded-full opacity-50" style={{ background: 'radial-gradient(circle, rgba(94,234,212,0.12), transparent 70%)' }} />
 
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur text-[11px] font-medium">
-            <Sparkles className="w-3 h-3 text-teal" style={{ color: '#5EEAD4' }} />
+            <Sparkles className="w-3 h-3" style={{ color: '#5EEAD4' }} />
             <span className="tracking-tight">Qatar · platform-reviewed contractors</span>
           </div>
 
@@ -40,7 +40,7 @@ export default function HomePage() {
 
           <div className="mt-5 grid gap-2.5">
             <Link href="/post-project">
-              <button className="w-full h-12 rounded-2xl text-[15px] font-bold flex items-center justify-center gap-2 glow-teal" style={{ background: '#0E9E89' }}>
+              <button className="w-full h-12 rounded-2xl text-[15px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#14A88E' }}>
                 {t('postProject')} <Arrow />
               </button>
             </Link>
@@ -63,16 +63,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* TRUST — bento style asymmetric */}
+      {/* TRUST — bento style, all light & consistent */}
       <section className="grid grid-cols-2 gap-2.5 mb-5">
-        <BentoCard
-          icon={ShieldCheck}
-          title={t('trustReview')}
-          desc={t('trustReviewDesc')}
-          big
-        />
+        <BentoCard icon={ShieldCheck} title={t('trustReview')} desc={t('trustReviewDesc')} big />
         <BentoCard icon={GitCompare} title={t('trustCompare')} desc={t('trustCompareDesc')} />
-        <BentoCard icon={Handshake} title={t('trustQatar')} desc={t('trustQatarDesc')} accent />
+        <BentoCard icon={Handshake} title={t('trustQatar')} desc={t('trustQatarDesc')} />
       </section>
 
       {/* CATEGORIES — horizontal scroll chips */}
@@ -89,8 +84,8 @@ export default function HomePage() {
             return (
               <Link key={c} href={`/post-project?category=${c}`} className="shrink-0">
                 <div className="w-[88px] h-[100px] rounded-2xl bg-white border border-border hover:border-navy/40 hover:shadow-soft transition-all px-2 py-3 flex flex-col items-center justify-center gap-2">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(14,158,137,0.10)' }}>
-                    <Icon className="w-5 h-5" style={{ color: '#0E9E89' }} />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(20,168,142,0.10)' }}>
+                    <Icon className="w-5 h-5" style={{ color: '#14A88E' }} />
                   </div>
                   <span className="text-[11px] font-semibold text-navy text-center leading-tight">{t(`cat_${c}`)}</span>
                 </div>
@@ -137,14 +132,14 @@ export default function HomePage() {
   );
 }
 
-function BentoCard({ icon: Icon, title, desc, big = false, accent = false }) {
+function BentoCard({ icon: Icon, title, desc, big = false }) {
   return (
-    <div className={`${big ? 'col-span-2' : ''} ${accent ? 'navy text-white' : 'bg-white border border-border'} rounded-2xl p-3.5 shadow-soft`}>
-      <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-2 ${accent ? 'bg-white/10' : ''}`} style={!accent ? { background: 'rgba(14,158,137,0.12)' } : {}}>
-        <Icon className="w-4.5 h-4.5" style={{ color: accent ? '#5EEAD4' : '#0E9E89' }} />
+    <div className={`${big ? 'col-span-2' : ''} bg-white border border-border rounded-2xl p-4 shadow-soft`}>
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-2.5" style={{ background: 'rgba(20,168,142,0.10)' }}>
+        <Icon className="w-5 h-5" style={{ color: '#14A88E' }} />
       </div>
-      <div className={`text-[13px] font-bold ${accent ? 'text-white' : 'text-navy'}`}>{title}</div>
-      <div className={`text-[11.5px] mt-0.5 leading-relaxed ${accent ? 'text-white/70' : 'text-muted-foreground'}`}>{desc}</div>
+      <div className="text-[13.5px] font-bold text-navy">{title}</div>
+      <div className="text-[12px] mt-1 leading-relaxed text-muted-foreground">{desc}</div>
     </div>
   );
 }
