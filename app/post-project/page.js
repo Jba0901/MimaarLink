@@ -29,6 +29,8 @@ function PostProjectInner() {
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [createdId, setCreatedId] = useState(null);
+  const [tried2, setTried2] = useState(false);
+  const [tried3, setTried3] = useState(false);
   const [data, setData] = useState({
     category: '', location: '', description: '', timeline: '', budgetRange: '', files: [],
     name: '', company: '', phone: '', email: '', role: '', languagePreference: 'en',
@@ -56,6 +58,8 @@ function PostProjectInner() {
   };
 
   const submit = async () => {
+    setTried3(true);
+    if (!data.name || !data.phone) return;
     setSubmitting(true);
     try {
       const res = await fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
@@ -69,7 +73,7 @@ function PostProjectInner() {
   const Stepper = () => (
     <div className="flex items-center gap-1.5 mb-5">
       {[1,2,3,4].map(n => (
-        <div key={n} className={`h-1.5 flex-1 rounded-full ${n <= step ? '' : 'bg-secondary'}`} style={n <= step ? { background: '#0D1F3C' } : {}} />
+        <div key={n} className={`h-1.5 flex-1 rounded-full ${n <= step ? '' : 'bg-secondary'}`} style={n <= step ? { background: '#142A44' } : {}} />
       ))}
     </div>
   );
@@ -96,13 +100,16 @@ function PostProjectInner() {
 
       {step === 2 && (
         <div className="space-y-3.5">
+          <RequiredField label={t('location')} value={data.location} onChange={v => update('location', v)} tried={tried2} t={t} placeholder={t('locationPh')} />
           <div>
-            <Label className="text-sm">{t('location')} *</Label>
-            <Input value={data.location} onChange={e => update('location', e.target.value)} placeholder={t('locationPh')} className="h-11 mt-1.5" />
-          </div>
-          <div>
-            <Label className="text-sm">{t('description')} *</Label>
-            <Textarea value={data.description} onChange={e => update('description', e.target.value)} placeholder={t('descriptionPh')} className="mt-1.5 min-h-[110px]" />
+            <Label className="text-sm">{t('description')} <span className="text-red-600">*</span></Label>
+            <Textarea
+              value={data.description}
+              onChange={e => update('description', e.target.value)}
+              placeholder={t('descriptionPh')}
+              className={`mt-1.5 min-h-[110px] ${tried2 && !data.description ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
+            />
+            {tried2 && !data.description && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
           </div>
           <div>
             <Label className="text-sm">{t('timeline')}</Label>
@@ -133,7 +140,7 @@ function PostProjectInner() {
           </div>
           <div className="flex gap-2 pt-1">
             <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11">{t('back')}</Button>
-            <Button onClick={() => setStep(3)} disabled={!data.location || !data.description} className="flex-1 h-11" style={{ background: '#0D1F3C' }}>{t('next')}</Button>
+            <Button onClick={() => { setTried2(true); if (data.location && data.description) setStep(3); }} className="flex-1 h-11" style={{ background: '#142A44' }}>{t('next')}</Button>
           </div>
         </div>
       )}
@@ -141,18 +148,12 @@ function PostProjectInner() {
       {step === 3 && (
         <div className="space-y-3.5">
           <h2 className="text-base font-semibold text-navy">{t('contactDetails')}</h2>
-          <div>
-            <Label className="text-sm">{t('name')} *</Label>
-            <Input value={data.name} onChange={e => update('name', e.target.value)} className="h-11 mt-1.5" />
-          </div>
+          <RequiredField label={t('name')} value={data.name} onChange={v => update('name', v)} tried={tried3} t={t} />
           <div>
             <Label className="text-sm">{t('company')}</Label>
             <Input value={data.company} onChange={e => update('company', e.target.value)} className="h-11 mt-1.5" />
           </div>
-          <div>
-            <Label className="text-sm">{t('phone')} *</Label>
-            <Input value={data.phone} onChange={e => update('phone', e.target.value)} placeholder="+974 ..." className="h-11 mt-1.5" inputMode="tel" />
-          </div>
+          <RequiredField label={t('phone')} value={data.phone} onChange={v => update('phone', v)} tried={tried3} t={t} placeholder="+974 ..." inputMode="tel" />
           <div>
             <Label className="text-sm">{t('email')}</Label>
             <Input value={data.email} onChange={e => update('email', e.target.value)} className="h-11 mt-1.5" type="email" />
@@ -173,7 +174,7 @@ function PostProjectInner() {
           </div>
           <div className="flex gap-2 pt-1">
             <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11">{t('back')}</Button>
-            <Button onClick={submit} disabled={!data.name || !data.phone || submitting} className="flex-1 h-11" style={{ background: '#0D1F3C' }}>
+            <Button onClick={submit} disabled={submitting} className="flex-1 h-11" style={{ background: '#142A44' }}>
               {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-1.5" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>
@@ -181,10 +182,10 @@ function PostProjectInner() {
       )}
 
       {step === 4 && createdId && (
-        <Card className="border-2" style={{ borderColor: '#0FAE96' }}>
+        <Card className="border-2" style={{ borderColor: '#14A88E' }}>
           <CardContent className="p-6 text-center">
-            <div className="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-3" style={{ background: 'rgba(15,174,150,0.15)' }}>
-              <CheckCircle2 className="w-7 h-7" style={{ color: '#0FAE96' }} />
+            <div className="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-3" style={{ background: 'rgba(20,168,142,0.15)' }}>
+              <CheckCircle2 className="w-7 h-7" style={{ color: '#14A88E' }} />
             </div>
             <h2 className="text-xl font-bold text-navy">{t('confirmation')}</h2>
             <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{t('confirmationDesc')}</p>
@@ -197,11 +198,31 @@ function PostProjectInner() {
                 </Button>
               </div>
             </div>
-            <Button onClick={() => router.push('/project/' + createdId)} className="w-full mt-4 h-11" style={{ background: '#0D1F3C' }}>{t('viewProject')}</Button>
+            <Button onClick={() => router.push('/project/' + createdId)} className="w-full mt-4 h-11" style={{ background: '#142A44' }}>{t('viewProject')}</Button>
           </CardContent>
         </Card>
       )}
     </AppShell>
+  );
+}
+
+function RequiredField({ label, value, onChange, tried, t, placeholder, inputMode, type }) {
+  const showError = tried && !value;
+  return (
+    <div>
+      <Label className="text-sm">
+        {label} <span className="text-red-600">*</span>
+      </Label>
+      <Input
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        placeholder={placeholder}
+        inputMode={inputMode}
+        type={type}
+        className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
+      />
+      {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+    </div>
   );
 }
 

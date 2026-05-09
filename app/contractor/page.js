@@ -76,29 +76,19 @@ export default function ContractorPage() {
       <p className="text-sm text-muted-foreground mb-5">{t('contractorSubtitle')}</p>
 
       <div className="space-y-3.5">
-        <div>
-          <Label className="text-sm">{t('companyName')} *</Label>
-          <Input value={data.companyName} onChange={e => update('companyName', e.target.value)} className="h-11 mt-1.5" />
-        </div>
-        <div>
-          <Label className="text-sm">{t('crNumber')} *</Label>
-          <Input value={data.crNumber} onChange={e => update('crNumber', e.target.value)} className="h-11 mt-1.5" />
-        </div>
-        <div>
-          <Label className="text-sm">{t('contactPerson')} *</Label>
-          <Input value={data.contactPerson} onChange={e => update('contactPerson', e.target.value)} className="h-11 mt-1.5" />
-        </div>
-        <div>
-          <Label className="text-sm">{t('whatsapp')} *</Label>
-          <Input value={data.whatsapp} onChange={e => update('whatsapp', e.target.value)} placeholder="+974 ..." className="h-11 mt-1.5" inputMode="tel" />
-        </div>
+        <RequiredField label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedSubmit} t={t} />
+        <RequiredField label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedSubmit} t={t} />
+        <RequiredField label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedSubmit} t={t} />
+        <RequiredField label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedSubmit} t={t} placeholder="+974 ..." inputMode="tel" />
         <div>
           <Label className="text-sm">{t('email')}</Label>
           <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
         </div>
         <div>
-          <Label className="text-sm mb-2 block">{t('serviceCategoriesLabel')} *</Label>
-          <div className="grid grid-cols-2 gap-1.5">
+          <Label className="text-sm mb-2 block">
+            {t('serviceCategoriesLabel')} <span className="text-red-600">*</span>
+          </Label>
+          <div className={`grid grid-cols-2 gap-1.5 ${triedSubmit && data.categories.length === 0 ? 'p-1.5 rounded-lg ring-1 ring-red-300' : ''}`}>
             {CATEGORIES.map(c => (
               <button key={c} type="button" onClick={() => toggleCat(c)}
                 className={`text-start text-xs rounded-lg border-2 px-3 py-2 ${data.categories.includes(c) ? 'border-navy bg-secondary' : 'border-border'}`}>
@@ -106,6 +96,7 @@ export default function ContractorPage() {
               </button>
             ))}
           </div>
+          {triedSubmit && data.categories.length === 0 && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
         </div>
         <div>
           <Label className="text-sm">{t('serviceAreas')}</Label>
@@ -153,5 +144,25 @@ export default function ContractorPage() {
         </Button>
       </div>
     </AppShell>
+  );
+}
+
+function RequiredField({ label, value, onChange, tried, t, placeholder, inputMode, type }) {
+  const showError = tried && !value;
+  return (
+    <div>
+      <Label className="text-sm">
+        {label} <span className="text-red-600">*</span>
+      </Label>
+      <Input
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        placeholder={placeholder}
+        inputMode={inputMode}
+        type={type}
+        className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
+      />
+      {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+    </div>
   );
 }
