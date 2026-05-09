@@ -59,7 +59,8 @@ function PostProjectInner() {
 
   const submit = async () => {
     setTried3(true);
-    if (!data.name || !data.phone) return;
+    const phoneDigits = (data.phone || '').replace(/\D/g, '').length;
+    if (!data.name || !data.phone || phoneDigits < 8) return;
     setSubmitting(true);
     try {
       const res = await fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
@@ -153,7 +154,7 @@ function PostProjectInner() {
             <Label className="text-sm">{t('company')}</Label>
             <Input value={data.company} onChange={e => update('company', e.target.value)} className="h-11 mt-1.5" />
           </div>
-          <RequiredField label={t('phone')} value={data.phone} onChange={v => update('phone', v)} tried={tried3} t={t} placeholder="+974 ..." inputMode="tel" />
+          <RequiredField label={t('phone')} value={data.phone} onChange={v => update('phone', v)} tried={tried3} t={t} placeholder="+974 ..." kind="phone" />
           <div>
             <Label className="text-sm">{t('email')}</Label>
             <Input value={data.email} onChange={e => update('email', e.target.value)} className="h-11 mt-1.5" type="email" />
@@ -206,8 +207,22 @@ function PostProjectInner() {
   );
 }
 
-function RequiredField({ label, value, onChange, tried, t, placeholder, inputMode, type }) {
-  const showError = tried && !value;
+function RequiredField({ label, value, onChange, tried, t, placeholder, inputMode, type, kind }) {
+  const isPhone = kind === 'phone';
+  const handleChange = (raw) => {
+    if (isPhone) {
+      let cleaned = raw.replace(/[^0-9+\s-]/g, '');
+      cleaned = cleaned.replace(/(?!^)\+/g, '');
+      onChange(cleaned);
+    } else {
+      onChange(raw);
+    }
+  };
+  const digitCount = isPhone ? (value || '').replace(/\D/g, '').length : 0;
+  const empty = !value;
+  const phoneTooShort = isPhone && !empty && digitCount < 8;
+  const showError = tried && (empty || phoneTooShort);
+  const errMsg = phoneTooShort ? t('invalidPhone') : t('requireField');
   return (
     <div>
       <Label className="text-sm">
@@ -215,13 +230,13 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
       </Label>
       <Input
         value={value}
-        onChange={e => onChange(e.target.value)}
+        onChange={e => handleChange(e.target.value)}
         placeholder={placeholder}
-        inputMode={inputMode}
+        inputMode={isPhone ? 'tel' : inputMode}
         type={type}
         className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
       />
-      {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+      {showError && <div className="text-[11px] text-red-600 mt-1">{errMsg}</div>}
     </div>
   );
 }

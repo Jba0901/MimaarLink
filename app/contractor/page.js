@@ -40,7 +40,9 @@ export default function ContractorPage() {
   };
 
   const hasCR = data.documents.filter(d => d.label === 'cr').length > 0;
-  const formValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && data.categories.length > 0 && hasCR;
+  const phoneDigits = (data.whatsapp || '').replace(/\D/g, '').length;
+  const phoneValid = phoneDigits >= 8;
+  const formValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && phoneValid && data.categories.length > 0 && hasCR;
 
   const submit = async () => {
     setTriedSubmit(true);
@@ -79,7 +81,7 @@ export default function ContractorPage() {
         <RequiredField label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedSubmit} t={t} />
         <RequiredField label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedSubmit} t={t} />
         <RequiredField label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedSubmit} t={t} />
-        <RequiredField label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedSubmit} t={t} placeholder="+974 ..." inputMode="tel" />
+        <RequiredField label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedSubmit} t={t} placeholder="+974 ..." kind="phone" />
         <div>
           <Label className="text-sm">{t('email')}</Label>
           <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
@@ -147,8 +149,24 @@ export default function ContractorPage() {
   );
 }
 
-function RequiredField({ label, value, onChange, tried, t, placeholder, inputMode, type }) {
-  const showError = tried && !value;
+function RequiredField({ label, value, onChange, tried, t, placeholder, inputMode, type, kind }) {
+  const isPhone = kind === 'phone';
+  const handleChange = (raw) => {
+    if (isPhone) {
+      // Allow + (only at start), digits, spaces, dashes — strip everything else
+      let cleaned = raw.replace(/[^0-9+\s-]/g, '');
+      // Ensure + only at the beginning
+      cleaned = cleaned.replace(/(?!^)\+/g, '');
+      onChange(cleaned);
+    } else {
+      onChange(raw);
+    }
+  };
+  const digitCount = isPhone ? (value || '').replace(/\D/g, '').length : 0;
+  const empty = !value;
+  const phoneTooShort = isPhone && !empty && digitCount < 8;
+  const showError = tried && (empty || phoneTooShort);
+  const errMsg = phoneTooShort ? t('invalidPhone') : t('requireField');
   return (
     <div>
       <Label className="text-sm">
@@ -156,13 +174,13 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
       </Label>
       <Input
         value={value}
-        onChange={e => onChange(e.target.value)}
+        onChange={e => handleChange(e.target.value)}
         placeholder={placeholder}
-        inputMode={inputMode}
+        inputMode={isPhone ? 'tel' : inputMode}
         type={type}
         className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
       />
-      {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+      {showError && <div className="text-[11px] text-red-600 mt-1">{errMsg}</div>}
     </div>
   );
 }
