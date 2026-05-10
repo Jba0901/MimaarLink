@@ -31,7 +31,8 @@ export default function AdminContractorPage() {
 
   const change = async (v) => {
     await fetch(`/api/contractors/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ verificationStatus: v }) });
-    toast.success(t('statusUpdated')); load();
+    toast.success(t('statusUpdated'));
+    router.push('/admin');
   };
 
   const deleteContractor = async () => {

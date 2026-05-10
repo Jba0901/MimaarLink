@@ -214,6 +214,18 @@ export async function POST(request, { params }) {
         createdAt: now,
       };
       await db.collection('bids').insertOne(bid);
+      // Auto-create invite if not already present — merges "assign contractor" into bid creation
+      const existingInvite = await db.collection('bidinvites').findOne({ projectId: bid.projectId, contractorId: bid.contractorId });
+      if (!existingInvite) {
+        await db.collection('bidinvites').insertOne({
+          id: uuidv4(),
+          projectId: bid.projectId,
+          contractorId: bid.contractorId,
+          inviteStatus: 'sent',
+          responseStatus: 'submitted',
+          createdAt: now,
+        });
+      }
       // upgrade project status if still earlier
       const project = await db.collection('projects').findOne({ id: bid.projectId });
       if (project) {
@@ -295,6 +307,19 @@ export async function PATCH(request, { params }) {
       const c = await db.collection('contractors').findOne({ id });
       return ok(stripMongo(c));
     }
+    if (path.startsWith('bids/')) {
+      const id = path.split('/')[1];
+      const update = {};
+      if (body.attachments) update.attachments = body.attachments;
+      if (body.price !== undefined) update.price = Number(body.price);
+      if (body.timeline !== undefined) update.timeline = body.timeline;
+      if (body.warranty !== undefined) update.warranty = body.warranty;
+      if (body.exclusions !== undefined) update.exclusions = body.exclusions;
+      if (body.notes !== undefined) update.notes = body.notes;
+      await db.collection('bids').updateOne({ id }, { $set: update });
+      const bid = await db.collection('bids').findOne({ id });
+      return ok(stripMongo(bid));
+    }
     return err('Not found', 404);
   } catch (e) {
     console.error('PATCH error', e);
@@ -321,6 +346,19 @@ export async function DELETE(request, { params }) {
       await db.collection('bids').deleteMany({ contractorId: id });
       await db.collection('bidinvites').deleteMany({ contractorId: id });
       await db.collection('adminnotes').deleteMany({ contractorId: id });
+      return ok({ ok: true });
+    }
+    if (path.startsWith('bids/')) {
+      const id = path.split('/')[1];
+      const bid = await db.collection('bids').findOne({ id });
+      await db.collection('bids').deleteOne({ id });
+      // Also remove the associated invite if no other bids exist from this contractor on this project
+      if (bid) {
+        const remaining = await db.collection('bids').countDocuments({ projectId: bid.projectId, contractorId: bid.contractorId });
+        if (remaining === 0) {
+          await db.collection('bidinvites').deleteMany({ projectId: bid.projectId, contractorId: bid.contractorId });
+        }
+      }
       return ok({ ok: true });
     }
     return err('Not found', 404);

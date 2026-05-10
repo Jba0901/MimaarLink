@@ -13,8 +13,12 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, ArrowRight, Plus, ShieldCheck, FileText, Loader2, ExternalLink, Trash2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Plus, ShieldCheck, FileText, Loader2, ExternalLink, Trash2, Paperclip } from 'lucide-react';
 import { toast } from 'sonner';
+
+async function fileToDataURL(file) {
+  return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(file); });
+}
 
 export default function AdminProjectPage() {
   const { id } = useParams();
@@ -24,10 +28,8 @@ export default function AdminProjectPage() {
   const [allContractors, setAllContractors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openBid, setOpenBid] = useState(false);
-  const [openAssign, setOpenAssign] = useState(false);
   const [note, setNote] = useState('');
   const [bidForm, setBidForm] = useState({ contractorId: '', price: '', timeline: '', warranty: '', exclusions: '', notes: '' });
-  const [assignContractor, setAssignContractor] = useState('');
 
   useEffect(() => {
     if (typeof window !== 'undefined' && localStorage.getItem('mlAdmin') !== '1') router.push('/admin');
@@ -50,7 +52,8 @@ export default function AdminProjectPage() {
 
   const changeStatus = async (s) => {
     await fetch(`/api/projects/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: s }) });
-    toast.success(t('statusUpdated')); load();
+    toast.success(t('statusUpdated'));
+    router.push('/admin');
   };
 
   const addNote = async () => {
@@ -67,10 +70,24 @@ export default function AdminProjectPage() {
     load();
   };
 
-  const submitAssign = async () => {
-    if (!assignContractor) return;
-    await fetch('/api/bidinvites', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId: id, contractorId: assignContractor }) });
-    toast.success(t('invited')); setOpenAssign(false); setAssignContractor(''); load();
+  const deleteBid = async (bidId) => {
+    await fetch(`/api/bids/${bidId}`, { method: 'DELETE' });
+    toast.success(t('deleted')); load();
+  };
+
+  const uploadBidFile = async (bidId, currentAttachments, e) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+    const items = [...(currentAttachments || [])];
+    for (const f of files) {
+      if (f.size > 2 * 1024 * 1024) { toast.error(`${f.name} > 2MB`); continue; }
+      const dataUrl = await fileToDataURL(f);
+      items.push({ name: f.name, type: f.type, size: f.size, data: dataUrl });
+    }
+    await fetch(`/api/bids/${bidId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ attachments: items }) });
+    toast.success(t('saved'));
+    e.target.value = '';
+    load();
   };
 
   const deleteProject = async () => {
@@ -128,20 +145,11 @@ export default function AdminProjectPage() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-2 gap-2 mb-3">
-        <Dialog open={openAssign} onOpenChange={setOpenAssign}>
-          <DialogTrigger asChild><Button variant="outline" className="h-11"><Plus className="w-4 h-4 mr-1" />{t('assignContractor')}</Button></DialogTrigger>
-          <DialogContent dir={dir}>
-            <DialogHeader><DialogTitle>{t('assignContractor')}</DialogTitle></DialogHeader>
-            <Select value={assignContractor} onValueChange={setAssignContractor}>
-              <SelectTrigger><SelectValue placeholder={t('selectContractor')} /></SelectTrigger>
-              <SelectContent>{allContractors.map(c => <SelectItem key={c.id} value={c.id}>{c.companyName} {c.verificationStatus !== 'verified' ? `(${t('notVerified')})` : ''}</SelectItem>)}</SelectContent>
-            </Select>
-            <DialogFooter><Button onClick={submitAssign}>{t('save')}</Button></DialogFooter>
-          </DialogContent>
-        </Dialog>
+      <div className="mb-3">
         <Dialog open={openBid} onOpenChange={setOpenBid}>
-          <DialogTrigger asChild><Button className="h-11" style={{ background: '#0D1F3C' }}><Plus className="w-4 h-4 mr-1" />{t('addBid')}</Button></DialogTrigger>
+          <DialogTrigger asChild>
+            <Button className="w-full h-11" style={{ background: '#0EB59E' }}><Plus className="w-4 h-4 me-1" />{t('addBid')}</Button>
+          </DialogTrigger>
           <DialogContent dir={dir} className="max-h-[90vh] overflow-y-auto">
             <DialogHeader><DialogTitle>{t('addBidFor')}</DialogTitle></DialogHeader>
             <div className="space-y-2.5">
@@ -158,37 +166,54 @@ export default function AdminProjectPage() {
               <div><Label className="text-xs">{t('exclusions')}</Label><Input value={bidForm.exclusions} onChange={e => setBidForm(f => ({...f, exclusions: e.target.value}))} /></div>
               <div><Label className="text-xs">{t('notes')}</Label><Textarea value={bidForm.notes} onChange={e => setBidForm(f => ({...f, notes: e.target.value}))} /></div>
             </div>
-            <DialogFooter><Button onClick={submitBid} style={{ background: '#0D1F3C' }}>{t('save')}</Button></DialogFooter>
+            <DialogFooter><Button onClick={submitBid} style={{ background: '#0D1B2A' }}>{t('save')}</Button></DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
 
       <Card className="mb-3">
         <CardContent className="p-4">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('invitedContractors')} ({invites.length})</div>
-          {invites.length === 0 && <p className="text-xs text-muted-foreground">—</p>}
-          <div className="space-y-1.5">
-            {invites.map(inv => (
-              <div key={inv.id} className="text-sm flex items-center justify-between bg-secondary rounded-lg p-2">
-                <span className="text-navy">{cmap[inv.contractorId]?.companyName || inv.contractorId}</span>
-                <Badge variant="outline" className="text-[10px]">{inv.responseStatus}</Badge>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="mb-3">
-        <CardContent className="p-4">
           <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('bids')} ({bids.length})</div>
           {bids.length === 0 && <p className="text-xs text-muted-foreground">—</p>}
           <div className="space-y-2">
-            {bids.map(b => (
-              <div key={b.id} className="text-xs bg-secondary rounded-lg p-2.5">
-                <div className="flex justify-between font-semibold text-navy text-sm"><span>{cmap[b.contractorId]?.companyName}</span><span>{b.price.toLocaleString()} QAR</span></div>
-                <div className="text-muted-foreground">{b.timeline}</div>
-              </div>
-            ))}
+            {bids.map(b => {
+              const fileCount = (b.attachments || []).length;
+              return (
+                <div key={b.id} className="bg-secondary rounded-lg p-2.5">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-semibold text-navy text-sm truncate">{cmap[b.contractorId]?.companyName}</span>
+                        {fileCount > 0 && (
+                          <span className="inline-flex items-center gap-0.5 text-[10px] bg-white text-navy px-1.5 py-0.5 rounded-full">
+                            <Paperclip className="w-2.5 h-2.5" />{fileCount}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-0.5">{b.price.toLocaleString()} QAR · {b.timeline}</div>
+                      {fileCount > 0 && (
+                        <div className="mt-1.5 space-y-1">
+                          {b.attachments.map((f, i) => (
+                            <a key={i} href={f.data} download={f.name} className="flex items-center gap-1.5 text-[11px] text-navy bg-white rounded px-2 py-1">
+                              <FileText className="w-3 h-3" /><span className="truncate">{f.name}</span>
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex gap-1 shrink-0">
+                      <label className="w-8 h-8 rounded-md bg-white hover:bg-background flex items-center justify-center cursor-pointer text-navy" title={t('uploadAgreement')}>
+                        <Paperclip className="w-3.5 h-3.5" />
+                        <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => uploadBidFile(b.id, b.attachments, e)} />
+                      </label>
+                      <button onClick={() => deleteBid(b.id)} className="w-8 h-8 rounded-md bg-white hover:bg-red-50 flex items-center justify-center text-red-600" title={t('delete')}>
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </CardContent>
       </Card>
