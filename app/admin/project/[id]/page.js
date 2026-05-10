@@ -28,8 +28,10 @@ export default function AdminProjectPage() {
   const [allContractors, setAllContractors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openBid, setOpenBid] = useState(false);
+  const [openAssign, setOpenAssign] = useState(false);
   const [note, setNote] = useState('');
   const [bidForm, setBidForm] = useState({ contractorId: '', price: '', timeline: '', warranty: '', exclusions: '', notes: '' });
+  const [assignContractor, setAssignContractor] = useState('');
 
   useEffect(() => {
     if (typeof window !== 'undefined' && localStorage.getItem('mlAdmin') !== '1') router.push('/admin');
@@ -72,6 +74,17 @@ export default function AdminProjectPage() {
 
   const deleteBid = async (bidId) => {
     await fetch(`/api/bids/${bidId}`, { method: 'DELETE' });
+    toast.success(t('deleted')); load();
+  };
+
+  const submitAssign = async () => {
+    if (!assignContractor) return;
+    await fetch('/api/bidinvites', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId: id, contractorId: assignContractor }) });
+    toast.success(t('invited')); setOpenAssign(false); setAssignContractor(''); load();
+  };
+
+  const deleteInvite = async (inviteId) => {
+    await fetch(`/api/bidinvites/${inviteId}`, { method: 'DELETE' });
     toast.success(t('deleted')); load();
   };
 
@@ -145,10 +158,21 @@ export default function AdminProjectPage() {
         </CardContent>
       </Card>
 
-      <div className="mb-3">
+      <div className="grid grid-cols-2 gap-2 mb-3">
+        <Dialog open={openAssign} onOpenChange={setOpenAssign}>
+          <DialogTrigger asChild><Button variant="outline" className="h-11"><Plus className="w-4 h-4 me-1" />{t('assignContractor')}</Button></DialogTrigger>
+          <DialogContent dir={dir}>
+            <DialogHeader><DialogTitle>{t('assignContractor')}</DialogTitle></DialogHeader>
+            <Select value={assignContractor} onValueChange={setAssignContractor}>
+              <SelectTrigger><SelectValue placeholder={t('selectContractor')} /></SelectTrigger>
+              <SelectContent>{allContractors.map(c => <SelectItem key={c.id} value={c.id}>{c.companyName} {c.verificationStatus !== 'verified' ? `(${t('notVerified')})` : ''}</SelectItem>)}</SelectContent>
+            </Select>
+            <DialogFooter><Button onClick={submitAssign}>{t('save')}</Button></DialogFooter>
+          </DialogContent>
+        </Dialog>
         <Dialog open={openBid} onOpenChange={setOpenBid}>
           <DialogTrigger asChild>
-            <Button className="w-full h-11" style={{ background: '#0EB59E' }}><Plus className="w-4 h-4 me-1" />{t('addBid')}</Button>
+            <Button className="h-11" style={{ background: '#0EB59E' }}><Plus className="w-4 h-4 me-1" />{t('addBid')}</Button>
           </DialogTrigger>
           <DialogContent dir={dir} className="max-h-[90vh] overflow-y-auto">
             <DialogHeader><DialogTitle>{t('addBidFor')}</DialogTitle></DialogHeader>
@@ -170,6 +194,26 @@ export default function AdminProjectPage() {
           </DialogContent>
         </Dialog>
       </div>
+
+      <Card className="mb-3">
+        <CardContent className="p-4">
+          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('invitedContractors')} ({invites.length})</div>
+          {invites.length === 0 && <p className="text-xs text-muted-foreground">—</p>}
+          <div className="space-y-1.5">
+            {invites.map(inv => (
+              <div key={inv.id} className="text-sm flex items-center justify-between bg-secondary rounded-lg p-2">
+                <span className="text-navy truncate flex-1 me-2">{cmap[inv.contractorId]?.companyName || inv.contractorId}</span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <Badge variant="outline" className="text-[10px]">{inv.responseStatus}</Badge>
+                  <button onClick={() => deleteInvite(inv.id)} className="w-7 h-7 rounded-md bg-white hover:bg-red-50 flex items-center justify-center text-red-600" title={t('delete')}>
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       <Card className="mb-3">
         <CardContent className="p-4">
