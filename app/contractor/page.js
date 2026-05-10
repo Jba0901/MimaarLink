@@ -20,7 +20,7 @@ export default function ContractorPage() {
   const [submitting, setSubmitting] = useState(false);
   const [triedSubmit, setTriedSubmit] = useState(false);
   const [data, setData] = useState({
-    companyName: '', crNumber: '', contactPerson: '', whatsapp: '', email: '',
+    companyName: '', crNumber: '', contactPerson: '', whatsapp: '+974 ', email: '',
     categories: [], serviceAreas: '', projectSizeRange: '', documents: [],
   });
 
@@ -112,8 +112,8 @@ export default function ContractorPage() {
         {[
           { key: 'cr', label: t('uploadCR'), required: true },
           { key: 'trade', label: t('uploadTrade'), required: false },
-          { key: 'past', label: t('uploadPast'), required: false },
-          { key: 'cert', label: t('uploadCert'), required: false },
+          { key: 'establishment', label: t('uploadEstablishment'), required: false },
+          { key: 'profile', label: t('uploadCompanyProfile'), required: false },
         ].map(it => {
           const filesForLabel = data.documents.filter(d => d.label === it.key);
           const showError = it.required && triedSubmit && filesForLabel.length === 0;
