@@ -16,11 +16,17 @@ export default function AppShell({ children, hideNav = false }) {
             </div>
             <span className="font-bold text-navy text-[15px] tracking-tight">{t('appName')}</span>
           </Link>
-          <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-            className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/70 hover:bg-white text-navy transition">
-            <Globe className="w-3.5 h-3.5" />
-            <span className="text-xs font-semibold">{t('language')}</span>
-          </button>
+          <div className="flex items-center gap-1.5">
+            <Link href="/contractor" className="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/70 hover:bg-white text-navy transition">
+              <Hammer className="w-3.5 h-3.5" />
+              <span className="text-xs font-semibold">{t('joinContractor')}</span>
+            </Link>
+            <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
+              className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/70 hover:bg-white text-navy transition">
+              <Globe className="w-3.5 h-3.5" />
+              <span className="text-xs font-semibold">{t('language')}</span>
+            </button>
+          </div>
         </div>
       </header>
       <main className="flex-1 w-full pb-28">

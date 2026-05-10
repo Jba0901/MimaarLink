@@ -3,8 +3,8 @@ import { LangProvider } from '@/lib/LangContext';
 import { Toaster } from '@/components/ui/sonner';
 
 export const metadata = {
-  title: 'MimarLink — Get 3-5 bids from verified Qatar contractors',
-  description: 'Post your project, we review the scope, invite matched contractors, and help you compare bids clearly.',
+  title: 'Bonyan Link — Get competitive bids from various contractors',
+  description: 'Post your project. Our AI matches it with suitable contractors based on service, activity, and location.',
 };
 
 export default function RootLayout({ children }) {

@@ -5,9 +5,9 @@ import AppShell from '@/components/AppShell';
 import { useLang } from '@/lib/LangContext';
 import { CATEGORIES } from '@/lib/i18n';
 import {
-  ShieldCheck, GitCompare, Handshake, ArrowRight, ArrowUpRight,
+  Cpu, GitCompare, MapPin as PinIcon, ArrowRight, ArrowUpRight,
   Wrench, Snowflake, Plug, Droplets, Layers, HardHat, Hammer,
-  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, MapPin
+  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, MapPin
 } from 'lucide-react';
 
 const CAT_ICONS = {
@@ -22,52 +22,52 @@ export default function HomePage() {
 
   return (
     <AppShell>
-      {/* HERO — softer navy gradient card */}
-      <section className="relative overflow-hidden rounded-[28px] navy-deep text-white px-5 pt-6 pb-7 mb-4 shadow-soft">
+      {/* HERO — soft navy gradient with single primary CTA */}
+      <section className="relative overflow-hidden rounded-[28px] navy-deep text-white px-5 pt-6 pb-6 mb-4 shadow-soft">
         <div className="absolute -top-20 -end-20 w-56 h-56 rounded-full opacity-60" style={{ background: 'radial-gradient(circle, rgba(20,168,142,0.30), transparent 70%)' }} />
         <div className="absolute -bottom-24 -start-24 w-60 h-60 rounded-full opacity-50" style={{ background: 'radial-gradient(circle, rgba(94,234,212,0.12), transparent 70%)' }} />
 
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur text-[11px] font-medium">
             <Sparkles className="w-3 h-3" style={{ color: '#5EEAD4' }} />
-            <span className="tracking-tight">Qatar · platform-reviewed contractors</span>
+            <span className="tracking-tight">AI-powered · Qatar</span>
           </div>
 
-          <h1 className="mt-4 text-[28px] sm:text-[32px] font-bold leading-[1.1] tracking-tight">
+          <h1 className="mt-4 text-[28px] sm:text-[32px] font-bold leading-[1.15] tracking-tight">
             {t('tagline')}
           </h1>
           <p className="mt-3 text-[14px] text-white/70 leading-relaxed max-w-md">{t('subtitle')}</p>
 
-          <div className="mt-5 grid gap-2.5">
+          <div className="mt-5">
             <Link href="/post-project">
-              <button className="w-full h-12 rounded-2xl text-[15px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#14A88E' }}>
+              <button className="w-full h-14 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#14A88E' }}>
                 {t('postProject')} <Arrow />
               </button>
             </Link>
-            <Link href="/contractor">
-              <button className="w-full h-12 rounded-2xl text-[15px] font-semibold border border-white/20 bg-white/5 hover:bg-white/10 transition flex items-center justify-center">
-                {t('joinContractor')}
-              </button>
-            </Link>
+            <div className="mt-3 flex items-center justify-center gap-1.5 text-[12px] text-white/65">
+              <span>{isRTL ? 'هل أنت مقاول؟' : 'Are you a contractor?'}</span>
+              <Link href="/contractor" className="text-white font-semibold underline-offset-2 hover:underline">
+                {t('joinContractor')} <ArrowUpRight className="inline w-3 h-3" />
+              </Link>
+            </div>
           </div>
 
-          {/* mini stats strip */}
-          <div className="mt-5 flex items-center gap-3 text-[11px] text-white/65">
-            <div className="flex -space-x-2">
-              {[0,1,2].map(i => (
-                <div key={i} className="w-6 h-6 rounded-full border-2 border-[#0A1628]" style={{ background: ['#0E9E89','#5EEAD4','#FBBF24'][i] }} />
-              ))}
-            </div>
-            <span>Verified contractors active in <strong className="text-white">Doha · Lusail · Al Wakrah</strong></span>
+          {/* benefits chips row */}
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[11.5px] text-white/75">
+            <span className="inline-flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5" style={{ color: '#5EEAD4' }} />{t('benefit_ai')}</span>
+            <span className="text-white/30">·</span>
+            <span className="inline-flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" style={{ color: '#5EEAD4' }} />{t('benefit_bids')}</span>
+            <span className="text-white/30">·</span>
+            <span className="inline-flex items-center gap-1.5"><PinIcon className="w-3.5 h-3.5" style={{ color: '#5EEAD4' }} />{t('benefit_local')}</span>
           </div>
         </div>
       </section>
 
       {/* TRUST — bento style, all light & consistent */}
       <section className="grid grid-cols-2 gap-2.5 mb-5">
-        <BentoCard icon={ShieldCheck} title={t('trustReview')} desc={t('trustReviewDesc')} big />
+        <BentoCard icon={Cpu} title={t('trustReview')} desc={t('trustReviewDesc')} big />
         <BentoCard icon={GitCompare} title={t('trustCompare')} desc={t('trustCompareDesc')} />
-        <BentoCard icon={Handshake} title={t('trustQatar')} desc={t('trustQatarDesc')} />
+        <BentoCard icon={PinIcon} title={t('trustQatar')} desc={t('trustQatarDesc')} />
       </section>
 
       {/* CATEGORIES — horizontal scroll chips */}
