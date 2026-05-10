@@ -40,14 +40,18 @@ export default function ContractorPage() {
   };
 
   const hasCR = data.documents.filter(d => d.label === 'cr').length > 0;
+  const hasTrade = data.documents.filter(d => d.label === 'trade').length > 0;
+  const hasEstablishment = data.documents.filter(d => d.label === 'establishment').length > 0;
   const phoneDigits = (data.whatsapp || '').replace(/\D/g, '').length;
   const phoneValid = phoneDigits >= 8;
-  const formValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && phoneValid && data.categories.length > 0 && hasCR;
+  const formValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && phoneValid && data.categories.length > 0 && hasCR && hasTrade && hasEstablishment;
 
   const submit = async () => {
     setTriedSubmit(true);
     if (!formValid) {
       if (!hasCR) toast.error(t('uploadCR') + ' — ' + t('requireField'));
+      else if (!hasTrade) toast.error(t('uploadTrade') + ' — ' + t('requireField'));
+      else if (!hasEstablishment) toast.error(t('uploadEstablishment') + ' — ' + t('requireField'));
       return;
     }
     setSubmitting(true);
@@ -111,8 +115,8 @@ export default function ContractorPage() {
 
         {[
           { key: 'cr', label: t('uploadCR'), required: true },
-          { key: 'trade', label: t('uploadTrade'), required: false },
-          { key: 'establishment', label: t('uploadEstablishment'), required: false },
+          { key: 'trade', label: t('uploadTrade'), required: true },
+          { key: 'establishment', label: t('uploadEstablishment'), required: true },
           { key: 'profile', label: t('uploadCompanyProfile'), required: false },
         ].map(it => {
           const filesForLabel = data.documents.filter(d => d.label === it.key);
