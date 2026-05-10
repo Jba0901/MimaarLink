@@ -182,7 +182,6 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
             value={localPart}
             onChange={e => handleLocalChange(e.target.value)}
             inputMode="tel"
-            placeholder="7000 1111"
             className="flex-1 px-3 bg-background outline-none text-sm"
           />
         </div>
