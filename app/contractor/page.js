@@ -155,22 +155,43 @@ export default function ContractorPage() {
 
 function RequiredField({ label, value, onChange, tried, t, placeholder, inputMode, type, kind }) {
   const isPhone = kind === 'phone';
-  const handleChange = (raw) => {
-    if (isPhone) {
-      // Allow + (only at start), digits, spaces, dashes — strip everything else
-      let cleaned = raw.replace(/[^0-9+\s-]/g, '');
-      // Ensure + only at the beginning
-      cleaned = cleaned.replace(/(?!^)\+/g, '');
-      onChange(cleaned);
-    } else {
-      onChange(raw);
-    }
-  };
-  const digitCount = isPhone ? (value || '').replace(/\D/g, '').length : 0;
-  const empty = !value;
-  const phoneTooShort = isPhone && !empty && digitCount < 8;
-  const showError = tried && (empty || phoneTooShort);
-  const errMsg = phoneTooShort ? t('invalidPhone') : t('requireField');
+  const PREFIX = '+974';
+
+  if (isPhone) {
+    const localPart = (value || '').replace(/^\+974\s*/, '');
+    const handleLocalChange = (raw) => {
+      // allow only digits, spaces, and dashes after the locked prefix
+      const cleaned = raw.replace(/[^\d\s-]/g, '');
+      onChange(PREFIX + ' ' + cleaned);
+    };
+    const digitCount = (value || '').replace(/\D/g, '').length;
+    const empty = !localPart.trim();
+    const tooShort = !empty && digitCount < 8;
+    const showError = tried && (empty || tooShort);
+    const errMsg = tooShort ? t('invalidPhone') : t('requireField');
+    return (
+      <div>
+        <Label className="text-sm">
+          {label} <span className="text-red-600">*</span>
+        </Label>
+        <div dir="ltr" className={`mt-1.5 flex items-stretch h-11 rounded-md overflow-hidden border ${showError ? 'border-red-400' : 'border-input'} focus-within:ring-1 ${showError ? 'focus-within:ring-red-400' : 'focus-within:ring-ring'}`}>
+          <div className="px-3 flex items-center bg-secondary text-navy text-sm font-semibold select-none border-e border-input shrink-0">
+            {PREFIX}
+          </div>
+          <input
+            value={localPart}
+            onChange={e => handleLocalChange(e.target.value)}
+            inputMode="tel"
+            placeholder="7000 1111"
+            className="flex-1 px-3 bg-background outline-none text-sm"
+          />
+        </div>
+        {showError && <div className="text-[11px] text-red-600 mt-1">{errMsg}</div>}
+      </div>
+    );
+  }
+
+  const showError = tried && !value;
   return (
     <div>
       <Label className="text-sm">
@@ -178,13 +199,13 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
       </Label>
       <Input
         value={value}
-        onChange={e => handleChange(e.target.value)}
+        onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
-        inputMode={isPhone ? 'tel' : inputMode}
+        inputMode={inputMode}
         type={type}
         className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
       />
-      {showError && <div className="text-[11px] text-red-600 mt-1">{errMsg}</div>}
+      {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
     </div>
   );
 }
