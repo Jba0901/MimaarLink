@@ -18,21 +18,31 @@ export default function AdminContractorPage() {
   const { t, dir } = useLang();
   const [c, setC] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [statusDraft, setStatusDraft] = useState('');
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && localStorage.getItem('mlAdmin') !== '1') router.push('/admin');
   }, [router]);
 
-  const load = () => fetch(`/api/contractors/${id}`).then(r => r.json()).then(j => { setC(j); setLoading(false); });
+  const load = () => fetch(`/api/contractors/${id}`).then(r => r.json()).then(j => {
+    setC(j); setLoading(false);
+    if (j?.verificationStatus) setStatusDraft(j.verificationStatus);
+  });
   useEffect(() => { load(); }, [id]);
 
   if (loading) return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
   if (!c || c.error) return <AppShell><p>Not found</p></AppShell>;
 
-  const change = async (v) => {
-    await fetch(`/api/contractors/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ verificationStatus: v }) });
-    toast.success(t('statusUpdated'));
-    router.push('/admin');
+  const saveAll = async () => {
+    if (!statusDraft || statusDraft === c.verificationStatus) { toast.message(t('saved')); return; }
+    setSaving(true);
+    try {
+      await fetch(`/api/contractors/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ verificationStatus: statusDraft }) });
+      toast.success(t('saved'));
+      await load();
+    } catch { toast.error('Failed'); }
+    finally { setSaving(false); }
   };
 
   const deleteContractor = async () => {
@@ -71,7 +81,7 @@ export default function AdminContractorPage() {
       <Card className="mb-3">
         <CardContent className="p-4">
           <Label className="text-xs uppercase tracking-wide font-semibold text-muted-foreground">{t('verificationStatus')}</Label>
-          <Select value={c.verificationStatus} onValueChange={change}>
+          <Select value={statusDraft || c.verificationStatus} onValueChange={setStatusDraft}>
             <SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
             <SelectContent>{CONTRACTOR_STATUSES.map(s => <SelectItem key={s} value={s}>{t(`cstatus_${s}`)}</SelectItem>)}</SelectContent>
           </Select>
@@ -94,6 +104,10 @@ export default function AdminContractorPage() {
           </CardContent>
         </Card>
       )}
+
+      <Button onClick={saveAll} disabled={saving} className="w-full mt-4 h-12 text-base" style={{ background: '#0D1B2A' }}>
+        {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : t('save')}
+      </Button>
 
       <AlertDialog>
         <AlertDialogTrigger asChild>

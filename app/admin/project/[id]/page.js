@@ -30,6 +30,8 @@ export default function AdminProjectPage() {
   const [openBid, setOpenBid] = useState(false);
   const [openAssign, setOpenAssign] = useState(false);
   const [note, setNote] = useState('');
+  const [statusDraft, setStatusDraft] = useState('');
+  const [saving, setSaving] = useState(false);
   const [bidForm, setBidForm] = useState({ contractorId: '', price: '', timeline: '', warranty: '', exclusions: '', notes: '' });
   const [assignContractor, setAssignContractor] = useState('');
 
@@ -43,6 +45,7 @@ export default function AdminProjectPage() {
       fetch('/api/contractors').then(r => r.json()),
     ]);
     setD(a); setAllContractors(b); setLoading(false);
+    if (a?.project?.status) setStatusDraft(a.project.status);
   };
   useEffect(() => { load(); }, [id]);
 
@@ -52,10 +55,31 @@ export default function AdminProjectPage() {
   const { project, requester, bids, invites, notes, contractors } = d;
   const cmap = Object.fromEntries(contractors.map(c => [c.id, c]));
 
-  const changeStatus = async (s) => {
-    await fetch(`/api/projects/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: s }) });
-    toast.success(t('statusUpdated'));
-    router.push('/admin');
+  const changeStatus = (s) => {
+    // local draft only — saved via the "Save" button at the bottom
+    setStatusDraft(s);
+  };
+
+  const saveAll = async () => {
+    setSaving(true);
+    try {
+      const tasks = [];
+      if (statusDraft && statusDraft !== project.status) {
+        tasks.push(fetch(`/api/projects/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: statusDraft }) }));
+      }
+      if (note.trim()) {
+        tasks.push(fetch('/api/adminnotes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId: id, note: note.trim() }) }));
+      }
+      if (tasks.length === 0) { toast.message(t('saved')); setSaving(false); return; }
+      await Promise.all(tasks);
+      setNote('');
+      toast.success(t('saved'));
+      await load();
+    } catch (e) {
+      toast.error('Failed to save');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const addNote = async () => {
@@ -148,12 +172,12 @@ export default function AdminProjectPage() {
       <Card className="mb-3">
         <CardContent className="p-4 space-y-2">
           <Label className="text-xs uppercase tracking-wide font-semibold text-muted-foreground">{t('changeStatus')}</Label>
-          <Select value={project.status} onValueChange={changeStatus}>
+          <Select value={statusDraft || project.status} onValueChange={changeStatus}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>{PROJECT_STATUSES.map(s => <SelectItem key={s} value={s}>{t(`status_${s}`)}</SelectItem>)}</SelectContent>
           </Select>
           <Button variant="outline" className="w-full mt-1" onClick={() => router.push(`/bids/${id}`)}>
-            <ExternalLink className="w-3.5 h-3.5 mr-1.5" />{t('viewBids')}
+            <ExternalLink className="w-3.5 h-3.5 me-1.5" />{t('viewBids')}
           </Button>
         </CardContent>
       </Card>
@@ -266,7 +290,6 @@ export default function AdminProjectPage() {
         <CardContent className="p-4">
           <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('adminNotes')}</div>
           <Textarea value={note} onChange={e => setNote(e.target.value)} placeholder={t('addNote')} className="min-h-[60px]" />
-          <Button onClick={addNote} className="mt-2 w-full h-9" size="sm" style={{ background: '#0D1F3C' }}>{t('save')}</Button>
           <div className="mt-3 space-y-1.5">
             {notes.map(n => (
               <div key={n.id} className="text-xs bg-secondary rounded-lg p-2">
@@ -277,6 +300,10 @@ export default function AdminProjectPage() {
           </div>
         </CardContent>
       </Card>
+
+      <Button onClick={saveAll} disabled={saving} className="w-full mt-4 h-12 text-base" style={{ background: '#0D1B2A' }}>
+        {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : t('save')}
+      </Button>
 
       <AlertDialog>
         <AlertDialogTrigger asChild>
