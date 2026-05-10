@@ -1,6 +1,7 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_STATUSES, CONTRACTOR_STATUSES } from '@/lib/i18n';
@@ -14,13 +15,16 @@ import { ChevronRight, Lock, Loader2, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
 const statusColor = (s) => {
-  if (['verified','active','approved','meeting_arranged','closed','bids_received'].includes(s)) return '#0FAE96';
+  if (['verified','active','approved','meeting_arranged','closed','bids_received'].includes(s)) return '#0EB59E';
   if (['suspended'].includes(s)) return '#dc2626';
-  return '#0D1F3C';
+  return '#0D1B2A';
 };
 
-export default function AdminPage() {
+function AdminInner() {
   const { t } = useLang();
+  const sp = useSearchParams();
+  const initialTab = sp.get('tab') === 'contractors' ? 'contractors' : 'projects';
+  const [tab, setTab] = useState(initialTab);
   const [authed, setAuthed] = useState(false);
   const [pwd, setPwd] = useState('');
   const [busy, setBusy] = useState(false);
@@ -72,7 +76,7 @@ export default function AdminPage() {
   return (
     <AppShell>
       <h1 className="text-2xl font-bold text-navy mb-4">{t('adminTitle')}</h1>
-      <Tabs defaultValue="projects">
+      <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="grid w-full grid-cols-2 mb-4">
           <TabsTrigger value="projects">{t('projects')} ({projects.length})</TabsTrigger>
           <TabsTrigger value="contractors">{t('contractors')} ({contractors.length})</TabsTrigger>
@@ -128,4 +132,8 @@ export default function AdminPage() {
       </Tabs>
     </AppShell>
   );
+}
+
+export default function AdminPage() {
+  return <Suspense fallback={null}><AdminInner /></Suspense>;
 }

@@ -70,11 +70,11 @@ export default function AdminProjectPage() {
       if (note.trim()) {
         tasks.push(fetch('/api/adminnotes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId: id, note: note.trim() }) }));
       }
-      if (tasks.length === 0) { toast.message(t('saved')); setSaving(false); return; }
+      if (tasks.length === 0) { toast.message(t('saved')); setSaving(false); router.push('/admin'); return; }
       await Promise.all(tasks);
       setNote('');
       toast.success(t('saved'));
-      await load();
+      router.push('/admin');
     } catch (e) {
       toast.error('Failed to save');
     } finally {

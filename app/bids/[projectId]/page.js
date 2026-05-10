@@ -35,7 +35,7 @@ export default function BidsPage() {
     <AppShell>
       <div className="flex items-center justify-between mb-3">
         <h1 className="text-xl font-bold text-navy">{t('bidComparison')}</h1>
-        <Button variant="ghost" size="sm" onClick={() => router.push(`/project/${projectId}`)}>{t('back')}</Button>
+        <Button variant="ghost" size="sm" onClick={() => router.back()}>{t('back')}</Button>
       </div>
       <p className="text-xs text-muted-foreground mb-4">{t('onlyVerified')}</p>
 

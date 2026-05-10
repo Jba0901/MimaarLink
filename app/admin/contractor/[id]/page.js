@@ -35,12 +35,12 @@ export default function AdminContractorPage() {
   if (!c || c.error) return <AppShell><p>Not found</p></AppShell>;
 
   const saveAll = async () => {
-    if (!statusDraft || statusDraft === c.verificationStatus) { toast.message(t('saved')); return; }
+    if (!statusDraft || statusDraft === c.verificationStatus) { toast.message(t('saved')); router.push('/admin?tab=contractors'); return; }
     setSaving(true);
     try {
       await fetch(`/api/contractors/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ verificationStatus: statusDraft }) });
       toast.success(t('saved'));
-      await load();
+      router.push('/admin?tab=contractors');
     } catch { toast.error('Failed'); }
     finally { setSaving(false); }
   };
