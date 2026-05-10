@@ -4,16 +4,26 @@ import Link from 'next/link';
 import { useLang } from '@/lib/LangContext';
 import { Globe, Home, Hammer, FilePlus } from 'lucide-react';
 
+function Logo({ size = 32 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      {/* Taller navy building */}
+      <path d="M10 58 V20 L26 8 L26 22 L26 58 Z" fill="none" stroke="#0D1B2A" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
+      <line x1="18" y1="22" x2="18" y2="58" stroke="#0D1B2A" strokeWidth="3" strokeLinecap="round" />
+      {/* Shorter teal house */}
+      <path d="M34 58 V36 L46 26 L58 36 V58" fill="none" stroke="#0EB59E" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export default function AppShell({ children, hideNav = false }) {
   const { t, lang, setLang } = useLang();
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md">
-        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+        <div className="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-xl navy flex items-center justify-center shadow-soft">
-              <Hammer className="w-4 h-4 text-white" />
-            </div>
+            <Logo size={32} />
             <span className="font-bold text-navy text-[15px] tracking-tight">{t('appName')}</span>
           </Link>
           <div className="flex items-center gap-1.5">

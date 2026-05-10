@@ -7,7 +7,7 @@ import { CATEGORIES } from '@/lib/i18n';
 import {
   Cpu, GitCompare, MapPin as PinIcon, ArrowRight, ArrowUpRight,
   Wrench, Snowflake, Plug, Droplets, Layers, HardHat, Hammer,
-  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, MapPin
+  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, MapPin, Mail
 } from 'lucide-react';
 
 const CAT_ICONS = {
@@ -114,19 +114,52 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA strip */}
-      <Link href="/post-project">
-        <div className="rounded-2xl border-2 border-dashed border-navy/15 bg-white/50 px-4 py-4 flex items-center justify-between mb-4 hover:bg-white transition">
-          <div>
-            <div className="text-[13px] font-bold text-navy">{t('postProject')}</div>
-            <div className="text-[11px] text-muted-foreground">{t('subtitle').slice(0, 60)}…</div>
-          </div>
-          <div className="w-9 h-9 rounded-full navy flex items-center justify-center text-white"><Arrow /></div>
-        </div>
-      </Link>
+      {/* CONTACT — proper footer card */}
+      <section className="mt-2 mb-2">
+        <div className="rounded-[24px] navy-deep text-white p-5 shadow-soft relative overflow-hidden">
+          <div className="absolute -top-10 -end-10 w-32 h-32 rounded-full opacity-50" style={{ background: 'radial-gradient(circle, rgba(14,181,158,0.25), transparent 70%)' }} />
+          <div className="relative">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur text-[11px] font-medium mb-3">
+              <Mail className="w-3 h-3" style={{ color: '#5EEAD4' }} />
+              <span className="tracking-tight">{t('contactTitle')}</span>
+            </div>
+            <h3 className="text-[20px] font-bold leading-tight">{t('contactTitle')}</h3>
+            <p className="text-[13px] text-white/65 mt-1">{t('contactSubtitle')}</p>
 
-      <p className="text-[11px] text-muted-foreground text-center pb-1 flex items-center justify-center gap-1">
-        <MapPin className="w-3 h-3" /> {t('poweredBy')}
+            <div className="mt-4 grid gap-2">
+              <a href="mailto:hello@bunyanplatform.qa" className="flex items-center gap-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-3 transition">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(14,181,158,0.18)' }}>
+                  <Mail className="w-4 h-4" style={{ color: '#0EB59E' }} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[11px] text-white/55 uppercase tracking-wide">{t('contactEmail')}</div>
+                  <div className="text-[13.5px] font-semibold text-white truncate">hello@bunyanplatform.qa</div>
+                </div>
+                <ArrowUpRight className="w-4 h-4 text-white/50" />
+              </a>
+              <div className="flex items-center gap-3 rounded-2xl bg-white/5 border border-white/10 px-3.5 py-3">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(245,182,61,0.18)' }}>
+                  <PinIcon className="w-4 h-4" style={{ color: '#F5B63D' }} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[11px] text-white/55 uppercase tracking-wide">{t('contactLocation')}</div>
+                  <div className="text-[13.5px] font-semibold text-white">{t('contactLocationValue')}</div>
+                </div>
+              </div>
+            </div>
+
+            <Link href="mailto:hello@bunyanplatform.qa">
+              <button className="w-full mt-4 h-11 rounded-2xl text-[14px] font-bold flex items-center justify-center gap-2 text-white glow-teal" style={{ background: '#0EB59E' }}>
+                <Mail className="w-4 h-4" />
+                {t('contactEmailUs')}
+              </button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <p className="text-[11px] text-muted-foreground text-center pt-3 pb-1">
+        {t('poweredBy')} · {new Date().getFullYear()} · {t('allRights')}
       </p>
     </AppShell>
   );

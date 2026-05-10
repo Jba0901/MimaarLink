@@ -3,7 +3,7 @@ import { LangProvider } from '@/lib/LangContext';
 import { Toaster } from '@/components/ui/sonner';
 
 export const metadata = {
-  title: 'Bonyan Link — Get competitive bids from various contractors',
+  title: 'Bunyan Platform — Get competitive bids from various contractors',
   description: 'Post your project. Our AI matches it with suitable contractors based on service, activity, and location.',
 };
 
