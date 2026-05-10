@@ -20,6 +20,7 @@ export default function AdminContractorPage() {
   const [loading, setLoading] = useState(true);
   const [statusDraft, setStatusDraft] = useState('');
   const [saving, setSaving] = useState(false);
+  const [confirmLeave, setConfirmLeave] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && localStorage.getItem('mlAdmin') !== '1') router.push('/admin');
@@ -30,6 +31,15 @@ export default function AdminContractorPage() {
     if (j?.verificationStatus) setStatusDraft(j.verificationStatus);
   });
   useEffect(() => { load(); }, [id]);
+
+  // Warn before closing tab when there are unsaved changes
+  useEffect(() => {
+    const dirty = !!(statusDraft && c && statusDraft !== c.verificationStatus);
+    if (!dirty) return;
+    const handler = (e) => { e.preventDefault(); e.returnValue = ''; };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [statusDraft, c]);
 
   if (loading) return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
   if (!c || c.error) return <AppShell><p>Not found</p></AppShell>;
@@ -55,7 +65,7 @@ export default function AdminContractorPage() {
 
   return (
     <AppShell>
-      <button onClick={() => router.push('/admin')} className="flex items-center gap-1 text-sm text-navy mb-3"><Back className="w-4 h-4" />{t('backToList')}</button>
+      <button onClick={tryNavigate} className="flex items-center gap-1 text-sm text-navy mb-3"><Back className="w-4 h-4" />{t('backToList')}</button>
 
       <div className="flex items-center gap-2 mb-3">
         <h1 className="text-xl font-bold text-navy">{c.companyName}</h1>
@@ -123,6 +133,19 @@ export default function AdminContractorPage() {
           <AlertDialogFooter>
             <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={deleteContractor} className="bg-red-600 hover:bg-red-700">{t('delete')}</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={confirmLeave} onOpenChange={setConfirmLeave}>
+        <AlertDialogContent dir={dir}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('unsavedTitle')}</AlertDialogTitle>
+            <AlertDialogDescription>{t('unsavedDesc')}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t('stay')}</AlertDialogCancel>
+            <AlertDialogAction onClick={() => router.push('/admin?tab=contractors')} className="bg-red-600 hover:bg-red-700">{t('discardLeave')}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

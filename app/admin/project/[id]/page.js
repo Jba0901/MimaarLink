@@ -32,6 +32,8 @@ export default function AdminProjectPage() {
   const [note, setNote] = useState('');
   const [statusDraft, setStatusDraft] = useState('');
   const [saving, setSaving] = useState(false);
+  const [confirmLeave, setConfirmLeave] = useState(false);
+  const [pendingNav, setPendingNav] = useState(null);
   const [bidForm, setBidForm] = useState({ contractorId: '', price: '', timeline: '', warranty: '', exclusions: '', notes: '' });
   const [assignContractor, setAssignContractor] = useState('');
 
@@ -49,11 +51,34 @@ export default function AdminProjectPage() {
   };
   useEffect(() => { load(); }, [id]);
 
+  // Warn before closing/refreshing tab when there are unsaved changes
+  useEffect(() => {
+    const dirty = (statusDraft && d?.project && statusDraft !== d.project.status) || note.trim().length > 0;
+    if (!dirty) return;
+    const handler = (e) => { e.preventDefault(); e.returnValue = ''; };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [statusDraft, note, d]);
+
   if (loading) return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
   if (!d || d.error) return <AppShell><p>Not found</p></AppShell>;
 
   const { project, requester, bids, invites, notes, contractors } = d;
   const cmap = Object.fromEntries(contractors.map(c => [c.id, c]));
+
+  const isDirty = (statusDraft && statusDraft !== project.status) || note.trim().length > 0;
+
+  const tryNavigate = (target) => {
+    if (isDirty) { setPendingNav(target); setConfirmLeave(true); }
+    else router.push(target);
+  };
+
+  const confirmDiscard = () => {
+    setConfirmLeave(false);
+    const target = pendingNav || '/admin';
+    setPendingNav(null);
+    router.push(target);
+  };
 
   const changeStatus = (s) => {
     // local draft only — saved via the "Save" button at the bottom
@@ -137,7 +162,7 @@ export default function AdminProjectPage() {
 
   return (
     <AppShell>
-      <button onClick={() => router.push('/admin')} className="flex items-center gap-1 text-sm text-navy mb-3"><Back className="w-4 h-4" />{t('backToList')}</button>
+      <button onClick={() => tryNavigate('/admin')} className="flex items-center gap-1 text-sm text-navy mb-3"><Back className="w-4 h-4" />{t('backToList')}</button>
       <h1 className="text-xl font-bold text-navy">{t(`cat_${project.category}`)}</h1>
       <div className="text-xs text-muted-foreground mb-3">{project.location}</div>
 
@@ -319,6 +344,19 @@ export default function AdminProjectPage() {
           <AlertDialogFooter>
             <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={deleteProject} className="bg-red-600 hover:bg-red-700">{t('delete')}</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={confirmLeave} onOpenChange={setConfirmLeave}>
+        <AlertDialogContent dir={dir}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t('unsavedTitle')}</AlertDialogTitle>
+            <AlertDialogDescription>{t('unsavedDesc')}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setPendingNav(null)}>{t('stay')}</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDiscard} className="bg-red-600 hover:bg-red-700">{t('discardLeave')}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
