@@ -8,7 +8,7 @@ function Logo({ size = 32 }) {
   return (
     <img
       src="/logo.png"
-      alt="Bunyan Platform"
+      alt="MimaarLink"
       width={size}
       height={size}
       style={{ width: size, height: size, objectFit: 'contain' }}
