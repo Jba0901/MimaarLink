@@ -4,14 +4,33 @@ import Link from 'next/link';
 import { useLang } from '@/lib/LangContext';
 import { Globe, Home, Hammer, FilePlus } from 'lucide-react';
 
-function Logo({ size = 44 }) {
+function Logo({ height = 40 }) {
   return (
     <img
       src="/logo.png"
       alt="MimaarLink"
-      height={size}
-      style={{ height: size, width: 'auto', objectFit: 'contain' }}
+      height={height}
+      style={{ height: height, width: 'auto', objectFit: 'contain' }}
     />
+  );
+}
+
+function BrandText() {
+  const { t, lang } = useLang();
+  if (lang === 'ar') {
+    const parts = t('appName').split(' ');
+    return (
+      <span className="font-bold text-[20px] tracking-tight leading-none">
+        <span style={{ color: '#0D1B2A' }}>{parts[0]}</span>
+        {parts[1] && <span style={{ color: '#0EB59E' }} className="ms-1">{parts[1]}</span>}
+      </span>
+    );
+  }
+  return (
+    <span className="font-bold text-[20px] tracking-tight leading-none">
+      <span style={{ color: '#0D1B2A' }}>Mimaar</span>
+      <span style={{ color: '#0EB59E' }}>Link</span>
+    </span>
   );
 }
 
@@ -20,9 +39,10 @@ export default function AppShell({ children, hideNav = false }) {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md">
-        <div className="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center group">
-            <Logo size={42} />
+        <div className="max-w-3xl mx-auto px-4 h-[68px] flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <Logo height={42} />
+            <BrandText />
           </Link>
           <div className="flex items-center gap-1.5">
             <Link href="/contractor" className="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/70 hover:bg-white text-navy transition">
