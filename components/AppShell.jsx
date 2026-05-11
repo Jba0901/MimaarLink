@@ -4,14 +4,13 @@ import Link from 'next/link';
 import { useLang } from '@/lib/LangContext';
 import { Globe, Home, Hammer, FilePlus } from 'lucide-react';
 
-function Logo({ size = 32 }) {
+function Logo({ size = 44 }) {
   return (
     <img
       src="/logo.png"
       alt="MimaarLink"
-      width={size}
       height={size}
-      style={{ width: size, height: size, objectFit: 'contain' }}
+      style={{ height: size, width: 'auto', objectFit: 'contain' }}
     />
   );
 }
@@ -22,9 +21,8 @@ export default function AppShell({ children, hideNav = false }) {
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md">
         <div className="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <Logo size={36} />
-            <span className="font-bold text-navy text-[15px] tracking-tight">{t('appName')}</span>
+          <Link href="/" className="flex items-center group">
+            <Logo size={42} />
           </Link>
           <div className="flex items-center gap-1.5">
             <Link href="/contractor" className="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/70 hover:bg-white text-navy transition">
