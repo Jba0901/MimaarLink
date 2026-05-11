@@ -20,14 +20,14 @@ function BrandText() {
   if (lang === 'ar') {
     const parts = t('appName').split(' ');
     return (
-      <span className="font-bold text-[20px] tracking-tight leading-none">
+      <span className="font-bold text-[18px] tracking-tight leading-none">
         <span style={{ color: '#0D1B2A' }}>{parts[0]}</span>
         {parts[1] && <span style={{ color: '#0EB59E' }} className="ms-1">{parts[1]}</span>}
       </span>
     );
   }
   return (
-    <span className="font-bold text-[20px] tracking-tight leading-none">
+    <span className="font-bold text-[18px] tracking-tight leading-none">
       <span style={{ color: '#0D1B2A' }}>Mimaar</span>
       <span style={{ color: '#0EB59E' }}>Link</span>
     </span>
