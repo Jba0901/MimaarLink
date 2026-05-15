@@ -96,6 +96,10 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
 
 function SiteFooter() {
   const { t } = useLang();
+  const pathname = usePathname();
+  // Home page already has its own rich "Get in touch" section + copyright line.
+  // Avoid duplicating contact info there.
+  if (pathname === '/') return null;
   const year = new Date().getFullYear();
   return (
     <footer className="max-w-3xl mx-auto px-4 mt-8">
