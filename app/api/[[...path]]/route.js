@@ -363,7 +363,7 @@ async function uploadFiles(files, folder) {
     }
 
     if (parsed.buffer.length > 1 * 1024 * 1024) {
-      throw new Error(`${file.name || 'File'} is larger than the 1MB upload limit.`);
+      throw new Error(`${file.name || 'File'} is too large. File upload should be max 1MB per file.`);
     }
 
     const safeName = cleanFileName(file.name);

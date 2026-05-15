@@ -50,7 +50,7 @@ function PostProjectInner() {
     const list = Array.from(e.target.files || []).slice(0, 5);
     const items = [];
     for (const f of list) {
-      if (f.size > 1 * 1024 * 1024) { toast.error(`${f.name} > 1MB`); continue; }
+      if (f.size > 1 * 1024 * 1024) { toast.error(`${f.name} is too large. File upload should be max 1MB per file.`); continue; }
       const dataUrl = await fileToDataURL(f);
       items.push({ name: f.name, type: f.type, size: f.size, data: dataUrl });
     }
