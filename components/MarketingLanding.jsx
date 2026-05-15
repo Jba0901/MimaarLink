@@ -4,7 +4,7 @@ import Link from 'next/link';
 import AppShell from '@/components/AppShell';
 import { useLang } from '@/lib/LangContext';
 import { Card, CardContent } from '@/components/ui/card';
-import { Sparkles, ArrowRight, CheckCircle2, ShieldCheck, MapPin, Clock, Wallet, GitCompare, TrendingUp } from 'lucide-react';
+import { Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export default function MarketingLanding({
   eyebrow,
@@ -12,8 +12,12 @@ export default function MarketingLanding({
   subtitle,
   ctaLabel,
   ctaHref,
+  ctaSubtext,
   benefits,
+  popularTypesTitle,
+  popularTypes,
   steps,
+  privacyLine,
   finalTitle,
   finalSub,
 }) {
@@ -45,6 +49,9 @@ export default function MarketingLanding({
                 {ctaLabel} <Arrow />
               </button>
             </Link>
+            {ctaSubtext && (
+              <p className="mt-2.5 text-[12px] text-white/65 text-center">{ctaSubtext}</p>
+            )}
           </div>
         </div>
       </section>
@@ -66,8 +73,25 @@ export default function MarketingLanding({
         ))}
       </section>
 
+      {/* POPULAR PROJECT TYPES (optional) */}
+      {popularTypes && popularTypes.length > 0 && (
+        <section className="mb-6">
+          <h2 className="text-base font-bold text-navy mb-3">{popularTypesTitle}</h2>
+          <div className="flex flex-wrap gap-2">
+            {popularTypes.map((p, i) => (
+              <span
+                key={i}
+                className="text-[12.5px] font-semibold text-navy bg-white border border-border rounded-full px-3 py-1.5 shadow-soft"
+              >
+                {p}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* HOW IT WORKS */}
-      <section className="mb-7">
+      <section className="mb-6">
         <h2 className="text-base font-bold text-navy mb-3">{t('howItWorks')}</h2>
         <div className="relative">
           <div className={`absolute top-3 bottom-3 w-px bg-border ${isRTL ? 'right-[15px]' : 'left-[15px]'}`} />
@@ -84,6 +108,14 @@ export default function MarketingLanding({
           </div>
         </div>
       </section>
+
+      {/* PRIVACY / TRUST LINE (optional) */}
+      {privacyLine && (
+        <div className="mb-4 flex items-start gap-2 px-1">
+          <ShieldCheck className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#0EB59E' }} />
+          <p className="text-[12.5px] text-muted-foreground leading-relaxed">{privacyLine}</p>
+        </div>
+      )}
 
       {/* FINAL CTA */}
       <section className="mb-3">

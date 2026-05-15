@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useLang } from '@/lib/LangContext';
 import { Globe, Home, Hammer, FilePlus } from 'lucide-react';
 
@@ -63,9 +64,9 @@ export default function AppShell({ children, hideNav = false }) {
       {!hideNav && (
         <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 safe-pad-bottom">
           <div className="flex items-center gap-1 navy rounded-full px-1.5 py-1.5 shadow-soft border border-white/5">
-            <NavBtn href="/" icon={Home} label={t('home')} />
-            <NavBtn href="/post-project" icon={FilePlus} label={t('postProject')} />
-            <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} />
+            <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
+            <NavBtn href="/post-project" icon={FilePlus} label={t('postProject')} matches={['/post-project', '/for-projects']} />
+            <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} matches={['/contractor', '/for-contractors']} />
           </div>
         </nav>
       )}
@@ -73,9 +74,19 @@ export default function AppShell({ children, hideNav = false }) {
   );
 }
 
-function NavBtn({ href, icon: Icon, label }) {
+function NavBtn({ href, icon: Icon, label, matches = [] }) {
+  const pathname = usePathname();
+  const active = matches.some((m) => pathname === m);
   return (
-    <Link href={href} className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition">
+    <Link
+      href={href}
+      className={
+        'flex items-center gap-1.5 px-3.5 py-2 rounded-full transition ' +
+        (active
+          ? 'bg-white text-navy shadow-soft'
+          : 'text-white/80 hover:text-white hover:bg-white/10')
+      }
+    >
       <Icon className="w-4 h-4" />
       <span className="text-[11.5px] font-semibold tracking-tight whitespace-nowrap">{label}</span>
     </Link>
