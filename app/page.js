@@ -127,29 +127,29 @@ export default function HomePage() {
             <p className="text-[13px] text-white/65 mt-1">{t('contactSubtitle')}</p>
 
             <div className="mt-4 grid gap-2">
-              <a href="mailto:hello@bunyanplatform.qa" className="flex items-center gap-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-3 transition">
+              <a href="mailto:MimaarLink@gmail.com" className="flex items-center gap-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-3 transition">
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(14,181,158,0.18)' }}>
                   <Mail className="w-4 h-4" style={{ color: '#0EB59E' }} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-[11px] text-white/55 uppercase tracking-wide">{t('contactEmail')}</div>
-                  <div className="text-[13.5px] font-semibold text-white truncate">hello@bunyanplatform.qa</div>
+                  <div className="text-[13.5px] font-semibold text-white truncate">MimaarLink@gmail.com</div>
                 </div>
                 <ArrowUpRight className="w-4 h-4 text-white/50" />
               </a>
-              <a href="tel:+97444001234" className="flex items-center gap-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-3 transition">
+              <a href="tel:+97466259219" className="flex items-center gap-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-3 transition">
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(245,182,61,0.18)' }}>
                   <Phone className="w-4 h-4" style={{ color: '#F5B63D' }} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-[11px] text-white/55 uppercase tracking-wide">{t('contactPhone')}</div>
-                  <div className="text-[13.5px] font-semibold text-white truncate" dir="ltr">+974 4400 1234</div>
+                  <div className="text-[13.5px] font-semibold text-white truncate" dir="ltr">+974 6625 9219</div>
                 </div>
                 <ArrowUpRight className="w-4 h-4 text-white/50" />
               </a>
             </div>
 
-            <Link href="mailto:hello@bunyanplatform.qa">
+            <Link href="mailto:MimaarLink@gmail.com">
               <button className="w-full mt-4 h-11 rounded-2xl text-[14px] font-bold flex items-center justify-center gap-2 text-white glow-teal" style={{ background: '#0EB59E' }}>
                 <Mail className="w-4 h-4" />
                 {t('contactEmailUs')}
