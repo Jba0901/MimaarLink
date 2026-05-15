@@ -17,7 +17,7 @@ export default function MarketingLanding({
   finalTitle,
   finalSub,
 }) {
-  const { dir } = useLang();
+  const { dir, t } = useLang();
   const isRTL = dir === 'rtl';
   const Arrow = () => isRTL ? <ArrowRight className="w-4 h-4 rotate-180" /> : <ArrowRight className="w-4 h-4" />;
 
@@ -68,7 +68,7 @@ export default function MarketingLanding({
 
       {/* HOW IT WORKS */}
       <section className="mb-7">
-        <h2 className="text-base font-bold text-navy mb-3">How it works</h2>
+        <h2 className="text-base font-bold text-navy mb-3">{t('howItWorks')}</h2>
         <div className="relative">
           <div className={`absolute top-3 bottom-3 w-px bg-border ${isRTL ? 'right-[15px]' : 'left-[15px]'}`} />
           <div className="space-y-3">
