@@ -6,7 +6,7 @@ import { useLang } from '@/lib/LangContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ShieldCheck, Clock, Wallet, FileWarning, FileCheck2, Loader2 } from 'lucide-react';
+import { ShieldCheck, Clock, Wallet, FileWarning, FileCheck2, FileText, Loader2, Paperclip } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function BidsPage() {
@@ -73,6 +73,29 @@ export default function BidsPage() {
                   {b.exclusions && <div className="text-xs flex items-start gap-2"><FileWarning className="w-3.5 h-3.5 text-navy mt-0.5 shrink-0" /><span><span className="font-semibold">{t('exclusions')}:</span> {b.exclusions}</span></div>}
                   {b.notes && <div className="text-xs text-muted-foreground leading-relaxed">{b.notes}</div>}
                 </div>
+
+                {b.attachments && b.attachments.length > 0 && (
+                  <div className="mt-3 border-t border-border pt-3">
+                    <div className="mb-1.5 flex items-center gap-1.5 text-[10px] uppercase tracking-wide text-muted-foreground font-semibold">
+                      <Paperclip className="w-3 h-3" />
+                      {t('bidFiles')}
+                    </div>
+                    <div className="space-y-1.5">
+                      {b.attachments.map((f, i) => (
+                        <a
+                          key={i}
+                          href={f.data || f.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-2 rounded-lg bg-secondary px-3 py-2 text-xs text-navy hover:bg-secondary/70"
+                        >
+                          <FileText className="w-3.5 h-3.5 shrink-0" />
+                          <span className="min-w-0 flex-1 truncate">{f.name || t('files')}</span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="flex gap-2 mt-3">
                   <Button variant="outline" size="sm" className="flex-1" onClick={() => action('shortlist', b.contractorId)}>{t('shortlist')}</Button>
