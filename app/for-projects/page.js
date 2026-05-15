@@ -21,12 +21,14 @@ export default function ForProjectsPage() {
       ]}
       popularTypesTitle={t('projL_popularTitle')}
       popularTypes={[
-        t('ptype_fitout'),
-        t('ptype_maintenance'),
-        t('ptype_civil'),
-        t('ptype_mep'),
-        t('ptype_renovation'),
-        t('ptype_landscaping'),
+        t('ptype_office'),
+        t('ptype_retail'),
+        t('ptype_mepworks'),
+        t('ptype_hvac'),
+        t('ptype_elec'),
+        t('ptype_civilmaint'),
+        t('ptype_flooring'),
+        t('ptype_painting'),
       ]}
       steps={[
         { title: t('projL_s1'), desc: t('projL_s1d') },
