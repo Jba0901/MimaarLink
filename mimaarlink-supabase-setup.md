@@ -14,6 +14,7 @@ These environment variables should exist in the Vercel project:
 Optional:
 
 - `SUPABASE_STORAGE_BUCKET=mimaarlink-files`
+- `ADMIN_SESSION_SECRET`
 
 ## What The App Creates Automatically
 
@@ -37,3 +38,5 @@ Each uploaded file is limited to 10 MB.
 - Vercel hosts the website.
 - Supabase Postgres stores form/admin data.
 - Supabase Storage stores uploaded files.
+
+The admin API uses an HTTP-only browser cookie after login. If Vercel redeploys and the admin page asks you to log in again, that is normal.

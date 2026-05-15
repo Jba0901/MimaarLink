@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import crypto from 'crypto';
 import pg from 'pg';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,6 +13,7 @@ const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABAS
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 const STORAGE_BUCKET = process.env.SUPABASE_STORAGE_BUCKET || 'mimaarlink-files';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || ADMIN_PASSWORD;
 
 let pool = null;
 let schemaReady = null;
@@ -22,6 +24,19 @@ function ok(data, status = 200) {
 
 function err(message, status = 400) {
   return NextResponse.json({ error: message }, { status });
+}
+
+function adminSessionValue() {
+  return crypto.createHash('sha256').update(`mimaarlink-admin:${ADMIN_SESSION_SECRET}`).digest('hex');
+}
+
+function isAdminRequest(request) {
+  return request.cookies.get('ml_admin_session')?.value === adminSessionValue();
+}
+
+function requireAdmin(request) {
+  if (!isAdminRequest(request)) return err('Admin login required', 401);
+  return null;
 }
 
 async function readJson(request) {
@@ -39,7 +54,7 @@ async function getPool() {
 
   if (!pool) {
     pool = new Pool({
-      connectionString: POSTGRES_URL,
+      connectionString: postgresConnectionString(),
       max: 3,
       ssl: { rejectUnauthorized: false },
     });
@@ -48,6 +63,14 @@ async function getPool() {
   if (!schemaReady) schemaReady = ensureSchema(pool);
   await schemaReady;
   return pool;
+}
+
+function postgresConnectionString() {
+  const url = new URL(POSTGRES_URL);
+  // Supabase/Vercel connection strings include sslmode=require. node-postgres
+  // treats that as its own SSL config and can ignore rejectUnauthorized:false.
+  url.searchParams.delete('sslmode');
+  return url.toString();
 }
 
 async function ensureSchema(db) {
@@ -434,6 +457,8 @@ export async function GET(request, { params }) {
     if (path === '' || path === 'health') return ok({ ok: true, name: 'MimaarLink API', database: 'supabase' });
 
     if (path === 'projects') {
+      const adminError = requireAdmin(request);
+      if (adminError) return adminError;
       const { rows } = await db.query('select * from projects order by created_at desc');
       return ok(rows.map(projectFromRow));
     }
@@ -457,6 +482,8 @@ export async function GET(request, { params }) {
       }
 
       if (sub === 'full') {
+        const adminError = requireAdmin(request);
+        if (adminError) return adminError;
         const [bidResult, inviteResult, noteResult, requesterResult] = await Promise.all([
           db.query('select * from bids where project_id = $1 order by created_at asc', [id]),
           db.query('select * from bid_invites where project_id = $1 order by created_at asc', [id]),
@@ -484,6 +511,8 @@ export async function GET(request, { params }) {
     }
 
     if (path === 'contractors') {
+      const adminError = requireAdmin(request);
+      if (adminError) return adminError;
       const status = url.searchParams.get('status');
       const result = status
         ? await db.query('select * from contractors where verification_status = $1 order by created_at desc', [status])
@@ -492,6 +521,8 @@ export async function GET(request, { params }) {
     }
 
     if (path.startsWith('contractors/')) {
+      const adminError = requireAdmin(request);
+      if (adminError) return adminError;
       const id = parts[1];
       const { rows } = await db.query('select * from contractors where id = $1', [id]);
       const contractor = contractorFromRow(rows[0]);
@@ -500,6 +531,8 @@ export async function GET(request, { params }) {
     }
 
     if (path === 'stats') {
+      const adminError = requireAdmin(request);
+      if (adminError) return adminError;
       const [projects, contractors, bids] = await Promise.all([
         db.query('select count(*)::int as count from projects'),
         db.query('select count(*)::int as count from contractors'),
@@ -527,8 +560,30 @@ export async function POST(request, { params }) {
     const now = new Date().toISOString();
 
     if (path === 'admin/login') {
-      if (body.password === ADMIN_PASSWORD) return ok({ ok: true, token: 'admin-' + Date.now() });
+      if (body.password === ADMIN_PASSWORD) {
+        const response = ok({ ok: true });
+        response.cookies.set('ml_admin_session', adminSessionValue(), {
+          httpOnly: true,
+          sameSite: 'lax',
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: 60 * 60 * 12,
+          path: '/',
+        });
+        return response;
+      }
       return err('Invalid password', 401);
+    }
+
+    if (path === 'admin/logout') {
+      const response = ok({ ok: true });
+      response.cookies.set('ml_admin_session', '', {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 0,
+        path: '/',
+      });
+      return response;
     }
 
     const db = await getPool();
@@ -643,6 +698,8 @@ export async function POST(request, { params }) {
     }
 
     if (path === 'bids') {
+      const adminError = requireAdmin(request);
+      if (adminError) return adminError;
       const bidId = uuidv4();
       const attachments = await uploadFiles(body.attachments, `bids/${bidId}`);
       const bid = {
@@ -681,6 +738,8 @@ export async function POST(request, { params }) {
     }
 
     if (path === 'bidinvites') {
+      const adminError = requireAdmin(request);
+      if (adminError) return adminError;
       const invite = {
         id: uuidv4(),
         projectId: body.projectId,
@@ -701,6 +760,8 @@ export async function POST(request, { params }) {
     }
 
     if (path === 'adminnotes') {
+      const adminError = requireAdmin(request);
+      if (adminError) return adminError;
       const note = {
         id: uuidv4(),
         projectId: body.projectId || null,
@@ -735,6 +796,8 @@ export async function PATCH(request, { params }) {
     const path = parts.join('/');
     const body = await readJson(request);
     const now = new Date().toISOString();
+    const adminError = requireAdmin(request);
+    if (adminError) return adminError;
 
     if (path.startsWith('projects/')) {
       const id = parts[1];
@@ -795,6 +858,8 @@ export async function DELETE(request, { params }) {
     const db = await getPool();
     const parts = params?.path || [];
     const path = parts.join('/');
+    const adminError = requireAdmin(request);
+    if (adminError) return adminError;
 
     if (path.startsWith('projects/')) {
       const id = parts[1];

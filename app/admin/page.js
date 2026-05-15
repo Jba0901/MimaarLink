@@ -52,6 +52,11 @@ function AdminInner() {
           contractorsRes.json().catch(() => null),
         ]);
 
+        if (projectsRes.status === 401 || contractorsRes.status === 401) {
+          localStorage.removeItem('mlAdmin');
+          setAuthed(false);
+          throw new Error('Please log in again.');
+        }
         if (!projectsRes.ok) throw new Error(projectsJson?.error || 'Could not load projects');
         if (!contractorsRes.ok) throw new Error(contractorsJson?.error || 'Could not load contractors');
         if (!Array.isArray(projectsJson)) throw new Error(projectsJson?.error || 'Projects API returned invalid data');
@@ -127,6 +132,7 @@ function AdminInner() {
                 variant="outline"
                 size="sm"
                 onClick={() => {
+                  fetch('/api/admin/logout', { method: 'POST' }).catch(() => {});
                   localStorage.removeItem('mlAdmin');
                   setAuthed(false);
                   setLoadError('');
