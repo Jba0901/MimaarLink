@@ -133,7 +133,13 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-[11px] text-white/55 uppercase tracking-wide">{t('contactEmail')}</div>
-                  <div className="text-[13.5px] font-semibold text-white truncate">MimaarLink@gmail.com</div>
+                  <div
+                    className={`text-[13.5px] font-semibold text-white truncate ${isRTL ? 'text-right' : 'text-left'}`}
+                    dir="ltr"
+                    style={{ unicodeBidi: 'isolate' }}
+                  >
+                    MimaarLink@gmail.com
+                  </div>
                 </div>
                 <ArrowUpRight className="w-4 h-4 text-white/50" />
               </a>
@@ -143,7 +149,13 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-[11px] text-white/55 uppercase tracking-wide">{t('contactPhone')}</div>
-                  <div className="text-[13.5px] font-semibold text-white truncate" dir="ltr">+974 6625 9219</div>
+                  <div
+                    className={`text-[13.5px] font-semibold text-white truncate ${isRTL ? 'text-right' : 'text-left'}`}
+                    dir="ltr"
+                    style={{ unicodeBidi: 'isolate' }}
+                  >
+                    +974 6625 9219
+                  </div>
                 </div>
                 <ArrowUpRight className="w-4 h-4 text-white/50" />
               </a>
