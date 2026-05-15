@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle2, Upload, X, Loader2, Copy } from 'lucide-react';
 import { toast } from 'sonner';
+import { MAX_FILE_SIZE_BYTES, MAX_TOTAL_UPLOAD_SIZE_BYTES, fileTooLargeMessage, totalUploadTooLargeMessage, uploadTotalSize } from '@/lib/uploadLimits';
 
 async function fileToDataURL(file) {
   return new Promise((resolve, reject) => {
@@ -49,12 +50,16 @@ function PostProjectInner() {
   const onFiles = async (e) => {
     const list = Array.from(e.target.files || []).slice(0, 5);
     const items = [];
+    let nextTotal = uploadTotalSize(data.files);
     for (const f of list) {
-      if (f.size > 1 * 1024 * 1024) { toast.error(`${f.name} is too large. File upload should be max 1MB per file.`); continue; }
+      if (f.size > MAX_FILE_SIZE_BYTES) { toast.error(fileTooLargeMessage(f.name)); continue; }
+      if (nextTotal + f.size > MAX_TOTAL_UPLOAD_SIZE_BYTES) { toast.error(totalUploadTooLargeMessage()); continue; }
       const dataUrl = await fileToDataURL(f);
       items.push({ name: f.name, type: f.type, size: f.size, data: dataUrl });
+      nextTotal += f.size;
     }
     setData(d => ({ ...d, files: [...d.files, ...items].slice(0, 5) }));
+    e.target.value = '';
   };
 
   const submit = async () => {

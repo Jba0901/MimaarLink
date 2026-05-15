@@ -31,7 +31,7 @@ It also creates a private Supabase Storage bucket named `mimaarlink-files` for u
 
 ## Upload Limit
 
-Each uploaded file is limited to 1 MB.
+Each uploaded file is limited to 2 MB, with a 3 MB total upload limit per submission while uploads still pass through Vercel.
 
 ## Simple Mental Model
 

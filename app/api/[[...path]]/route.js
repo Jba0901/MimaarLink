@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import pg from 'pg';
 import { v4 as uuidv4 } from 'uuid';
+import { MAX_FILE_SIZE_BYTES, MAX_TOTAL_UPLOAD_SIZE_BYTES, fileTooLargeMessage, totalUploadTooLargeMessage } from '@/lib/uploadLimits';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -166,7 +167,7 @@ async function ensureStorageBucket(db) {
         $1,
         $1,
         false,
-        1048576,
+        ${MAX_FILE_SIZE_BYTES},
         array['image/jpeg','image/png','image/webp','application/pdf']::text[]
       )
       on conflict (id) do update set
@@ -349,6 +350,7 @@ function storageBaseUrl() {
 async function uploadFiles(files, folder) {
   if (!Array.isArray(files) || files.length === 0) return [];
   const uploaded = [];
+  let totalUploadBytes = 0;
 
   for (const file of files) {
     if (!file?.data || !String(file.data).startsWith('data:')) {
@@ -362,8 +364,12 @@ async function uploadFiles(files, folder) {
       continue;
     }
 
-    if (parsed.buffer.length > 1 * 1024 * 1024) {
-      throw new Error(`${file.name || 'File'} is too large. File upload should be max 1MB per file.`);
+    if (parsed.buffer.length > MAX_FILE_SIZE_BYTES) {
+      throw new Error(fileTooLargeMessage(file.name || 'File'));
+    }
+    totalUploadBytes += parsed.buffer.length;
+    if (totalUploadBytes > MAX_TOTAL_UPLOAD_SIZE_BYTES) {
+      throw new Error(totalUploadTooLargeMessage());
     }
 
     const safeName = cleanFileName(file.name);

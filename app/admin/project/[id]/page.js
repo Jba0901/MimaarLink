@@ -15,6 +15,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { ArrowLeft, ArrowRight, Plus, ShieldCheck, FileText, Loader2, ExternalLink, Trash2, Paperclip } from 'lucide-react';
 import { toast } from 'sonner';
+import { MAX_FILE_SIZE_BYTES, MAX_TOTAL_UPLOAD_SIZE_BYTES, fileTooLargeMessage, totalUploadTooLargeMessage, uploadTotalSize } from '@/lib/uploadLimits';
 
 async function fileToDataURL(file) {
   return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(file); });
@@ -141,10 +142,13 @@ export default function AdminProjectPage() {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
     const items = [...(currentAttachments || [])];
+    let nextTotal = uploadTotalSize(currentAttachments || []);
     for (const f of files) {
-      if (f.size > 1 * 1024 * 1024) { toast.error(`${f.name} is too large. File upload should be max 1MB per file.`); continue; }
+      if (f.size > MAX_FILE_SIZE_BYTES) { toast.error(fileTooLargeMessage(f.name)); continue; }
+      if (nextTotal + f.size > MAX_TOTAL_UPLOAD_SIZE_BYTES) { toast.error(totalUploadTooLargeMessage()); continue; }
       const dataUrl = await fileToDataURL(f);
       items.push({ name: f.name, type: f.type, size: f.size, data: dataUrl });
+      nextTotal += f.size;
     }
     await fetch(`/api/bids/${bidId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ attachments: items }) });
     toast.success(t('saved'));
