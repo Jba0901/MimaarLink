@@ -31,7 +31,7 @@ It also creates a private Supabase Storage bucket named `mimaarlink-files` for u
 
 ## Upload Limit
 
-Each uploaded file is limited to 1 MB during beta.
+Each uploaded file is limited to 1 MB.
 
 ## Simple Mental Model
 
