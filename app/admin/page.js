@@ -28,6 +28,8 @@ function AdminInner() {
   const [authed, setAuthed] = useState(false);
   const [pwd, setPwd] = useState('');
   const [busy, setBusy] = useState(false);
+  const [loadingData, setLoadingData] = useState(false);
+  const [loadError, setLoadError] = useState('');
   const [projects, setProjects] = useState([]);
   const [contractors, setContractors] = useState([]);
 
@@ -37,8 +39,36 @@ function AdminInner() {
 
   useEffect(() => {
     if (!authed) return;
-    fetch('/api/projects').then(r => r.json()).then(setProjects);
-    fetch('/api/contractors').then(r => r.json()).then(setContractors);
+    const loadAdminData = async () => {
+      setLoadingData(true);
+      setLoadError('');
+      try {
+        const [projectsRes, contractorsRes] = await Promise.all([
+          fetch('/api/projects'),
+          fetch('/api/contractors'),
+        ]);
+        const [projectsJson, contractorsJson] = await Promise.all([
+          projectsRes.json().catch(() => null),
+          contractorsRes.json().catch(() => null),
+        ]);
+
+        if (!projectsRes.ok) throw new Error(projectsJson?.error || 'Could not load projects');
+        if (!contractorsRes.ok) throw new Error(contractorsJson?.error || 'Could not load contractors');
+        if (!Array.isArray(projectsJson)) throw new Error(projectsJson?.error || 'Projects API returned invalid data');
+        if (!Array.isArray(contractorsJson)) throw new Error(contractorsJson?.error || 'Contractors API returned invalid data');
+
+        setProjects(projectsJson);
+        setContractors(contractorsJson);
+      } catch (e) {
+        setProjects([]);
+        setContractors([]);
+        setLoadError(e.message || 'Admin data could not be loaded');
+      } finally {
+        setLoadingData(false);
+      }
+    };
+
+    loadAdminData();
   }, [authed]);
 
   const login = async () => {
@@ -79,6 +109,42 @@ function AdminInner() {
   return (
     <AppShell>
       <h1 className="text-2xl font-bold text-navy mb-4">{t('adminTitle')}</h1>
+      {loadError && (
+        <Card className="mb-4 border-red-200 bg-red-50">
+          <CardContent className="p-4">
+            <div className="text-sm font-semibold text-red-700">Admin data could not load</div>
+            <p className="mt-1 text-xs leading-relaxed text-red-700/80">{loadError}</p>
+            <div className="mt-3 flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => window.location.reload()}
+                className="h-9"
+              >
+                Try again
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  localStorage.removeItem('mlAdmin');
+                  setAuthed(false);
+                  setLoadError('');
+                }}
+                className="h-9"
+              >
+                Log out
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+      {loadingData && (
+        <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          Loading admin data...
+        </div>
+      )}
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="grid w-full grid-cols-2 mb-4">
           <TabsTrigger value="projects">{t('projects')} ({projects.length})</TabsTrigger>

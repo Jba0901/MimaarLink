@@ -8,6 +8,9 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 
 let cachedClient = null;
 async function getDb() {
+  if (!MONGO_URL) {
+    throw new Error('MONGO_URL is not configured. Add a production database before using admin data and submissions.');
+  }
   if (!cachedClient) {
     cachedClient = new MongoClient(MONGO_URL);
     await cachedClient.connect();
