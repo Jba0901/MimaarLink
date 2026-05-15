@@ -40,7 +40,7 @@ export default function ContractorPage() {
     const list = Array.from(e.target.files || []).slice(0, 3);
     const items = [];
     for (const f of list) {
-      if (f.size > 10 * 1024 * 1024) { toast.error(`${f.name} > 10MB`); continue; }
+      if (f.size > 1 * 1024 * 1024) { toast.error(`${f.name} > 1MB`); continue; }
       const dataUrl = await fileToDataURL(f);
       items.push({ name: f.name, type: f.type, size: f.size, data: dataUrl, label });
     }
@@ -154,6 +154,7 @@ export default function ContractorPage() {
               <Label className="text-sm">
                 {it.label}{it.required && <span className="text-red-600 ms-1">*</span>}
               </Label>
+              <div className="text-[11px] text-muted-foreground mt-1">{t('uploadHint')}</div>
               <label className={`mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${showError ? 'border-red-400' : 'border-border hover:border-navy/40'}`}>
                 <Upload className="w-4 h-4 text-navy" />
                 <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>

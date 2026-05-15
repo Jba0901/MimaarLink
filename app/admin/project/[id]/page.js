@@ -142,7 +142,7 @@ export default function AdminProjectPage() {
     if (files.length === 0) return;
     const items = [...(currentAttachments || [])];
     for (const f of files) {
-      if (f.size > 10 * 1024 * 1024) { toast.error(`${f.name} > 10MB`); continue; }
+      if (f.size > 1 * 1024 * 1024) { toast.error(`${f.name} > 1MB`); continue; }
       const dataUrl = await fileToDataURL(f);
       items.push({ name: f.name, type: f.type, size: f.size, data: dataUrl });
     }

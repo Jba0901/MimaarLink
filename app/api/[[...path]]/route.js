@@ -166,7 +166,7 @@ async function ensureStorageBucket(db) {
         $1,
         $1,
         false,
-        10485760,
+        1048576,
         array['image/jpeg','image/png','image/webp','application/pdf']::text[]
       )
       on conflict (id) do update set
@@ -362,8 +362,8 @@ async function uploadFiles(files, folder) {
       continue;
     }
 
-    if (parsed.buffer.length > 10 * 1024 * 1024) {
-      throw new Error(`${file.name || 'File'} is larger than the 10MB upload limit.`);
+    if (parsed.buffer.length > 1 * 1024 * 1024) {
+      throw new Error(`${file.name || 'File'} is larger than the 1MB upload limit.`);
     }
 
     const safeName = cleanFileName(file.name);
