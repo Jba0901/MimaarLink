@@ -45,7 +45,10 @@ function AdminInner() {
     setBusy(true);
     try {
       const res = await fetch('/api/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: pwd }) });
-      if (!res.ok) throw new Error('Invalid password');
+      if (!res.ok) {
+        const json = await res.json().catch(() => null);
+        throw new Error(json?.error || 'Admin login failed');
+      }
       localStorage.setItem('mlAdmin', '1');
       setAuthed(true);
     } catch (e) { toast.error(e.message); } finally { setBusy(false); }

@@ -141,7 +141,6 @@ export async function GET(request, { params }) {
 
 export async function POST(request, { params }) {
   try {
-    const db = await getDb();
     const path = (params?.path || []).join('/');
     const body = await readJson(request);
     const now = new Date().toISOString();
@@ -150,6 +149,8 @@ export async function POST(request, { params }) {
       if (body.password === ADMIN_PASSWORD) return ok({ ok: true, token: 'admin-' + Date.now() });
       return err('Invalid password', 401);
     }
+
+    const db = await getDb();
 
     if (path === 'projects') {
       const requester = {
