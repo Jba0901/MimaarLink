@@ -7,7 +7,7 @@ import { Globe, Home, Hammer, FilePlus } from 'lucide-react';
 function Logo({ height = 40 }) {
   return (
     <img
-      src="/logo.png"
+      src="/logo.png?v=chain"
       alt="MimaarLink"
       height={height}
       style={{ height: height, width: 'auto', objectFit: 'contain' }}
