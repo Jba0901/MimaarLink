@@ -21,11 +21,20 @@ export default function ContractorPage() {
   const [triedSubmit, setTriedSubmit] = useState(false);
   const [data, setData] = useState({
     companyName: '', crNumber: '', contactPerson: '', whatsapp: '+974 ', email: '',
-    categories: [], serviceAreas: '', projectSizeRange: '', documents: [],
+    categories: [], otherCategoryDesc: '', serviceAreas: '', projectSizeRange: '', documents: [],
   });
 
   const update = (k, v) => setData(d => ({ ...d, [k]: v }));
-  const toggleCat = (c) => update('categories', data.categories.includes(c) ? data.categories.filter(x => x !== c) : [...data.categories, c]);
+  const toggleCat = (c) => {
+    const isRemoving = data.categories.includes(c);
+    const next = isRemoving ? data.categories.filter(x => x !== c) : [...data.categories, c];
+    setData(d => ({
+      ...d,
+      categories: next,
+      // clear the "other" description if user unchecks "other"
+      otherCategoryDesc: c === 'other' && isRemoving ? '' : d.otherCategoryDesc,
+    }));
+  };
 
   const onFiles = async (e, label) => {
     const list = Array.from(e.target.files || []).slice(0, 3);
@@ -44,7 +53,9 @@ export default function ContractorPage() {
   const hasEstablishment = data.documents.filter(d => d.label === 'establishment').length > 0;
   const phoneDigits = (data.whatsapp || '').replace(/\D/g, '').length;
   const phoneValid = phoneDigits >= 8;
-  const formValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && phoneValid && data.categories.length > 0 && hasCR && hasTrade && hasEstablishment;
+  const hasOther = data.categories.includes('other');
+  const otherDescValid = !hasOther || (data.otherCategoryDesc || '').trim().length >= 3;
+  const formValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && phoneValid && data.categories.length > 0 && otherDescValid && hasCR && hasTrade && hasEstablishment;
 
   const submit = async () => {
     setTriedSubmit(true);
@@ -104,6 +115,23 @@ export default function ContractorPage() {
           </div>
           {triedSubmit && data.categories.length === 0 && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
         </div>
+        {hasOther && (
+          <div>
+            <Label className="text-sm">
+              {t('otherCategoryLabel')} <span className="text-red-600">*</span>
+            </Label>
+            <textarea
+              value={data.otherCategoryDesc}
+              onChange={e => update('otherCategoryDesc', e.target.value)}
+              placeholder={t('otherCategoryPh')}
+              rows={3}
+              maxLength={300}
+              className={`w-full mt-1.5 rounded-md border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-1 ${triedSubmit && !otherDescValid ? 'border-red-400 focus-visible:ring-red-400' : 'border-input focus-visible:ring-ring'}`}
+            />
+            <div className="text-[11px] text-muted-foreground mt-1">{t('otherCategoryHelp')}</div>
+            {triedSubmit && !otherDescValid && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+          </div>
+        )}
         <div>
           <Label className="text-sm">{t('serviceAreas')}</Label>
           <Input value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />

@@ -189,6 +189,7 @@ export async function POST(request, { params }) {
         whatsapp: body.whatsapp || '',
         email: body.email || '',
         categories: Array.isArray(body.categories) ? body.categories : [],
+        otherCategoryDesc: body.otherCategoryDesc || '',
         serviceAreas: body.serviceAreas || '',
         projectSizeRange: body.projectSizeRange || '',
         documents: Array.isArray(body.documents) ? body.documents : [],

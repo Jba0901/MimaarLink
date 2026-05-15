@@ -91,6 +91,12 @@ export default function AdminContractorPage() {
               <span key={cat} className="text-[10px] bg-secondary text-navy px-1.5 py-0.5 rounded">{t(`cat_${cat}`)}</span>
             ))}
           </div>
+          {c.categories?.includes('other') && c.otherCategoryDesc && (
+            <div className="pt-2 mt-1 border-t border-border">
+              <div className="text-[10px] uppercase tracking-wide font-semibold text-muted-foreground">{t('otherCategoryLabel')}</div>
+              <div className="text-[12px] text-navy mt-0.5 whitespace-pre-wrap leading-relaxed">{c.otherCategoryDesc}</div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
