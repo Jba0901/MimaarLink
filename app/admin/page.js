@@ -15,7 +15,7 @@ import { ChevronRight, Lock, Loader2, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
 const statusColor = (s) => {
-  if (['verified','active','approved','meeting_arranged','closed','bids_received'].includes(s)) return '#0EB59E';
+  if (['verified','approved','meeting_arranged','closed','bids_received'].includes(s)) return '#0EB59E';
   if (['suspended'].includes(s)) return '#dc2626';
   return '#0D1B2A';
 };

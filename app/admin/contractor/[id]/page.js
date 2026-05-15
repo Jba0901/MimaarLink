@@ -61,6 +61,12 @@ export default function AdminContractorPage() {
     else toast.error('Failed');
   };
 
+  const tryNavigate = () => {
+    const dirty = !!(statusDraft && c && statusDraft !== c.verificationStatus);
+    if (dirty) setConfirmLeave(true);
+    else router.push('/admin?tab=contractors');
+  };
+
   const Back = dir === 'rtl' ? ArrowRight : ArrowLeft;
 
   return (
