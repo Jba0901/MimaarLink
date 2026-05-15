@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import pg from 'pg';
 import { v4 as uuidv4 } from 'uuid';
-import { MAX_FILE_SIZE_BYTES, MAX_TOTAL_UPLOAD_SIZE_BYTES, fileTooLargeMessage, totalUploadTooLargeMessage } from '@/lib/uploadLimits';
+import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -350,7 +350,6 @@ function storageBaseUrl() {
 async function uploadFiles(files, folder) {
   if (!Array.isArray(files) || files.length === 0) return [];
   const uploaded = [];
-  let totalUploadBytes = 0;
 
   for (const file of files) {
     if (!file?.data || !String(file.data).startsWith('data:')) {
@@ -366,10 +365,6 @@ async function uploadFiles(files, folder) {
 
     if (parsed.buffer.length > MAX_FILE_SIZE_BYTES) {
       throw new Error(fileTooLargeMessage(file.name || 'File'));
-    }
-    totalUploadBytes += parsed.buffer.length;
-    if (totalUploadBytes > MAX_TOTAL_UPLOAD_SIZE_BYTES) {
-      throw new Error(totalUploadTooLargeMessage());
     }
 
     const safeName = cleanFileName(file.name);

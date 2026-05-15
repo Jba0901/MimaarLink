@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle2, Upload, X, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { MAX_FILE_SIZE_BYTES, MAX_TOTAL_UPLOAD_SIZE_BYTES, fileTooLargeMessage, totalUploadTooLargeMessage, uploadTotalSize } from '@/lib/uploadLimits';
+import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 
 async function fileToDataURL(file) {
   return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(file); });
@@ -17,9 +17,12 @@ async function fileToDataURL(file) {
 
 export default function ContractorPage() {
   const { t } = useLang();
+  const [step, setStep] = useState(1);
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [triedSubmit, setTriedSubmit] = useState(false);
+  const [triedBasics, setTriedBasics] = useState(false);
+  const [triedServices, setTriedServices] = useState(false);
+  const [triedDocuments, setTriedDocuments] = useState(false);
   const [data, setData] = useState({
     companyName: '', crNumber: '', contactPerson: '', whatsapp: '+974 ', email: '',
     categories: [], otherCategoryDesc: '', serviceAreas: '', projectSizeRange: '', documents: [],
@@ -40,13 +43,10 @@ export default function ContractorPage() {
   const onFiles = async (e, label) => {
     const list = Array.from(e.target.files || []).slice(0, 3);
     const items = [];
-    let nextTotal = uploadTotalSize(data.documents);
     for (const f of list) {
       if (f.size > MAX_FILE_SIZE_BYTES) { toast.error(fileTooLargeMessage(f.name)); continue; }
-      if (nextTotal + f.size > MAX_TOTAL_UPLOAD_SIZE_BYTES) { toast.error(totalUploadTooLargeMessage()); continue; }
       const dataUrl = await fileToDataURL(f);
       items.push({ name: f.name, type: f.type, size: f.size, data: dataUrl, label });
-      nextTotal += f.size;
     }
     setData(d => ({ ...d, documents: [...d.documents, ...items] }));
     e.target.value = '';
@@ -55,15 +55,30 @@ export default function ContractorPage() {
   const hasCR = data.documents.filter(d => d.label === 'cr').length > 0;
   const hasTrade = data.documents.filter(d => d.label === 'trade').length > 0;
   const hasEstablishment = data.documents.filter(d => d.label === 'establishment').length > 0;
-  const phoneDigits = (data.whatsapp || '').replace(/\D/g, '').length;
+  const phoneDigits = (data.whatsapp || '').replace(/^\+974\s*/, '').replace(/\D/g, '').length;
   const phoneValid = phoneDigits >= 8;
   const hasOther = data.categories.includes('other');
   const otherDescValid = !hasOther || (data.otherCategoryDesc || '').trim().length >= 3;
-  const formValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && phoneValid && data.categories.length > 0 && otherDescValid && hasCR && hasTrade && hasEstablishment;
+  const basicsValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && phoneValid;
+  const servicesValid = data.categories.length > 0 && otherDescValid;
+  const documentsValid = hasCR && hasTrade && hasEstablishment;
+  const formValid = basicsValid && servicesValid && documentsValid;
+
+  const goNextFromBasics = () => {
+    setTriedBasics(true);
+    if (basicsValid) setStep(2);
+  };
+
+  const goNextFromServices = () => {
+    setTriedServices(true);
+    if (servicesValid) setStep(3);
+  };
 
   const submit = async () => {
-    setTriedSubmit(true);
+    setTriedDocuments(true);
     if (!formValid) {
+      if (!basicsValid) { setTriedBasics(true); setStep(1); return; }
+      if (!servicesValid) { setTriedServices(true); setStep(2); return; }
       if (!hasCR) toast.error(t('uploadCR') + ' — ' + t('requireField'));
       else if (!hasTrade) toast.error(t('uploadTrade') + ' — ' + t('requireField'));
       else if (!hasEstablishment) toast.error(t('uploadEstablishment') + ' — ' + t('requireField'));
@@ -76,6 +91,25 @@ export default function ContractorPage() {
       setDone(true);
     } catch (e) { toast.error(e.message); } finally { setSubmitting(false); }
   };
+
+  const Stepper = () => (
+    <div className="flex items-center gap-1.5 mb-5">
+      {[1, 2, 3].map(n => (
+        <div
+          key={n}
+          className={`h-1.5 flex-1 rounded-full ${n <= step ? '' : 'bg-secondary'}`}
+          style={n <= step ? { background: '#142A44' } : {}}
+        />
+      ))}
+    </div>
+  );
+
+  const documentFields = [
+    { key: 'cr', label: t('uploadCR'), required: true },
+    { key: 'trade', label: t('uploadTrade'), required: true },
+    { key: 'establishment', label: t('uploadEstablishment'), required: true },
+    { key: 'profile', label: t('uploadCompanyProfile'), required: false },
+  ];
 
   if (done) return (
     <AppShell>
@@ -95,93 +129,107 @@ export default function ContractorPage() {
     <AppShell>
       <h1 className="text-2xl font-bold text-navy mb-1">{t('contractorTitle')}</h1>
       <p className="text-sm text-muted-foreground mb-5">{t('contractorSubtitle')}</p>
+      <Stepper />
 
-      <div className="space-y-3.5">
-        <RequiredField label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedSubmit} t={t} />
-        <RequiredField label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedSubmit} t={t} />
-        <RequiredField label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedSubmit} t={t} />
-        <RequiredField label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedSubmit} t={t} placeholder="+974 ..." kind="phone" />
-        <div>
-          <Label className="text-sm">{t('email')}</Label>
-          <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
-        </div>
-        <div>
-          <Label className="text-sm mb-2 block">
-            {t('serviceCategoriesLabel')} <span className="text-red-600">*</span>
-          </Label>
-          <div className={`grid grid-cols-2 gap-1.5 ${triedSubmit && data.categories.length === 0 ? 'p-1.5 rounded-lg ring-1 ring-red-300' : ''}`}>
-            {CATEGORIES.map(c => (
-              <button key={c} type="button" onClick={() => toggleCat(c)}
-                className={`text-start text-xs rounded-lg border-2 px-3 py-2 ${data.categories.includes(c) ? 'border-navy bg-secondary' : 'border-border'}`}>
-                {t(`cat_${c}`)}
-              </button>
-            ))}
-          </div>
-          {triedSubmit && data.categories.length === 0 && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
-        </div>
-        {hasOther && (
+      {step === 1 && (
+        <div className="space-y-3.5">
+          <RequiredField label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedBasics} t={t} />
+          <RequiredField label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedBasics} t={t} />
+          <RequiredField label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedBasics} t={t} />
+          <RequiredField label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
           <div>
-            <Label className="text-sm">
-              {t('otherCategoryLabel')} <span className="text-red-600">*</span>
-            </Label>
-            <textarea
-              value={data.otherCategoryDesc}
-              onChange={e => update('otherCategoryDesc', e.target.value)}
-              placeholder={t('otherCategoryPh')}
-              rows={3}
-              maxLength={300}
-              className={`w-full mt-1.5 rounded-md border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-1 ${triedSubmit && !otherDescValid ? 'border-red-400 focus-visible:ring-red-400' : 'border-input focus-visible:ring-ring'}`}
-            />
-            <div className="text-[11px] text-muted-foreground mt-1">{t('otherCategoryHelp')}</div>
-            {triedSubmit && !otherDescValid && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+            <Label className="text-sm">{t('email')}</Label>
+            <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
           </div>
-        )}
-        <div>
-          <Label className="text-sm">{t('serviceAreas')}</Label>
-          <Input value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
+          <Button onClick={goNextFromBasics} className="w-full h-11 mt-2" style={{ background: '#142A44' }}>{t('next')}</Button>
         </div>
-        <div>
-          <Label className="text-sm">{t('projectSize')}</Label>
-          <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
-        </div>
+      )}
 
-        {[
-          { key: 'cr', label: t('uploadCR'), required: true },
-          { key: 'trade', label: t('uploadTrade'), required: true },
-          { key: 'establishment', label: t('uploadEstablishment'), required: true },
-          { key: 'profile', label: t('uploadCompanyProfile'), required: false },
-        ].map(it => {
-          const filesForLabel = data.documents.filter(d => d.label === it.key);
-          const showError = it.required && triedSubmit && filesForLabel.length === 0;
-          return (
-            <div key={it.key}>
-              <Label className="text-sm">
-                {it.label}{it.required && <span className="text-red-600 ms-1">*</span>}
-              </Label>
-              <div className="text-[11px] text-muted-foreground mt-1">{t('uploadHint')}</div>
-              <label className={`mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${showError ? 'border-red-400' : 'border-border hover:border-navy/40'}`}>
-                <Upload className="w-4 h-4 text-navy" />
-                <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
-                <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />
-              </label>
-              {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
-              <div className="mt-1 space-y-1">
-                {filesForLabel.map((f, i) => (
-                  <div key={i} className="flex items-center justify-between text-xs bg-secondary rounded-lg px-3 py-1.5">
-                    <span className="truncate">{f.name}</span>
-                    <button onClick={() => update('documents', data.documents.filter(x => x !== f))} className="text-muted-foreground"><X className="w-3.5 h-3.5" /></button>
-                  </div>
-                ))}
-              </div>
+      {step === 2 && (
+        <div className="space-y-3.5">
+          <div>
+            <Label className="text-sm mb-2 block">
+              {t('serviceCategoriesLabel')} <span className="text-red-600">*</span>
+            </Label>
+            <div className={`grid grid-cols-2 gap-1.5 ${triedServices && data.categories.length === 0 ? 'p-1.5 rounded-lg ring-1 ring-red-300' : ''}`}>
+              {CATEGORIES.map(c => (
+                <button key={c} type="button" onClick={() => toggleCat(c)}
+                  className={`text-start text-xs rounded-lg border-2 px-3 py-2 ${data.categories.includes(c) ? 'border-navy bg-secondary' : 'border-border'}`}>
+                  {t(`cat_${c}`)}
+                </button>
+              ))}
             </div>
-          );
-        })}
+            {triedServices && data.categories.length === 0 && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+          </div>
+          {hasOther && (
+            <div>
+              <Label className="text-sm">
+                {t('otherCategoryLabel')} <span className="text-red-600">*</span>
+              </Label>
+              <textarea
+                value={data.otherCategoryDesc}
+                onChange={e => update('otherCategoryDesc', e.target.value)}
+                placeholder={t('otherCategoryPh')}
+                rows={3}
+                maxLength={300}
+                className={`w-full mt-1.5 rounded-md border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-1 ${triedServices && !otherDescValid ? 'border-red-400 focus-visible:ring-red-400' : 'border-input focus-visible:ring-ring'}`}
+              />
+              <div className="text-[11px] text-muted-foreground mt-1">{t('otherCategoryHelp')}</div>
+              {triedServices && !otherDescValid && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+            </div>
+          )}
+          <div>
+            <Label className="text-sm">{t('serviceAreas')}</Label>
+            <Input value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
+          </div>
+          <div>
+            <Label className="text-sm">{t('projectSize')}</Label>
+            <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
+          </div>
+          <div className="flex gap-2 pt-1">
+            <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11">{t('back')}</Button>
+            <Button onClick={goNextFromServices} className="flex-1 h-11" style={{ background: '#142A44' }}>{t('next')}</Button>
+          </div>
+        </div>
+      )}
 
-        <Button onClick={submit} disabled={submitting}
-          className="w-full h-12 text-base mt-2" style={{ background: '#142A44' }}>
-          {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-2" />{t('submitting')}</> : t('submit')}
-        </Button>
-      </div>
+      {step === 3 && (
+        <div className="space-y-3.5">
+          {documentFields.map(it => {
+            const filesForLabel = data.documents.filter(d => d.label === it.key);
+            const showError = it.required && triedDocuments && filesForLabel.length === 0;
+            return (
+              <div key={it.key}>
+                <Label className="text-sm">
+                  {it.label}{it.required && <span className="text-red-600 ms-1">*</span>}
+                </Label>
+                <div className="text-[11px] text-muted-foreground mt-1">{t('uploadHint')}</div>
+                <label className={`mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${showError ? 'border-red-400' : 'border-border hover:border-navy/40'}`}>
+                  <Upload className="w-4 h-4 text-navy" />
+                  <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
+                  <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />
+                </label>
+                {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+                <div className="mt-1 space-y-1">
+                  {filesForLabel.map((f, i) => (
+                    <div key={i} className="flex items-center justify-between text-xs bg-secondary rounded-lg px-3 py-1.5">
+                      <span className="truncate">{f.name}</span>
+                      <button onClick={() => update('documents', data.documents.filter(x => x !== f))} className="text-muted-foreground"><X className="w-3.5 h-3.5" /></button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+
+          <div className="flex gap-2 pt-1">
+            <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11">{t('back')}</Button>
+            <Button onClick={submit} disabled={submitting} className="flex-1 h-11" style={{ background: '#142A44' }}>
+              {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-2" />{t('submitting')}</> : t('submit')}
+            </Button>
+          </div>
+        </div>
+      )}
     </AppShell>
   );
 }
@@ -197,7 +245,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
       const cleaned = raw.replace(/[^\d\s-]/g, '');
       onChange(PREFIX + ' ' + cleaned);
     };
-    const digitCount = (value || '').replace(/\D/g, '').length;
+    const digitCount = localPart.replace(/\D/g, '').length;
     const empty = !localPart.trim();
     const tooShort = !empty && digitCount < 8;
     const showError = tried && (empty || tooShort);
