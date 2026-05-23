@@ -43,7 +43,6 @@ export default function BidsPage() {
         {sortedBids.map((b) => {
           const c = d.contractors[b.contractorId] || {};
           const isLowest = b.price === lowest;
-          const statusColor = c.verificationStatus === 'verified' ? '#0FAE96' : c.verificationStatus === 'cr_checked' ? '#FFB638' : '#0D1B2A';
           return (
             <Card key={b.id} className={`border-2 ${isLowest ? '' : 'border-border'}`} style={isLowest ? { borderColor: '#0FAE96' } : {}}>
               <CardContent className="p-4">
@@ -53,14 +52,7 @@ export default function BidsPage() {
                       <span className="font-semibold text-navy text-base">{c.companyName || 'Contractor'}</span>
                       {c.verificationStatus === 'verified' && <ShieldCheck className="w-4 h-4" style={{ color: '#0FAE96' }} />}
                     </div>
-                    <div className="mt-1 flex flex-wrap items-center gap-1.5">
-                      {c.verificationStatus && (
-                        <Badge style={{ background: statusColor }} className="text-white text-[10px]">
-                          {t(`cstatus_${c.verificationStatus}`)}
-                        </Badge>
-                      )}
-                      {c.serviceAreas && <span className="text-xs text-muted-foreground">{c.serviceAreas}</span>}
-                    </div>
+                    {c.serviceAreas && <div className="text-xs text-muted-foreground mt-0.5">{c.serviceAreas}</div>}
                   </div>
                   {isLowest && <Badge style={{ background: '#0FAE96' }} className="text-white text-[10px]">Lowest</Badge>}
                 </div>
