@@ -6,7 +6,6 @@ import { useLang } from '@/lib/LangContext';
 import { CONTRACTOR_STATUSES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
@@ -20,6 +19,7 @@ export default function AdminContractorPage() {
   const [c, setC] = useState(null);
   const [loading, setLoading] = useState(true);
   const [statusDraft, setStatusDraft] = useState('');
+  const [documentChecksDraft, setDocumentChecksDraft] = useState({});
   const [saving, setSaving] = useState(false);
   const [confirmLeave, setConfirmLeave] = useState(false);
 
@@ -30,26 +30,34 @@ export default function AdminContractorPage() {
   const load = () => fetch(`/api/contractors/${id}`).then(r => r.json()).then(j => {
     setC(j); setLoading(false);
     if (j?.verificationStatus) setStatusDraft(j.verificationStatus);
+    if (j?.documentChecks) setDocumentChecksDraft(normalizeDocumentChecks(j.documentChecks));
   });
   useEffect(() => { load(); }, [id]);
 
   // Warn before closing tab when there are unsaved changes
   useEffect(() => {
-    const dirty = !!(statusDraft && c && statusDraft !== c.verificationStatus);
+    const dirty = isDirty();
     if (!dirty) return;
     const handler = (e) => { e.preventDefault(); e.returnValue = ''; };
     window.addEventListener('beforeunload', handler);
     return () => window.removeEventListener('beforeunload', handler);
-  }, [statusDraft, c]);
+  }, [statusDraft, documentChecksDraft, c]);
 
   if (loading) return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
   if (!c || c.error) return <AppShell><p>Not found</p></AppShell>;
 
   const saveAll = async () => {
-    if (!statusDraft || statusDraft === c.verificationStatus) { toast.message(t('saved')); router.push('/admin?tab=contractors'); return; }
+    if (!isDirty()) { toast.message(t('saved')); router.push('/admin?tab=contractors'); return; }
     setSaving(true);
     try {
-      await fetch(`/api/contractors/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ verificationStatus: statusDraft }) });
+      await fetch(`/api/contractors/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          verificationStatus: statusDraft || c.verificationStatus,
+          documentChecks: normalizeDocumentChecks(documentChecksDraft),
+        }),
+      });
       toast.success(t('saved'));
       router.push('/admin?tab=contractors');
     } catch { toast.error('Failed'); }
@@ -63,8 +71,7 @@ export default function AdminContractorPage() {
   };
 
   const tryNavigate = () => {
-    const dirty = !!(statusDraft && c && statusDraft !== c.verificationStatus);
-    if (dirty) setConfirmLeave(true);
+    if (isDirty()) setConfirmLeave(true);
     else router.push('/admin?tab=contractors');
   };
 
@@ -79,12 +86,31 @@ export default function AdminContractorPage() {
   };
 
   const Back = dir === 'rtl' ? ArrowRight : ArrowLeft;
-  const hasDocument = (label) => (c.documents || []).some((file) => file.label === label);
   const documentChecklist = [
     { key: 'cr', label: t('uploadCR'), required: true },
     { key: 'trade', label: t('uploadTrade'), required: false },
     { key: 'establishment', label: t('uploadEstablishment'), required: false },
   ];
+
+  function normalizeDocumentChecks(checks = {}) {
+    return {
+      cr: Boolean(checks.cr),
+      trade: Boolean(checks.trade),
+      establishment: Boolean(checks.establishment),
+    };
+  }
+
+  function isDirty() {
+    if (!c) return false;
+    const statusChanged = Boolean(statusDraft && statusDraft !== c.verificationStatus);
+    const currentChecks = JSON.stringify(normalizeDocumentChecks(c.documentChecks));
+    const draftChecks = JSON.stringify(normalizeDocumentChecks(documentChecksDraft));
+    return statusChanged || currentChecks !== draftChecks;
+  }
+
+  const setDocumentPresent = (key, present) => {
+    setDocumentChecksDraft((checks) => ({ ...normalizeDocumentChecks(checks), [key]: present }));
+  };
 
   return (
     <AppShell>
@@ -149,13 +175,28 @@ export default function AdminContractorPage() {
           <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documentChecklist')}</div>
           <div className="space-y-1.5">
             {documentChecklist.map((doc) => {
-              const present = hasDocument(doc.key);
+              const present = Boolean(documentChecksDraft[doc.key]);
               return (
                 <div key={doc.key} className="flex items-center justify-between gap-2 rounded-lg bg-secondary px-3 py-2 text-xs">
                   <span className="font-medium text-navy">{doc.label}</span>
-                  <Badge style={{ background: present ? '#0EB59E' : '#FFB638' }} className="text-white text-[10px]">
-                    {present ? t('present') : t('missing')}
-                  </Badge>
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={() => setDocumentPresent(doc.key, true)}
+                      className={`rounded-full px-2.5 py-1 text-[10px] font-semibold transition ${present ? 'text-white' : 'bg-white text-muted-foreground hover:text-navy'}`}
+                      style={present ? { background: '#0EB59E' } : {}}
+                    >
+                      {t('present')}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDocumentPresent(doc.key, false)}
+                      className={`rounded-full px-2.5 py-1 text-[10px] font-semibold transition ${!present ? 'text-white' : 'bg-white text-muted-foreground hover:text-navy'}`}
+                      style={!present ? { background: '#FFB638' } : {}}
+                    >
+                      {t('missing')}
+                    </button>
+                  </div>
                 </div>
               );
             })}

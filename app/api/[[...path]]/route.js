@@ -113,6 +113,7 @@ async function ensureSchema(db) {
       service_areas text not null default '',
       project_size_range text not null default '',
       documents jsonb not null default '[]'::jsonb,
+      document_checks jsonb not null default '{}'::jsonb,
       verification_status text not null default 'applied',
       created_at timestamptz not null default now(),
       updated_at timestamptz not null default now()
@@ -153,6 +154,11 @@ async function ensureSchema(db) {
     create index if not exists bids_project_id_idx on bids(project_id);
     create index if not exists bid_invites_project_id_idx on bid_invites(project_id);
     create index if not exists admin_notes_project_id_idx on admin_notes(project_id);
+  `);
+
+  await db.query(`
+    alter table contractors
+    add column if not exists document_checks jsonb not null default '{}'::jsonb;
   `);
 
   await ensureStorageBucket(db);
@@ -224,6 +230,32 @@ function storedArray(value) {
   return [];
 }
 
+function storedObject(value) {
+  if (value && typeof value === 'object' && !Array.isArray(value)) return value;
+  return {};
+}
+
+function defaultDocumentChecks(documents = []) {
+  const labels = new Set(storedArray(documents).map((file) => file?.label).filter(Boolean));
+  return {
+    cr: labels.has('cr'),
+    trade: labels.has('trade'),
+    establishment: labels.has('establishment'),
+  };
+}
+
+function normalizeDocumentChecks(checks, documents = []) {
+  const fallback = defaultDocumentChecks(documents);
+  const stored = storedObject(checks);
+  const hasStored = Object.keys(stored).length > 0;
+  const source = hasStored ? stored : fallback;
+  return {
+    cr: Boolean(source.cr),
+    trade: Boolean(source.trade),
+    establishment: Boolean(source.establishment),
+  };
+}
+
 function fileForClient(file) {
   if (!file || typeof file !== 'object') return file;
   if (file.url && !file.data) return { ...file, data: file.url };
@@ -275,6 +307,7 @@ function contractorFromRow(row) {
     serviceAreas: row.service_areas,
     projectSizeRange: row.project_size_range,
     documents: storedArray(row.documents).map(fileForClient),
+    documentChecks: normalizeDocumentChecks(row.document_checks, row.documents),
     verificationStatus: row.verification_status,
     createdAt: dbDate(row.created_at),
     updatedAt: dbDate(row.updated_at),
@@ -294,7 +327,7 @@ function contractorStatusFromRow(row) {
     verificationStatus: contractor.verificationStatus,
     createdAt: contractor.createdAt,
     updatedAt: contractor.updatedAt,
-    documentLabels: contractor.documents.map((file) => file.label).filter(Boolean),
+    documentChecks: contractor.documentChecks,
   };
 }
 
@@ -676,6 +709,7 @@ export async function POST(request, { params }) {
     if (path === 'contractors') {
       const contractorId = uuidv4();
       const documents = await uploadFiles(body.documents, `contractors/${contractorId}`);
+      const documentChecks = defaultDocumentChecks(documents);
       const contractor = {
         id: contractorId,
         companyName: body.companyName || '',
@@ -688,6 +722,7 @@ export async function POST(request, { params }) {
         serviceAreas: body.serviceAreas || '',
         projectSizeRange: body.projectSizeRange || '',
         documents,
+        documentChecks,
         verificationStatus: 'applied',
         createdAt: now,
         updatedAt: now,
@@ -698,9 +733,9 @@ export async function POST(request, { params }) {
         insert into contractors (
           id, company_name, cr_number, contact_person, whatsapp, email, categories,
           other_category_desc, service_areas, project_size_range, documents,
-          verification_status, created_at, updated_at
+          document_checks, verification_status, created_at, updated_at
         )
-        values ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, $9, $10, $11::jsonb, $12, $13, $14)
+        values ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, $9, $10, $11::jsonb, $12::jsonb, $13, $14, $15)
         `,
         [
           contractor.id,
@@ -714,6 +749,7 @@ export async function POST(request, { params }) {
           contractor.serviceAreas,
           contractor.projectSizeRange,
           JSON.stringify(contractor.documents),
+          JSON.stringify(contractor.documentChecks),
           contractor.verificationStatus,
           now,
           now,
@@ -836,8 +872,23 @@ export async function PATCH(request, { params }) {
 
     if (path.startsWith('contractors/')) {
       const id = parts[1];
+      const fields = [];
+      const values = [];
+      const addField = (column, value, cast = '') => {
+        values.push(value);
+        fields.push(`${column} = $${values.length}${cast}`);
+      };
       if (body.verificationStatus) {
-        await db.query('update contractors set verification_status = $1, updated_at = $2 where id = $3', [body.verificationStatus, now, id]);
+        addField('verification_status', body.verificationStatus);
+      }
+      if (body.documentChecks) {
+        addField('document_checks', JSON.stringify(normalizeDocumentChecks(body.documentChecks)), '::jsonb');
+      }
+      if (fields.length > 0) {
+        values.push(now);
+        fields.push(`updated_at = $${values.length}`);
+        values.push(id);
+        await db.query(`update contractors set ${fields.join(', ')} where id = $${values.length}`, values);
       }
       const { rows } = await db.query('select * from contractors where id = $1', [id]);
       return ok(contractorFromRow(rows[0]));

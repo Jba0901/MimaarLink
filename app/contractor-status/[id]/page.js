@@ -16,13 +16,6 @@ const statusColor = (status) => {
   return '#0D1B2A';
 };
 
-const documentLabelKey = {
-  cr: 'uploadCR',
-  trade: 'uploadTrade',
-  establishment: 'uploadEstablishment',
-  profile: 'uploadCompanyProfile',
-};
-
 export default function ContractorStatusPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -51,7 +44,12 @@ export default function ContractorStatusPage() {
   const status = contractor.verificationStatus || 'applied';
   const statusOrder = CONTRACTOR_STATUSES.filter((s) => s !== 'suspended');
   const statusIndex = status === 'suspended' ? statusOrder.length - 1 : statusOrder.indexOf(status);
-  const documentLabels = [...new Set(contractor.documentLabels || [])];
+  const documentChecklist = [
+    { key: 'cr', label: t('uploadCR') },
+    { key: 'trade', label: t('uploadTrade') },
+    { key: 'establishment', label: t('uploadEstablishment') },
+  ];
+  const documentChecks = contractor.documentChecks || {};
 
   return (
     <AppShell>
@@ -109,19 +107,23 @@ export default function ContractorStatusPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('receivedDocuments')}</div>
-          {documentLabels.length === 0 ? (
-            <p className="text-sm text-muted-foreground">-</p>
-          ) : (
-            <div className="space-y-1.5">
-              {documentLabels.map((label) => (
-                <div key={label} className="flex items-center gap-2 text-sm text-navy bg-secondary rounded-lg px-3 py-2">
-                  <FileText className="w-4 h-4 text-muted-foreground" />
-                  <span>{t(documentLabelKey[label] || 'files')}</span>
+          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documentChecklist')}</div>
+          <div className="space-y-1.5">
+            {documentChecklist.map((doc) => {
+              const present = Boolean(documentChecks[doc.key]);
+              return (
+                <div key={doc.key} className="flex items-center justify-between gap-2 text-sm text-navy bg-secondary rounded-lg px-3 py-2">
+                  <div className="flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-muted-foreground" />
+                    <span>{doc.label}</span>
+                  </div>
+                  <Badge style={{ background: present ? '#0EB59E' : '#FFB638' }} className="text-white text-[10px]">
+                    {present ? t('present') : t('missing')}
+                  </Badge>
                 </div>
-              ))}
-            </div>
-          )}
+              );
+            })}
+          </div>
         </CardContent>
       </Card>
 
