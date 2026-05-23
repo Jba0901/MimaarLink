@@ -281,6 +281,23 @@ function contractorFromRow(row) {
   };
 }
 
+function contractorStatusFromRow(row) {
+  const contractor = contractorFromRow(row);
+  if (!contractor) return null;
+  return {
+    id: contractor.id,
+    companyName: contractor.companyName,
+    categories: contractor.categories,
+    otherCategoryDesc: contractor.otherCategoryDesc,
+    serviceAreas: contractor.serviceAreas,
+    projectSizeRange: contractor.projectSizeRange,
+    verificationStatus: contractor.verificationStatus,
+    createdAt: contractor.createdAt,
+    updatedAt: contractor.updatedAt,
+    documentLabels: contractor.documents.map((file) => file.label).filter(Boolean),
+  };
+}
+
 function bidFromRow(row) {
   if (!row) return null;
   return {
@@ -509,6 +526,14 @@ export async function GET(request, { params }) {
       }
 
       return ok(project);
+    }
+
+    if (path.startsWith('contractor-status/')) {
+      const id = parts[1];
+      const { rows } = await db.query('select * from contractors where id = $1', [id]);
+      const contractor = contractorStatusFromRow(rows[0]);
+      if (!contractor) return err('Not found', 404);
+      return ok(contractor);
     }
 
     if (path === 'contractors') {

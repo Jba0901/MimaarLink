@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, ArrowRight, Loader2, FileText, ShieldCheck, Trash2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader2, FileText, ShieldCheck, Trash2, Copy, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function AdminContractorPage() {
@@ -68,6 +68,16 @@ export default function AdminContractorPage() {
     else router.push('/admin?tab=contractors');
   };
 
+  const contractorPublicUrl = () => {
+    if (typeof window === 'undefined') return `/contractor-status/${id}`;
+    return `${window.location.origin}/contractor-status/${id}`;
+  };
+
+  const copyContractorLink = async () => {
+    await navigator.clipboard.writeText(contractorPublicUrl());
+    toast.success(t('linkCopied'));
+  };
+
   const Back = dir === 'rtl' ? ArrowRight : ArrowLeft;
   const hasDocument = (label) => (c.documents || []).some((file) => file.label === label);
   const documentChecklist = [
@@ -114,6 +124,23 @@ export default function AdminContractorPage() {
             <SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
             <SelectContent>{CONTRACTOR_STATUSES.map(s => <SelectItem key={s} value={s}>{t(`cstatus_${s}`)}</SelectItem>)}</SelectContent>
           </Select>
+        </CardContent>
+      </Card>
+
+      <Card className="mb-3">
+        <CardContent className="p-4">
+          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('contractorStatusLink')}</div>
+          <div className="mt-2 flex items-center gap-1.5">
+            <code className="min-w-0 flex-1 truncate text-[11px] text-navy">/contractor-status/{id}</code>
+            <Button variant="outline" size="sm" className="h-8 px-2 text-[11px]" onClick={copyContractorLink}>
+              <Copy className="w-3.5 h-3.5" />
+              <span className="ms-1">{t('copyLink')}</span>
+            </Button>
+            <Button variant="outline" size="sm" className="h-8 px-2 text-[11px]" onClick={() => window.open(`/contractor-status/${id}`, '_blank', 'noopener,noreferrer')}>
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span className="ms-1">{t('openLink')}</span>
+            </Button>
+          </div>
         </CardContent>
       </Card>
 

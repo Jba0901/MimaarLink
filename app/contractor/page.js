@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle2, Upload, X, Loader2 } from 'lucide-react';
+import { CheckCircle2, Upload, X, Loader2, Copy } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 
@@ -19,6 +19,7 @@ export default function ContractorPage() {
   const { t } = useLang();
   const [step, setStep] = useState(1);
   const [done, setDone] = useState(false);
+  const [createdId, setCreatedId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [triedBasics, setTriedBasics] = useState(false);
   const [triedServices, setTriedServices] = useState(false);
@@ -83,7 +84,9 @@ export default function ContractorPage() {
     setSubmitting(true);
     try {
       const res = await fetch('/api/contractors', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      if (!res.ok) throw new Error('Error');
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Error');
+      setCreatedId(json.id);
       setDone(true);
     } catch (e) { toast.error(e.message); } finally { setSubmitting(false); }
   };
@@ -116,6 +119,20 @@ export default function ContractorPage() {
           </div>
           <h2 className="text-xl font-bold text-navy">{t('contractorDone')}</h2>
           <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{t('contractorDoneDesc')}</p>
+          {createdId && (
+            <>
+              <div className="mt-4 p-3 rounded-lg bg-secondary text-start">
+                <div className="text-[11px] text-muted-foreground mb-1">{t('saveContractorLink')}</div>
+                <div className="flex items-center gap-2">
+                  <code className="text-[11px] flex-1 truncate">/contractor-status/{createdId}</code>
+                  <Button size="sm" variant="outline" onClick={() => { navigator.clipboard.writeText(window.location.origin + '/contractor-status/' + createdId); toast.success(t('linkCopied')); }}>
+                    <Copy className="w-3.5 h-3.5" />
+                  </Button>
+                </div>
+              </div>
+              <Button onClick={() => window.location.href = '/contractor-status/' + createdId} className="w-full mt-4 h-11" style={{ background: '#142A44' }}>{t('viewContractorStatus')}</Button>
+            </>
+          )}
         </CardContent>
       </Card>
     </AppShell>
