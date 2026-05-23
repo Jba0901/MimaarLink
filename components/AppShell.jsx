@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLang } from '@/lib/LangContext';
-import { Globe, Home, Hammer, FilePlus, Mail, Phone } from 'lucide-react';
+import { Globe, Home, Hammer, FilePlus, Instagram, Mail, Phone } from 'lucide-react';
 
 function Logo({ height = 40 }) {
   return (
@@ -120,6 +120,16 @@ function SiteFooter() {
           >
             <Phone className="w-3.5 h-3.5" />
             <span className="font-medium">+974 6625 9219</span>
+          </a>
+          <span className="opacity-40 hidden sm:inline">Â·</span>
+          <a
+            href="https://instagram.com/MimaarLink"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 hover:text-navy transition"
+          >
+            <Instagram className="w-3.5 h-3.5" />
+            <span className="font-medium">@MimaarLink</span>
           </a>
         </div>
         <div className="text-[11px] text-muted-foreground/80">

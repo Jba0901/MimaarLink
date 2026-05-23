@@ -7,7 +7,7 @@ import { CATEGORIES } from '@/lib/i18n';
 import {
   Cpu, GitCompare, MapPin as PinIcon, ArrowRight, ArrowUpRight,
   Wrench, Snowflake, Plug, Droplets, Layers, HardHat, Hammer,
-  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, MapPin, Mail, Phone
+  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, MapPin, Mail, Phone, Instagram
 } from 'lucide-react';
 
 const CAT_ICONS = {
@@ -155,6 +155,22 @@ export default function HomePage() {
                     style={{ unicodeBidi: 'isolate' }}
                   >
                     +974 6625 9219
+                  </div>
+                </div>
+                <ArrowUpRight className="w-4 h-4 text-white/50" />
+              </a>
+              <a href="https://instagram.com/MimaarLink" target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-3 transition">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(14,181,158,0.18)' }}>
+                  <Instagram className="w-4 h-4" style={{ color: '#0EB59E' }} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[11px] text-white/55 uppercase tracking-wide">{t('contactInstagram')}</div>
+                  <div
+                    className={`text-[13.5px] font-semibold text-white truncate ${isRTL ? 'text-right' : 'text-left'}`}
+                    dir="ltr"
+                    style={{ unicodeBidi: 'isolate' }}
+                  >
+                    @MimaarLink
                   </div>
                 </div>
                 <ArrowUpRight className="w-4 h-4 text-white/50" />
