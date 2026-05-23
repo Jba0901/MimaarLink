@@ -215,7 +215,7 @@ export default function AdminProjectPage() {
             <DialogHeader><DialogTitle>{t('assignContractor')}</DialogTitle></DialogHeader>
             <Select value={assignContractor} onValueChange={setAssignContractor}>
               <SelectTrigger><SelectValue placeholder={t('selectContractor')} /></SelectTrigger>
-              <SelectContent>{allContractors.map(c => <SelectItem key={c.id} value={c.id}>{c.companyName} {c.verificationStatus !== 'verified' ? `(${t('notVerified')})` : ''}</SelectItem>)}</SelectContent>
+              <SelectContent>{allContractors.map(c => <SelectItem key={c.id} value={c.id}>{c.companyName} ({t(`cstatus_${c.verificationStatus}`)})</SelectItem>)}</SelectContent>
             </Select>
             <DialogFooter><Button onClick={submitAssign}>{t('save')}</Button></DialogFooter>
           </DialogContent>

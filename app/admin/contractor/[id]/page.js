@@ -6,6 +6,7 @@ import { useLang } from '@/lib/LangContext';
 import { CONTRACTOR_STATUSES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
@@ -68,6 +69,12 @@ export default function AdminContractorPage() {
   };
 
   const Back = dir === 'rtl' ? ArrowRight : ArrowLeft;
+  const hasDocument = (label) => (c.documents || []).some((file) => file.label === label);
+  const documentChecklist = [
+    { key: 'cr', label: t('uploadCR'), required: true },
+    { key: 'trade', label: t('uploadTrade'), required: false },
+    { key: 'establishment', label: t('uploadEstablishment'), required: false },
+  ];
 
   return (
     <AppShell>
@@ -107,6 +114,25 @@ export default function AdminContractorPage() {
             <SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
             <SelectContent>{CONTRACTOR_STATUSES.map(s => <SelectItem key={s} value={s}>{t(`cstatus_${s}`)}</SelectItem>)}</SelectContent>
           </Select>
+        </CardContent>
+      </Card>
+
+      <Card className="mb-3">
+        <CardContent className="p-4">
+          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documentChecklist')}</div>
+          <div className="space-y-1.5">
+            {documentChecklist.map((doc) => {
+              const present = hasDocument(doc.key);
+              return (
+                <div key={doc.key} className="flex items-center justify-between gap-2 rounded-lg bg-secondary px-3 py-2 text-xs">
+                  <span className="font-medium text-navy">{doc.label}</span>
+                  <Badge style={{ background: present ? '#0EB59E' : '#FFB638' }} className="text-white text-[10px]">
+                    {present ? t('present') : t('missing')}
+                  </Badge>
+                </div>
+              );
+            })}
+          </div>
         </CardContent>
       </Card>
 

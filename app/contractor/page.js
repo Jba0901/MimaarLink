@@ -53,15 +53,13 @@ export default function ContractorPage() {
   };
 
   const hasCR = data.documents.filter(d => d.label === 'cr').length > 0;
-  const hasTrade = data.documents.filter(d => d.label === 'trade').length > 0;
-  const hasEstablishment = data.documents.filter(d => d.label === 'establishment').length > 0;
   const phoneDigits = (data.whatsapp || '').replace(/^\+974\s*/, '').replace(/\D/g, '').length;
   const phoneValid = phoneDigits >= 8;
   const hasOther = data.categories.includes('other');
   const otherDescValid = !hasOther || (data.otherCategoryDesc || '').trim().length >= 3;
   const basicsValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && phoneValid;
   const servicesValid = data.categories.length > 0 && otherDescValid;
-  const documentsValid = hasCR && hasTrade && hasEstablishment;
+  const documentsValid = hasCR;
   const formValid = basicsValid && servicesValid && documentsValid;
 
   const goNextFromBasics = () => {
@@ -80,8 +78,6 @@ export default function ContractorPage() {
       if (!basicsValid) { setTriedBasics(true); setStep(1); return; }
       if (!servicesValid) { setTriedServices(true); setStep(2); return; }
       if (!hasCR) toast.error(t('uploadCR') + ' — ' + t('requireField'));
-      else if (!hasTrade) toast.error(t('uploadTrade') + ' — ' + t('requireField'));
-      else if (!hasEstablishment) toast.error(t('uploadEstablishment') + ' — ' + t('requireField'));
       return;
     }
     setSubmitting(true);
@@ -106,8 +102,8 @@ export default function ContractorPage() {
 
   const documentFields = [
     { key: 'cr', label: t('uploadCR'), required: true },
-    { key: 'trade', label: t('uploadTrade'), required: true },
-    { key: 'establishment', label: t('uploadEstablishment'), required: true },
+    { key: 'trade', label: t('uploadTrade'), required: false },
+    { key: 'establishment', label: t('uploadEstablishment'), required: false },
     { key: 'profile', label: t('uploadCompanyProfile'), required: false },
   ];
 
@@ -202,6 +198,7 @@ export default function ContractorPage() {
               <div key={it.key}>
                 <Label className="text-sm">
                   {it.label}{it.required && <span className="text-red-600 ms-1">*</span>}
+                  {!it.required && <span className="text-muted-foreground ms-1">({t('optional')})</span>}
                 </Label>
                 <div className="text-[11px] text-muted-foreground mt-1">{t('uploadHint')}</div>
                 <label className={`mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${showError ? 'border-red-400' : 'border-border hover:border-navy/40'}`}>
