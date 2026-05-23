@@ -7,7 +7,7 @@ import { PROJECT_STATUSES } from '@/lib/i18n';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, Circle, FileText, MapPin, Calendar, Wallet, Loader2 } from 'lucide-react';
+import { CheckCircle2, Circle, FileText, MapPin, Calendar, Wallet, Loader2, Download } from 'lucide-react';
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -50,7 +50,12 @@ export default function ProjectPage() {
             <div className="space-y-1.5">
               {data.files.map((f, i) => (
                 <a key={i} href={f.data} download={f.name} className="flex items-center gap-2 text-sm text-navy bg-secondary rounded-lg px-3 py-2 hover:bg-secondary/70">
-                  <FileText className="w-4 h-4" /><span className="truncate flex-1">{f.name}</span>
+                  <FileText className="w-4 h-4 shrink-0" />
+                  <span className="truncate flex-1">{f.name}</span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-1 text-[10px] font-semibold text-navy">
+                    <Download className="w-3 h-3" />
+                    {t('download')}
+                  </span>
                 </a>
               ))}
             </div>

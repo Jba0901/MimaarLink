@@ -328,6 +328,14 @@ function contractorStatusFromRow(row) {
     createdAt: contractor.createdAt,
     updatedAt: contractor.updatedAt,
     documentChecks: contractor.documentChecks,
+    documents: contractor.documents.map((file) => ({
+      name: file.name,
+      label: file.label,
+      type: file.type,
+      size: file.size,
+      url: file.url || file.data,
+      data: file.data || file.url,
+    })),
   };
 }
 

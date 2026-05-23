@@ -7,7 +7,7 @@ import { useLang } from '@/lib/LangContext';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle2, Circle, FileText, Hammer, Loader2, MapPin, Wallet } from 'lucide-react';
+import { CheckCircle2, Circle, Download, FileText, Hammer, Loader2, MapPin, Wallet } from 'lucide-react';
 
 const statusColor = (status) => {
   if (status === 'verified') return '#0EB59E';
@@ -50,6 +50,7 @@ export default function ContractorStatusPage() {
     { key: 'establishment', label: t('uploadEstablishment') },
   ];
   const documentChecks = contractor.documentChecks || {};
+  const uploadedDocuments = contractor.documents || [];
 
   return (
     <AppShell>
@@ -126,6 +127,31 @@ export default function ContractorStatusPage() {
           </div>
         </CardContent>
       </Card>
+
+      {uploadedDocuments.length > 0 && (
+        <Card className="mb-3">
+          <CardContent className="p-4">
+            <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documents')}</div>
+            <div className="space-y-1.5">
+              {uploadedDocuments.map((file, i) => (
+                <a
+                  key={i}
+                  href={file.data || file.url}
+                  download={file.name}
+                  className="flex items-center gap-2 text-sm text-navy bg-secondary rounded-lg px-3 py-2 hover:bg-secondary/70"
+                >
+                  <FileText className="w-4 h-4 shrink-0" />
+                  <span className="min-w-0 flex-1 truncate">{file.name || t('files')}</span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-1 text-[10px] font-semibold text-navy">
+                    <Download className="w-3 h-3" />
+                    {t('download')}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Button onClick={() => router.push('/')} className="w-full h-11" style={{ background: '#0D1B2A' }}>
         {t('backToHome')}
