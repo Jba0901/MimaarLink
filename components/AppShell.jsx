@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLang } from '@/lib/LangContext';
-import { Globe, Home, Hammer, FilePlus, Instagram, Mail, Phone } from 'lucide-react';
+import { Globe, Home, Hammer, FilePlus, Instagram, Mail, MessageCircle, Phone } from 'lucide-react';
 
 function Logo({ height = 40 }) {
   return (
@@ -50,8 +50,10 @@ export default function AppShell({ children, hideNav = false }) {
               <Hammer className="w-3.5 h-3.5" />
               <span className="text-xs font-semibold">{t('joinContractor')}</span>
             </Link>
-            <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-              className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/70 hover:bg-white text-navy transition">
+            <button
+              onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
+              className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/70 hover:bg-white text-navy transition"
+            >
               <Globe className="w-3.5 h-3.5" />
               <span className="text-xs font-semibold">{t('language')}</span>
             </button>
@@ -97,45 +99,36 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
 function SiteFooter() {
   const { t } = useLang();
   const pathname = usePathname();
-  // Home page already has its own rich "Get in touch" section + copyright line.
-  // Avoid duplicating contact info there.
   if (pathname === '/') return null;
   const year = new Date().getFullYear();
   return (
     <footer className="max-w-3xl mx-auto px-4 mt-8">
       <div className="border-t border-border pt-4 pb-2 flex flex-col items-center gap-2 text-center">
-        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[12.5px] text-muted-foreground">
-          <a
-            href="mailto:MimaarLink@gmail.com"
-            className="inline-flex items-center gap-1.5 hover:text-navy transition"
-          >
-            <Mail className="w-3.5 h-3.5" />
-            <span className="font-medium">MimaarLink@gmail.com</span>
-          </a>
-          <span className="opacity-40 hidden sm:inline">·</span>
-          <a
-            href="tel:+97466259219"
-            className="inline-flex items-center gap-1.5 hover:text-navy transition"
-            dir="ltr"
-          >
-            <Phone className="w-3.5 h-3.5" />
-            <span className="font-medium">+974 6625 9219</span>
-          </a>
-          <span className="opacity-40 hidden sm:inline">Â·</span>
-          <a
-            href="https://instagram.com/MimaarLink"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 hover:text-navy transition"
-          >
-            <Instagram className="w-3.5 h-3.5" />
-            <span className="font-medium">@MimaarLink</span>
-          </a>
+        <div className="flex items-center justify-center gap-2 text-muted-foreground">
+          <FooterIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} />
+          <FooterIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={MessageCircle} external />
+          <FooterIcon href="tel:+97466259219" label={t('contactPhone')} icon={Phone} />
+          <FooterIcon href="https://instagram.com/MimaarLink" label={t('contactInstagram')} icon={Instagram} external />
         </div>
         <div className="text-[11px] text-muted-foreground/80">
-          © {year} {t('appName')} · {t('allRights')}
+          &copy; {year} {t('appName')} &middot; {t('allRights')}
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterIcon({ href, label, icon: Icon, external = false }) {
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      title={label}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noreferrer' : undefined}
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground shadow-soft transition hover:border-navy/30 hover:text-navy"
+    >
+      <Icon className="h-4 w-4" />
+    </a>
   );
 }

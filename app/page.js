@@ -7,7 +7,7 @@ import { CATEGORIES } from '@/lib/i18n';
 import {
   Cpu, GitCompare, MapPin as PinIcon, ArrowRight, ArrowUpRight,
   Wrench, Snowflake, Plug, Droplets, Layers, HardHat, Hammer,
-  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, MapPin, Mail, Phone, Instagram
+  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, Mail, MessageCircle, Phone, Instagram
 } from 'lucide-react';
 
 const CAT_ICONS = {
@@ -126,63 +126,12 @@ export default function HomePage() {
             <h3 className="text-[20px] font-bold leading-tight">{t('contactTitle')}</h3>
             <p className="text-[13px] text-white/65 mt-1">{t('contactSubtitle')}</p>
 
-            <div className="mt-4 grid gap-2">
-              <a href="mailto:MimaarLink@gmail.com" className="flex items-center gap-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-3 transition">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(14,181,158,0.18)' }}>
-                  <Mail className="w-4 h-4" style={{ color: '#0EB59E' }} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-[11px] text-white/55 uppercase tracking-wide">{t('contactEmail')}</div>
-                  <div
-                    className={`text-[13.5px] font-semibold text-white truncate ${isRTL ? 'text-right' : 'text-left'}`}
-                    dir="ltr"
-                    style={{ unicodeBidi: 'isolate' }}
-                  >
-                    MimaarLink@gmail.com
-                  </div>
-                </div>
-                <ArrowUpRight className="w-4 h-4 text-white/50" />
-              </a>
-              <a href="tel:+97466259219" className="flex items-center gap-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-3 transition">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(245,182,61,0.18)' }}>
-                  <Phone className="w-4 h-4" style={{ color: '#F5B63D' }} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-[11px] text-white/55 uppercase tracking-wide">{t('contactPhone')}</div>
-                  <div
-                    className={`text-[13.5px] font-semibold text-white truncate ${isRTL ? 'text-right' : 'text-left'}`}
-                    dir="ltr"
-                    style={{ unicodeBidi: 'isolate' }}
-                  >
-                    +974 6625 9219
-                  </div>
-                </div>
-                <ArrowUpRight className="w-4 h-4 text-white/50" />
-              </a>
-              <a href="https://instagram.com/MimaarLink" target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-3 transition">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'rgba(14,181,158,0.18)' }}>
-                  <Instagram className="w-4 h-4" style={{ color: '#0EB59E' }} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-[11px] text-white/55 uppercase tracking-wide">{t('contactInstagram')}</div>
-                  <div
-                    className={`text-[13.5px] font-semibold text-white truncate ${isRTL ? 'text-right' : 'text-left'}`}
-                    dir="ltr"
-                    style={{ unicodeBidi: 'isolate' }}
-                  >
-                    @MimaarLink
-                  </div>
-                </div>
-                <ArrowUpRight className="w-4 h-4 text-white/50" />
-              </a>
+            <div className="mt-4 grid grid-cols-4 gap-2">
+              <ContactAction href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} />
+              <ContactAction href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={MessageCircle} external />
+              <ContactAction href="tel:+97466259219" label={t('contactPhone')} icon={Phone} />
+              <ContactAction href="https://instagram.com/MimaarLink" label={t('contactInstagram')} icon={Instagram} external />
             </div>
-
-            <Link href="mailto:MimaarLink@gmail.com">
-              <button className="w-full mt-4 h-11 rounded-2xl text-[14px] font-bold flex items-center justify-center gap-2 text-white glow-teal" style={{ background: '#0EB59E' }}>
-                <Mail className="w-4 h-4" />
-                {t('contactEmailUs')}
-              </button>
-            </Link>
           </div>
         </div>
       </section>
@@ -203,5 +152,23 @@ function BentoCard({ icon: Icon, title, desc, big = false }) {
       <div className="text-[13.5px] font-bold text-navy">{title}</div>
       <div className="text-[12px] mt-1 leading-relaxed text-muted-foreground">{desc}</div>
     </div>
+  );
+}
+
+function ContactAction({ href, label, icon: Icon, external = false }) {
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      title={label}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noreferrer' : undefined}
+      className="group flex min-h-[76px] flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-2 py-3 text-center text-white/75 transition hover:bg-white/10 hover:text-white"
+    >
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10 transition group-hover:bg-white/15">
+        <Icon className="h-4 w-4" style={{ color: '#5EEAD4' }} />
+      </span>
+      <span className="max-w-full break-words text-[10.5px] font-semibold leading-tight">{label}</span>
+    </a>
   );
 }
