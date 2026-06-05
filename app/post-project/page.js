@@ -3,16 +3,24 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import { useLang } from '@/lib/LangContext';
-import { CATEGORIES } from '@/lib/i18n';
+import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle2, Upload, X, Loader2, Copy } from 'lucide-react';
+import { CheckCircle2, Upload, X, Loader2, Copy, Layers, Wrench, Snowflake, HardHat, MoreHorizontal } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
+
+const PROJECT_CATEGORY_ICONS = {
+  fitout: Layers,
+  maintenance: Wrench,
+  mep: Snowflake,
+  civil: HardHat,
+  other: MoreHorizontal,
+};
 
 async function fileToDataURL(file) {
   return new Promise((resolve, reject) => {
@@ -39,7 +47,7 @@ function PostProjectInner() {
 
   useEffect(() => {
     const cat = sp.get('category');
-    if (cat && CATEGORIES.includes(cat)) {
+    if (cat && PROJECT_CATEGORIES.includes(cat)) {
       setData(d => ({ ...d, category: cat }));
       setStep(2);
     }
@@ -90,13 +98,21 @@ function PostProjectInner() {
       {step === 1 && (
         <div>
           <Label className="text-sm font-semibold text-navy mb-3 block">{t('selectCategory')}</Label>
-          <div className="grid grid-cols-2 gap-2.5">
-            {CATEGORIES.map(c => (
-              <button key={c} type="button" onClick={() => { update('category', c); setStep(2); }}
-                className={`text-start rounded-xl border-2 p-3.5 transition-all ${data.category === c ? 'border-navy bg-secondary' : 'border-border hover:border-navy/40'}`}>
-                <div className="text-sm font-semibold text-navy">{t(`cat_${c}`)}</div>
-              </button>
-            ))}
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+            {PROJECT_CATEGORIES.map(c => {
+              const Icon = PROJECT_CATEGORY_ICONS[c] || MoreHorizontal;
+              return (
+                <button key={c} type="button" onClick={() => { update('category', c); setStep(2); }}
+                  className={`min-h-[62px] text-start rounded-2xl border px-4 py-3 transition-all shadow-soft ${data.category === c ? 'border-navy bg-secondary' : 'border-border bg-white hover:border-navy/35 hover:bg-secondary/40'}`}>
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl light-teal">
+                      <Icon className="h-5 w-5 text-teal" />
+                    </span>
+                    <span className="text-[15px] font-bold text-navy leading-tight">{t(`cat_${c}`)}</span>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
@@ -141,7 +157,7 @@ function PostProjectInner() {
               </div>
             )}
           </div>
-          <div className="flex gap-2 pt-1">
+          <div className="sticky bottom-24 z-30 -mx-1 flex gap-2 rounded-2xl bg-background/90 p-1.5 pt-2 backdrop-blur">
             <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11">{t('back')}</Button>
             <Button onClick={() => { setTried2(true); if (data.location && data.description) setStep(3); }} className="flex-1 h-11" style={{ background: '#142A44' }}>{t('next')}</Button>
           </div>
@@ -175,7 +191,7 @@ function PostProjectInner() {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex gap-2 pt-1">
+          <div className="sticky bottom-24 z-30 -mx-1 flex gap-2 rounded-2xl bg-background/90 p-1.5 pt-2 backdrop-blur">
             <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11">{t('back')}</Button>
             <Button onClick={submit} disabled={submitting} className="flex-1 h-11" style={{ background: '#142A44' }}>
               {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-1.5" />{t('submitting')}</> : t('submit')}

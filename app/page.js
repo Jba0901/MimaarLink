@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/AppShell';
 import { useLang } from '@/lib/LangContext';
-import { CATEGORIES } from '@/lib/i18n';
+import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import {
   Cpu, GitCompare, MapPin as PinIcon, ArrowRight, ArrowUpRight,
   Wrench, Snowflake, Plug, Droplets, Layers, HardHat, Hammer,
@@ -12,7 +12,7 @@ import {
 
 const CAT_ICONS = {
   mep: Wrench, hvac: Snowflake, electrical: Plug, plumbing: Droplets, fitout: Layers,
-  civil: HardHat, joinery: Hammer, flooring: Square, painting: PaintBucket, aluminum: Frame, other: MoreHorizontal,
+  civil: HardHat, maintenance: Wrench, joinery: Hammer, flooring: Square, painting: PaintBucket, aluminum: Frame, other: MoreHorizontal,
 };
 
 export default function HomePage() {
@@ -79,7 +79,7 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 pb-1">
-          {CATEGORIES.map((c) => {
+          {PROJECT_CATEGORIES.map((c) => {
             const Icon = CAT_ICONS[c] || MoreHorizontal;
             return (
               <Link key={c} href={`/post-project?category=${c}`} className="shrink-0">

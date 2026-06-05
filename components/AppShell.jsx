@@ -60,7 +60,7 @@ export default function AppShell({ children, hideNav = false }) {
           </div>
         </div>
       </header>
-      <main className="flex-1 w-full pb-28">
+      <main className="flex-1 w-full pb-36">
         <div className="max-w-3xl mx-auto px-4 py-3">{children}</div>
         <SiteFooter />
       </main>
