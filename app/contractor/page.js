@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import AppShell from '@/components/AppShell';
+import FormProgress from '@/components/FormProgress';
 import { useLang } from '@/lib/LangContext';
 import { CATEGORIES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -91,18 +92,6 @@ export default function ContractorPage() {
     } catch (e) { toast.error(e.message); } finally { setSubmitting(false); }
   };
 
-  const Stepper = () => (
-    <div className="flex items-center gap-1.5 mb-5">
-      {[1, 2, 3].map(n => (
-        <div
-          key={n}
-          className={`h-1.5 flex-1 rounded-full ${n <= step ? '' : 'bg-secondary'}`}
-          style={n <= step ? { background: '#142A44' } : {}}
-        />
-      ))}
-    </div>
-  );
-
   const documentFields = [
     { key: 'cr', label: t('uploadCR'), required: true },
     { key: 'trade', label: t('uploadTrade'), required: false },
@@ -111,7 +100,7 @@ export default function ContractorPage() {
   ];
 
   if (done) return (
-    <AppShell>
+    <AppShell hideNav>
       <Card className="border-2 mt-4" style={{ borderColor: '#0FAE96' }}>
         <CardContent className="p-6 text-center">
           <div className="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-3" style={{ background: 'rgba(15,174,150,0.15)' }}>
@@ -139,10 +128,16 @@ export default function ContractorPage() {
   );
 
   return (
-    <AppShell>
+    <AppShell hideFooter hideNav>
       <h1 className="text-2xl font-bold text-navy mb-1">{t('contractorTitle')}</h1>
       <p className="text-sm text-muted-foreground mb-5">{t('contractorSubtitle')}</p>
-      <Stepper />
+      <FormProgress
+        step={step}
+        total={3}
+        label={t('stepLabel')}
+        title={step === 1 ? t('contractorStep1Title') : step === 2 ? t('contractorStep2Title') : t('contractorStep3Title')}
+        desc={step === 1 ? t('contractorStep1Desc') : step === 2 ? t('contractorStep2Desc') : t('contractorStep3Desc')}
+      />
 
       {step === 1 && (
         <div className="space-y-3.5">
@@ -154,7 +149,9 @@ export default function ContractorPage() {
             <Label className="text-sm">{t('email')}</Label>
             <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
           </div>
-          <Button onClick={goNextFromBasics} className="w-full h-11 mt-2" style={{ background: '#142A44' }}>{t('next')}</Button>
+          <div className="pt-2">
+            <Button onClick={goNextFromBasics} className="w-full h-11" style={{ background: '#142A44' }}>{t('next')}</Button>
+          </div>
         </div>
       )}
 
@@ -164,11 +161,14 @@ export default function ContractorPage() {
             <Label className="text-sm mb-2 block">
               {t('serviceCategoriesLabel')} <span className="text-red-600">*</span>
             </Label>
-            <div className={`grid grid-cols-2 gap-1.5 ${triedServices && data.categories.length === 0 ? 'p-1.5 rounded-lg ring-1 ring-red-300' : ''}`}>
+            <div className={`grid grid-cols-2 gap-2 ${triedServices && data.categories.length === 0 ? 'p-1.5 rounded-lg ring-1 ring-red-300' : ''}`}>
               {CATEGORIES.map(c => (
                 <button key={c} type="button" onClick={() => toggleCat(c)}
-                  className={`text-start text-xs rounded-lg border-2 px-3 py-2 ${data.categories.includes(c) ? 'border-navy bg-secondary' : 'border-border'}`}>
-                  {t(`cat_${c}`)}
+                  className={`min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 transition ${data.categories.includes(c) ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-border bg-white text-navy hover:border-navy/35'}`}>
+                  <span className="flex items-center justify-between gap-2">
+                    <span>{t(`cat_${c}`)}</span>
+                    {data.categories.includes(c) && <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-teal" />}
+                  </span>
                 </button>
               ))}
             </div>
@@ -199,7 +199,7 @@ export default function ContractorPage() {
             <Label className="text-sm">{t('projectSize')}</Label>
             <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
           </div>
-          <div className="flex gap-2 pt-1">
+          <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11">{t('back')}</Button>
             <Button onClick={goNextFromServices} className="flex-1 h-11" style={{ background: '#142A44' }}>{t('next')}</Button>
           </div>
@@ -236,7 +236,7 @@ export default function ContractorPage() {
             );
           })}
 
-          <div className="flex gap-2 pt-1">
+          <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11">{t('back')}</Button>
             <Button onClick={submit} disabled={submitting} className="flex-1 h-11" style={{ background: '#142A44' }}>
               {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-2" />{t('submitting')}</> : t('submit')}

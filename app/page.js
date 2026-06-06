@@ -25,9 +25,6 @@ export default function HomePage() {
     <AppShell>
       {/* HERO — soft navy gradient with single primary CTA */}
       <section className="relative overflow-hidden rounded-[28px] navy-deep text-white px-5 pt-6 pb-6 mb-4 shadow-soft">
-        <div className="absolute -top-20 -end-20 w-56 h-56 rounded-full opacity-60" style={{ background: 'radial-gradient(circle, rgba(20,168,142,0.30), transparent 70%)' }} />
-        <div className="absolute -bottom-24 -start-24 w-60 h-60 rounded-full opacity-50" style={{ background: 'radial-gradient(circle, rgba(94,234,212,0.12), transparent 70%)' }} />
-
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur text-[11px] font-medium">
             <Sparkles className="w-3 h-3" style={{ color: '#5EEAD4' }} />
@@ -39,18 +36,17 @@ export default function HomePage() {
           </h1>
           <p className="mt-3 text-[14px] text-white/70 leading-relaxed max-w-md">{t('subtitle')}</p>
 
-          <div className="mt-5">
+          <div className="mt-5 grid gap-2">
             <Link href="/post-project">
               <button className="w-full h-14 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#14A88E' }}>
                 {t('postProject')} <Arrow />
               </button>
             </Link>
-            <div className="mt-3 flex items-center justify-center gap-1.5 text-[12px] text-white/65">
-              <span>{isRTL ? 'هل أنت مقاول؟' : 'Are you a contractor?'}</span>
-              <Link href="/contractor" className="text-white font-semibold underline-offset-2 hover:underline">
-                {t('joinContractor')} <ArrowUpRight className="inline w-3 h-3" />
-              </Link>
-            </div>
+            <Link href="/contractor">
+              <button className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 text-[14px] font-bold text-white/90 transition hover:bg-white/15">
+                {t('joinContractor')} <ArrowUpRight className="h-3.5 w-3.5" />
+              </button>
+            </Link>
           </div>
 
           {/* benefits chips row */}

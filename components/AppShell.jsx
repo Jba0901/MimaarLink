@@ -36,7 +36,7 @@ function BrandText() {
   );
 }
 
-export default function AppShell({ children, hideNav = false }) {
+export default function AppShell({ children, hideNav = false, hideFooter = false }) {
   const { t, lang, setLang } = useLang();
   return (
     <div className="min-h-screen flex flex-col">
@@ -63,7 +63,7 @@ export default function AppShell({ children, hideNav = false }) {
       </header>
       <main className="flex-1 w-full pb-36">
         <div className="max-w-3xl mx-auto px-4 py-3">{children}</div>
-        <SiteFooter />
+        {!hideFooter && <SiteFooter />}
       </main>
       {!hideNav && (
         <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 safe-pad-bottom">

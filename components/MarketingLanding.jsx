@@ -29,9 +29,6 @@ export default function MarketingLanding({
     <AppShell>
       {/* HERO */}
       <section className="relative overflow-hidden rounded-[28px] navy-deep text-white px-5 pt-6 pb-6 mb-5 shadow-soft">
-        <div className="absolute -top-20 -end-20 w-56 h-56 rounded-full opacity-60" style={{ background: 'radial-gradient(circle, rgba(14,181,158,0.30), transparent 70%)' }} />
-        <div className="absolute -bottom-24 -start-24 w-60 h-60 rounded-full opacity-50" style={{ background: 'radial-gradient(circle, rgba(94,234,212,0.12), transparent 70%)' }} />
-
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur text-[11px] font-medium">
             <Sparkles className="w-3 h-3" style={{ color: '#5EEAD4' }} />
@@ -120,7 +117,6 @@ export default function MarketingLanding({
       {/* FINAL CTA */}
       <section className="mb-3">
         <div className="rounded-[24px] navy-deep text-white p-5 shadow-soft relative overflow-hidden">
-          <div className="absolute -top-10 -end-10 w-32 h-32 rounded-full opacity-50" style={{ background: 'radial-gradient(circle, rgba(14,181,158,0.25), transparent 70%)' }} />
           <div className="relative text-center">
             <h3 className="text-[20px] font-bold leading-tight">{finalTitle}</h3>
             <p className="text-[13px] text-white/70 mt-1">{finalSub}</p>

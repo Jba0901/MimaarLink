@@ -2,6 +2,7 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
+import FormProgress from '@/components/FormProgress';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -81,19 +82,19 @@ function PostProjectInner() {
     } catch (e) { toast.error(e.message); } finally { setSubmitting(false); }
   };
 
-  const Stepper = () => (
-    <div className="flex items-center gap-1.5 mb-5">
-      {[1,2,3,4].map(n => (
-        <div key={n} className={`h-1.5 flex-1 rounded-full ${n <= step ? '' : 'bg-secondary'}`} style={n <= step ? { background: '#142A44' } : {}} />
-      ))}
-    </div>
-  );
-
   return (
-    <AppShell>
+    <AppShell hideFooter hideNav>
       <h1 className="text-2xl font-bold text-navy mb-1">{t('postTitle')}</h1>
       <p className="text-sm text-muted-foreground mb-4">{t('subtitle')}</p>
-      <Stepper />
+      {step < 4 && (
+        <FormProgress
+          step={step}
+          total={3}
+          label={t('stepLabel')}
+          title={step === 1 ? t('projectStep1Title') : step === 2 ? t('projectStep2Title') : t('projectStep3Title')}
+          desc={step === 1 ? t('projectStep1Desc') : step === 2 ? t('projectStep2Desc') : t('projectStep3Desc')}
+        />
+      )}
 
       {step === 1 && (
         <div>
@@ -157,7 +158,7 @@ function PostProjectInner() {
               </div>
             )}
           </div>
-          <div className="sticky bottom-24 z-30 -mx-1 flex gap-2 rounded-2xl bg-background/90 p-1.5 pt-2 backdrop-blur">
+          <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11">{t('back')}</Button>
             <Button onClick={() => { setTried2(true); if (data.location && data.description) setStep(3); }} className="flex-1 h-11" style={{ background: '#142A44' }}>{t('next')}</Button>
           </div>
@@ -191,7 +192,7 @@ function PostProjectInner() {
               </SelectContent>
             </Select>
           </div>
-          <div className="sticky bottom-24 z-30 -mx-1 flex gap-2 rounded-2xl bg-background/90 p-1.5 pt-2 backdrop-blur">
+          <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11">{t('back')}</Button>
             <Button onClick={submit} disabled={submitting} className="flex-1 h-11" style={{ background: '#142A44' }}>
               {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-1.5" />{t('submitting')}</> : t('submit')}
