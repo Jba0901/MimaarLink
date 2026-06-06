@@ -14,7 +14,7 @@ export default function StartHerePage() {
   return (
     <AppShell hideNav>
       <div className="mx-auto flex min-h-[calc(100vh-190px)] max-w-md flex-col justify-center py-2">
-        <section className="rounded-[28px] border border-border bg-white p-5 shadow-soft">
+        <section className="rounded-[28px] border border-border bg-white p-5 shadow-soft motion-fade-up">
           <div className="text-center">
             <div className="inline-flex rounded-full border border-border bg-background px-3 py-1 text-[11px] font-bold text-muted-foreground">
               {t('startEyebrow')}
@@ -67,7 +67,7 @@ export default function StartHerePage() {
 function SimpleChoice({ href, icon: Icon, title, desc, cta, accent, Arrow }) {
   return (
     <Link href={href} className="block">
-      <article className="flex items-center gap-3 rounded-2xl border border-border bg-white p-3 shadow-soft transition hover:border-navy/25">
+      <article className="interactive-card flex items-center gap-3 rounded-2xl border border-border bg-white p-3 shadow-soft transition hover:border-navy/25">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" style={{ background: `${accent}18` }}>
           <Icon className="h-5 w-5" style={{ color: accent }} />
         </div>

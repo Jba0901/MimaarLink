@@ -8,7 +8,8 @@ import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import {
   Cpu, GitCompare, MapPin as PinIcon, ArrowRight, ArrowUpRight,
   Wrench, Snowflake, Plug, Droplets, Layers, HardHat, Hammer,
-  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, Mail, Phone, Instagram
+  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, Mail, Phone, Instagram,
+  FileText, CheckCircle2
 } from 'lucide-react';
 
 const CAT_ICONS = {
@@ -24,51 +25,50 @@ export default function HomePage() {
   return (
     <AppShell>
       {/* HERO — soft navy gradient with single primary CTA */}
-      <section className="relative overflow-hidden rounded-[28px] navy-deep text-white px-5 pt-6 pb-6 mb-4 shadow-soft">
+      <section className="relative overflow-hidden rounded-[28px] navy-deep subtle-grid glass-line text-white px-5 pt-6 pb-5 mb-16 shadow-soft motion-fade-up">
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur text-[11px] font-medium">
             <Sparkles className="w-3 h-3" style={{ color: '#5EEAD4' }} />
-            <span className="tracking-tight">AI-powered · Qatar</span>
+            <span>AI-powered | Qatar</span>
           </div>
 
-          <h1 className="mt-4 text-[28px] sm:text-[32px] font-bold leading-[1.15] tracking-tight">
+          <h1 className="mt-4 text-[28px] sm:text-[32px] font-bold leading-[1.15]">
             {t('tagline')}
           </h1>
           <p className="mt-3 text-[14px] text-white/70 leading-relaxed max-w-md">{t('subtitle')}</p>
 
           <div className="mt-5 grid gap-2">
             <Link href="/post-project">
-              <button className="w-full h-14 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#14A88E' }}>
+              <button className="cta-press w-full h-14 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#14A88E' }}>
                 {t('postProject')} <Arrow />
               </button>
             </Link>
             <Link href="/contractor">
-              <button className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 text-[14px] font-bold text-white/90 transition hover:bg-white/15">
+              <button className="cta-press flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 text-[14px] font-bold text-white/90 transition hover:bg-white/15">
                 {t('joinContractor')} <ArrowUpRight className="h-3.5 w-3.5" />
               </button>
             </Link>
           </div>
 
           {/* benefits chips row */}
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[11.5px] text-white/75">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11.5px] text-white/75">
             <span className="inline-flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5" style={{ color: '#5EEAD4' }} />{t('benefit_ai')}</span>
-            <span className="text-white/30">·</span>
             <span className="inline-flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" style={{ color: '#5EEAD4' }} />{t('benefit_bids')}</span>
-            <span className="text-white/30">·</span>
             <span className="inline-flex items-center gap-1.5"><PinIcon className="w-3.5 h-3.5" style={{ color: '#5EEAD4' }} />{t('benefit_local')}</span>
           </div>
+          <WorkflowPreview t={t} isRTL={isRTL} />
         </div>
       </section>
 
       {/* TRUST — bento style, all light & consistent */}
-      <section className="grid grid-cols-2 gap-2.5 mb-5">
+      <section className="grid grid-cols-2 gap-2.5 mb-5 motion-fade-up motion-delay-1">
         <BentoCard icon={Cpu} title={t('trustReview')} desc={t('trustReviewDesc')} big />
         <BentoCard icon={GitCompare} title={t('trustCompare')} desc={t('trustCompareDesc')} />
         <BentoCard icon={PinIcon} title={t('trustQatar')} desc={t('trustQatarDesc')} />
       </section>
 
       {/* CATEGORIES — horizontal scroll chips */}
-      <section className="mb-6 -mx-4">
+      <section className="mb-6 -mx-4 motion-fade-up motion-delay-2">
         <div className="flex items-center justify-between px-4 mb-2.5">
           <h2 className="text-base font-bold text-navy">{t('serviceCategories')}</h2>
           <Link href="/post-project" className="text-[11px] text-navy/60 font-semibold flex items-center gap-0.5">
@@ -80,7 +80,7 @@ export default function HomePage() {
             const Icon = CAT_ICONS[c] || MoreHorizontal;
             return (
               <Link key={c} href={`/post-project?category=${c}`} className="shrink-0">
-                <div className="w-[88px] h-[100px] rounded-2xl bg-white border border-border hover:border-navy/40 hover:shadow-soft transition-all px-2 py-3 flex flex-col items-center justify-center gap-2">
+                <div className="interactive-card w-[88px] h-[100px] rounded-2xl bg-white border border-border hover:border-navy/40 hover:shadow-soft px-2 py-3 flex flex-col items-center justify-center gap-2">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(20,168,142,0.10)' }}>
                     <Icon className="w-5 h-5" style={{ color: '#14A88E' }} />
                   </div>
@@ -93,7 +93,7 @@ export default function HomePage() {
       </section>
 
       {/* HOW IT WORKS — vertical timeline with connector */}
-      <section className="mb-8">
+      <section className="mb-8 motion-fade-up motion-delay-3">
         <h2 className="text-base font-bold text-navy mb-3">{t('howItWorks')}</h2>
         <div className="relative">
           <div className={`absolute top-3 bottom-3 w-px bg-border ${isRTL ? 'right-[15px]' : 'left-[15px]'}`} />
@@ -101,7 +101,7 @@ export default function HomePage() {
             {[1,2,3].map((n) => (
               <div key={n} className="relative flex gap-3 items-start">
                 <div className="relative z-10 w-8 h-8 rounded-full navy text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-soft">{n}</div>
-                <div className="flex-1 bg-white border border-border rounded-2xl px-4 py-3 shadow-soft">
+                <div className="interactive-card flex-1 bg-white border border-border rounded-2xl px-4 py-3 shadow-soft">
                   <div className="text-[14px] font-bold text-navy">{t(`step${n}Title`).replace(/^[\d.\s\u0660-\u0669]+/, '')}</div>
                   <div className="text-[12px] text-muted-foreground mt-1 leading-relaxed">{t(`step${n}Desc`)}</div>
                 </div>
@@ -112,13 +112,12 @@ export default function HomePage() {
       </section>
 
       {/* CONTACT — proper footer card */}
-      <section className="mt-2 mb-2">
-        <div className="rounded-[24px] navy-deep text-white p-5 shadow-soft relative overflow-hidden">
-          <div className="absolute -top-10 -end-10 w-32 h-32 rounded-full opacity-50" style={{ background: 'radial-gradient(circle, rgba(14,181,158,0.25), transparent 70%)' }} />
+      <section className="mt-2 mb-2 motion-fade-up motion-delay-4">
+        <div className="rounded-[24px] navy-deep subtle-grid text-white p-5 shadow-soft relative overflow-hidden">
           <div className="relative">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur text-[11px] font-medium mb-3">
               <Mail className="w-3 h-3" style={{ color: '#5EEAD4' }} />
-              <span className="tracking-tight">{t('contactTitle')}</span>
+              <span>{t('contactTitle')}</span>
             </div>
             <h3 className="text-[20px] font-bold leading-tight">{t('contactTitle')}</h3>
             <p className="text-[13px] text-white/65 mt-1">{t('contactSubtitle')}</p>
@@ -142,7 +141,7 @@ export default function HomePage() {
 
 function BentoCard({ icon: Icon, title, desc, big = false }) {
   return (
-    <div className={`${big ? 'col-span-2' : ''} bg-white border border-border rounded-2xl p-4 shadow-soft`}>
+    <div className={`interactive-card ${big ? 'col-span-2' : ''} bg-white border border-border rounded-2xl p-4 shadow-soft`}>
       <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-2.5" style={{ background: 'rgba(20,168,142,0.10)' }}>
         <Icon className="w-5 h-5" style={{ color: '#14A88E' }} />
       </div>
@@ -160,12 +159,51 @@ function ContactAction({ href, label, icon: Icon, external = false }) {
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className="group flex min-h-[76px] flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-2 py-3 text-center text-white/75 transition hover:bg-white/10 hover:text-white"
+      className="interactive-card group flex min-h-[76px] flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-2 py-3 text-center text-white/75 transition hover:bg-white/10 hover:text-white"
     >
       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10 transition group-hover:bg-white/15">
         <Icon className="h-4 w-4" style={{ color: '#5EEAD4' }} />
       </span>
       <span className="max-w-full break-words text-[10.5px] font-semibold leading-tight">{label}</span>
     </a>
+  );
+}
+
+function WorkflowPreview({ t, isRTL }) {
+  const connectorSide = isRTL ? 'right-[18px]' : 'left-[18px]';
+  return (
+    <div className="mt-5 rounded-3xl border border-white/12 bg-white/[0.07] p-3 backdrop-blur">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <div className="text-[11px] font-semibold uppercase text-white/45">{t('projectStatus')}</div>
+          <div className="truncate text-[13px] font-bold text-white">{t('bidComparison')}</div>
+        </div>
+        <span className="pulse-dot flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10">
+          <CheckCircle2 className="h-4 w-4" style={{ color: '#5EEAD4' }} />
+        </span>
+      </div>
+
+      <div className="relative space-y-2.5">
+        <div className={`absolute top-5 bottom-5 w-px bg-white/12 ${connectorSide}`} />
+        <PreviewStep icon={FileText} title={t('status_received')} desc={t('projectDetails')} />
+        <PreviewStep icon={ShieldCheck} title={t('status_contractors_invited')} desc={t('trustReview')} />
+        <PreviewStep icon={GitCompare} title={t('status_bids_received')} desc={t('trustCompare')} active />
+      </div>
+
+    </div>
+  );
+}
+
+function PreviewStep({ icon: Icon, title, desc, active = false }) {
+  return (
+    <div className="relative flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.055] px-3 py-2.5">
+      <span className={`relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-white text-navy' : 'bg-white/10 text-white/80'}`}>
+        <Icon className="h-4 w-4" />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[12.5px] font-bold text-white">{title}</span>
+        <span className="block truncate text-[10.5px] font-semibold text-white/50">{desc}</span>
+      </span>
+    </div>
   );
 }

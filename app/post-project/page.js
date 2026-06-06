@@ -84,8 +84,8 @@ function PostProjectInner() {
 
   return (
     <AppShell hideFooter hideNav>
-      <h1 className="text-2xl font-bold text-navy mb-1">{t('postTitle')}</h1>
-      <p className="text-sm text-muted-foreground mb-4">{t('subtitle')}</p>
+      <h1 className="text-2xl font-bold text-navy mb-1 motion-fade-up">{t('postTitle')}</h1>
+      <p className="text-sm text-muted-foreground mb-4 motion-fade-up motion-delay-1">{t('subtitle')}</p>
       {step < 4 && (
         <FormProgress
           step={step}
@@ -104,7 +104,7 @@ function PostProjectInner() {
               const Icon = PROJECT_CATEGORY_ICONS[c] || MoreHorizontal;
               return (
                 <button key={c} type="button" onClick={() => { update('category', c); setStep(2); }}
-                  className={`min-h-[62px] text-start rounded-2xl border px-4 py-3 transition-all shadow-soft ${data.category === c ? 'border-navy bg-secondary' : 'border-border bg-white hover:border-navy/35 hover:bg-secondary/40'}`}>
+                  className={`interactive-card min-h-[62px] text-start rounded-2xl border px-4 py-3 shadow-soft ${data.category === c ? 'border-navy bg-secondary' : 'border-border bg-white hover:border-navy/35 hover:bg-secondary/40'}`}>
                   <div className="flex items-center gap-3">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl light-teal">
                       <Icon className="h-5 w-5 text-teal" />
@@ -142,7 +142,7 @@ function PostProjectInner() {
           <div>
             <Label className="text-sm">{t('uploadFilesLabel')}</Label>
             <div className="text-[11px] text-muted-foreground mb-2">{t('uploadHint')}</div>
-            <label className="flex items-center justify-center gap-2 h-20 rounded-xl border-2 border-dashed border-border hover:border-navy/40 cursor-pointer bg-secondary/50">
+            <label className="interactive-card flex items-center justify-center gap-2 h-20 rounded-xl border-2 border-dashed border-border hover:border-navy/40 cursor-pointer bg-secondary/50">
               <Upload className="w-4 h-4 text-navy" />
               <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
               <input type="file" multiple className="hidden" onChange={onFiles} accept="image/*,application/pdf" />
@@ -159,8 +159,8 @@ function PostProjectInner() {
             )}
           </div>
           <div className="flex gap-2 pt-2">
-            <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11">{t('back')}</Button>
-            <Button onClick={() => { setTried2(true); if (data.location && data.description) setStep(3); }} className="flex-1 h-11" style={{ background: '#142A44' }}>{t('next')}</Button>
+            <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11 cta-press">{t('back')}</Button>
+            <Button onClick={() => { setTried2(true); if (data.location && data.description) setStep(3); }} className="flex-1 h-11 cta-press" style={{ background: '#142A44' }}>{t('next')}</Button>
           </div>
         </div>
       )}
@@ -193,8 +193,8 @@ function PostProjectInner() {
             </Select>
           </div>
           <div className="flex gap-2 pt-2">
-            <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11">{t('back')}</Button>
-            <Button onClick={submit} disabled={submitting} className="flex-1 h-11" style={{ background: '#142A44' }}>
+            <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11 cta-press">{t('back')}</Button>
+            <Button onClick={submit} disabled={submitting} className="flex-1 h-11 cta-press" style={{ background: '#142A44' }}>
               {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-1.5" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>
@@ -202,7 +202,7 @@ function PostProjectInner() {
       )}
 
       {step === 4 && createdId && (
-        <Card className="border-2" style={{ borderColor: '#14A88E' }}>
+        <Card className="border-2 motion-fade-up" style={{ borderColor: '#14A88E' }}>
           <CardContent className="p-6 text-center">
             <div className="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-3" style={{ background: 'rgba(20,168,142,0.15)' }}>
               <CheckCircle2 className="w-7 h-7" style={{ color: '#14A88E' }} />

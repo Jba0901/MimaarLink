@@ -101,7 +101,7 @@ export default function ContractorPage() {
 
   if (done) return (
     <AppShell hideNav>
-      <Card className="border-2 mt-4" style={{ borderColor: '#0FAE96' }}>
+      <Card className="border-2 mt-4 motion-fade-up" style={{ borderColor: '#0FAE96' }}>
         <CardContent className="p-6 text-center">
           <div className="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-3" style={{ background: 'rgba(15,174,150,0.15)' }}>
             <CheckCircle2 className="w-7 h-7" style={{ color: '#0FAE96' }} />
@@ -129,8 +129,8 @@ export default function ContractorPage() {
 
   return (
     <AppShell hideFooter hideNav>
-      <h1 className="text-2xl font-bold text-navy mb-1">{t('contractorTitle')}</h1>
-      <p className="text-sm text-muted-foreground mb-5">{t('contractorSubtitle')}</p>
+      <h1 className="text-2xl font-bold text-navy mb-1 motion-fade-up">{t('contractorTitle')}</h1>
+      <p className="text-sm text-muted-foreground mb-5 motion-fade-up motion-delay-1">{t('contractorSubtitle')}</p>
       <FormProgress
         step={step}
         total={3}
@@ -150,7 +150,7 @@ export default function ContractorPage() {
             <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
           </div>
           <div className="pt-2">
-            <Button onClick={goNextFromBasics} className="w-full h-11" style={{ background: '#142A44' }}>{t('next')}</Button>
+            <Button onClick={goNextFromBasics} className="w-full h-11 cta-press" style={{ background: '#142A44' }}>{t('next')}</Button>
           </div>
         </div>
       )}
@@ -164,7 +164,7 @@ export default function ContractorPage() {
             <div className={`grid grid-cols-2 gap-2 ${triedServices && data.categories.length === 0 ? 'p-1.5 rounded-lg ring-1 ring-red-300' : ''}`}>
               {CATEGORIES.map(c => (
                 <button key={c} type="button" onClick={() => toggleCat(c)}
-                  className={`min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 transition ${data.categories.includes(c) ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-border bg-white text-navy hover:border-navy/35'}`}>
+                  className={`interactive-card min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 ${data.categories.includes(c) ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-border bg-white text-navy hover:border-navy/35'}`}>
                   <span className="flex items-center justify-between gap-2">
                     <span>{t(`cat_${c}`)}</span>
                     {data.categories.includes(c) && <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-teal" />}
@@ -200,8 +200,8 @@ export default function ContractorPage() {
             <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
           </div>
           <div className="flex gap-2 pt-2">
-            <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11">{t('back')}</Button>
-            <Button onClick={goNextFromServices} className="flex-1 h-11" style={{ background: '#142A44' }}>{t('next')}</Button>
+            <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11 cta-press">{t('back')}</Button>
+            <Button onClick={goNextFromServices} className="flex-1 h-11 cta-press" style={{ background: '#142A44' }}>{t('next')}</Button>
           </div>
         </div>
       )}
@@ -218,7 +218,7 @@ export default function ContractorPage() {
                   {!it.required && <span className="text-muted-foreground ms-1">({t('optional')})</span>}
                 </Label>
                 <div className="text-[11px] text-muted-foreground mt-1">{t('uploadHint')}</div>
-                <label className={`mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${showError ? 'border-red-400' : 'border-border hover:border-navy/40'}`}>
+                <label className={`interactive-card mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${showError ? 'border-red-400' : 'border-border hover:border-navy/40'}`}>
                   <Upload className="w-4 h-4 text-navy" />
                   <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
                   <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />
@@ -237,8 +237,8 @@ export default function ContractorPage() {
           })}
 
           <div className="flex gap-2 pt-2">
-            <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11">{t('back')}</Button>
-            <Button onClick={submit} disabled={submitting} className="flex-1 h-11" style={{ background: '#142A44' }}>
+            <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11 cta-press">{t('back')}</Button>
+            <Button onClick={submit} disabled={submitting} className="flex-1 h-11 cta-press" style={{ background: '#142A44' }}>
               {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-2" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>

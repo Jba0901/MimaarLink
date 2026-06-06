@@ -22,14 +22,14 @@ function BrandText() {
   if (lang === 'ar') {
     const parts = t('appName').split(' ');
     return (
-      <span className="font-bold text-[18px] tracking-tight leading-none">
+      <span className="font-bold text-[18px] leading-none">
         <span style={{ color: '#0D1B2A' }}>{parts[0]}</span>
         {parts[1] && <span style={{ color: '#0EB59E' }} className="ms-1">{parts[1]}</span>}
       </span>
     );
   }
   return (
-    <span className="font-bold text-[18px] tracking-tight leading-none">
+    <span className="font-bold text-[18px] leading-none">
       <span style={{ color: '#0D1B2A' }}>Mimaar</span>
       <span style={{ color: '#0EB59E' }}>Link</span>
     </span>
@@ -40,20 +40,20 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
   const { t, lang, setLang } = useLang();
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-border/45 bg-background/88 backdrop-blur-xl">
         <div className="max-w-3xl mx-auto px-4 h-[68px] flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5 group">
             <Logo height={42} />
             <BrandText />
           </Link>
           <div className="flex items-center gap-1.5">
-            <Link href="/contractor" className="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/70 hover:bg-white text-navy transition">
+            <Link href="/contractor" className="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/75 hover:bg-white text-navy transition interactive-card">
               <Hammer className="w-3.5 h-3.5" />
               <span className="text-xs font-semibold">{t('joinContractor')}</span>
             </Link>
             <button
               onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-              className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/70 hover:bg-white text-navy transition"
+              className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/75 hover:bg-white text-navy transition interactive-card"
             >
               <Globe className="w-3.5 h-3.5" />
               <span className="text-xs font-semibold">{t('language')}</span>
@@ -67,7 +67,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       </main>
       {!hideNav && (
         <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 safe-pad-bottom">
-          <div className="flex items-center gap-1 navy rounded-full px-1.5 py-1.5 shadow-soft border border-white/5">
+          <div className="flex items-center gap-1 navy rounded-full px-1.5 py-1.5 shadow-soft border border-white/5 glass-line">
             <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
             <NavBtn href="/post-project" icon={FilePlus} label={t('postProject')} matches={['/post-project', '/for-projects']} />
             <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} matches={['/contractor', '/for-contractors']} />
@@ -85,14 +85,14 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
     <Link
       href={href}
       className={
-        'flex items-center gap-1.5 px-3.5 py-2 rounded-full transition ' +
+        'flex items-center gap-1.5 px-3.5 py-2 rounded-full transition cta-press ' +
         (active
           ? 'bg-white text-navy shadow-soft'
           : 'text-white/80 hover:text-white hover:bg-white/10')
       }
     >
       <Icon className="w-4 h-4" />
-      <span className="text-[11.5px] font-semibold tracking-tight whitespace-nowrap">{label}</span>
+      <span className="text-[11.5px] font-semibold whitespace-nowrap">{label}</span>
     </Link>
   );
 }
@@ -127,7 +127,7 @@ function FooterIcon({ href, label, icon: Icon, external = false }) {
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground shadow-soft transition hover:border-navy/30 hover:text-navy"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground shadow-soft transition hover:border-navy/30 hover:text-navy interactive-card"
     >
       <Icon className="h-4 w-4" />
     </a>

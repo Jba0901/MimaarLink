@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function FormProgress({ step, total, label, title, desc }) {
   return (
-    <section className="mb-5 rounded-2xl border border-border bg-white p-4 shadow-soft">
+    <section className="mb-5 rounded-2xl border border-border bg-white p-4 shadow-soft motion-fade-up">
       <div className="mb-3 flex items-center justify-between gap-3">
         <span className="rounded-full bg-secondary px-3 py-1 text-[11px] font-bold text-navy">
           {label} {step}/{total}
@@ -19,7 +19,7 @@ export default function FormProgress({ step, total, label, title, desc }) {
           return (
             <div
               key={n}
-              className={`h-1.5 flex-1 rounded-full ${n <= step ? 'navy' : 'bg-secondary'}`}
+              className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${n <= step ? 'navy' : 'bg-secondary'}`}
             />
           );
         })}
