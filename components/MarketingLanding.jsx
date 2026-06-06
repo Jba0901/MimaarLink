@@ -26,9 +26,9 @@ export default function MarketingLanding({
   const Arrow = () => isRTL ? <ArrowRight className="w-4 h-4 rotate-180" /> : <ArrowRight className="w-4 h-4" />;
 
   return (
-    <AppShell>
+    <AppShell hideNav>
       {/* HERO */}
-      <section className="relative overflow-hidden rounded-[28px] navy-deep subtle-grid glass-line text-white px-5 pt-6 pb-6 mb-5 shadow-soft motion-fade-up">
+      <section className="relative overflow-hidden rounded-[28px] premium-panel glass-line text-white px-5 pt-6 pb-6 mb-5 shadow-soft motion-fade-up">
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur text-[11px] font-medium">
             <Sparkles className="w-3 h-3" style={{ color: '#5EEAD4' }} />
@@ -42,7 +42,7 @@ export default function MarketingLanding({
 
           <div className="mt-5">
             <Link href={ctaHref}>
-              <button className="cta-press w-full h-14 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#0EB59E' }}>
+              <button className="cta-press tap-highlight w-full h-14 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#0EB59E' }}>
                 {ctaLabel} <Arrow />
               </button>
             </Link>
@@ -116,12 +116,12 @@ export default function MarketingLanding({
 
       {/* FINAL CTA */}
       <section className="mb-3 motion-fade-up motion-delay-4">
-        <div className="rounded-[24px] navy-deep subtle-grid text-white p-5 shadow-soft relative overflow-hidden">
+        <div className="rounded-[24px] premium-panel-soft text-white p-5 shadow-soft relative overflow-hidden">
           <div className="relative text-center">
             <h3 className="text-[20px] font-bold leading-tight">{finalTitle}</h3>
             <p className="text-[13px] text-white/70 mt-1">{finalSub}</p>
             <Link href={ctaHref}>
-              <button className="cta-press w-full mt-4 h-12 rounded-2xl text-[15px] font-bold flex items-center justify-center gap-2 text-white glow-teal" style={{ background: '#0EB59E' }}>
+              <button className="cta-press tap-highlight w-full mt-4 h-12 rounded-2xl text-[15px] font-bold flex items-center justify-center gap-2 text-white glow-teal" style={{ background: '#0EB59E' }}>
                 {ctaLabel} <Arrow />
               </button>
             </Link>

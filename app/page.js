@@ -23,9 +23,9 @@ export default function HomePage() {
   const Arrow = isRTL ? () => <ArrowRight className="w-4 h-4 rotate-180" /> : () => <ArrowRight className="w-4 h-4" />;
 
   return (
-    <AppShell>
+    <AppShell hideNav>
       {/* HERO — soft navy gradient with single primary CTA */}
-      <section className="relative overflow-hidden rounded-[28px] navy-deep subtle-grid glass-line text-white px-5 pt-6 pb-5 mb-16 shadow-soft motion-fade-up">
+      <section className="relative overflow-hidden rounded-[28px] premium-panel glass-line text-white px-5 pt-6 pb-5 mb-5 shadow-soft motion-fade-up">
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur text-[11px] font-medium">
             <Sparkles className="w-3 h-3" style={{ color: '#5EEAD4' }} />
@@ -39,12 +39,12 @@ export default function HomePage() {
 
           <div className="mt-5 grid gap-2">
             <Link href="/post-project">
-              <button className="cta-press w-full h-14 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#14A88E' }}>
+              <button className="cta-press tap-highlight w-full h-14 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#14A88E' }}>
                 {t('postProject')} <Arrow />
               </button>
             </Link>
             <Link href="/contractor">
-              <button className="cta-press flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 text-[14px] font-bold text-white/90 transition hover:bg-white/15">
+              <button className="cta-press tap-highlight flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 text-[14px] font-bold text-white/90 transition hover:bg-white/15">
                 {t('joinContractor')} <ArrowUpRight className="h-3.5 w-3.5" />
               </button>
             </Link>
@@ -56,7 +56,7 @@ export default function HomePage() {
             <span className="inline-flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" style={{ color: '#5EEAD4' }} />{t('benefit_bids')}</span>
             <span className="inline-flex items-center gap-1.5"><PinIcon className="w-3.5 h-3.5" style={{ color: '#5EEAD4' }} />{t('benefit_local')}</span>
           </div>
-          <WorkflowPreview t={t} isRTL={isRTL} />
+          <WorkflowPreview t={t} />
         </div>
       </section>
 
@@ -113,7 +113,7 @@ export default function HomePage() {
 
       {/* CONTACT — proper footer card */}
       <section className="mt-2 mb-2 motion-fade-up motion-delay-4">
-        <div className="rounded-[24px] navy-deep subtle-grid text-white p-5 shadow-soft relative overflow-hidden">
+        <div className="rounded-[24px] premium-panel-soft text-white p-5 shadow-soft relative overflow-hidden">
           <div className="relative">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur text-[11px] font-medium mb-3">
               <Mail className="w-3 h-3" style={{ color: '#5EEAD4' }} />
@@ -169,40 +169,37 @@ function ContactAction({ href, label, icon: Icon, external = false }) {
   );
 }
 
-function WorkflowPreview({ t, isRTL }) {
-  const connectorSide = isRTL ? 'right-[18px]' : 'left-[18px]';
+function WorkflowPreview({ t }) {
   return (
-    <div className="mt-5 rounded-3xl border border-white/12 bg-white/[0.07] p-3 backdrop-blur">
-      <div className="mb-3 flex items-center justify-between gap-3">
+    <div className="mt-5 rounded-3xl border border-white/12 bg-white/[0.075] p-3.5 backdrop-blur">
+      <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <div className="text-[11px] font-semibold uppercase text-white/45">{t('projectStatus')}</div>
           <div className="truncate text-[13px] font-bold text-white">{t('bidComparison')}</div>
         </div>
-        <span className="pulse-dot flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10">
+        <span className="pulse-dot float-soft flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10">
           <CheckCircle2 className="h-4 w-4" style={{ color: '#5EEAD4' }} />
         </span>
       </div>
 
-      <div className="relative space-y-2.5">
-        <div className={`absolute top-5 bottom-5 w-px bg-white/12 ${connectorSide}`} />
+      <div className="mt-3 grid grid-cols-3 gap-2">
         <PreviewStep icon={FileText} title={t('status_received')} desc={t('projectDetails')} />
         <PreviewStep icon={ShieldCheck} title={t('status_contractors_invited')} desc={t('trustReview')} />
         <PreviewStep icon={GitCompare} title={t('status_bids_received')} desc={t('trustCompare')} active />
       </div>
-
     </div>
   );
 }
 
 function PreviewStep({ icon: Icon, title, desc, active = false }) {
   return (
-    <div className="relative flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.055] px-3 py-2.5">
-      <span className={`relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-white text-navy' : 'bg-white/10 text-white/80'}`}>
+    <div className={`relative min-w-0 rounded-2xl border px-2.5 py-2.5 text-center ${active ? 'active-glow border-white/25 bg-white/[0.14]' : 'border-white/10 bg-white/[0.055]'}`}>
+      <span className={`mx-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-white text-navy' : 'bg-white/10 text-white/80'}`}>
         <Icon className="h-4 w-4" />
       </span>
-      <span className="min-w-0 flex-1">
-        <span className="block truncate text-[12.5px] font-bold text-white">{title}</span>
-        <span className="block truncate text-[10.5px] font-semibold text-white/50">{desc}</span>
+      <span className="mt-2 block min-w-0">
+        <span className="block truncate text-[10.5px] font-bold text-white">{title}</span>
+        <span className="mt-0.5 block truncate text-[9.5px] font-semibold text-white/48">{desc}</span>
       </span>
     </div>
   );

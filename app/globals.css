@@ -31,6 +31,7 @@
   * { @apply border-border; }
   body {
     @apply bg-background text-foreground;
+    background-image: linear-gradient(180deg, rgba(255,255,255,0.72) 0%, rgba(245,244,241,0.95) 360px, rgba(240,239,235,1) 100%);
     -webkit-font-smoothing: antialiased;
     text-rendering: geometricPrecision;
   }
@@ -44,6 +45,18 @@
   .border-navy { border-color: #0D1B2A; }
   .navy-deep {
     background-image: linear-gradient(160deg, #1a2d47 0%, #0D1B2A 55%, #08121E 100%);
+  }
+  .premium-panel {
+    background-color: #0D1B2A;
+    background-image:
+      linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.025) 28%, transparent 72%),
+      linear-gradient(140deg, #172A42 0%, #0D1B2A 58%, #07111D 100%);
+  }
+  .premium-panel-soft {
+    background-color: #0D1B2A;
+    background-image:
+      linear-gradient(180deg, rgba(255,255,255,0.08), transparent 42%),
+      linear-gradient(145deg, #14263D 0%, #0D1B2A 62%, #081421 100%);
   }
   .teal { background-color: #0EB59E; }
   .text-teal { color: #0EB59E; }
@@ -87,13 +100,27 @@
     border: 1px solid rgba(14,181,158,0.35);
     animation: pulse-ring 1.8s ease-out infinite;
   }
-  .subtle-grid {
-    background-color: #0D1B2A;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(160deg, #1a2d47 0%, #0D1B2A 55%, #08121E 100%);
-    background-size: 22px 22px;
+  .float-soft {
+    animation: float-soft 4.8s ease-in-out infinite;
+  }
+  .active-glow {
+    animation: active-glow 2.8s ease-in-out infinite;
+  }
+  .progress-live {
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-live::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 42%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: translateX(-120%);
+    animation: progress-sweep 2.8s ease-in-out infinite;
+  }
+  .tap-highlight {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -107,8 +134,26 @@
   100% { opacity: 0; transform: scale(1.38); }
 }
 
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes active-glow {
+  0%, 100% { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 0 0 rgba(14,181,158,0); }
+  50% { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.22), 0 12px 30px -22px rgba(14,181,158,0.65); }
+}
+
+@keyframes progress-sweep {
+  0%, 45% { transform: translateX(-130%); }
+  100% { transform: translateX(260%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .motion-fade-up,
+  .float-soft,
+  .active-glow,
+  .progress-live::after,
   .pulse-dot::after {
     animation: none;
   }

@@ -164,7 +164,7 @@ export default function ContractorPage() {
             <div className={`grid grid-cols-2 gap-2 ${triedServices && data.categories.length === 0 ? 'p-1.5 rounded-lg ring-1 ring-red-300' : ''}`}>
               {CATEGORIES.map(c => (
                 <button key={c} type="button" onClick={() => toggleCat(c)}
-                  className={`interactive-card min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 ${data.categories.includes(c) ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-border bg-white text-navy hover:border-navy/35'}`}>
+                  className={`interactive-card tap-highlight min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 ${data.categories.includes(c) ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-border bg-white text-navy hover:border-navy/35'}`}>
                   <span className="flex items-center justify-between gap-2">
                     <span>{t(`cat_${c}`)}</span>
                     {data.categories.includes(c) && <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-teal" />}
@@ -218,7 +218,7 @@ export default function ContractorPage() {
                   {!it.required && <span className="text-muted-foreground ms-1">({t('optional')})</span>}
                 </Label>
                 <div className="text-[11px] text-muted-foreground mt-1">{t('uploadHint')}</div>
-                <label className={`interactive-card mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${showError ? 'border-red-400' : 'border-border hover:border-navy/40'}`}>
+                <label className={`interactive-card tap-highlight mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${showError ? 'border-red-400' : 'border-border hover:border-navy/40'}`}>
                   <Upload className="w-4 h-4 text-navy" />
                   <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
                   <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />

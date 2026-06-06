@@ -104,7 +104,7 @@ function PostProjectInner() {
               const Icon = PROJECT_CATEGORY_ICONS[c] || MoreHorizontal;
               return (
                 <button key={c} type="button" onClick={() => { update('category', c); setStep(2); }}
-                  className={`interactive-card min-h-[62px] text-start rounded-2xl border px-4 py-3 shadow-soft ${data.category === c ? 'border-navy bg-secondary' : 'border-border bg-white hover:border-navy/35 hover:bg-secondary/40'}`}>
+                  className={`interactive-card tap-highlight min-h-[62px] text-start rounded-2xl border px-4 py-3 shadow-soft ${data.category === c ? 'border-navy bg-secondary' : 'border-border bg-white hover:border-navy/35 hover:bg-secondary/40'}`}>
                   <div className="flex items-center gap-3">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl light-teal">
                       <Icon className="h-5 w-5 text-teal" />
@@ -142,7 +142,7 @@ function PostProjectInner() {
           <div>
             <Label className="text-sm">{t('uploadFilesLabel')}</Label>
             <div className="text-[11px] text-muted-foreground mb-2">{t('uploadHint')}</div>
-            <label className="interactive-card flex items-center justify-center gap-2 h-20 rounded-xl border-2 border-dashed border-border hover:border-navy/40 cursor-pointer bg-secondary/50">
+            <label className="interactive-card tap-highlight flex items-center justify-center gap-2 h-20 rounded-xl border-2 border-dashed border-border hover:border-navy/40 cursor-pointer bg-secondary/50">
               <Upload className="w-4 h-4 text-navy" />
               <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
               <input type="file" multiple className="hidden" onChange={onFiles} accept="image/*,application/pdf" />

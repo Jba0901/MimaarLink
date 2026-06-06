@@ -67,7 +67,7 @@ export default function StartHerePage() {
 function SimpleChoice({ href, icon: Icon, title, desc, cta, accent, Arrow }) {
   return (
     <Link href={href} className="block">
-      <article className="interactive-card flex items-center gap-3 rounded-2xl border border-border bg-white p-3 shadow-soft transition hover:border-navy/25">
+      <article className="interactive-card tap-highlight flex items-center gap-3 rounded-2xl border border-border bg-white p-3 shadow-soft transition hover:border-navy/25">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" style={{ background: `${accent}18` }}>
           <Icon className="h-5 w-5" style={{ color: accent }} />
         </div>

@@ -47,13 +47,13 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
             <BrandText />
           </Link>
           <div className="flex items-center gap-1.5">
-            <Link href="/contractor" className="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/75 hover:bg-white text-navy transition interactive-card">
+            <Link href="/contractor" className="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/75 hover:bg-white text-navy transition interactive-card tap-highlight">
               <Hammer className="w-3.5 h-3.5" />
               <span className="text-xs font-semibold">{t('joinContractor')}</span>
             </Link>
             <button
               onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-              className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/75 hover:bg-white text-navy transition interactive-card"
+              className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/75 hover:bg-white text-navy transition interactive-card tap-highlight"
             >
               <Globe className="w-3.5 h-3.5" />
               <span className="text-xs font-semibold">{t('language')}</span>
@@ -61,7 +61,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
           </div>
         </div>
       </header>
-      <main className="flex-1 w-full pb-36">
+      <main className={`flex-1 w-full ${hideNav ? 'pb-10' : 'pb-36'}`}>
         <div className="max-w-3xl mx-auto px-4 py-3">{children}</div>
         {!hideFooter && <SiteFooter />}
       </main>
@@ -85,7 +85,7 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
     <Link
       href={href}
       className={
-        'flex items-center gap-1.5 px-3.5 py-2 rounded-full transition cta-press ' +
+        'flex items-center gap-1.5 px-3.5 py-2 rounded-full transition cta-press tap-highlight ' +
         (active
           ? 'bg-white text-navy shadow-soft'
           : 'text-white/80 hover:text-white hover:bg-white/10')
@@ -127,7 +127,7 @@ function FooterIcon({ href, label, icon: Icon, external = false }) {
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground shadow-soft transition hover:border-navy/30 hover:text-navy interactive-card"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground shadow-soft transition hover:border-navy/30 hover:text-navy interactive-card tap-highlight"
     >
       <Icon className="h-4 w-4" />
     </a>

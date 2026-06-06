@@ -19,7 +19,7 @@ export default function FormProgress({ step, total, label, title, desc }) {
           return (
             <div
               key={n}
-              className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${n <= step ? 'navy' : 'bg-secondary'}`}
+              className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${n <= step ? 'navy progress-live' : 'bg-secondary'}`}
             />
           );
         })}
