@@ -2,8 +2,9 @@
 import React from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/AppShell';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { useLang } from '@/lib/LangContext';
-import { ArrowRight, Building2, Hammer, MessageCircle } from 'lucide-react';
+import { ArrowRight, Building2, Hammer } from 'lucide-react';
 
 export default function StartHerePage() {
   const { t, dir } = useLang();
@@ -53,7 +54,7 @@ export default function StartHerePage() {
               rel="noreferrer"
               className="mt-2 inline-flex items-center justify-center gap-1.5 text-[13px] font-bold text-navy"
             >
-              <MessageCircle className="h-4 w-4" style={{ color: '#0EB59E' }} />
+              <WhatsAppIcon className="h-4 w-4" style={{ color: '#0EB59E' }} />
               {t('startWhatsapp')}
             </a>
           </div>

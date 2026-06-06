@@ -2,12 +2,13 @@
 import React from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/AppShell';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import {
   Cpu, GitCompare, MapPin as PinIcon, ArrowRight, ArrowUpRight,
   Wrench, Snowflake, Plug, Droplets, Layers, HardHat, Hammer,
-  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, Mail, MessageCircle, Phone, Instagram
+  PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, Mail, Phone, Instagram
 } from 'lucide-react';
 
 const CAT_ICONS = {
@@ -128,7 +129,7 @@ export default function HomePage() {
 
             <div className="mt-4 grid grid-cols-4 gap-2">
               <ContactAction href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} />
-              <ContactAction href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={MessageCircle} external />
+              <ContactAction href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external />
               <ContactAction href="tel:+97466259219" label={t('contactPhone')} icon={Phone} />
               <ContactAction href="https://instagram.com/MimaarLink" label={t('contactInstagram')} icon={Instagram} external />
             </div>

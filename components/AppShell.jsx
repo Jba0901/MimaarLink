@@ -3,7 +3,8 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLang } from '@/lib/LangContext';
-import { Globe, Home, Hammer, FilePlus, Instagram, Mail, MessageCircle, Phone } from 'lucide-react';
+import { Globe, Home, Hammer, FilePlus, Instagram, Mail, Phone } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 function Logo({ height = 40 }) {
   return (
@@ -106,7 +107,7 @@ function SiteFooter() {
       <div className="border-t border-border pt-4 pb-2 flex flex-col items-center gap-2 text-center">
         <div className="flex items-center justify-center gap-2 text-muted-foreground">
           <FooterIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} />
-          <FooterIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={MessageCircle} external />
+          <FooterIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external />
           <FooterIcon href="tel:+97466259219" label={t('contactPhone')} icon={Phone} />
           <FooterIcon href="https://instagram.com/MimaarLink" label={t('contactInstagram')} icon={Instagram} external />
         </div>
