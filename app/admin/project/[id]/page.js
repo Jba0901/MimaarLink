@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, ArrowRight, Plus, ShieldCheck, FileText, Loader2, ExternalLink, Trash2, Paperclip } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CalendarClock, Plus, ShieldCheck, FileText, Loader2, ExternalLink, Trash2, Paperclip } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 
@@ -21,10 +21,20 @@ async function fileToDataURL(file) {
   return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(file); });
 }
 
+const formatAdminTime = (value, lang = 'en') => {
+  if (!value) return '-';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '-';
+  return new Intl.DateTimeFormat(lang === 'ar' ? 'ar-QA' : 'en-QA', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(date);
+};
+
 export default function AdminProjectPage() {
   const { id } = useParams();
   const router = useRouter();
-  const { t, dir } = useLang();
+  const { t, dir, lang } = useLang();
   const [d, setD] = useState(null);
   const [allContractors, setAllContractors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -170,6 +180,10 @@ export default function AdminProjectPage() {
       <Card className="mb-3">
         <CardContent className="p-4 space-y-2">
           <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('projectDetailsTitle')}</div>
+          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <CalendarClock className="h-3.5 w-3.5 shrink-0" />
+            <span>{t('applicationTime')}: {formatAdminTime(project.createdAt, lang)}</span>
+          </div>
           <div className="text-sm leading-relaxed">{project.description}</div>
           {project.timeline && <div className="text-xs"><span className="font-semibold">{t('timeline')}:</span> {project.timeline}</div>}
           {project.budgetRange && <div className="text-xs"><span className="font-semibold">{t('budget')}:</span> {project.budgetRange}</div>}

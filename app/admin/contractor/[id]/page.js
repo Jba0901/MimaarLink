@@ -9,13 +9,23 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, ArrowRight, Loader2, FileText, ShieldCheck, Trash2, Copy, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CalendarClock, Loader2, FileText, ShieldCheck, Trash2, Copy, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
+
+const formatAdminTime = (value, lang = 'en') => {
+  if (!value) return '-';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '-';
+  return new Intl.DateTimeFormat(lang === 'ar' ? 'ar-QA' : 'en-QA', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(date);
+};
 
 export default function AdminContractorPage() {
   const { id } = useParams();
   const router = useRouter();
-  const { t, dir } = useLang();
+  const { t, dir, lang } = useLang();
   const [c, setC] = useState(null);
   const [loading, setLoading] = useState(true);
   const [statusDraft, setStatusDraft] = useState('');
@@ -123,6 +133,10 @@ export default function AdminContractorPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4 space-y-1.5 text-sm">
+          <div className="mb-2 flex items-center gap-1 text-xs text-muted-foreground">
+            <CalendarClock className="h-3.5 w-3.5 shrink-0" />
+            <span>{t('applicationTime')}: {formatAdminTime(c.createdAt, lang)}</span>
+          </div>
           <div><span className="font-semibold">{t('crNumber')}:</span> {c.crNumber}</div>
           <div><span className="font-semibold">{t('contactPerson')}:</span> {c.contactPerson}</div>
           <div><span className="font-semibold">{t('whatsapp')}:</span> {c.whatsapp}</div>

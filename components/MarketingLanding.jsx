@@ -42,7 +42,7 @@ export default function MarketingLanding({
 
           <div className="mt-5">
             <Link href={ctaHref}>
-              <button className="cta-press tap-highlight w-full h-14 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#0EB59E' }}>
+              <button className="cta-press soft-shine tap-highlight w-full h-14 rounded-2xl text-[16px] font-bold flex items-center justify-center gap-2 glow-teal text-white" style={{ background: '#0EB59E' }}>
                 {ctaLabel} <Arrow />
               </button>
             </Link>
@@ -121,7 +121,7 @@ export default function MarketingLanding({
             <h3 className="text-[20px] font-bold leading-tight">{finalTitle}</h3>
             <p className="text-[13px] text-white/70 mt-1">{finalSub}</p>
             <Link href={ctaHref}>
-              <button className="cta-press tap-highlight w-full mt-4 h-12 rounded-2xl text-[15px] font-bold flex items-center justify-center gap-2 text-white glow-teal" style={{ background: '#0EB59E' }}>
+              <button className="cta-press soft-shine tap-highlight w-full mt-4 h-12 rounded-2xl text-[15px] font-bold flex items-center justify-center gap-2 text-white glow-teal" style={{ background: '#0EB59E' }}>
                 {ctaLabel} <Arrow />
               </button>
             </Link>
