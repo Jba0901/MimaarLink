@@ -40,20 +40,20 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
   const { t, lang, setLang } = useLang();
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-40 border-b border-border/45 bg-background/88 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-white/60 bg-background/[0.78] shadow-[0_1px_0_rgba(255,255,255,0.75)] backdrop-blur-xl">
         <div className="max-w-3xl mx-auto px-4 h-[68px] flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="group flex items-center gap-2.5 rounded-full pe-2 transition hover:bg-white/[0.45]">
             <Logo height={42} />
             <BrandText />
           </Link>
           <div className="flex items-center gap-1.5">
-            <Link href="/contractor" className="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/75 hover:bg-white text-navy transition interactive-card tap-highlight">
+            <Link href="/contractor" className="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-full border border-white/70 bg-white/75 text-navy shadow-soft transition hover:bg-white interactive-card tap-highlight">
               <Hammer className="w-3.5 h-3.5" />
               <span className="text-xs font-semibold">{t('joinContractor')}</span>
             </Link>
             <button
               onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-              className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-border bg-white/75 hover:bg-white text-navy transition interactive-card tap-highlight"
+              className="flex items-center gap-1.5 px-3 h-9 rounded-full border border-white/70 bg-white/75 text-navy shadow-soft transition hover:bg-white interactive-card tap-highlight"
             >
               <Globe className="w-3.5 h-3.5" />
               <span className="text-xs font-semibold">{t('language')}</span>
@@ -62,12 +62,12 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         </div>
       </header>
       <main className={`flex-1 w-full ${hideNav ? 'pb-10' : 'pb-36'}`}>
-        <div className="max-w-3xl mx-auto px-4 py-3">{children}</div>
+        <div className="max-w-3xl mx-auto px-4 py-4">{children}</div>
         {!hideFooter && <SiteFooter />}
       </main>
       {!hideNav && (
         <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 safe-pad-bottom">
-          <div className="flex items-center gap-1 navy rounded-full px-1.5 py-1.5 shadow-soft border border-white/5 glass-line">
+          <div className="flex items-center gap-1 navy rounded-full px-1.5 py-1.5 shadow-lift border border-white/5 glass-line">
             <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
             <NavBtn href="/post-project" icon={FilePlus} label={t('postProject')} matches={['/post-project', '/for-projects']} />
             <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} matches={['/contractor', '/for-contractors']} />
@@ -104,7 +104,7 @@ function SiteFooter() {
   const year = new Date().getFullYear();
   return (
     <footer className="max-w-3xl mx-auto px-4 mt-8">
-      <div className="border-t border-border pt-4 pb-2 flex flex-col items-center gap-2 text-center">
+      <div className="border-t border-border/70 pt-4 pb-2 flex flex-col items-center gap-2 text-center">
         <div className="flex items-center justify-center gap-2 text-muted-foreground">
           <FooterIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} />
           <FooterIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external />
@@ -127,7 +127,7 @@ function FooterIcon({ href, label, icon: Icon, external = false }) {
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground shadow-soft transition hover:border-navy/30 hover:text-navy interactive-card tap-highlight"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/80 bg-white/80 text-muted-foreground shadow-soft transition hover:border-navy/30 hover:bg-white hover:text-navy interactive-card tap-highlight"
     >
       <Icon className="h-4 w-4" />
     </a>

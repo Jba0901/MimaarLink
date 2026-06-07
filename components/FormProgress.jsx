@@ -4,9 +4,9 @@ import React from 'react';
 
 export default function FormProgress({ step, total, label, title, desc }) {
   return (
-    <section className="mb-5 rounded-2xl border border-border bg-white p-4 shadow-soft motion-fade-up">
+    <section className="mb-5 rounded-[20px] border border-white/80 quiet-panel p-4 shadow-soft motion-fade-up">
       <div className="mb-3 flex items-center justify-between gap-3">
-        <span className="rounded-full bg-secondary px-3 py-1 text-[11px] font-bold text-navy">
+        <span className="rounded-full bg-white/80 px-3 py-1 text-[11px] font-bold text-navy shadow-soft">
           {label} {step}/{total}
         </span>
         <span className="text-[11px] font-semibold text-muted-foreground">

@@ -129,15 +129,16 @@ export default function ContractorPage() {
 
   return (
     <AppShell hideFooter hideNav>
-      <h1 className="text-2xl font-bold text-navy mb-1 motion-fade-up">{t('contractorTitle')}</h1>
-      <p className="text-sm text-muted-foreground mb-5 motion-fade-up motion-delay-1">{t('contractorSubtitle')}</p>
-      <FormProgress
-        step={step}
-        total={3}
-        label={t('stepLabel')}
-        title={step === 1 ? t('contractorStep1Title') : step === 2 ? t('contractorStep2Title') : t('contractorStep3Title')}
-        desc={step === 1 ? t('contractorStep1Desc') : step === 2 ? t('contractorStep2Desc') : t('contractorStep3Desc')}
-      />
+      <section className="form-shell p-4 sm:p-5">
+        <h1 className="text-2xl font-bold text-navy mb-1 motion-fade-up">{t('contractorTitle')}</h1>
+        <p className="text-sm text-muted-foreground mb-5 motion-fade-up motion-delay-1">{t('contractorSubtitle')}</p>
+        <FormProgress
+          step={step}
+          total={3}
+          label={t('stepLabel')}
+          title={step === 1 ? t('contractorStep1Title') : step === 2 ? t('contractorStep2Title') : t('contractorStep3Title')}
+          desc={step === 1 ? t('contractorStep1Desc') : step === 2 ? t('contractorStep2Desc') : t('contractorStep3Desc')}
+        />
 
       {step === 1 && (
         <div className="space-y-3.5">
@@ -147,7 +148,7 @@ export default function ContractorPage() {
           <RequiredField label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
           <div>
             <Label className="text-sm">{t('email')}</Label>
-            <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
+            <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5 soft-input" />
           </div>
           <div className="pt-2">
             <Button onClick={goNextFromBasics} className="w-full h-11 cta-press" style={{ background: '#142A44' }}>{t('next')}</Button>
@@ -164,7 +165,7 @@ export default function ContractorPage() {
             <div className={`grid grid-cols-2 gap-2 ${triedServices && data.categories.length === 0 ? 'p-1.5 rounded-lg ring-1 ring-red-300' : ''}`}>
               {CATEGORIES.map(c => (
                 <button key={c} type="button" onClick={() => toggleCat(c)}
-                  className={`interactive-card tap-highlight min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 ${data.categories.includes(c) ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-border bg-white text-navy hover:border-navy/35'}`}>
+                  className={`interactive-card tap-highlight min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 ${data.categories.includes(c) ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-white/80 bg-white/80 text-navy hover:border-navy/35 hover:bg-white'}`}>
                   <span className="flex items-center justify-between gap-2">
                     <span>{t(`cat_${c}`)}</span>
                     {data.categories.includes(c) && <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-teal" />}
@@ -185,7 +186,7 @@ export default function ContractorPage() {
                 placeholder={t('otherCategoryPh')}
                 rows={3}
                 maxLength={300}
-                className={`w-full mt-1.5 rounded-md border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-1 ${triedServices && !otherDescValid ? 'border-red-400 focus-visible:ring-red-400' : 'border-input focus-visible:ring-ring'}`}
+                className={`w-full mt-1.5 rounded-xl border bg-white/72 px-3 py-2 text-sm outline-none focus-visible:ring-1 placeholder:text-muted-foreground/30 ${triedServices && !otherDescValid ? 'border-red-400 focus-visible:ring-red-400' : 'border-input focus-visible:ring-ring'}`}
               />
               <div className="text-[11px] text-muted-foreground mt-1">{t('otherCategoryHelp')}</div>
               {triedServices && !otherDescValid && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
@@ -193,11 +194,11 @@ export default function ContractorPage() {
           )}
           <div>
             <Label className="text-sm">{t('serviceAreas')}</Label>
-            <Input value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
+            <Input value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5 soft-input" />
           </div>
           <div>
             <Label className="text-sm">{t('projectSize')}</Label>
-            <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
+            <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5 soft-input" />
           </div>
           <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11 cta-press">{t('back')}</Button>
@@ -218,7 +219,7 @@ export default function ContractorPage() {
                   {!it.required && <span className="text-muted-foreground ms-1">({t('optional')})</span>}
                 </Label>
                 <div className="text-[11px] text-muted-foreground mt-1">{t('uploadHint')}</div>
-                <label className={`interactive-card tap-highlight mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${showError ? 'border-red-400' : 'border-border hover:border-navy/40'}`}>
+                <label className={`interactive-card tap-highlight mt-1.5 flex items-center justify-center gap-2 h-16 rounded-2xl border-2 border-dashed cursor-pointer bg-white/60 ${showError ? 'border-red-400' : 'border-border/80 hover:border-navy/40'}`}>
                   <Upload className="w-4 h-4 text-navy" />
                   <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
                   <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />
@@ -244,6 +245,7 @@ export default function ContractorPage() {
           </div>
         </div>
       )}
+      </section>
     </AppShell>
   );
 }
@@ -269,7 +271,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
         <Label className="text-sm">
           {label} <span className="text-red-600">*</span>
         </Label>
-        <div dir="ltr" className={`mt-1.5 flex items-stretch h-11 rounded-md overflow-hidden border ${showError ? 'border-red-400' : 'border-input'} focus-within:ring-1 ${showError ? 'focus-within:ring-red-400' : 'focus-within:ring-ring'}`}>
+        <div dir="ltr" className={`mt-1.5 flex items-stretch h-11 rounded-xl overflow-hidden border bg-white/72 ${showError ? 'border-red-400' : 'border-input'} focus-within:ring-1 ${showError ? 'focus-within:ring-red-400' : 'focus-within:ring-ring'}`}>
           <div className="px-3 flex items-center bg-secondary text-navy text-sm font-semibold select-none border-e border-input shrink-0">
             {PREFIX}
           </div>
@@ -277,7 +279,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
             value={localPart}
             onChange={e => handleLocalChange(e.target.value)}
             inputMode="tel"
-            className="flex-1 px-3 bg-background outline-none text-sm"
+            className="flex-1 px-3 bg-transparent outline-none text-sm"
           />
         </div>
         {showError && <div className="text-[11px] text-red-600 mt-1">{errMsg}</div>}
@@ -297,7 +299,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
         placeholder={placeholder}
         inputMode={inputMode}
         type={type}
-        className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
+        className={`h-11 mt-1.5 soft-input ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
       />
       {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
     </div>

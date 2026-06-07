@@ -84,17 +84,18 @@ function PostProjectInner() {
 
   return (
     <AppShell hideFooter hideNav>
-      <h1 className="text-2xl font-bold text-navy mb-1 motion-fade-up">{t('postTitle')}</h1>
-      <p className="text-sm text-muted-foreground mb-4 motion-fade-up motion-delay-1">{t('subtitle')}</p>
-      {step < 4 && (
-        <FormProgress
-          step={step}
-          total={3}
-          label={t('stepLabel')}
-          title={step === 1 ? t('projectStep1Title') : step === 2 ? t('projectStep2Title') : t('projectStep3Title')}
-          desc={step === 1 ? t('projectStep1Desc') : step === 2 ? t('projectStep2Desc') : t('projectStep3Desc')}
-        />
-      )}
+      <section className="form-shell p-4 sm:p-5">
+        <h1 className="text-2xl font-bold text-navy mb-1 motion-fade-up">{t('postTitle')}</h1>
+        <p className="text-sm text-muted-foreground mb-4 motion-fade-up motion-delay-1">{t('subtitle')}</p>
+        {step < 4 && (
+          <FormProgress
+            step={step}
+            total={3}
+            label={t('stepLabel')}
+            title={step === 1 ? t('projectStep1Title') : step === 2 ? t('projectStep2Title') : t('projectStep3Title')}
+            desc={step === 1 ? t('projectStep1Desc') : step === 2 ? t('projectStep2Desc') : t('projectStep3Desc')}
+          />
+        )}
 
       {step === 1 && (
         <div>
@@ -104,7 +105,7 @@ function PostProjectInner() {
               const Icon = PROJECT_CATEGORY_ICONS[c] || MoreHorizontal;
               return (
                 <button key={c} type="button" onClick={() => { update('category', c); setStep(2); }}
-                  className={`interactive-card tap-highlight min-h-[62px] text-start rounded-2xl border px-4 py-3 shadow-soft ${data.category === c ? 'border-navy bg-secondary' : 'border-border bg-white hover:border-navy/35 hover:bg-secondary/40'}`}>
+                  className={`interactive-card tap-highlight min-h-[62px] text-start rounded-2xl border px-4 py-3 shadow-soft ${data.category === c ? 'border-navy bg-secondary' : 'border-white/80 bg-white/80 hover:border-navy/35 hover:bg-white'}`}>
                   <div className="flex items-center gap-3">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl light-teal">
                       <Icon className="h-5 w-5 text-teal" />
@@ -127,22 +128,22 @@ function PostProjectInner() {
               value={data.description}
               onChange={e => update('description', e.target.value)}
               placeholder={t('descriptionPh')}
-              className={`mt-1.5 min-h-[110px] ${tried2 && !data.description ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
+              className={`mt-1.5 min-h-[110px] soft-input ${tried2 && !data.description ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
             />
             {tried2 && !data.description && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
           </div>
           <div>
             <Label className="text-sm">{t('timeline')}</Label>
-            <Input value={data.timeline} onChange={e => update('timeline', e.target.value)} placeholder={t('timelinePh')} className="h-11 mt-1.5" />
+            <Input value={data.timeline} onChange={e => update('timeline', e.target.value)} placeholder={t('timelinePh')} className="h-11 mt-1.5 soft-input" />
           </div>
           <div>
             <Label className="text-sm">{t('budget')}</Label>
-            <Input value={data.budgetRange} onChange={e => update('budgetRange', e.target.value)} placeholder={t('budgetPh')} className="h-11 mt-1.5" />
+            <Input value={data.budgetRange} onChange={e => update('budgetRange', e.target.value)} placeholder={t('budgetPh')} className="h-11 mt-1.5 soft-input" />
           </div>
           <div>
             <Label className="text-sm">{t('uploadFilesLabel')}</Label>
             <div className="text-[11px] text-muted-foreground mb-2">{t('uploadHint')}</div>
-            <label className="interactive-card tap-highlight flex items-center justify-center gap-2 h-20 rounded-xl border-2 border-dashed border-border hover:border-navy/40 cursor-pointer bg-secondary/50">
+            <label className="interactive-card tap-highlight flex items-center justify-center gap-2 h-20 rounded-2xl border-2 border-dashed border-border/80 hover:border-navy/40 cursor-pointer bg-white/60">
               <Upload className="w-4 h-4 text-navy" />
               <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
               <input type="file" multiple className="hidden" onChange={onFiles} accept="image/*,application/pdf" />
@@ -209,7 +210,7 @@ function PostProjectInner() {
             </div>
             <h2 className="text-xl font-bold text-navy">{t('confirmation')}</h2>
             <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{t('confirmationDesc')}</p>
-            <div className="mt-4 p-3 rounded-lg bg-secondary text-start">
+              <div className="mt-4 p-3 rounded-2xl bg-secondary text-start">
               <div className="text-[11px] text-muted-foreground mb-1">{t('saveLink')}</div>
               <div className="flex items-center gap-2">
                 <code className="text-[11px] flex-1 truncate">/project/{createdId}</code>
@@ -222,6 +223,7 @@ function PostProjectInner() {
           </CardContent>
         </Card>
       )}
+      </section>
     </AppShell>
   );
 }
@@ -246,7 +248,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
         <Label className="text-sm">
           {label} <span className="text-red-600">*</span>
         </Label>
-        <div dir="ltr" className={`mt-1.5 flex items-stretch h-11 rounded-md overflow-hidden border ${showError ? 'border-red-400' : 'border-input'} focus-within:ring-1 ${showError ? 'focus-within:ring-red-400' : 'focus-within:ring-ring'}`}>
+        <div dir="ltr" className={`mt-1.5 flex items-stretch h-11 rounded-xl overflow-hidden border bg-white/72 ${showError ? 'border-red-400' : 'border-input'} focus-within:ring-1 ${showError ? 'focus-within:ring-red-400' : 'focus-within:ring-ring'}`}>
           <div className="px-3 flex items-center bg-secondary text-navy text-sm font-semibold select-none border-e border-input shrink-0">
             {PREFIX}
           </div>
@@ -254,7 +256,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
             value={localPart}
             onChange={e => handleLocalChange(e.target.value)}
             inputMode="tel"
-            className="flex-1 px-3 bg-background outline-none text-sm"
+            className="flex-1 px-3 bg-transparent outline-none text-sm"
           />
         </div>
         {showError && <div className="text-[11px] text-red-600 mt-1">{errMsg}</div>}
@@ -274,7 +276,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
         placeholder={placeholder}
         inputMode={inputMode}
         type={type}
-        className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
+        className={`h-11 mt-1.5 soft-input ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
       />
       {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
     </div>
