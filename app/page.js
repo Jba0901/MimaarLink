@@ -152,6 +152,8 @@ function BentoCard({ icon: Icon, title, desc, big = false }) {
 }
 
 function ContactAction({ href, label, icon: Icon, external = false }) {
+  const iconSize = Icon === WhatsAppIcon ? 'h-[19px] w-[19px]' : 'h-[15px] w-[15px]';
+
   return (
     <a
       href={href}
@@ -162,7 +164,7 @@ function ContactAction({ href, label, icon: Icon, external = false }) {
       className="interactive-card group flex min-h-[76px] flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-2 py-3 text-center text-white/75 transition hover:bg-white/10 hover:text-white"
     >
       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/10 transition group-hover:bg-white/15">
-        <Icon className="h-[15px] w-[15px]" style={{ color: '#5EEAD4' }} />
+        <Icon className={iconSize} style={{ color: '#5EEAD4' }} />
       </span>
       <span className="max-w-full break-words text-[10.5px] font-semibold leading-tight">{label}</span>
     </a>
