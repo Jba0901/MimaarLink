@@ -120,6 +120,8 @@ function SiteFooter() {
 }
 
 function FooterIcon({ href, label, icon: Icon, external = false }) {
+  const iconSize = Icon === WhatsAppIcon ? 'h-[18px] w-[18px]' : 'h-[15px] w-[15px]';
+
   return (
     <a
       href={href}
@@ -129,7 +131,7 @@ function FooterIcon({ href, label, icon: Icon, external = false }) {
       rel={external ? 'noreferrer' : undefined}
       className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground shadow-soft transition hover:border-navy/30 hover:text-navy interactive-card tap-highlight"
     >
-      <Icon className="h-4 w-4" />
+      <Icon className={iconSize} />
     </a>
   );
 }

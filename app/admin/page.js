@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { ChevronRight, Copy, ExternalLink, Lock, Loader2, ShieldCheck } from 'lucide-react';
+import { CalendarClock, ChevronRight, Copy, ExternalLink, Lock, Loader2, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
 const statusColor = (s) => {
@@ -21,8 +21,18 @@ const statusColor = (s) => {
   return '#0D1B2A';
 };
 
+const formatAdminTime = (value, lang = 'en') => {
+  if (!value) return '-';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '-';
+  return new Intl.DateTimeFormat(lang === 'ar' ? 'ar-QA' : 'en-QA', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(date);
+};
+
 function AdminInner() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const router = useRouter();
   const sp = useSearchParams();
   const initialTab = sp.get('tab') === 'contractors' ? 'contractors' : 'projects';
@@ -182,6 +192,10 @@ function AdminInner() {
                       </div>
                       <div className="text-xs text-muted-foreground mt-0.5 truncate">{p.location}</div>
                       <div className="text-xs text-muted-foreground truncate">{p.description}</div>
+                      <div className="mt-1.5 flex items-center gap-1 text-[11px] text-muted-foreground">
+                        <CalendarClock className="h-3.5 w-3.5 shrink-0" />
+                        <span>{t('applicationTime')}: {formatAdminTime(p.createdAt, lang)}</span>
+                      </div>
                     </div>
                     <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
                   </div>
@@ -217,6 +231,10 @@ function AdminInner() {
                         {c.verificationStatus === 'verified' && <ShieldCheck className="w-3.5 h-3.5" style={{ color: '#0FAE96' }} />}
                       </div>
                       <div className="text-xs text-muted-foreground mt-0.5">{c.contactPerson} · {c.whatsapp}</div>
+                      <div className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground">
+                        <CalendarClock className="h-3.5 w-3.5 shrink-0" />
+                        <span>{t('applicationTime')}: {formatAdminTime(c.createdAt, lang)}</span>
+                      </div>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {(c.categories || []).slice(0,3).map(cat => (
                           <span key={cat} className="text-[10px] bg-secondary text-navy px-1.5 py-0.5 rounded">{t(`cat_${cat}`)}</span>
