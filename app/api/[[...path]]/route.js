@@ -154,6 +154,13 @@ async function ensureSchema(db) {
     create index if not exists bids_project_id_idx on bids(project_id);
     create index if not exists bid_invites_project_id_idx on bid_invites(project_id);
     create index if not exists admin_notes_project_id_idx on admin_notes(project_id);
+
+    alter table requesters enable row level security;
+    alter table projects enable row level security;
+    alter table contractors enable row level security;
+    alter table bid_invites enable row level security;
+    alter table bids enable row level security;
+    alter table admin_notes enable row level security;
   `);
 
   await db.query(`
