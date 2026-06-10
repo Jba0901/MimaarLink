@@ -54,7 +54,7 @@ export default function StartHerePage() {
               rel="noreferrer"
               className="mt-2 inline-flex items-center justify-center gap-1.5 text-[13px] font-bold text-navy"
             >
-              <WhatsAppIcon className="h-[18px] w-[18px]" style={{ color: '#0EB59E' }} />
+              <WhatsAppIcon className="h-4 w-4" style={{ color: '#0EB59E' }} />
               {t('startWhatsapp')}
             </a>
           </div>
