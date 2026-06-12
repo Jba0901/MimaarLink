@@ -9,7 +9,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, ArrowRight, CalendarClock, Loader2, FileText, ShieldCheck, Trash2, Copy, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Building2, CalendarClock, ClipboardCheck, Loader2, FileText, ShieldCheck, Trash2, Copy, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
 
 const formatAdminTime = (value, lang = 'en') => {
@@ -21,6 +21,21 @@ const formatAdminTime = (value, lang = 'en') => {
     timeStyle: 'short',
   }).format(date);
 };
+
+const providerTypeLabel = (provider, t) => (
+  provider?.providerType === 'consultant' ? t('providerTypeConsultant') : t('providerTypeContractor')
+);
+
+const consultantGradeLabel = (grade, t) => {
+  if (grade === 'grade_a') return t('gradeA');
+  if (grade === 'grade_b') return t('gradeB');
+  if (grade === 'grade_c') return t('gradeC');
+  return t('gradeUnknown');
+};
+
+const providerServices = (provider) => (
+  provider?.providerType === 'consultant' ? (provider.consultantServices || []) : (provider.categories || [])
+);
 
 export default function AdminContractorPage() {
   const { id } = useParams();
@@ -96,6 +111,9 @@ export default function AdminContractorPage() {
   };
 
   const Back = dir === 'rtl' ? ArrowRight : ArrowLeft;
+  const isConsultant = c.providerType === 'consultant';
+  const TypeIcon = isConsultant ? ClipboardCheck : Building2;
+  const serviceKeys = providerServices(c);
   const documentChecklist = [
     { key: 'cr', label: t('uploadCR'), required: true },
     { key: 'trade', label: t('uploadTrade'), required: false },
@@ -137,18 +155,25 @@ export default function AdminContractorPage() {
             <CalendarClock className="h-3.5 w-3.5 shrink-0" />
             <span>{t('applicationTime')}: {formatAdminTime(c.createdAt, lang)}</span>
           </div>
+          <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-border bg-secondary px-2.5 py-1 text-[11px] font-semibold text-navy">
+            <TypeIcon className="h-3.5 w-3.5" />
+            {providerTypeLabel(c, t)}
+          </div>
           <div><span className="font-semibold">{t('crNumber')}:</span> {c.crNumber}</div>
           <div><span className="font-semibold">{t('contactPerson')}:</span> {c.contactPerson}</div>
           <div><span className="font-semibold">{t('whatsapp')}:</span> {c.whatsapp}</div>
           {c.email && <div><span className="font-semibold">{t('email')}:</span> {c.email}</div>}
           <div><span className="font-semibold">{t('serviceAreas')}:</span> {c.serviceAreas}</div>
           <div><span className="font-semibold">{t('projectSize')}:</span> {c.projectSizeRange}</div>
+          {isConsultant && (
+            <div><span className="font-semibold">{t('consultantGrade')}:</span> {consultantGradeLabel(c.consultantGrade, t)}</div>
+          )}
           <div className="flex flex-wrap gap-1 pt-1">
-            {(c.categories || []).map(cat => (
+            {serviceKeys.map(cat => (
               <span key={cat} className="text-[10px] bg-secondary text-navy px-1.5 py-0.5 rounded">{t(`cat_${cat}`)}</span>
             ))}
           </div>
-          {c.categories?.includes('other') && c.otherCategoryDesc && (
+          {serviceKeys.includes('other') && c.otherCategoryDesc && (
             <div className="pt-2 mt-1 border-t border-border">
               <div className="text-[10px] uppercase tracking-wide font-semibold text-muted-foreground">{t('otherCategoryLabel')}</div>
               <div className="text-[12px] text-navy mt-0.5 whitespace-pre-wrap leading-relaxed">{c.otherCategoryDesc}</div>
@@ -169,7 +194,7 @@ export default function AdminContractorPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('contractorStatusLink')}</div>
+          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('providerStatusLink')}</div>
           <div className="mt-2 flex items-center gap-1.5">
             <code className="min-w-0 flex-1 truncate text-[11px] text-navy">/contractor-status/{id}</code>
             <Button variant="outline" size="sm" className="h-8 px-2 text-[11px]" onClick={copyContractorLink}>

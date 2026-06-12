@@ -31,6 +31,16 @@ const formatAdminTime = (value, lang = 'en') => {
   }).format(date);
 };
 
+const providerTypeLabel = (provider, t) => (
+  provider?.providerType === 'consultant' ? t('providerTypeConsultant') : t('providerTypeContractor')
+);
+
+const providerOptionLabel = (provider, t) => {
+  if (!provider) return '';
+  const status = provider.verificationStatus ? t(`cstatus_${provider.verificationStatus}`) : '';
+  return `${provider.companyName} - ${providerTypeLabel(provider, t)}${status ? ` - ${status}` : ''}`;
+};
+
 export default function AdminProjectPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -224,12 +234,12 @@ export default function AdminProjectPage() {
 
       <div className="grid grid-cols-2 gap-2 mb-3">
         <Dialog open={openAssign} onOpenChange={setOpenAssign}>
-          <DialogTrigger asChild><Button variant="outline" className="h-11"><Plus className="w-4 h-4 me-1" />{t('assignContractor')}</Button></DialogTrigger>
+          <DialogTrigger asChild><Button variant="outline" className="h-11"><Plus className="w-4 h-4 me-1" />{t('assignProvider')}</Button></DialogTrigger>
           <DialogContent dir={dir}>
-            <DialogHeader><DialogTitle>{t('assignContractor')}</DialogTitle></DialogHeader>
+            <DialogHeader><DialogTitle>{t('assignProvider')}</DialogTitle></DialogHeader>
             <Select value={assignContractor} onValueChange={setAssignContractor}>
-              <SelectTrigger><SelectValue placeholder={t('selectContractor')} /></SelectTrigger>
-              <SelectContent>{allContractors.map(c => <SelectItem key={c.id} value={c.id}>{c.companyName} {c.verificationStatus !== 'verified' ? `(${t('notVerified')})` : ''}</SelectItem>)}</SelectContent>
+              <SelectTrigger><SelectValue placeholder={t('selectProvider')} /></SelectTrigger>
+              <SelectContent>{allContractors.map(c => <SelectItem key={c.id} value={c.id}>{providerOptionLabel(c, t)}</SelectItem>)}</SelectContent>
             </Select>
             <DialogFooter><Button onClick={submitAssign}>{t('save')}</Button></DialogFooter>
           </DialogContent>
@@ -242,10 +252,10 @@ export default function AdminProjectPage() {
             <DialogHeader><DialogTitle>{t('addBidFor')}</DialogTitle></DialogHeader>
             <div className="space-y-2.5">
               <div>
-                <Label className="text-xs">{t('selectContractor')}</Label>
+                <Label className="text-xs">{t('selectProvider')}</Label>
                 <Select value={bidForm.contractorId} onValueChange={v => setBidForm(f => ({...f, contractorId: v}))}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>{allContractors.map(c => <SelectItem key={c.id} value={c.id}>{c.companyName}</SelectItem>)}</SelectContent>
+                  <SelectContent>{allContractors.map(c => <SelectItem key={c.id} value={c.id}>{providerOptionLabel(c, t)}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
               <div><Label className="text-xs">{t('price')}</Label><Input type="number" value={bidForm.price} onChange={e => setBidForm(f => ({...f, price: e.target.value}))} /></div>
@@ -261,12 +271,17 @@ export default function AdminProjectPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('invitedContractors')} ({invites.length})</div>
+          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('invitedProviders')} ({invites.length})</div>
           {invites.length === 0 && <p className="text-xs text-muted-foreground">—</p>}
           <div className="space-y-1.5">
             {invites.map(inv => (
               <div key={inv.id} className="text-sm flex items-center justify-between bg-secondary rounded-lg p-2">
-                <span className="text-navy truncate flex-1 me-2">{cmap[inv.contractorId]?.companyName || inv.contractorId}</span>
+                <div className="min-w-0 flex-1 me-2">
+                  <span className="block text-navy truncate">{cmap[inv.contractorId]?.companyName || inv.contractorId}</span>
+                  {cmap[inv.contractorId] && (
+                    <span className="block text-[10px] text-muted-foreground">{providerTypeLabel(cmap[inv.contractorId], t)}</span>
+                  )}
+                </div>
                 <div className="flex items-center gap-1.5 shrink-0">
                   <Badge variant="outline" className="text-[10px]">{inv.responseStatus}</Badge>
                   <button onClick={() => deleteInvite(inv.id)} className="w-7 h-7 rounded-md bg-white hover:bg-red-50 flex items-center justify-center text-red-600" title={t('delete')}>
@@ -292,6 +307,9 @@ export default function AdminProjectPage() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5">
                         <span className="font-semibold text-navy text-sm truncate">{cmap[b.contractorId]?.companyName}</span>
+                        {cmap[b.contractorId] && (
+                          <span className="text-[10px] bg-white text-navy px-1.5 py-0.5 rounded-full">{providerTypeLabel(cmap[b.contractorId], t)}</span>
+                        )}
                         {fileCount > 0 && (
                           <span className="inline-flex items-center gap-0.5 text-[10px] bg-white text-navy px-1.5 py-0.5 rounded-full">
                             <Paperclip className="w-2.5 h-2.5" />{fileCount}

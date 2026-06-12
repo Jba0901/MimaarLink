@@ -9,12 +9,12 @@ import {
   Cpu, GitCompare, MapPin as PinIcon, ArrowRight, ArrowUpRight,
   Wrench, Snowflake, Plug, Droplets, Layers, HardHat, Hammer,
   PaintBucket, Square, Frame, MoreHorizontal, Sparkles, ShieldCheck, Mail, Phone, Instagram,
-  FileText, CheckCircle2
+  FileText, CheckCircle2, ClipboardCheck
 } from 'lucide-react';
 
 const CAT_ICONS = {
   mep: Wrench, hvac: Snowflake, electrical: Plug, plumbing: Droplets, fitout: Layers,
-  civil: HardHat, maintenance: Wrench, joinery: Hammer, flooring: Square, painting: PaintBucket, aluminum: Frame, other: MoreHorizontal,
+  civil: HardHat, consultancy: ClipboardCheck, maintenance: Wrench, joinery: Hammer, flooring: Square, painting: PaintBucket, aluminum: Frame, other: MoreHorizontal,
 };
 
 export default function HomePage() {

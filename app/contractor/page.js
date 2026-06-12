@@ -1,14 +1,16 @@
 'use client';
-import React, { useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import FormProgress from '@/components/FormProgress';
 import { useLang } from '@/lib/LangContext';
-import { CATEGORIES } from '@/lib/i18n';
+import { CATEGORIES, CONSULTANT_CATEGORIES, CONSULTANT_GRADES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle2, Upload, X, Loader2, Copy } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { CheckCircle2, Upload, X, Loader2, Copy, Building2, ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 
@@ -17,7 +19,17 @@ async function fileToDataURL(file) {
 }
 
 export default function ContractorPage() {
+  return (
+    <Suspense fallback={null}>
+      <ContractorApplicationInner />
+    </Suspense>
+  );
+}
+
+function ContractorApplicationInner() {
   const { t } = useLang();
+  const sp = useSearchParams();
+  const requestedType = sp.get('type') === 'consultant' ? 'consultant' : 'contractor';
   const [step, setStep] = useState(1);
   const [done, setDone] = useState(false);
   const [createdId, setCreatedId] = useState(null);
@@ -26,17 +38,44 @@ export default function ContractorPage() {
   const [triedServices, setTriedServices] = useState(false);
   const [triedDocuments, setTriedDocuments] = useState(false);
   const [data, setData] = useState({
+    providerType: requestedType,
     companyName: '', crNumber: '', contactPerson: '', whatsapp: '+974 ', email: '',
-    categories: [], otherCategoryDesc: '', serviceAreas: '', projectSizeRange: '', documents: [],
+    categories: [], consultantGrade: requestedType === 'consultant' ? 'unknown' : '', consultantServices: [],
+    otherCategoryDesc: '', serviceAreas: '', projectSizeRange: '', documents: [],
   });
 
+  useEffect(() => {
+    setData(d => ({
+      ...d,
+      providerType: requestedType,
+      consultantGrade: requestedType === 'consultant' ? (d.consultantGrade || 'unknown') : '',
+      consultantServices: requestedType === 'consultant' ? d.consultantServices : [],
+    }));
+  }, [requestedType]);
+
   const update = (k, v) => setData(d => ({ ...d, [k]: v }));
+  const isConsultant = data.providerType === 'consultant';
+  const serviceOptions = isConsultant ? CONSULTANT_CATEGORIES : CATEGORIES;
+  const serviceLabel = isConsultant ? t('consultantServicesLabel') : t('serviceCategoriesLabel');
+
+  const selectProviderType = (providerType) => {
+    setData(d => ({
+      ...d,
+      providerType,
+      categories: [],
+      consultantServices: [],
+      consultantGrade: providerType === 'consultant' ? 'unknown' : '',
+      otherCategoryDesc: '',
+    }));
+  };
+
   const toggleCat = (c) => {
     const isRemoving = data.categories.includes(c);
     const next = isRemoving ? data.categories.filter(x => x !== c) : [...data.categories, c];
     setData(d => ({
       ...d,
       categories: next,
+      consultantServices: d.providerType === 'consultant' ? next : [],
       // clear the "other" description if user unchecks "other"
       otherCategoryDesc: c === 'other' && isRemoving ? '' : d.otherCategoryDesc,
     }));
@@ -107,11 +146,11 @@ export default function ContractorPage() {
             <CheckCircle2 className="w-7 h-7" style={{ color: '#0FAE96' }} />
           </div>
           <h2 className="text-xl font-bold text-navy">{t('contractorDone')}</h2>
-          <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{t('contractorDoneDesc')}</p>
+          <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{isConsultant ? t('consultantDoneDesc') : t('contractorDoneDesc')}</p>
           {createdId && (
             <>
               <div className="mt-4 p-3 rounded-lg bg-secondary text-start">
-                <div className="text-[11px] text-muted-foreground mb-1">{t('saveContractorLink')}</div>
+                <div className="text-[11px] text-muted-foreground mb-1">{t('saveProviderLink')}</div>
                 <div className="flex items-center gap-2">
                   <code className="text-[11px] flex-1 truncate">/contractor-status/{createdId}</code>
                   <Button size="sm" variant="outline" onClick={() => { navigator.clipboard.writeText(window.location.origin + '/contractor-status/' + createdId); toast.success(t('linkCopied')); }}>
@@ -119,7 +158,7 @@ export default function ContractorPage() {
                   </Button>
                 </div>
               </div>
-              <Button onClick={() => window.location.href = '/contractor-status/' + createdId} className="w-full mt-4 h-11" style={{ background: '#142A44' }}>{t('viewContractorStatus')}</Button>
+              <Button onClick={() => window.location.href = '/contractor-status/' + createdId} className="w-full mt-4 h-11" style={{ background: '#142A44' }}>{t('viewProviderStatus')}</Button>
             </>
           )}
         </CardContent>
@@ -129,8 +168,8 @@ export default function ContractorPage() {
 
   return (
     <AppShell hideFooter hideNav>
-      <h1 className="text-2xl font-bold text-navy mb-1 motion-fade-up">{t('contractorTitle')}</h1>
-      <p className="text-sm text-muted-foreground mb-5 motion-fade-up motion-delay-1">{t('contractorSubtitle')}</p>
+      <h1 className="text-2xl font-bold text-navy mb-1 motion-fade-up">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</h1>
+      <p className="text-sm text-muted-foreground mb-5 motion-fade-up motion-delay-1">{isConsultant ? t('consultantSubtitle') : t('contractorSubtitle')}</p>
       <FormProgress
         step={step}
         total={3}
@@ -141,6 +180,25 @@ export default function ContractorPage() {
 
       {step === 1 && (
         <div className="space-y-3.5">
+          <div>
+            <Label className="text-sm mb-2 block">{t('providerTypeLabel')}</Label>
+            <div className="grid grid-cols-2 gap-2">
+              <ProviderTypeButton
+                active={data.providerType === 'contractor'}
+                icon={Building2}
+                title={t('providerTypeContractor')}
+                desc={t('providerTypeContractorDesc')}
+                onClick={() => selectProviderType('contractor')}
+              />
+              <ProviderTypeButton
+                active={data.providerType === 'consultant'}
+                icon={ClipboardCheck}
+                title={t('providerTypeConsultant')}
+                desc={t('providerTypeConsultantDesc')}
+                onClick={() => selectProviderType('consultant')}
+              />
+            </div>
+          </div>
           <RequiredField label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedBasics} t={t} />
           <RequiredField label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedBasics} t={t} />
           <RequiredField label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedBasics} t={t} />
@@ -157,12 +215,27 @@ export default function ContractorPage() {
 
       {step === 2 && (
         <div className="space-y-3.5">
+          {isConsultant && (
+            <div>
+              <Label className="text-sm">{t('consultantGrade')}</Label>
+              <Select value={data.consultantGrade || 'unknown'} onValueChange={v => update('consultantGrade', v)}>
+                <SelectTrigger className="h-11 mt-1.5">
+                  <SelectValue placeholder={t('consultantGradePh')} />
+                </SelectTrigger>
+                <SelectContent>
+                  {CONSULTANT_GRADES.map(g => (
+                    <SelectItem key={g} value={g}>{t(g === 'unknown' ? 'gradeUnknown' : g === 'grade_a' ? 'gradeA' : g === 'grade_b' ? 'gradeB' : 'gradeC')}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
           <div>
             <Label className="text-sm mb-2 block">
-              {t('serviceCategoriesLabel')} <span className="text-red-600">*</span>
+              {serviceLabel} <span className="text-red-600">*</span>
             </Label>
             <div className={`grid grid-cols-2 gap-2 ${triedServices && data.categories.length === 0 ? 'p-1.5 rounded-lg ring-1 ring-red-300' : ''}`}>
-              {CATEGORIES.map(c => (
+              {serviceOptions.map(c => (
                 <button key={c} type="button" onClick={() => toggleCat(c)}
                   className={`interactive-card tap-highlight min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 ${data.categories.includes(c) ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-border bg-white text-navy hover:border-navy/35'}`}>
                   <span className="flex items-center justify-between gap-2">
@@ -301,5 +374,24 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
       />
       {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
     </div>
+  );
+}
+
+function ProviderTypeButton({ active, icon: Icon, title, desc, onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`interactive-card tap-highlight rounded-2xl border p-3 text-start transition ${active ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-border bg-white text-navy hover:border-navy/35'}`}
+    >
+      <span className="flex items-center justify-between gap-2">
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ background: active ? '#D0F2EE' : 'rgba(13,27,42,0.06)' }}>
+          <Icon className="h-4 w-4" style={{ color: active ? '#0EB59E' : '#0D1B2A' }} />
+        </span>
+        {active && <CheckCircle2 className="h-4 w-4 shrink-0 text-teal" />}
+      </span>
+      <span className="mt-2 block text-[13px] font-bold leading-tight">{title}</span>
+      <span className="mt-1 block text-[11px] leading-relaxed text-muted-foreground">{desc}</span>
+    </button>
   );
 }

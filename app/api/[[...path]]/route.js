@@ -103,12 +103,15 @@ async function ensureSchema(db) {
 
     create table if not exists contractors (
       id text primary key,
+      provider_type text not null default 'contractor',
       company_name text not null default '',
       cr_number text not null default '',
       contact_person text not null default '',
       whatsapp text not null default '',
       email text not null default '',
       categories jsonb not null default '[]'::jsonb,
+      consultant_grade text not null default '',
+      consultant_services jsonb not null default '[]'::jsonb,
       other_category_desc text not null default '',
       service_areas text not null default '',
       project_size_range text not null default '',
@@ -166,6 +169,15 @@ async function ensureSchema(db) {
   await db.query(`
     alter table contractors
     add column if not exists document_checks jsonb not null default '{}'::jsonb;
+
+    alter table contractors
+    add column if not exists provider_type text not null default 'contractor';
+
+    alter table contractors
+    add column if not exists consultant_grade text not null default '';
+
+    alter table contractors
+    add column if not exists consultant_services jsonb not null default '[]'::jsonb;
   `);
 
   await ensureStorageBucket(db);
@@ -304,12 +316,15 @@ function contractorFromRow(row) {
   if (!row) return null;
   return {
     id: row.id,
+    providerType: row.provider_type || 'contractor',
     companyName: row.company_name,
     crNumber: row.cr_number,
     contactPerson: row.contact_person,
     whatsapp: row.whatsapp,
     email: row.email,
     categories: storedArray(row.categories),
+    consultantGrade: row.consultant_grade || '',
+    consultantServices: storedArray(row.consultant_services),
     otherCategoryDesc: row.other_category_desc,
     serviceAreas: row.service_areas,
     projectSizeRange: row.project_size_range,
@@ -326,8 +341,11 @@ function contractorStatusFromRow(row) {
   if (!contractor) return null;
   return {
     id: contractor.id,
+    providerType: contractor.providerType,
     companyName: contractor.companyName,
     categories: contractor.categories,
+    consultantGrade: contractor.consultantGrade,
+    consultantServices: contractor.consultantServices,
     otherCategoryDesc: contractor.otherCategoryDesc,
     serviceAreas: contractor.serviceAreas,
     projectSizeRange: contractor.projectSizeRange,
@@ -727,12 +745,15 @@ export async function POST(request, { params }) {
       const documentChecks = defaultDocumentChecks(documents);
       const contractor = {
         id: contractorId,
+        providerType: body.providerType === 'consultant' ? 'consultant' : 'contractor',
         companyName: body.companyName || '',
         crNumber: body.crNumber || '',
         contactPerson: body.contactPerson || '',
         whatsapp: body.whatsapp || '',
         email: body.email || '',
         categories: Array.isArray(body.categories) ? body.categories : [],
+        consultantGrade: body.consultantGrade || '',
+        consultantServices: Array.isArray(body.consultantServices) ? body.consultantServices : [],
         otherCategoryDesc: body.otherCategoryDesc || '',
         serviceAreas: body.serviceAreas || '',
         projectSizeRange: body.projectSizeRange || '',
@@ -746,20 +767,24 @@ export async function POST(request, { params }) {
       await db.query(
         `
         insert into contractors (
-          id, company_name, cr_number, contact_person, whatsapp, email, categories,
-          other_category_desc, service_areas, project_size_range, documents,
-          document_checks, verification_status, created_at, updated_at
+          id, provider_type, company_name, cr_number, contact_person, whatsapp, email,
+          categories, consultant_grade, consultant_services, other_category_desc,
+          service_areas, project_size_range, documents, document_checks,
+          verification_status, created_at, updated_at
         )
-        values ($1, $2, $3, $4, $5, $6, $7::jsonb, $8, $9, $10, $11::jsonb, $12::jsonb, $13, $14, $15)
+        values ($1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9, $10::jsonb, $11, $12, $13, $14::jsonb, $15::jsonb, $16, $17, $18)
         `,
         [
           contractor.id,
+          contractor.providerType,
           contractor.companyName,
           contractor.crNumber,
           contractor.contactPerson,
           contractor.whatsapp,
           contractor.email,
           JSON.stringify(contractor.categories),
+          contractor.consultantGrade,
+          JSON.stringify(contractor.consultantServices),
           contractor.otherCategoryDesc,
           contractor.serviceAreas,
           contractor.projectSizeRange,

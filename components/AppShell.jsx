@@ -70,7 +70,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
           <div className="flex items-center gap-1 navy rounded-full px-1.5 py-1.5 shadow-soft border border-white/5 glass-line">
             <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
             <NavBtn href="/post-project" icon={FilePlus} label={t('postProject')} matches={['/post-project', '/for-projects']} />
-            <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} matches={['/contractor', '/for-contractors']} />
+            <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} matches={['/contractor', '/consultant', '/for-contractors']} />
           </div>
         </nav>
       )}
