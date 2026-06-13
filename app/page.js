@@ -9,7 +9,7 @@ import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import {
   Cpu, GitCompare, MapPin, ArrowRight, ArrowUpRight, Building2,
   Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal,
-  Hammer, ShieldCheck, Mail, Phone, Instagram, CheckCircle2, FileText, Users
+  Hammer, ShieldCheck, Mail, Phone, Instagram, CheckCircle2, FileText
 } from 'lucide-react';
 
 const CAT_ICONS = {
@@ -29,7 +29,7 @@ export default function HomePage() {
 
   return (
     <AppShell hideNav wide>
-      <div className="v2-ambient -mx-4 sm:-mx-6 px-4 sm:px-6">
+      <div className="v2-ambient overflow-hidden rounded-[28px] px-1 sm:px-2">
         {/* ============ HERO ============ */}
         <section className="relative z-10 pt-6 pb-10 lg:pt-14 lg:pb-14">
           <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center">
@@ -52,9 +52,13 @@ export default function HomePage() {
                 <Link href="/post-project" className="btn btn-primary soft-shine px-7 text-[15px]" style={{ minHeight: 52 }}>
                   {t('postProject')} <Arrow />
                 </Link>
-                <Link href="/contractor" className="btn btn-outline px-7 text-[14px]" style={{ minHeight: 52 }}>
+                <Link href="/contractor" className="btn btn-outline px-6 text-[14px]" style={{ minHeight: 52 }}>
                   <Hammer className="w-4 h-4 shrink-0" />
-                  {t('joinContractor')}
+                  {t('providerTypeContractor')}
+                </Link>
+                <Link href="/contractor?type=consultant" className="btn btn-outline px-6 text-[14px]" style={{ minHeight: 52 }}>
+                  <ClipboardCheck className="w-4 h-4 shrink-0" />
+                  {t('providerTypeConsultant')}
                 </Link>
               </div>
 
@@ -137,42 +141,28 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ AUDIENCE SPLIT ============ */}
-      <section className="py-10 lg:py-14">
-        <div className="grid lg:grid-cols-2 gap-4">
-          {/* owners */}
+      {/* ============ ROLE SELECTOR ============ */}
+      <section className="py-8 lg:py-12">
+        <Reveal>
+          <div className="mb-4 flex items-end justify-between gap-3">
+            <div>
+              <div className="eyebrow mb-1.5">{t('startEyebrow')}</div>
+              <h2 className="display-title text-[22px] sm:text-[28px]">{t('startTitle')}</h2>
+            </div>
+            <Link href="/start-here" className="hidden sm:inline-flex items-center gap-1 text-[12.5px] font-bold text-[#0B8E7C] tap-highlight">
+              {t('seeAll')} <ArrowUpRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+        </Reveal>
+        <div className="grid gap-2.5 lg:grid-cols-3">
           <Reveal>
-            <div className="relative h-full rounded-[26px] border border-[#0EB59E]/20 p-7 sm:p-9 overflow-hidden" style={{ background: 'linear-gradient(150deg, #EAF9F6 0%, #F2FBF9 60%, #FFFFFF 100%)' }}>
-              <div className="eyebrow mb-3">{t('startProjectEyebrow')}</div>
-              <h3 className="display-title text-[23px] sm:text-[27px]">{t('startProjectTitle')}</h3>
-              <p className="mt-2.5 text-[14px] text-muted-foreground leading-relaxed max-w-sm">{t('startProjectDesc')}</p>
-              <Link href="/post-project" className="btn btn-primary mt-6 px-6 text-[14px]" style={{ minHeight: 46 }}>
-                {t('startProjectCta')} <Arrow />
-              </Link>
-              <Building2 className="absolute bottom-[-22px] w-32 h-32 pointer-events-none select-none" style={{ color: 'rgba(14,181,158,0.08)', insetInlineEnd: '-10px' }} />
-            </div>
+            <RoleCard href="/post-project" icon={Building2} eyebrow={t('startProjectEyebrow')} title={t('startProjectTitle')} desc={t('startProjectDesc')} cta={t('startProjectCta')} accent="#0EB59E" Arrow={Arrow} />
           </Reveal>
-
-          {/* providers: contractor + consultant */}
-          <Reveal delay={120}>
-            <div className="relative h-full rounded-[26px] premium-panel glass-line text-white p-7 sm:p-9 overflow-hidden">
-              <div className="inline-flex items-center text-[12px] font-bold mb-3" style={{ color: '#FFD27A' }}>{t('joinContractor')}</div>
-              <h3 className="text-[23px] sm:text-[27px] font-extrabold leading-tight">{t('startContractorTitle')}</h3>
-              <p className="mt-2.5 text-[14px] text-white/65 leading-relaxed max-w-sm">{t('startContractorDesc')}</p>
-              <div className="mt-6 flex flex-col sm:flex-row sm:items-center gap-3">
-                <Link href="/contractor" className="btn btn-amber px-6 text-[14px]" style={{ minHeight: 46 }}>
-                  {t('startContractorCta')} <Arrow />
-                </Link>
-                <Link
-                  href="/contractor?type=consultant"
-                  className="inline-flex items-center justify-center gap-1.5 text-[13px] font-bold text-white/70 underline underline-offset-4 decoration-white/25 transition-colors hover:text-white tap-highlight"
-                >
-                  <ClipboardCheck className="h-3.5 w-3.5 shrink-0" />
-                  {t('startConsultantCta')}
-                </Link>
-              </div>
-              <Users className="absolute bottom-[-16px] w-32 h-32 pointer-events-none select-none" style={{ color: 'rgba(255,255,255,0.05)', insetInlineEnd: '-8px' }} />
-            </div>
+          <Reveal delay={80}>
+            <RoleCard href="/contractor" icon={Hammer} eyebrow={t('startContractorEyebrow')} title={t('startContractorTitle')} desc={t('startContractorDesc')} cta={t('startContractorCta')} accent="#FFB638" Arrow={Arrow} />
+          </Reveal>
+          <Reveal delay={160}>
+            <RoleCard href="/contractor?type=consultant" icon={ClipboardCheck} eyebrow={t('startConsultantEyebrow')} title={t('startConsultantTitle')} desc={t('startConsultantDesc')} cta={t('startConsultantCta')} accent="#142A44" Arrow={Arrow} />
           </Reveal>
         </div>
       </section>
@@ -211,6 +201,29 @@ function ContactAction({ href, label, icon: Icon, external = false }) {
       </span>
       <span className="text-[12px] font-bold text-navy leading-tight">{label}</span>
     </a>
+  );
+}
+
+function RoleCard({ href, icon: Icon, eyebrow, title, desc, cta, accent, Arrow }) {
+  return (
+    <Link href={href} className="block h-full tap-highlight">
+      <article
+        className="interactive-card group flex h-full min-h-[118px] items-center gap-3 rounded-[22px] border border-border bg-white p-3.5 shadow-soft hover:shadow-card lg:min-h-[154px] lg:flex-col lg:items-start lg:p-5"
+        style={{ borderInlineStartWidth: 4, borderInlineStartColor: accent }}
+      >
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl lg:h-12 lg:w-12" style={{ background: `${accent}14` }}>
+          <Icon className="h-5 w-5 lg:h-[22px] lg:w-[22px]" style={{ color: accent }} />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="text-[10.5px] font-extrabold leading-none lg:text-[11px]" style={{ color: accent }}>{eyebrow}</div>
+          <h3 className="mt-1 truncate text-[15.5px] font-extrabold leading-tight text-navy lg:whitespace-normal lg:text-[18px]">{title}</h3>
+          <p className="mt-1 line-clamp-2 text-[11.5px] leading-snug text-muted-foreground lg:text-[13px]">{desc}</p>
+          <div className="mt-2 inline-flex items-center gap-1.5 text-[11.5px] font-extrabold lg:text-[12.5px]" style={{ color: accent }}>
+            {cta} <Arrow />
+          </div>
+        </div>
+      </article>
+    </Link>
   );
 }
 

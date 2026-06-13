@@ -182,21 +182,24 @@ function ContractorApplicationInner() {
         <div className="space-y-3.5">
           <div>
             <Label className="text-sm mb-2 block">{t('providerTypeLabel')}</Label>
-            <div className="grid grid-cols-2 gap-2">
-              <ProviderTypeButton
-                active={data.providerType === 'contractor'}
-                icon={Building2}
-                title={t('providerTypeContractor')}
-                desc={t('providerTypeContractorDesc')}
-                onClick={() => selectProviderType('contractor')}
-              />
-              <ProviderTypeButton
-                active={data.providerType === 'consultant'}
-                icon={ClipboardCheck}
-                title={t('providerTypeConsultant')}
-                desc={t('providerTypeConsultantDesc')}
-                onClick={() => selectProviderType('consultant')}
-              />
+            <div className="rounded-[18px] border border-border bg-white p-1.5 shadow-soft">
+              <div className="grid grid-cols-2 gap-1.5">
+                <ProviderTypeButton
+                  active={data.providerType === 'contractor'}
+                  icon={Building2}
+                  title={t('providerTypeContractor')}
+                  onClick={() => selectProviderType('contractor')}
+                />
+                <ProviderTypeButton
+                  active={data.providerType === 'consultant'}
+                  icon={ClipboardCheck}
+                  title={t('providerTypeConsultant')}
+                  onClick={() => selectProviderType('consultant')}
+                />
+              </div>
+              <div className="mt-1.5 rounded-xl bg-secondary/70 px-3 py-2 text-[11.5px] font-medium leading-relaxed text-muted-foreground">
+                {isConsultant ? t('providerTypeConsultantDesc') : t('providerTypeContractorDesc')}
+              </div>
             </div>
           </div>
           <RequiredField label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedBasics} t={t} />
@@ -377,21 +380,18 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
   );
 }
 
-function ProviderTypeButton({ active, icon: Icon, title, desc, onClick }) {
+function ProviderTypeButton({ active, icon: Icon, title, onClick }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`interactive-card tap-highlight rounded-2xl border p-3 text-start transition ${active ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-border bg-white text-navy hover:border-navy/35'}`}
+      className={`tap-highlight flex min-h-[58px] items-center justify-center gap-2 rounded-[14px] border px-2.5 text-center transition ${active ? 'border-navy bg-[#0D1B2A] text-white shadow-soft' : 'border-transparent bg-transparent text-navy hover:bg-secondary/60'}`}
     >
-      <span className="flex items-center justify-between gap-2">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ background: active ? '#D0F2EE' : 'rgba(13,27,42,0.06)' }}>
-          <Icon className="h-4 w-4" style={{ color: active ? '#0EB59E' : '#0D1B2A' }} />
-        </span>
-        {active && <CheckCircle2 className="h-4 w-4 shrink-0 text-teal" />}
+      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-white/12' : 'bg-secondary'}`}>
+        <Icon className="h-4 w-4" style={{ color: active ? '#5EEAD4' : '#0EB59E' }} />
       </span>
-      <span className="mt-2 block text-[13px] font-bold leading-tight">{title}</span>
-      <span className="mt-1 block text-[11px] leading-relaxed text-muted-foreground">{desc}</span>
+      <span className="text-[12.5px] font-extrabold leading-tight">{title}</span>
+      {active && <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-teal" />}
     </button>
   );
 }
