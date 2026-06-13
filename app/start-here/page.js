@@ -89,10 +89,14 @@ export default function StartHerePage() {
 }
 
 function SimpleChoice({ href, icon: Icon, eyebrow, title, desc, meta, accent, Arrow }) {
+  const ctaStyle = accent === '#F5A623'
+    ? { background: 'linear-gradient(180deg, #FFC75F, #F5A623)', color: '#4A2D00' }
+    : { background: 'linear-gradient(180deg, #12C3AA, #0BA890)', color: '#fff' };
+
   return (
-    <Link href={href} className="block tap-highlight">
+    <Link href={href} className="block cursor-pointer tap-highlight">
       <article
-        className="group interactive-card relative overflow-hidden rounded-[20px] border border-border bg-white p-3 shadow-soft hover:shadow-card"
+        className="group interactive-card relative overflow-hidden rounded-[20px] border border-border bg-white p-3 shadow-soft hover:border-[#0EB59E]/35 hover:shadow-card"
         style={{ borderInlineStartWidth: 4, borderInlineStartColor: accent }}
       >
         <div className="flex items-center gap-3">
@@ -108,9 +112,13 @@ function SimpleChoice({ href, icon: Icon, eyebrow, title, desc, meta, accent, Ar
             <Arrow />
           </span>
         </div>
-        <div className="mt-2 flex items-center justify-between border-t border-border/70 pt-2">
-          <span className="text-[11px] font-bold text-muted-foreground">{meta}</span>
-          <span className="h-1.5 w-10 rounded-full opacity-70" style={{ background: accent }} />
+        <div className="mt-2 border-t border-border/70 pt-2">
+          <span
+            className="flex min-h-9 w-full items-center justify-center gap-1.5 rounded-[14px] px-3 text-[11.5px] font-extrabold shadow-soft transition group-hover:scale-[1.015]"
+            style={ctaStyle}
+          >
+            {meta} <Arrow />
+          </span>
         </div>
       </article>
     </Link>

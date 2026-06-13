@@ -205,10 +205,14 @@ function ContactAction({ href, label, icon: Icon, external = false }) {
 }
 
 function RoleCard({ href, icon: Icon, eyebrow, title, desc, cta, accent, Arrow }) {
+  const ctaStyle = accent === '#FFB638'
+    ? { background: 'linear-gradient(180deg, #FFC75F, #F5A623)', color: '#4A2D00' }
+    : { background: 'linear-gradient(180deg, #12C3AA, #0BA890)', color: '#fff' };
+
   return (
-    <Link href={href} className="block h-full tap-highlight">
+    <Link href={href} className="block h-full cursor-pointer tap-highlight">
       <article
-        className="interactive-card group flex h-full min-h-[118px] items-center gap-3 rounded-[22px] border border-border bg-white p-3.5 shadow-soft hover:shadow-card lg:min-h-[154px] lg:flex-col lg:items-start lg:p-5"
+        className="interactive-card group flex h-full min-h-[132px] items-center gap-3 rounded-[22px] border border-border bg-white p-3.5 shadow-soft hover:border-[#0EB59E]/35 hover:shadow-card lg:min-h-[172px] lg:flex-col lg:items-start lg:p-5"
         style={{ borderInlineStartWidth: 4, borderInlineStartColor: accent }}
       >
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl lg:h-12 lg:w-12" style={{ background: `${accent}14` }}>
@@ -218,7 +222,10 @@ function RoleCard({ href, icon: Icon, eyebrow, title, desc, cta, accent, Arrow }
           <div className="text-[10.5px] font-extrabold leading-none lg:text-[11px]" style={{ color: accent }}>{eyebrow}</div>
           <h3 className="mt-1 truncate text-[15.5px] font-extrabold leading-tight text-navy lg:whitespace-normal lg:text-[18px]">{title}</h3>
           <p className="mt-1 line-clamp-2 text-[11.5px] leading-snug text-muted-foreground lg:text-[13px]">{desc}</p>
-          <div className="mt-2 inline-flex items-center gap-1.5 text-[11.5px] font-extrabold lg:text-[12.5px]" style={{ color: accent }}>
+          <div
+            className="mt-3 flex min-h-9 w-full items-center justify-center gap-1.5 rounded-[14px] px-3 text-[12px] font-extrabold shadow-soft transition group-hover:scale-[1.015] lg:mt-auto lg:text-[12.5px]"
+            style={ctaStyle}
+          >
             {cta} <Arrow />
           </div>
         </div>

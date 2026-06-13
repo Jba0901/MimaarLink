@@ -385,10 +385,14 @@ function ProviderTypeButton({ active, icon: Icon, title, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className={`tap-highlight flex min-h-[58px] items-center justify-center gap-2 rounded-[14px] border px-2.5 text-center transition ${active ? 'border-navy bg-[#0D1B2A] text-white shadow-soft' : 'border-transparent bg-transparent text-navy hover:bg-secondary/60'}`}
+      className={`tap-highlight flex min-h-[58px] items-center justify-center gap-2 rounded-[14px] border px-2.5 text-center transition ${
+        active
+          ? 'border-[#0EB59E]/45 bg-[#E8F8F5] text-navy shadow-soft ring-1 ring-[#0EB59E]/15'
+          : 'border-transparent bg-transparent text-navy hover:bg-secondary/60'
+      }`}
     >
-      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-white/12' : 'bg-secondary'}`}>
-        <Icon className="h-4 w-4" style={{ color: active ? '#5EEAD4' : '#0EB59E' }} />
+      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-white' : 'bg-secondary'}`}>
+        <Icon className="h-4 w-4" style={{ color: '#0EB59E' }} />
       </span>
       <span className="text-[12.5px] font-extrabold leading-tight">{title}</span>
       {active && <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-teal" />}
