@@ -207,7 +207,9 @@ function ContactAction({ href, label, icon: Icon, external = false }) {
 function RoleCard({ href, icon: Icon, eyebrow, title, desc, cta, accent, Arrow }) {
   const ctaStyle = accent === '#FFB638'
     ? { background: 'linear-gradient(180deg, #FFC75F, #F5A623)', color: '#4A2D00' }
-    : { background: 'linear-gradient(180deg, #12C3AA, #0BA890)', color: '#fff' };
+    : accent === '#142A44'
+      ? { background: 'linear-gradient(180deg, #173653, #0D1B2A)', color: '#fff' }
+      : { background: 'linear-gradient(180deg, #12C3AA, #0BA890)', color: '#fff' };
 
   return (
     <Link href={href} className="block h-full cursor-pointer tap-highlight">
