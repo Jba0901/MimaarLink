@@ -68,8 +68,9 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* matched-providers visual */}
-            <div className="motion-fade-up motion-delay-2 lg:justify-self-end w-full max-w-md mx-auto lg:mx-0">
+            {/* matched-providers visual — desktop only; on mobile it just
+                pushes the real content down without adding meaning */}
+            <div className="hidden lg:block motion-fade-up motion-delay-2 lg:justify-self-end w-full max-w-md mx-auto lg:mx-0">
               <MatchPreview t={t} />
             </div>
           </div>
