@@ -216,19 +216,12 @@ function WorkflowPreview({ t }) {
         <PreviewStep icon={GitCompare} title={t('status_bids_received')} active />
       </div>
 
-      <div className="space-y-2">
-        {[
-          { label: t('trustReview'), done: true },
-          { label: t('trustCompare'), done: true },
-          { label: t('trustQatar'), done: false },
-        ].map((row, i) => (
-          <div key={i} className="flex items-center gap-2.5 rounded-xl border border-white/8 bg-white/[0.05] px-3 py-2.5">
-            <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${row.done ? '' : 'border border-white/20'}`} style={row.done ? { background: 'rgba(14,181,158,0.25)' } : undefined}>
-              {row.done && <CheckCircle2 className="h-3.5 w-3.5" style={{ color: '#5EEAD4' }} />}
-            </span>
-            <span className={`truncate text-[12px] font-semibold ${row.done ? 'text-white/85' : 'text-white/40'}`}>{row.label}</span>
-          </div>
-        ))}
+      <div className="rounded-xl border border-white/8 bg-white/[0.05] px-3.5 py-3">
+        <p className="text-[11.5px] leading-relaxed text-white/70">{t('msg_bids_received')}</p>
+      </div>
+      <div aria-hidden="true" className="mt-2.5 flex items-center justify-center gap-2 rounded-full border border-white/14 bg-white/8 py-2.5 text-[12.5px] font-bold text-white/85 select-none pointer-events-none">
+        <GitCompare className="h-3.5 w-3.5" style={{ color: '#5EEAD4' }} />
+        {t('viewBids')}
       </div>
     </div>
   );
@@ -236,11 +229,11 @@ function WorkflowPreview({ t }) {
 
 function PreviewStep({ icon: Icon, title, active = false }) {
   return (
-    <div className={`relative min-w-0 rounded-xl border px-2 py-3 text-center ${active ? 'active-glow border-white/22 bg-white/[0.13]' : 'border-white/8 bg-white/[0.045]'}`}>
-      <span className={`mx-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${active ? 'bg-white text-navy' : 'bg-white/10 text-white/75'}`}>
+    <div className={`relative flex min-w-0 flex-col items-center rounded-xl border px-1.5 py-3 text-center ${active ? 'active-glow border-white/22 bg-white/[0.13]' : 'border-white/8 bg-white/[0.045]'}`}>
+      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${active ? 'bg-white text-navy' : 'bg-white/10 text-white/75'}`}>
         <Icon className="h-4 w-4" />
       </span>
-      <span className="mt-2 block truncate text-[10px] font-bold text-white leading-tight">{title}</span>
+      <span className="mt-2 block w-full text-[10px] font-bold text-white leading-snug">{title}</span>
     </div>
   );
 }

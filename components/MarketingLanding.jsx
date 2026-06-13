@@ -107,10 +107,7 @@ export default function MarketingLanding({
           {steps.map((s, i) => (
             <Reveal key={i} delay={i * 110}>
               <div className="interactive-card relative h-full bg-white border border-border rounded-3xl p-6 shadow-soft overflow-hidden">
-                <span className="absolute top-3 text-[64px] font-extrabold leading-none select-none pointer-events-none" style={{ color: 'rgba(13,27,42,0.05)', insetInlineEnd: '1rem' }}>
-                  {i + 1}
-                </span>
-                <div className="w-9 h-9 rounded-full navy text-white flex items-center justify-center text-[13px] font-bold mb-4 shadow-soft">
+                <div className="w-10 h-10 rounded-full navy text-white flex items-center justify-center text-[14px] font-bold mb-4 shadow-soft">
                   {i + 1}
                 </div>
                 <h3 className="text-[16px] font-bold text-navy leading-snug">{s.title}</h3>

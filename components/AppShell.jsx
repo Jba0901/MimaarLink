@@ -6,13 +6,13 @@ import { useLang } from '@/lib/LangContext';
 import { Globe, Home, Hammer, FilePlus, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 
-function Logo({ height = 36 }) {
+function Logo({ className = 'h-8 sm:h-9' }) {
   return (
     <img
       src="/logo.png?v=chain"
       alt="MimaarLink"
-      height={height}
-      style={{ height: height, width: 'auto', objectFit: 'contain' }}
+      className={`${className} w-auto shrink-0`}
+      style={{ objectFit: 'contain' }}
     />
   );
 }
@@ -22,14 +22,14 @@ function BrandText({ size = 17 }) {
   if (lang === 'ar') {
     const parts = t('appName').split(' ');
     return (
-      <span className="font-bold leading-none" style={{ fontSize: size }}>
+      <span className="font-bold leading-tight whitespace-nowrap" style={{ fontSize: size }}>
         <span style={{ color: '#0D1B2A' }}>{parts[0]}</span>
         {parts[1] && <span style={{ color: '#0EB59E' }} className="ms-1">{parts[1]}</span>}
       </span>
     );
   }
   return (
-    <span className="font-bold leading-none tracking-tight" style={{ fontSize: size }}>
+    <span className="font-bold leading-tight tracking-tight whitespace-nowrap" style={{ fontSize: size }}>
       <span style={{ color: '#0D1B2A' }}>Mimaar</span>
       <span style={{ color: '#0EB59E' }}>Link</span>
     </span>
@@ -58,12 +58,12 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
             : 'bg-transparent border-b border-transparent'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5 tap-highlight">
-            <Logo height={36} />
-            <BrandText />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-[60px] sm:h-16 flex items-center justify-between gap-3">
+          <Link href="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0 tap-highlight">
+            <Logo />
+            <BrandText size={16} />
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <Link href="/post-project" className="hidden md:inline-flex btn btn-primary h-9 px-4 text-[12.5px]">
               {t('postProject')}
             </Link>
@@ -73,7 +73,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
             </Link>
             <button
               onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-              className="btn btn-outline h-9 px-3.5 text-[12.5px]"
+              className="btn btn-outline h-9 px-3 sm:px-3.5 text-[12.5px]"
               aria-label="Switch language"
             >
               <Globe className="w-3.5 h-3.5 shrink-0" />
@@ -129,7 +129,7 @@ function SiteFooter({ wide = false }) {
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
           <div className="max-w-xs">
             <div className="flex items-center gap-2.5 mb-2.5">
-              <Logo height={30} />
+              <Logo className="h-7" />
               <BrandText size={15} />
             </div>
             <p className="text-[12.5px] text-muted-foreground leading-relaxed">{t('subtitle')}</p>
