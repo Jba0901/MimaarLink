@@ -121,7 +121,12 @@ function PostProjectInner() {
 
       {step === 2 && (
         <div className="space-y-3.5">
-          <RequiredField label={t('location')} value={data.location} onChange={v => update('location', v)} tried={tried2} t={t} placeholder={t('locationPh')} />
+          <div>
+            <Label className="text-sm">
+              {t('location')} <span className="ms-1 text-[11px] font-normal text-muted-foreground">({t('optional')})</span>
+            </Label>
+            <Input value={data.location} onChange={e => update('location', e.target.value)} placeholder={t('locationPh')} className="h-11 mt-1.5" />
+          </div>
           <div>
             <Label className="text-sm">{t('description')} <span className="text-red-600">*</span></Label>
             <Textarea
@@ -161,7 +166,7 @@ function PostProjectInner() {
           </div>
           <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11 cta-press">{t('back')}</Button>
-            <Button onClick={() => { setTried2(true); if (data.location && data.description) setStep(3); }} className="flex-1 h-11 cta-press" style={{ background: '#142A44' }}>{t('next')}</Button>
+            <Button onClick={() => { setTried2(true); if (data.description) setStep(3); }} className="flex-1 h-11 cta-press" style={{ background: '#142A44' }}>{t('next')}</Button>
           </div>
         </div>
       )}

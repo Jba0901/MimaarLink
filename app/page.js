@@ -9,7 +9,7 @@ import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import {
   Cpu, GitCompare, MapPin, ArrowRight, ArrowUpRight, Building2,
   Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal,
-  Hammer, ShieldCheck, Mail, Phone, Instagram, CheckCircle2, Sparkles, FileText, Users
+  Hammer, ShieldCheck, Mail, Phone, Instagram, CheckCircle2, FileText, Users
 } from 'lucide-react';
 
 const CAT_ICONS = {
@@ -35,8 +35,8 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-12 items-center">
             <div>
               <div className="motion-fade-up inline-flex items-center gap-1.5 rounded-full border border-[#0EB59E]/25 bg-[#0EB59E]/8 px-3 py-1.5 text-[12px] font-bold text-[#0B8E7C] mb-5">
-                <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                {t('benefit_ai')} · {t('contactLocationValue')}
+                <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+                {t('heroBadge')}
               </div>
 
               <h1 className="motion-fade-up motion-delay-1 display-title text-[32px] sm:text-[44px] lg:text-[50px]">
