@@ -10,12 +10,12 @@ import {
   Cpu, GitCompare, MapPin, ArrowRight, Building2,
   Wrench, Snowflake, Plug, Droplets, Layers, HardHat, Hammer,
   PaintBucket, Square, Frame, MoreHorizontal, ShieldCheck, Mail, Phone, Instagram,
-  FileText, CheckCircle2
+  FileText, CheckCircle2, ClipboardCheck
 } from 'lucide-react';
 
 const CAT_ICONS = {
   mep: Wrench, hvac: Snowflake, electrical: Plug, plumbing: Droplets, fitout: Layers,
-  civil: HardHat, maintenance: Wrench, joinery: Hammer, flooring: Square,
+  civil: HardHat, consultancy: ClipboardCheck, maintenance: Wrench, joinery: Hammer, flooring: Square,
   painting: PaintBucket, aluminum: Frame, other: MoreHorizontal,
 };
 
@@ -147,13 +147,22 @@ export default function HomePage() {
           </Reveal>
           <Reveal delay={120}>
             <div className="relative h-full rounded-[28px] premium-panel glass-line text-white p-7 sm:p-9 overflow-hidden">
-              <div className="inline-flex items-center text-[12px] font-bold mb-3" style={{ color: '#5EEAD4' }}>{t('startContractorEyebrow')}</div>
+              <div className="inline-flex items-center text-[12px] font-bold mb-3" style={{ color: '#5EEAD4' }}>{t('joinContractor')}</div>
               <h3 className="text-[24px] sm:text-[28px] font-extrabold leading-tight">{t('startContractorTitle')}</h3>
               <p className="mt-2.5 text-[14px] text-white/65 leading-relaxed max-w-sm">{t('startContractorDesc')}</p>
               <p className="mt-2 text-[12.5px] text-white/45 leading-relaxed max-w-sm">{t('startContractorMeta')}</p>
-              <Link href="/contractor" className="btn btn-ghost-light mt-6 px-6 text-[14px]" style={{ minHeight: 46 }}>
-                {t('startContractorCta')} <Arrow />
-              </Link>
+              <div className="mt-6 flex flex-col sm:flex-row sm:items-center gap-3">
+                <Link href="/contractor" className="btn btn-ghost-light px-6 text-[14px]" style={{ minHeight: 46 }}>
+                  {t('startContractorCta')} <Arrow />
+                </Link>
+                <Link
+                  href="/contractor?type=consultant"
+                  className="inline-flex items-center justify-center gap-1.5 text-[13px] font-bold text-white/65 underline underline-offset-4 decoration-white/25 transition-colors hover:text-white tap-highlight"
+                >
+                  <ClipboardCheck className="h-3.5 w-3.5 shrink-0" />
+                  {t('startConsultantCta')}
+                </Link>
+              </div>
               <Hammer className="absolute bottom-[-18px] w-36 h-36 pointer-events-none select-none" style={{ color: 'rgba(255,255,255,0.05)', insetInlineEnd: '-10px' }} />
             </div>
           </Reveal>

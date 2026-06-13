@@ -7,7 +7,7 @@ import { useLang } from '@/lib/LangContext';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle2, Circle, Download, FileText, Hammer, Loader2, MapPin, Wallet } from 'lucide-react';
+import { CheckCircle2, Circle, ClipboardCheck, Download, FileText, Hammer, Loader2, MapPin, Wallet } from 'lucide-react';
 
 const statusColor = (status) => {
   if (status === 'verified') return '#0EB59E';
@@ -15,6 +15,17 @@ const statusColor = (status) => {
   if (status === 'suspended') return '#dc2626';
   return '#0D1B2A';
 };
+
+const consultantGradeLabel = (grade, t) => {
+  if (grade === 'grade_a') return t('gradeA');
+  if (grade === 'grade_b') return t('gradeB');
+  if (grade === 'grade_c') return t('gradeC');
+  return t('gradeUnknown');
+};
+
+const providerServices = (provider) => (
+  provider?.providerType === 'consultant' ? (provider.consultantServices || []) : (provider.categories || [])
+);
 
 export default function ContractorStatusPage() {
   const { id } = useParams();
@@ -51,12 +62,15 @@ export default function ContractorStatusPage() {
   ];
   const documentChecks = contractor.documentChecks || {};
   const uploadedDocuments = contractor.documents || [];
+  const isConsultant = contractor.providerType === 'consultant';
+  const ServiceIcon = isConsultant ? ClipboardCheck : Hammer;
+  const serviceKeys = providerServices(contractor);
 
   return (
     <AppShell>
       <div className="flex items-start justify-between gap-3 mb-3">
         <div>
-          <h1 className="text-xl font-bold text-navy">{t('contractorStatus')}</h1>
+          <h1 className="text-xl font-bold text-navy">{t('providerStatus')}</h1>
           <p className="text-xs text-muted-foreground mt-0.5">{contractor.companyName}</p>
         </div>
         <Badge style={{ background: statusColor(status) }} className="text-white">
@@ -66,11 +80,14 @@ export default function ContractorStatusPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4 space-y-2.5">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('contractorSummary')}</div>
+          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('providerSummary')}</div>
           <div className="flex items-start gap-2 text-sm text-navy">
-            <Hammer className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" />
-            <span>{(contractor.categories || []).map((cat) => t(`cat_${cat}`)).join(', ')}</span>
+            <ServiceIcon className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" />
+            <span>{serviceKeys.map((cat) => t(`cat_${cat}`)).join(', ')}</span>
           </div>
+          {isConsultant && (
+            <div className="text-sm text-muted-foreground leading-relaxed">{consultantGradeLabel(contractor.consultantGrade, t)}</div>
+          )}
           {contractor.otherCategoryDesc && (
             <div className="text-sm text-muted-foreground leading-relaxed">{contractor.otherCategoryDesc}</div>
           )}

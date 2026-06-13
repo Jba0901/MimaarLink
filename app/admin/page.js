@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { CalendarClock, ChevronRight, Copy, ExternalLink, Lock, Loader2, ShieldCheck } from 'lucide-react';
+import { Building2, CalendarClock, ChevronRight, ClipboardCheck, Copy, ExternalLink, Lock, Loader2, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
 const statusColor = (s) => {
@@ -30,6 +30,21 @@ const formatAdminTime = (value, lang = 'en') => {
     timeStyle: 'short',
   }).format(date);
 };
+
+const providerTypeLabel = (provider, t) => (
+  provider?.providerType === 'consultant' ? t('providerTypeConsultant') : t('providerTypeContractor')
+);
+
+const consultantGradeLabel = (grade, t) => {
+  if (grade === 'grade_a') return t('gradeA');
+  if (grade === 'grade_b') return t('gradeB');
+  if (grade === 'grade_c') return t('gradeC');
+  return t('gradeUnknown');
+};
+
+const providerServices = (provider) => (
+  provider?.providerType === 'consultant' ? (provider.consultantServices || []) : (provider.categories || [])
+);
 
 function AdminInner() {
   const { t, lang } = useLang();
@@ -220,23 +235,35 @@ function AdminInner() {
         </TabsContent>
         <TabsContent value="contractors" className="space-y-2">
           {contractors.length === 0 && <p className="text-center text-sm text-muted-foreground py-6">{t('noContractors')}</p>}
-          {contractors.map(c => (
+          {contractors.map(c => {
+            const isConsultant = c.providerType === 'consultant';
+            const TypeIcon = isConsultant ? ClipboardCheck : Building2;
+            const services = providerServices(c);
+
+            return (
             <Link key={c.id} href={`/admin/contractor/${c.id}`}>
               <Card className="hover:border-navy transition">
                 <CardContent className="p-3.5">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex flex-wrap items-center gap-1.5">
                         <span className="font-semibold text-navy text-sm">{c.companyName}</span>
+                        <Badge variant="outline" className="gap-1 text-[10px]">
+                          <TypeIcon className="h-3 w-3" />
+                          {providerTypeLabel(c, t)}
+                        </Badge>
                         {c.verificationStatus === 'verified' && <ShieldCheck className="w-3.5 h-3.5" style={{ color: '#0FAE96' }} />}
                       </div>
                       <div className="text-xs text-muted-foreground mt-0.5">{c.contactPerson} · {c.whatsapp}</div>
+                      {isConsultant && (
+                        <div className="text-[11px] text-muted-foreground mt-0.5">{consultantGradeLabel(c.consultantGrade, t)}</div>
+                      )}
                       <div className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground">
                         <CalendarClock className="h-3.5 w-3.5 shrink-0" />
                         <span>{t('applicationTime')}: {formatAdminTime(c.createdAt, lang)}</span>
                       </div>
                       <div className="flex flex-wrap gap-1 mt-1">
-                        {(c.categories || []).slice(0,3).map(cat => (
+                        {services.slice(0,3).map(cat => (
                           <span key={cat} className="text-[10px] bg-secondary text-navy px-1.5 py-0.5 rounded">{t(`cat_${cat}`)}</span>
                         ))}
                       </div>
@@ -246,7 +273,8 @@ function AdminInner() {
                 </CardContent>
               </Card>
             </Link>
-          ))}
+            );
+          })}
         </TabsContent>
       </Tabs>
     </AppShell>

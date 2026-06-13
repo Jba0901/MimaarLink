@@ -4,7 +4,7 @@ import Link from 'next/link';
 import AppShell from '@/components/AppShell';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { useLang } from '@/lib/LangContext';
-import { ArrowRight, Building2, Hammer } from 'lucide-react';
+import { ArrowRight, Building2, ClipboardCheck, Hammer } from 'lucide-react';
 
 export default function StartHerePage() {
   const { t, dir } = useLang();
@@ -38,6 +38,15 @@ export default function StartHerePage() {
               title={t('startContractorTitle')}
               desc={t('startContractorDesc')}
               accent="#FFB638"
+              Arrow={Arrow}
+            />
+            <SimpleChoice
+              href="/contractor?type=consultant"
+              icon={ClipboardCheck}
+              title={t('startConsultantTitle')}
+              desc={t('startConsultantDesc')}
+              cta={t('startConsultantCta')}
+              accent="#142A44"
               Arrow={Arrow}
             />
           </div>

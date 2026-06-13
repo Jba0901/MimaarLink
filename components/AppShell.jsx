@@ -89,11 +89,11 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       </main>
 
       {!hideNav && (
-        <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 safe-pad-bottom">
+        <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 safe-pad-bottom max-w-[calc(100vw-20px)]">
           <div className="flex items-center gap-0.5 navy rounded-full px-1.5 py-1.5 shadow-card border border-white/8 glass-line">
             <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
             <NavBtn href="/post-project" icon={FilePlus} label={t('postProject')} matches={['/post-project', '/for-projects']} />
-            <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} matches={['/contractor', '/for-contractors']} />
+            <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} matches={['/contractor', '/consultant', '/for-contractors']} />
           </div>
         </nav>
       )}
@@ -107,15 +107,17 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
   return (
     <Link
       href={href}
+      aria-label={label}
+      title={label}
       className={
-        'flex items-center gap-1.5 px-3.5 py-2 rounded-full transition-all cta-press tap-highlight ' +
+        'flex items-center gap-1.5 py-2 rounded-full transition-all cta-press tap-highlight ' +
         (active
-          ? 'bg-white text-navy shadow-soft'
-          : 'text-white/75 hover:text-white hover:bg-white/10')
+          ? 'bg-white text-navy shadow-soft px-3.5'
+          : 'text-white/75 hover:text-white hover:bg-white/10 px-3 sm:px-3.5')
       }
     >
       <Icon className="w-4 h-4 shrink-0" />
-      <span className="text-[11px] font-semibold whitespace-nowrap">{label}</span>
+      <span className={`text-[11px] font-semibold whitespace-nowrap ${active ? '' : 'hidden sm:inline'}`}>{label}</span>
     </Link>
   );
 }

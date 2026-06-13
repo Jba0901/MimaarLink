@@ -9,6 +9,10 @@ import { Badge } from '@/components/ui/badge';
 import { ShieldCheck, Clock, Wallet, FileWarning, FileCheck2, FileText, Loader2, Paperclip } from 'lucide-react';
 import { toast } from 'sonner';
 
+const providerTypeLabel = (provider, t) => (
+  provider?.providerType === 'consultant' ? t('providerTypeConsultant') : t('providerTypeContractor')
+);
+
 export default function BidsPage() {
   const { projectId } = useParams();
   const router = useRouter();
@@ -49,7 +53,10 @@ export default function BidsPage() {
                 <div className="flex items-start justify-between mb-2">
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <span className="font-semibold text-navy text-base">{c.companyName || 'Contractor'}</span>
+                      <span className="font-semibold text-navy text-base">{c.companyName || t('provider')}</span>
+                      {c.providerType && (
+                        <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-semibold text-navy">{providerTypeLabel(c, t)}</span>
+                      )}
                       {c.verificationStatus === 'verified' && <ShieldCheck className="w-4 h-4" style={{ color: '#0FAE96' }} />}
                     </div>
                     {c.serviceAreas && <div className="text-xs text-muted-foreground mt-0.5">{c.serviceAreas}</div>}

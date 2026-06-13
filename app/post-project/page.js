@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle2, Upload, X, Loader2, Copy, Layers, Wrench, Snowflake, HardHat, MoreHorizontal } from 'lucide-react';
+import { CheckCircle2, Upload, X, Loader2, Copy, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 
@@ -20,6 +20,7 @@ const PROJECT_CATEGORY_ICONS = {
   maintenance: Wrench,
   mep: Snowflake,
   civil: HardHat,
+  consultancy: ClipboardCheck,
   other: MoreHorizontal,
 };
 
