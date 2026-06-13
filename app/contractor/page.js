@@ -168,8 +168,8 @@ function ContractorApplicationInner() {
 
   return (
     <AppShell hideFooter hideNav>
-      <h1 className="text-2xl font-bold text-navy mb-1 motion-fade-up">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</h1>
-      <p className="text-sm text-muted-foreground mb-5 motion-fade-up motion-delay-1">{isConsultant ? t('consultantSubtitle') : t('contractorSubtitle')}</p>
+      <h1 className="display-title text-[26px] mb-1.5 motion-fade-up">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</h1>
+      <p className="text-[13.5px] text-muted-foreground mb-5 motion-fade-up motion-delay-1 leading-relaxed">{isConsultant ? t('consultantSubtitle') : t('contractorSubtitle')}</p>
       <FormProgress
         step={step}
         total={3}

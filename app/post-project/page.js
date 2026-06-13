@@ -85,8 +85,8 @@ function PostProjectInner() {
 
   return (
     <AppShell hideFooter hideNav>
-      <h1 className="text-2xl font-bold text-navy mb-1 motion-fade-up">{t('postTitle')}</h1>
-      <p className="text-sm text-muted-foreground mb-4 motion-fade-up motion-delay-1">{t('subtitle')}</p>
+      <h1 className="display-title text-[26px] mb-1.5 motion-fade-up">{t('postTitle')}</h1>
+      <p className="text-[13.5px] text-muted-foreground mb-4 motion-fade-up motion-delay-1 leading-relaxed">{t('subtitle')}</p>
       {step < 4 && (
         <FormProgress
           step={step}
