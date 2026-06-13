@@ -58,19 +58,23 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
             : 'bg-transparent border-b border-transparent'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-[60px] sm:h-16 flex items-center justify-between gap-3">
-          <Link href="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0 tap-highlight">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-[58px] sm:h-16 flex items-center justify-between gap-2">
+          <Link href="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0 shrink tap-highlight">
             <Logo />
             <BrandText size={16} />
           </Link>
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <Link href="/post-project" className="hidden md:inline-flex btn btn-primary h-9 px-4 text-[12.5px]">
-              {t('postProject')}
-            </Link>
-            <Link href="/contractor" className="hidden sm:inline-flex btn btn-outline h-9 px-4 text-[12.5px]">
-              <Hammer className="w-3.5 h-3.5 shrink-0" />
-              {t('joinContractor')}
-            </Link>
+          <div className="flex items-center gap-2 shrink-0">
+            {/* primary actions: desktop only — on mobile these live in the hero CTAs + bottom nav.
+                wrapper carries `hidden` so it can't collide with the .btn display rule */}
+            <div className="hidden md:flex items-center gap-2">
+              <Link href="/post-project" className="btn btn-primary h-9 px-4 text-[12.5px]">
+                {t('postProject')}
+              </Link>
+              <Link href="/contractor" className="btn btn-outline h-9 px-4 text-[12.5px]">
+                <Hammer className="w-3.5 h-3.5 shrink-0" />
+                {t('joinContractor')}
+              </Link>
+            </div>
             <button
               onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
               className="btn btn-outline h-9 px-3 sm:px-3.5 text-[12.5px]"
