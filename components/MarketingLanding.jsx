@@ -2,6 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/AppShell';
+import Reveal from '@/components/Reveal';
 import { useLang } from '@/lib/LangContext';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 
@@ -25,114 +26,122 @@ export default function MarketingLanding({
   const Arrow = () =>
     isRTL ? <ArrowRight className="w-4 h-4 rotate-180 shrink-0" /> : <ArrowRight className="w-4 h-4 shrink-0" />;
 
+  // highlight the last word of the headline in teal
+  const words = (tagline || '').trim().split(' ');
+  const lastWord = words.length > 1 ? words.pop() : null;
+
   return (
-    <AppShell hideNav>
-      {/* HERO */}
-      <section className="relative overflow-hidden rounded-[28px] premium-panel glass-line text-white px-5 pt-7 pb-6 mb-5 shadow-card motion-fade-up">
-        <div className="relative">
-          {eyebrow && (
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/8 border border-white/12 text-[11px] font-semibold text-white/80 mb-4">
-              {eyebrow}
-            </div>
-          )}
-          <h1 className="text-[28px] sm:text-[32px] font-bold leading-[1.18]">{tagline}</h1>
-          <p className="mt-3 text-[14px] text-white/68 leading-relaxed max-w-sm">{subtitle}</p>
-          <div className="mt-6">
-            <Link href={ctaHref}>
-              <button
-                className="cta-press soft-shine tap-highlight w-full rounded-2xl text-[15px] font-bold flex items-center justify-center gap-2 glow-teal text-white"
-                style={{ background: '#0DB69E', minHeight: '52px' }}
-              >
-                {ctaLabel} <Arrow />
-              </button>
-            </Link>
-            {ctaSubtext && (
-              <p className="mt-2.5 text-[12px] text-white/55 text-center">{ctaSubtext}</p>
+    <AppShell hideNav wide>
+      <div className="hero-ambient -mx-4 sm:-mx-6 px-4 sm:px-6">
+        {/* ============ HERO ============ */}
+        <section className="relative pt-8 pb-12 lg:pt-16 lg:pb-14 text-center">
+          <div className="max-w-2xl mx-auto">
+            {eyebrow && (
+              <div className="motion-fade-up inline-flex items-center gap-1.5 rounded-full border border-[#0EB59E]/25 bg-[#0EB59E]/8 px-3 py-1.5 text-[12px] font-bold text-[#0B8E7C] mb-5">
+                {eyebrow}
+              </div>
             )}
+            <h1 className="motion-fade-up motion-delay-1 display-title text-[32px] sm:text-[42px] lg:text-[46px]">
+              {words.join(' ')}{' '}
+              {lastWord && <span className="text-teal">{lastWord}</span>}
+            </h1>
+            <p className="motion-fade-up motion-delay-2 mt-4 text-[15px] text-muted-foreground leading-relaxed max-w-lg mx-auto">
+              {subtitle}
+            </p>
+            <div className="motion-fade-up motion-delay-3 mt-7">
+              <Link href={ctaHref} className="btn btn-primary soft-shine px-9 text-[15px]" style={{ minHeight: 52 }}>
+                {ctaLabel} <Arrow />
+              </Link>
+              {ctaSubtext && (
+                <p className="mt-3 text-[12.5px] text-muted-foreground/80">{ctaSubtext}</p>
+              )}
+            </div>
           </div>
+        </section>
+      </div>
+
+      {/* ============ BENEFITS ============ */}
+      <section className="py-8 lg:py-10">
+        <div className="grid sm:grid-cols-3 gap-3.5">
+          {benefits.map((b, i) => (
+            <Reveal key={i} delay={i * 110}>
+              <div className="interactive-card h-full bg-white border border-border rounded-3xl p-6 shadow-soft">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(14,181,158,0.10)' }}>
+                  <b.icon className="w-[22px] h-[22px]" style={{ color: '#0EB59E' }} />
+                </div>
+                <h3 className="text-[16px] font-bold text-navy leading-snug">{b.title}</h3>
+                <p className="text-[13px] mt-1.5 leading-relaxed text-muted-foreground">{b.desc}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      {/* BENEFITS */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6 motion-fade-up motion-delay-1">
-        {benefits.map((b, i) => (
-          <div key={i} className="interactive-card bg-white border border-border rounded-2xl p-4 shadow-soft hover:shadow-card flex gap-3 items-start">
-            <div
-              className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-              style={{ background: 'rgba(14,181,158,0.10)' }}
-            >
-              <b.icon className="w-5 h-5" style={{ color: '#0EB59E' }} />
-            </div>
-            <div className="min-w-0">
-              <div className="text-[14px] font-bold text-navy leading-snug">{b.title}</div>
-              <div className="text-[12.5px] mt-1 leading-relaxed text-muted-foreground">{b.desc}</div>
-            </div>
-          </div>
-        ))}
-      </section>
-
-      {/* POPULAR PROJECT TYPES */}
+      {/* ============ POPULAR PROJECT TYPES ============ */}
       {popularTypes && popularTypes.length > 0 && (
-        <section className="mb-6 motion-fade-up motion-delay-2">
-          <h2 className="section-title">{popularTypesTitle}</h2>
-          <div className="flex flex-wrap gap-2">
-            {popularTypes.map((p, i) => (
-              <span
-                key={i}
-                className="text-[12.5px] font-semibold text-navy bg-white border border-border rounded-full px-3.5 py-1.5 shadow-soft"
-              >
-                {p}
-              </span>
-            ))}
-          </div>
+        <section className="py-8 lg:py-10">
+          <Reveal>
+            <h2 className="display-title text-[22px] sm:text-[26px] text-center mb-7">{popularTypesTitle}</h2>
+          </Reveal>
+          <Reveal delay={100}>
+            <div className="flex flex-wrap justify-center gap-2.5 max-w-2xl mx-auto">
+              {popularTypes.map((p, i) => (
+                <span
+                  key={i}
+                  className="text-[13px] font-semibold text-navy bg-white border border-border rounded-full px-4 py-2 shadow-soft transition-colors hover:border-[#0EB59E]/45"
+                >
+                  {p}
+                </span>
+              ))}
+            </div>
+          </Reveal>
         </section>
       )}
 
-      {/* HOW IT WORKS */}
-      <section className="mb-6 motion-fade-up motion-delay-3">
-        <h2 className="section-title">{t('howItWorks')}</h2>
-        <div className="relative">
-          <div className={`absolute top-4 bottom-4 w-px bg-border/70 ${isRTL ? 'right-[15px]' : 'left-[15px]'}`} />
-          <div className="space-y-3">
-            {steps.map((s, i) => (
-              <div key={i} className="relative flex gap-3 items-start">
-                <div className="relative z-10 w-8 h-8 rounded-full navy text-white flex items-center justify-center text-[12px] font-bold shrink-0 shadow-soft">
+      {/* ============ HOW IT WORKS ============ */}
+      <section className="py-8 lg:py-10">
+        <Reveal>
+          <h2 className="display-title text-[24px] sm:text-[30px] text-center mb-9">{t('howItWorks')}</h2>
+        </Reveal>
+        <div className="grid sm:grid-cols-3 gap-3.5">
+          {steps.map((s, i) => (
+            <Reveal key={i} delay={i * 110}>
+              <div className="interactive-card relative h-full bg-white border border-border rounded-3xl p-6 shadow-soft overflow-hidden">
+                <span className="absolute top-3 text-[64px] font-extrabold leading-none select-none pointer-events-none" style={{ color: 'rgba(13,27,42,0.05)', insetInlineEnd: '1rem' }}>
+                  {i + 1}
+                </span>
+                <div className="w-9 h-9 rounded-full navy text-white flex items-center justify-center text-[13px] font-bold mb-4 shadow-soft">
                   {i + 1}
                 </div>
-                <div className="interactive-card flex-1 bg-white border border-border rounded-2xl px-4 py-3.5 shadow-soft">
-                  <div className="text-[14px] font-bold text-navy">{s.title}</div>
-                  <div className="text-[12.5px] text-muted-foreground mt-1 leading-relaxed">{s.desc}</div>
-                </div>
+                <h3 className="text-[16px] font-bold text-navy leading-snug">{s.title}</h3>
+                <p className="text-[13px] mt-1.5 leading-relaxed text-muted-foreground">{s.desc}</p>
               </div>
-            ))}
-          </div>
+            </Reveal>
+          ))}
         </div>
+        {privacyLine && (
+          <Reveal delay={150}>
+            <div className="mt-6 flex items-center justify-center gap-2.5 px-1">
+              <ShieldCheck className="w-4 h-4 shrink-0" style={{ color: '#0EB59E' }} />
+              <p className="text-[12.5px] text-muted-foreground leading-relaxed text-center">{privacyLine}</p>
+            </div>
+          </Reveal>
+        )}
       </section>
 
-      {/* PRIVACY / TRUST LINE */}
-      {privacyLine && (
-        <div className="mb-5 flex items-start gap-2.5 px-1">
-          <ShieldCheck className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#0EB59E' }} />
-          <p className="text-[12.5px] text-muted-foreground leading-relaxed">{privacyLine}</p>
-        </div>
-      )}
-
-      {/* FINAL CTA */}
-      <section className="mb-3 motion-fade-up motion-delay-4">
-        <div className="rounded-[24px] premium-panel-soft text-white px-5 py-6 shadow-card relative overflow-hidden">
-          <div className="relative text-center">
-            <h3 className="text-[20px] font-bold leading-tight">{finalTitle}</h3>
-            <p className="text-[13px] text-white/60 mt-1 mb-5">{finalSub}</p>
-            <Link href={ctaHref}>
-              <button
-                className="cta-press soft-shine tap-highlight w-full rounded-2xl text-[15px] font-bold flex items-center justify-center gap-2 text-white glow-teal"
-                style={{ background: '#0DB69E', minHeight: '48px' }}
-              >
+      {/* ============ FINAL CTA ============ */}
+      <section className="py-8 lg:py-12">
+        <Reveal>
+          <div className="rounded-[28px] premium-panel glass-line text-white px-6 py-10 sm:px-10 sm:py-12 shadow-card relative overflow-hidden text-center">
+            <div className="relative max-w-xl mx-auto">
+              <h3 className="text-[24px] sm:text-[30px] font-extrabold leading-tight">{finalTitle}</h3>
+              <p className="text-[14px] text-white/60 mt-2.5 mb-7">{finalSub}</p>
+              <Link href={ctaHref} className="btn btn-primary soft-shine px-9 text-[15px]" style={{ minHeight: 52 }}>
                 {ctaLabel} <Arrow />
-              </button>
-            </Link>
+              </Link>
+            </div>
           </div>
-        </div>
+        </Reveal>
       </section>
     </AppShell>
   );
