@@ -156,13 +156,13 @@ export default function HomePage() {
         </Reveal>
         <div className="grid gap-2.5 lg:grid-cols-3">
           <Reveal>
-            <RoleCard href="/post-project" icon={Building2} eyebrow={t('startProjectEyebrow')} title={t('startProjectTitle')} desc={t('startProjectDesc')} cta={t('startProjectCta')} accent="#0EB59E" Arrow={Arrow} />
+            <RoleCard href="/post-project" icon={Building2} title={t('startProjectTitle')} desc={t('startProjectDesc')} accent="#0EB59E" Arrow={Arrow} />
           </Reveal>
           <Reveal delay={80}>
-            <RoleCard href="/contractor" icon={Hammer} eyebrow={t('startContractorEyebrow')} title={t('startContractorTitle')} desc={t('startContractorDesc')} cta={t('startContractorCta')} accent="#FFB638" Arrow={Arrow} />
+            <RoleCard href="/contractor" icon={Hammer} title={t('startContractorTitle')} desc={t('startContractorDesc')} accent="#FFB638" Arrow={Arrow} />
           </Reveal>
           <Reveal delay={160}>
-            <RoleCard href="/contractor?type=consultant" icon={ClipboardCheck} eyebrow={t('startConsultantEyebrow')} title={t('startConsultantTitle')} desc={t('startConsultantDesc')} cta={t('startConsultantCta')} accent="#142A44" Arrow={Arrow} />
+            <RoleCard href="/contractor?type=consultant" icon={ClipboardCheck} title={t('startConsultantTitle')} desc={t('startConsultantDesc')} accent="#142A44" Arrow={Arrow} />
           </Reveal>
         </div>
       </section>
@@ -204,32 +204,21 @@ function ContactAction({ href, label, icon: Icon, external = false }) {
   );
 }
 
-function RoleCard({ href, icon: Icon, eyebrow, title, desc, cta, accent, Arrow }) {
-  const ctaStyle = accent === '#FFB638'
-    ? { background: 'linear-gradient(180deg, #FFC75F, #F5A623)', color: '#4A2D00' }
-    : accent === '#142A44'
-      ? { background: 'linear-gradient(180deg, #173653, #0D1B2A)', color: '#fff' }
-      : { background: 'linear-gradient(180deg, #12C3AA, #0BA890)', color: '#fff' };
-
+function RoleCard({ href, icon: Icon, title, desc, accent, Arrow }) {
   return (
     <Link href={href} className="block h-full cursor-pointer tap-highlight">
       <article
-        className="interactive-card group flex h-full min-h-[132px] items-center gap-3 rounded-[22px] border border-border bg-white p-3.5 shadow-soft hover:border-[#0EB59E]/35 hover:shadow-card lg:min-h-[172px] lg:flex-col lg:items-start lg:p-5"
-        style={{ borderInlineStartWidth: 4, borderInlineStartColor: accent }}
+        className="interactive-card group flex h-full min-h-[96px] items-center gap-3 rounded-[22px] border border-border bg-white p-4 shadow-soft hover:border-[#0EB59E]/35 hover:shadow-card lg:min-h-[124px]"
       >
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl lg:h-12 lg:w-12" style={{ background: `${accent}14` }}>
-          <Icon className="h-5 w-5 lg:h-[22px] lg:w-[22px]" style={{ color: accent }} />
-        </div>
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-soft transition group-hover:scale-105" style={{ background: accent }}>
+          <Arrow />
+        </span>
         <div className="min-w-0 flex-1">
-          <div className="text-[10.5px] font-extrabold leading-none lg:text-[11px]" style={{ color: accent }}>{eyebrow}</div>
-          <h3 className="mt-1 truncate text-[15.5px] font-extrabold leading-tight text-navy lg:whitespace-normal lg:text-[18px]">{title}</h3>
-          <p className="mt-1 line-clamp-2 text-[11.5px] leading-snug text-muted-foreground lg:text-[13px]">{desc}</p>
-          <div
-            className="mt-3 flex min-h-9 w-full items-center justify-center gap-1.5 rounded-[14px] px-3 text-[12px] font-extrabold shadow-soft transition group-hover:scale-[1.015] lg:mt-auto lg:text-[12.5px]"
-            style={ctaStyle}
-          >
-            {cta} <Arrow />
-          </div>
+          <h3 className="truncate text-[18px] font-extrabold leading-tight text-navy lg:text-[19px]">{title}</h3>
+          <p className="mt-1 line-clamp-2 text-[12.5px] leading-relaxed text-muted-foreground lg:text-[13px]">{desc}</p>
+        </div>
+        <div className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[18px]" style={{ background: `${accent}12` }}>
+          <Icon className="h-[23px] w-[23px]" style={{ color: accent }} />
         </div>
       </article>
     </Link>
