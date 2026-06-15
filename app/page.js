@@ -1,15 +1,17 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/AppShell';
 import Reveal from '@/components/Reveal';
+import CountUp from '@/components/CountUp';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import {
   Cpu, GitCompare, MapPin, ArrowRight, ArrowUpRight, Building2,
   Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal,
-  Hammer, ShieldCheck, Mail, Phone, Instagram, CheckCircle2, FileText, Users
+  Hammer, ShieldCheck, Mail, Phone, Instagram, CheckCircle2, FileText, Users,
+  TrendingUp, Landmark, BadgeCheck, Wallet, Scale, Plus, Minus
 } from 'lucide-react';
 
 const CAT_ICONS = {
@@ -77,6 +79,9 @@ export default function HomePage() {
         </section>
       </div>
 
+      {/* ============ QATAR MARKET BAND ============ */}
+      <MarketBand t={t} />
+
       {/* ============ PROCESS STEPPER ============ */}
       <section className="py-10 lg:py-14">
         <Reveal>
@@ -137,6 +142,34 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ============ WHY MIMAARLINK ============ */}
+      <section className="py-10 lg:py-14">
+        <Reveal>
+          <div className="text-center max-w-xl mx-auto mb-9">
+            <h2 className="display-title text-[24px] sm:text-[30px]">{t('whyTitle')}</h2>
+            <p className="mt-2.5 text-[14px] text-muted-foreground leading-relaxed">{t('whySubtitle')}</p>
+          </div>
+        </Reveal>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {[
+            { icon: BadgeCheck, title: t('why1Title'), desc: t('why1Desc') },
+            { icon: Wallet, title: t('why2Title'), desc: t('why2Desc') },
+            { icon: Scale, title: t('why3Title'), desc: t('why3Desc') },
+            { icon: MapPin, title: t('why4Title'), desc: t('why4Desc') },
+          ].map((w, i) => (
+            <Reveal key={i} delay={i * 90}>
+              <div className="interactive-card h-full rounded-[22px] border border-border bg-white p-5 shadow-soft hover:border-[#0EB59E]/40">
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl" style={{ background: 'rgba(14,181,158,0.10)' }}>
+                  <w.icon className="h-[21px] w-[21px]" style={{ color: '#0EB59E' }} />
+                </span>
+                <h3 className="mt-4 text-[15.5px] font-bold text-navy leading-snug">{w.title}</h3>
+                <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">{w.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* ============ AUDIENCE SPLIT ============ */}
       <section className="py-10 lg:py-14">
         <div className="grid lg:grid-cols-2 gap-4">
@@ -177,6 +210,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ============ FAQ ============ */}
+      <FaqSection t={t} />
+
       {/* ============ CONTACT ============ */}
       <section className="py-10 lg:py-12">
         <Reveal>
@@ -193,6 +229,91 @@ export default function HomePage() {
         </Reveal>
       </section>
     </AppShell>
+  );
+}
+
+function MarketBand({ t }) {
+  const stats = [
+    { value: '$70B+', label: t('marketStat1Label'), icon: Landmark, animate: true },
+    { value: '10%+', label: t('marketStat2Label'), icon: TrendingUp, animate: true },
+    { value: t('marketVisionValue'), label: t('marketVisionLabel'), icon: ShieldCheck, animate: false },
+  ];
+  return (
+    <section className="py-4 lg:py-8">
+      <Reveal>
+        <div className="relative overflow-hidden rounded-[28px] premium-panel glass-line text-white px-6 py-9 sm:px-10 sm:py-11">
+          <div className="relative max-w-2xl">
+            <div className="inline-flex items-center gap-1.5 text-[12px] font-bold mb-3" style={{ color: '#5EEAD4' }}>
+              <Landmark className="h-3.5 w-3.5 shrink-0" />
+              {t('contactLocationValue')}
+            </div>
+            <h2 className="text-[24px] sm:text-[32px] font-extrabold leading-tight">{t('marketTitle')}</h2>
+            <p className="mt-3 text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/65">{t('marketSubtitle')}</p>
+          </div>
+
+          <div className="relative mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {stats.map((s, i) => (
+              <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.06] p-5">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
+                  <s.icon className="h-[18px] w-[18px]" style={{ color: '#5EEAD4' }} />
+                </span>
+                {s.animate
+                  ? <CountUp value={s.value} className="mt-4 block text-[30px] font-black leading-none text-white" />
+                  : <span className="mt-4 block text-[30px] font-black leading-none text-white"><bdi dir="ltr">{s.value}</bdi></span>}
+                <p className="mt-2 text-[12px] leading-relaxed text-white/55">{s.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="relative mt-5 text-[11px] text-white/40">{t('marketSource')}</p>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function FaqSection({ t }) {
+  const items = [1, 2, 3, 4, 5].map((n) => ({ q: t(`faqQ${n}`), a: t(`faqA${n}`) }));
+  const [open, setOpen] = useState(0);
+  return (
+    <section className="py-10 lg:py-14">
+      <Reveal>
+        <div className="text-center max-w-xl mx-auto mb-8">
+          <h2 className="display-title text-[24px] sm:text-[30px]">{t('faqTitle')}</h2>
+          <p className="mt-2.5 text-[14px] text-muted-foreground leading-relaxed">{t('faqSubtitle')}</p>
+        </div>
+      </Reveal>
+      <Reveal>
+        <div className="mx-auto max-w-2xl grid gap-2.5">
+          {items.map((it, i) => {
+            const isOpen = open === i;
+            return (
+              <div key={i} className={`rounded-2xl border bg-white shadow-soft transition-colors ${isOpen ? 'border-[#0EB59E]/40' : 'border-border'}`}>
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? -1 : i)}
+                  aria-expanded={isOpen}
+                  className="flex w-full items-center justify-between gap-3 px-5 py-4 text-start tap-highlight"
+                >
+                  <span className="text-[14px] font-bold text-navy leading-snug">{it.q}</span>
+                  <span
+                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? 'text-white' : 'text-navy'}`}
+                    style={isOpen ? { background: '#0EB59E' } : { background: 'rgba(13,27,42,0.05)' }}
+                  >
+                    {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                  </span>
+                </button>
+                <div className="grid transition-all duration-300 ease-out" style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}>
+                  <div className="overflow-hidden">
+                    <p className="px-5 pb-4 text-[13px] leading-relaxed text-muted-foreground">{it.a}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </Reveal>
+    </section>
   );
 }
 
