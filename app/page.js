@@ -9,7 +9,8 @@ import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import {
   Cpu, GitCompare, MapPin, ArrowRight, ArrowUpRight, Building2,
   Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal,
-  Hammer, ShieldCheck, Mail, Phone, Instagram, CheckCircle2, FileText
+  Hammer, ShieldCheck, Mail, Phone, Instagram, CheckCircle2, FileText,
+  BarChart3, Database, Landmark, Network
 } from 'lucide-react';
 
 const CAT_ICONS = {
@@ -80,6 +81,9 @@ export default function HomePage() {
           </div>
         </section>
       </div>
+
+      {/* ============ MARKET SIGNALS ============ */}
+      <MarketSignalsSection isRTL={isRTL} />
 
       {/* ============ PROCESS STEPPER ============ */}
       <section className="py-10 lg:py-14">
@@ -183,6 +187,126 @@ export default function HomePage() {
         </Reveal>
       </section>
     </AppShell>
+  );
+}
+
+function MarketSignalsSection({ isRTL }) {
+  const copy = isRTL
+    ? {
+        eyebrow: 'إشارات من السوق القطري',
+        title: 'سوق كبير، لكن طريقة الوصول للمقاول المناسب ما زالت غير منظمة.',
+        subtitle: 'معمار لينك يركز على الفجوة العملية: صاحب المشروع يريد خيارات واضحة، والمقاول أو المكتب الاستشاري يريد فرصاً مناسبة بدل الاعتماد فقط على العلاقات والرسائل المتفرقة.',
+        wedgeTitle: 'فكرتنا في المرحلة الثانية',
+        wedgeDesc: 'نحوّل الطلبات من محادثات واتساب غير واضحة إلى نطاق عمل، مزودين مناسبين، ومقارنة عروض قابلة للفهم.',
+        stats: [
+          { value: '34%', label: 'نمو قطاع البناء والعقار في قطر من 2015 إلى 2023', source: 'Oxford Business Group', href: 'https://oxfordbusinessgroup.com/reports/qatar/2025-report/construction-real-estate/built-to-last-sector-poised-for-continued-growth-fuelled-by-strategic-infrastructure-investment-and-regulatory-reforms-overview/', icon: BarChart3 },
+          { value: '$68.7B', label: 'حجم سوق البناء المقدر في قطر خلال 2025', source: 'Oxford Business Group', href: 'https://oxfordbusinessgroup.com/reports/qatar/2025-report/construction-real-estate/built-to-last-sector-poised-for-continued-growth-fuelled-by-strategic-infrastructure-investment-and-regulatory-reforms-overview/', icon: Landmark },
+          { value: '700+', label: 'شركة نشطة تقريباً تتنافس على المشاريع في سوق مجزأ', source: 'Oxford Business Group', href: 'https://oxfordbusinessgroup.com/reports/qatar/2025-report/construction-real-estate/built-to-last-sector-poised-for-continued-growth-fuelled-by-strategic-infrastructure-investment-and-regulatory-reforms-overview/', icon: Network },
+        ],
+        signals: [
+          { title: 'رؤية قطر 2030', desc: 'إطار وطني يدعم التنويع الاقتصادي، القطاع الخاص، وتطوير البنية التحتية.', href: 'https://www.gco.gov.qa/en/state-of-qatar/qatar-national-vision-2030/our-story/' },
+          { title: 'بيانات قطر المفتوحة', desc: 'مصدر رسمي لبيانات الإسكان، البناء، التخطيط العمراني، وتصاريح البناء.', href: 'https://www.data.gov.qa/' },
+        ],
+      }
+    : {
+        eyebrow: 'Qatar market signals',
+        title: 'A large market still depends on fragmented contractor discovery.',
+        subtitle: 'MimaarLink focuses on the practical gap: project owners need clear options, while contractors and consultant offices need relevant opportunities beyond scattered referrals and WhatsApp threads.',
+        wedgeTitle: 'Our Phase 2 wedge',
+        wedgeDesc: 'Turn messy project requests into scope, matched providers, and bid comparisons that are easier to understand.',
+        stats: [
+          { value: '34%', label: 'construction and real estate sector growth in Qatar from 2015 to 2023', source: 'Oxford Business Group', href: 'https://oxfordbusinessgroup.com/reports/qatar/2025-report/construction-real-estate/built-to-last-sector-poised-for-continued-growth-fuelled-by-strategic-infrastructure-investment-and-regulatory-reforms-overview/', icon: BarChart3 },
+          { value: '$68.7B', label: 'estimated Qatar construction market size in 2025', source: 'Oxford Business Group', href: 'https://oxfordbusinessgroup.com/reports/qatar/2025-report/construction-real-estate/built-to-last-sector-poised-for-continued-growth-fuelled-by-strategic-infrastructure-investment-and-regulatory-reforms-overview/', icon: Landmark },
+          { value: '700+', label: 'active companies competing in a fragmented construction market', source: 'Oxford Business Group', href: 'https://oxfordbusinessgroup.com/reports/qatar/2025-report/construction-real-estate/built-to-last-sector-poised-for-continued-growth-fuelled-by-strategic-infrastructure-investment-and-regulatory-reforms-overview/', icon: Network },
+        ],
+        signals: [
+          { title: 'Qatar National Vision 2030', desc: 'A national framework supporting diversification, private sector growth, and infrastructure development.', href: 'https://www.gco.gov.qa/en/state-of-qatar/qatar-national-vision-2030/our-story/' },
+          { title: 'Qatar Open Data', desc: 'Government open data covering housing, construction, urban planning, and building permits.', href: 'https://www.data.gov.qa/' },
+        ],
+      };
+
+  return (
+    <section className="py-10 lg:py-14">
+      <Reveal>
+        <div className="mb-6 max-w-3xl">
+          <div className="eyebrow mb-1.5">{copy.eyebrow}</div>
+          <h2 className="display-title text-[24px] sm:text-[32px]">{copy.title}</h2>
+          <p className="mt-3 text-[14px] leading-relaxed text-muted-foreground sm:text-[15px]">
+            {copy.subtitle}
+          </p>
+        </div>
+      </Reveal>
+
+      <div className="grid gap-3 lg:grid-cols-[1.15fr_0.85fr]">
+        <Reveal>
+          <div className="grid h-full gap-3 sm:grid-cols-3">
+            {copy.stats.map((stat) => (
+              <MarketStatCard key={stat.value} stat={stat} />
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal delay={120}>
+          <div className="h-full rounded-[26px] border border-border bg-white p-5 shadow-card">
+            <div className="flex items-start gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0D1B2A] text-white shadow-soft">
+                <GitCompare className="h-5 w-5" />
+              </span>
+              <div>
+                <h3 className="text-[17px] font-extrabold leading-tight text-navy">{copy.wedgeTitle}</h3>
+                <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">{copy.wedgeDesc}</p>
+              </div>
+            </div>
+
+            <div className="mt-5 grid gap-2">
+              {copy.signals.map((signal) => (
+                <a
+                  key={signal.title}
+                  href={signal.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group flex items-start justify-between gap-3 rounded-2xl border border-border bg-background px-4 py-3 transition hover:border-[#0EB59E]/40 hover:bg-white"
+                >
+                  <span>
+                    <span className="block text-[13px] font-extrabold text-navy">{signal.title}</span>
+                    <span className="mt-1 block text-[12px] leading-relaxed text-muted-foreground">{signal.desc}</span>
+                  </span>
+                  <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-teal transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function MarketStatCard({ stat }) {
+  const Icon = stat.icon || Database;
+
+  return (
+    <div className="interactive-card flex min-h-[178px] flex-col justify-between rounded-[24px] border border-border bg-white p-5 shadow-soft">
+      <div className="flex items-center justify-between gap-3">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#0EB59E]/10">
+          <Icon className="h-5 w-5 text-teal" />
+        </span>
+        <a
+          href={stat.href}
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-full border border-border bg-background px-2.5 py-1 text-[10px] font-bold text-muted-foreground transition hover:border-[#0EB59E]/40 hover:text-teal"
+        >
+          {stat.source}
+        </a>
+      </div>
+      <div>
+        <div className="text-[28px] font-black leading-none text-navy">
+          <bdi dir="ltr">{stat.value}</bdi>
+        </div>
+        <p className="mt-2 text-[12.5px] leading-relaxed text-muted-foreground">{stat.label}</p>
+      </div>
+    </div>
   );
 }
 
