@@ -47,7 +47,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const container = wide ? 'max-w-5xl' : 'max-w-3xl';
+  const container = wide ? 'max-w-6xl' : 'max-w-3xl';
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -58,7 +58,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
             : 'bg-transparent border-b border-transparent'
         }`}
       >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-[58px] sm:h-16 flex items-center justify-between gap-2">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-[58px] sm:h-16 flex items-center justify-between gap-2">
           <Link href="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0 shrink tap-highlight">
             <Logo />
             <BrandText size={16} />
@@ -129,7 +129,7 @@ function SiteFooter({ wide = false }) {
   const { t } = useLang();
   const year = new Date().getFullYear();
   return (
-    <footer className={`${wide ? 'max-w-5xl' : 'max-w-3xl'} mx-auto px-4 sm:px-6 mt-12`}>
+    <footer className={`${wide ? 'max-w-6xl' : 'max-w-3xl'} mx-auto px-4 sm:px-6 mt-12`}>
       <div className="border-t border-border pt-8 pb-6">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
           <div className="max-w-xs">

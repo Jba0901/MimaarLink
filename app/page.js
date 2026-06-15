@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/AppShell';
 import Reveal from '@/components/Reveal';
-import CountUp from '@/components/CountUp';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
@@ -50,13 +49,17 @@ export default function HomePage() {
                 {t('subtitle')}
               </p>
 
-              <div className="motion-fade-up motion-delay-3 mt-7 flex flex-col sm:flex-row gap-3">
+              <div className="motion-fade-up motion-delay-3 mt-7 flex flex-col sm:flex-row sm:flex-wrap gap-3">
                 <Link href="/post-project" className="btn btn-primary soft-shine px-7 text-[15px]" style={{ minHeight: 52 }}>
                   {t('postProject')} <Arrow />
                 </Link>
-                <Link href="/contractor" className="btn btn-outline px-7 text-[14px]" style={{ minHeight: 52 }}>
+                <Link href="/contractor" className="btn btn-outline px-6 text-[14px]" style={{ minHeight: 52 }}>
                   <Hammer className="w-4 h-4 shrink-0" />
-                  {t('joinContractor')}
+                  {t('providerTypeContractor')}
+                </Link>
+                <Link href="/contractor?type=consultant" className="btn btn-outline px-6 text-[14px]" style={{ minHeight: 52 }}>
+                  <ClipboardCheck className="w-4 h-4 shrink-0" />
+                  {t('providerTypeConsultant')}
                 </Link>
               </div>
 
@@ -190,18 +193,18 @@ export default function HomePage() {
           <Reveal delay={120}>
             <div className="relative h-full rounded-[26px] premium-panel glass-line text-white p-7 sm:p-9 overflow-hidden">
               <div className="inline-flex items-center text-[12px] font-bold mb-3" style={{ color: '#FFD27A' }}>{t('joinContractor')}</div>
-              <h3 className="text-[23px] sm:text-[27px] font-extrabold leading-tight">{t('startContractorTitle')}</h3>
-              <p className="mt-2.5 text-[14px] text-white/65 leading-relaxed max-w-sm">{t('startContractorDesc')}</p>
-              <div className="mt-6 flex flex-col sm:flex-row sm:items-center gap-3">
+              <h3 className="text-[23px] sm:text-[27px] font-extrabold leading-tight">{t('providerJoinTitle')}</h3>
+              <p className="mt-2.5 text-[14px] text-white/65 leading-relaxed max-w-sm">{t('providerJoinDesc')}</p>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 <Link href="/contractor" className="btn btn-amber px-6 text-[14px]" style={{ minHeight: 46 }}>
                   {t('startContractorCta')} <Arrow />
                 </Link>
                 <Link
                   href="/contractor?type=consultant"
-                  className="inline-flex items-center justify-center gap-1.5 text-[13px] font-bold text-white/70 underline underline-offset-4 decoration-white/25 transition-colors hover:text-white tap-highlight"
+                  className="btn btn-ghost-light px-6 text-[14px]"
+                  style={{ minHeight: 46 }}
                 >
-                  <ClipboardCheck className="h-3.5 w-3.5 shrink-0" />
-                  {t('startConsultantCta')}
+                  {t('startConsultantCta')} <Arrow />
                 </Link>
               </div>
               <Users className="absolute bottom-[-16px] w-32 h-32 pointer-events-none select-none" style={{ color: 'rgba(255,255,255,0.05)', insetInlineEnd: '-8px' }} />
@@ -234,9 +237,9 @@ export default function HomePage() {
 
 function MarketBand({ t }) {
   const stats = [
-    { value: '$70B+', label: t('marketStat1Label'), icon: Landmark, animate: true },
-    { value: '10%+', label: t('marketStat2Label'), icon: TrendingUp, animate: true },
-    { value: t('marketVisionValue'), label: t('marketVisionLabel'), icon: ShieldCheck, animate: false },
+    { value: '$68.7B', label: t('marketStat1Label'), icon: Landmark },
+    { value: '34%', label: t('marketStat2Label'), icon: TrendingUp },
+    { value: t('marketVisionValue'), label: t('marketVisionLabel'), icon: ShieldCheck },
   ];
   return (
     <section className="py-4 lg:py-8">
@@ -257,15 +260,31 @@ function MarketBand({ t }) {
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
                   <s.icon className="h-[18px] w-[18px]" style={{ color: '#5EEAD4' }} />
                 </span>
-                {s.animate
-                  ? <CountUp value={s.value} className="mt-4 block text-[30px] font-black leading-none text-white" />
-                  : <span className="mt-4 block text-[30px] font-black leading-none text-white"><bdi dir="ltr">{s.value}</bdi></span>}
+                <span className="mt-4 block text-[30px] font-black leading-none text-white"><bdi dir="ltr">{s.value}</bdi></span>
                 <p className="mt-2 text-[12px] leading-relaxed text-white/55">{s.label}</p>
               </div>
             ))}
           </div>
 
-          <p className="relative mt-5 text-[11px] text-white/40">{t('marketSource')}</p>
+          <div className="relative mt-5 flex flex-wrap items-center gap-2 text-[11px] text-white/45">
+            <span>{t('marketSource')}</span>
+            <a
+              href="https://oxfordbusinessgroup.com/reports/qatar/2025-report/construction-real-estate/built-to-last-sector-poised-for-continued-growth-fuelled-by-strategic-infrastructure-investment-and-regulatory-reforms-overview/"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-white/10 px-2.5 py-1 text-white/60 transition hover:border-[#5EEAD4]/40 hover:text-[#5EEAD4]"
+            >
+              Oxford Business Group
+            </a>
+            <a
+              href="https://www.gco.gov.qa/en/state-of-qatar/qatar-national-vision-2030/our-story/"
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-white/10 px-2.5 py-1 text-white/60 transition hover:border-[#5EEAD4]/40 hover:text-[#5EEAD4]"
+            >
+              Qatar National Vision 2030
+            </a>
+          </div>
         </div>
       </Reveal>
     </section>
