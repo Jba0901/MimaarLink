@@ -190,10 +190,10 @@ export default function HomePage() {
             ].map((r, i) => (
               <Reveal key={i} delay={i * 100}>
                 <article
-                  className="group interactive-card relative flex h-full flex-col overflow-hidden rounded-[26px] border border-border bg-white p-7 shadow-soft hover:shadow-card hover:border-transparent"
+                  className="group interactive-card card-sheen relative flex h-full flex-col overflow-hidden rounded-[26px] border border-border bg-white p-7 shadow-soft hover:shadow-card hover:border-transparent"
                   style={{ borderTopWidth: 3, borderTopColor: r.accent }}
                 >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl transition group-hover:scale-105" style={{ background: `${r.accent}14` }}>
+                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" style={{ background: `${r.accent}14` }}>
                     <r.icon className="h-7 w-7" style={{ color: r.accent }} />
                   </span>
                   <div className="mt-5 text-[12px] font-bold uppercase tracking-wide" style={{ color: r.accent }}>{r.eyebrow}</div>
@@ -202,7 +202,7 @@ export default function HomePage() {
                   <Link href={r.href} className={`btn ${r.btn} mt-6 w-full text-[14px]`} style={{ minHeight: 50 }}>
                     {r.cta} <Arrow />
                   </Link>
-                  <r.icon className="absolute bottom-[-22px] w-28 h-28 pointer-events-none select-none" style={{ color: `${r.accent}0d`, insetInlineEnd: '-10px' }} />
+                  <r.icon className="absolute bottom-[-22px] w-28 h-28 pointer-events-none select-none transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6" style={{ color: `${r.accent}0d`, insetInlineEnd: '-10px' }} />
                 </article>
               </Reveal>
             ))}
@@ -237,7 +237,7 @@ export default function HomePage() {
 
 function MarketBand({ t }) {
   const stats = [
-    { value: '$70B+', label: t('marketStat1Label'), icon: Landmark, animate: true },
+    { value: 'QAR 250B+', label: t('marketStat1Label'), icon: Landmark, animate: true },
     { value: '10%+', label: t('marketStat2Label'), icon: TrendingUp, animate: true },
     { value: t('marketVisionValue'), label: t('marketVisionLabel'), icon: ShieldCheck, animate: false },
   ];
@@ -257,21 +257,21 @@ function MarketBand({ t }) {
             </div>
           </Reveal>
 
-          <Reveal delay={120}>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {stats.map((s, i) => (
-                <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.06] p-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {stats.map((s, i) => (
+              <Reveal key={i} delay={i * 130} className="h-full">
+                <div className="stat-card card-sheen h-full rounded-2xl p-5">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10">
                     <s.icon className="h-[19px] w-[19px]" style={{ color: '#5EEAD4' }} />
                   </span>
                   {s.animate
-                    ? <CountUp value={s.value} className="mt-4 block text-[32px] font-black leading-none text-white" />
-                    : <span className="mt-4 block text-[32px] font-black leading-none text-white"><bdi dir="ltr">{s.value}</bdi></span>}
+                    ? <CountUp value={s.value} className="mt-4 block text-[30px] sm:text-[32px] font-black leading-none text-white" />
+                    : <span className="mt-4 block text-[30px] sm:text-[32px] font-black leading-none text-white"><bdi dir="ltr">{s.value}</bdi></span>}
                   <p className="mt-2.5 text-[12px] leading-relaxed text-white/55">{s.label}</p>
                 </div>
-              ))}
-            </div>
-          </Reveal>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>
