@@ -3,6 +3,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import FormProgress from '@/components/FormProgress';
+import FormAside from '@/components/FormAside';
 import { useLang } from '@/lib/LangContext';
 import { CATEGORIES, CONSULTANT_CATEGORIES, CONSULTANT_GRADES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -167,16 +168,18 @@ function ContractorApplicationInner() {
   );
 
   return (
-    <AppShell hideFooter hideNav>
-      <h1 className="display-title text-[26px] mb-1.5 motion-fade-up">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</h1>
-      <p className="text-[13.5px] text-muted-foreground mb-5 motion-fade-up motion-delay-1 leading-relaxed">{isConsultant ? t('consultantSubtitle') : t('contractorSubtitle')}</p>
-      <FormProgress
-        step={step}
-        total={3}
-        label={t('stepLabel')}
-        title={step === 1 ? t('contractorStep1Title') : step === 2 ? t('contractorStep2Title') : t('contractorStep3Title')}
-        desc={step === 1 ? t('contractorStep1Desc') : step === 2 ? t('contractorStep2Desc') : t('contractorStep3Desc')}
-      />
+    <AppShell hideFooter hideNav wide>
+      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
+        <div className="w-full lg:max-w-2xl">
+          <h1 className="display-title text-[26px] sm:text-[30px] mb-1.5 motion-fade-up">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</h1>
+          <p className="text-[13.5px] text-muted-foreground mb-5 motion-fade-up motion-delay-1 leading-relaxed">{isConsultant ? t('consultantSubtitle') : t('contractorSubtitle')}</p>
+          <FormProgress
+            step={step}
+            total={3}
+            label={t('stepLabel')}
+            title={step === 1 ? t('contractorStep1Title') : step === 2 ? t('contractorStep2Title') : t('contractorStep3Title')}
+            desc={step === 1 ? t('contractorStep1Desc') : step === 2 ? t('contractorStep2Desc') : t('contractorStep3Desc')}
+          />
 
       {step === 1 && (
         <div className="space-y-3.5">
@@ -199,10 +202,14 @@ function ContractorApplicationInner() {
               />
             </div>
           </div>
-          <RequiredField label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedBasics} t={t} />
-          <RequiredField label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedBasics} t={t} />
-          <RequiredField label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedBasics} t={t} />
-          <RequiredField label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            <RequiredField label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedBasics} t={t} />
+            <RequiredField label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedBasics} t={t} />
+          </div>
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            <RequiredField label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedBasics} t={t} />
+            <RequiredField label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
+          </div>
           <div>
             <Label className="text-sm">{t('email')}</Label>
             <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
@@ -264,13 +271,15 @@ function ContractorApplicationInner() {
               {triedServices && !otherDescValid && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
             </div>
           )}
-          <div>
-            <Label className="text-sm">{t('serviceAreas')}</Label>
-            <Input value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
-          </div>
-          <div>
-            <Label className="text-sm">{t('projectSize')}</Label>
-            <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            <div>
+              <Label className="text-sm">{t('serviceAreas')}</Label>
+              <Input value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
+            </div>
+            <div>
+              <Label className="text-sm">{t('projectSize')}</Label>
+              <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
+            </div>
           </div>
           <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11 cta-press">{t('back')}</Button>
@@ -317,6 +326,16 @@ function ContractorApplicationInner() {
           </div>
         </div>
       )}
+        </div>
+        <FormAside
+          steps={[
+            { title: t('contL_s1'), desc: t('contL_s1d') },
+            { title: t('contL_s2'), desc: t('contL_s2d') },
+            { title: t('contL_s3'), desc: t('contL_s3d') },
+          ]}
+          note={t('contractorStep3Desc')}
+        />
+      </div>
     </AppShell>
   );
 }

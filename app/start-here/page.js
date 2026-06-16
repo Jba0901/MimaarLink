@@ -12,18 +12,18 @@ export default function StartHerePage() {
   const Arrow = () => isRTL ? <ArrowRight className="h-4 w-4 rotate-180" /> : <ArrowRight className="h-4 w-4" />;
 
   return (
-    <AppShell hideNav hideFooter>
-      <div className="v2-ambient -mx-4 sm:-mx-6 px-4 sm:px-6 min-h-[calc(100vh-130px)] flex flex-col justify-center">
-        <div className="relative z-10 mx-auto w-full max-w-md py-6">
-          <div className="text-center mb-7 motion-fade-up">
+    <AppShell hideNav hideFooter wide>
+      <div className="v2-ambient -mx-4 sm:-mx-6 px-4 sm:px-6 flex min-h-[calc(100vh-130px)] flex-col justify-center py-8">
+        <div className="relative z-10 mx-auto w-full max-w-md sm:max-w-3xl lg:max-w-4xl">
+          <div className="mb-8 text-center motion-fade-up">
             <div className="eyebrow justify-center mb-3">{t('startEyebrow')}</div>
-            <h1 className="display-title text-[30px] sm:text-[34px]">{t('startTitle')}</h1>
-            <p className="mx-auto mt-2.5 max-w-[300px] text-[13.5px] leading-relaxed text-muted-foreground">
+            <h1 className="display-title text-[30px] sm:text-[36px]">{t('startTitle')}</h1>
+            <p className="mx-auto mt-3 max-w-[420px] text-[13.5px] sm:text-[14.5px] leading-relaxed text-muted-foreground">
               {t('startSubtitle')}
             </p>
           </div>
 
-          <div className="grid gap-3 motion-fade-up motion-delay-1">
+          <div className="grid gap-3 motion-fade-up motion-delay-1 sm:grid-cols-3">
             <SimpleChoice
               href="/post-project"
               icon={Building2}
@@ -50,17 +50,17 @@ export default function StartHerePage() {
             />
           </div>
 
-          <div className="mt-5 text-center motion-fade-up motion-delay-2">
-            <p className="text-[12.5px] font-semibold text-muted-foreground">{t('startHelpTitle')}</p>
+          <div className="mt-7 text-center motion-fade-up motion-delay-2">
+            <p className="mb-2.5 text-[12.5px] font-medium text-muted-foreground">{t('startHelpTitle')}</p>
             <a
               href="https://wa.me/97466259219"
               target="_blank"
               rel="noreferrer"
-              className="btn btn-outline mt-2.5 px-5 text-[13px]"
-              style={{ minHeight: 42 }}
+              className="btn btn-outline px-5 text-[13px]"
+              style={{ minHeight: 44 }}
             >
               <WhatsAppIcon className="h-[15px] w-[15px]" style={{ color: '#0EB59E' }} />
-              {t('startWhatsapp')}
+              {t('contactWhatsapp')}
             </a>
           </div>
         </div>
@@ -71,21 +71,18 @@ export default function StartHerePage() {
 
 function SimpleChoice({ href, icon: Icon, title, desc, accent, Arrow }) {
   return (
-    <Link href={href} className="block tap-highlight">
-      <article
-        className="interactive-card flex items-center gap-4 rounded-[22px] border border-border bg-white p-4 shadow-soft hover:shadow-card"
-        style={{ borderInlineStartWidth: 3, borderInlineStartColor: accent }}
-      >
-        <div className="flex shrink-0 items-center justify-center rounded-2xl" style={{ background: `${accent}16`, width: 52, height: 52 }}>
-          <Icon className="h-[22px] w-[22px]" style={{ color: accent }} />
+    <Link href={href} className="block h-full cursor-pointer tap-highlight">
+      <article className="group interactive-card flex h-full flex-col rounded-[22px] border border-border bg-white p-5 shadow-soft hover:border-[#0EB59E]/35 hover:shadow-card">
+        <div className="flex items-center justify-between gap-3">
+          <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[18px]" style={{ background: `${accent}14` }}>
+            <Icon className="h-[23px] w-[23px]" style={{ color: accent }} />
+          </span>
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-soft transition group-hover:scale-105" style={{ background: accent }}>
+            <Arrow />
+          </span>
         </div>
-        <div className="min-w-0 flex-1">
-          <h2 className="text-[16.5px] font-bold leading-tight text-navy">{title}</h2>
-          <p className="mt-1 text-[12.5px] leading-relaxed text-muted-foreground">{desc}</p>
-        </div>
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-soft" style={{ background: accent }}>
-          <Arrow />
-        </span>
+        <h2 className="mt-4 text-[17px] font-extrabold leading-tight text-navy">{title}</h2>
+        <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">{desc}</p>
       </article>
     </Link>
   );

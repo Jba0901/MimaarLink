@@ -3,6 +3,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import FormProgress from '@/components/FormProgress';
+import FormAside from '@/components/FormAside';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -84,18 +85,19 @@ function PostProjectInner() {
   };
 
   return (
-    <AppShell hideFooter hideNav>
-      <h1 className="display-title text-[26px] mb-1.5 motion-fade-up">{t('postTitle')}</h1>
-      <p className="text-[13.5px] text-muted-foreground mb-4 motion-fade-up motion-delay-1 leading-relaxed">{t('subtitle')}</p>
-      {step < 4 && (
-        <FormProgress
-          step={step}
-          total={3}
-          label={t('stepLabel')}
-          title={step === 1 ? t('projectStep1Title') : step === 2 ? t('projectStep2Title') : t('projectStep3Title')}
-          desc={step === 1 ? t('projectStep1Desc') : step === 2 ? t('projectStep2Desc') : t('projectStep3Desc')}
-        />
-      )}
+    <AppShell hideFooter hideNav wide>
+      {step < 4 ? (
+      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
+        <div className="w-full lg:max-w-2xl">
+          <h1 className="display-title text-[26px] sm:text-[30px] mb-1.5 motion-fade-up">{t('postTitle')}</h1>
+          <p className="text-[13.5px] text-muted-foreground mb-4 motion-fade-up motion-delay-1 leading-relaxed">{t('subtitle')}</p>
+          <FormProgress
+            step={step}
+            total={3}
+            label={t('stepLabel')}
+            title={step === 1 ? t('projectStep1Title') : step === 2 ? t('projectStep2Title') : t('projectStep3Title')}
+            desc={step === 1 ? t('projectStep1Desc') : step === 2 ? t('projectStep2Desc') : t('projectStep3Desc')}
+          />
 
       {step === 1 && (
         <div>
@@ -137,13 +139,15 @@ function PostProjectInner() {
             />
             {tried2 && !data.description && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
           </div>
-          <div>
-            <Label className="text-sm">{t('timeline')}</Label>
-            <Input value={data.timeline} onChange={e => update('timeline', e.target.value)} placeholder={t('timelinePh')} className="h-11 mt-1.5" />
-          </div>
-          <div>
-            <Label className="text-sm">{t('budget')}</Label>
-            <Input value={data.budgetRange} onChange={e => update('budgetRange', e.target.value)} placeholder={t('budgetPh')} className="h-11 mt-1.5" />
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            <div>
+              <Label className="text-sm">{t('timeline')}</Label>
+              <Input value={data.timeline} onChange={e => update('timeline', e.target.value)} placeholder={t('timelinePh')} className="h-11 mt-1.5" />
+            </div>
+            <div>
+              <Label className="text-sm">{t('budget')}</Label>
+              <Input value={data.budgetRange} onChange={e => update('budgetRange', e.target.value)} placeholder={t('budgetPh')} className="h-11 mt-1.5" />
+            </div>
           </div>
           <div>
             <Label className="text-sm">{t('uploadFilesLabel')}</Label>
@@ -174,29 +178,35 @@ function PostProjectInner() {
       {step === 3 && (
         <div className="space-y-3.5">
           <h2 className="text-base font-semibold text-navy">{t('contactDetails')}</h2>
-          <RequiredField label={t('name')} value={data.name} onChange={v => update('name', v)} tried={tried3} t={t} />
-          <div>
-            <Label className="text-sm">{t('company')}</Label>
-            <Input value={data.company} onChange={e => update('company', e.target.value)} className="h-11 mt-1.5" />
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            <RequiredField label={t('name')} value={data.name} onChange={v => update('name', v)} tried={tried3} t={t} />
+            <div>
+              <Label className="text-sm">{t('company')}</Label>
+              <Input value={data.company} onChange={e => update('company', e.target.value)} className="h-11 mt-1.5" />
+            </div>
           </div>
-          <RequiredField label={t('phone')} value={data.phone} onChange={v => update('phone', v)} tried={tried3} t={t} placeholder="+974 ..." kind="phone" />
-          <div>
-            <Label className="text-sm">{t('email')}</Label>
-            <Input value={data.email} onChange={e => update('email', e.target.value)} className="h-11 mt-1.5" type="email" />
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            <RequiredField label={t('phone')} value={data.phone} onChange={v => update('phone', v)} tried={tried3} t={t} placeholder="+974 ..." kind="phone" />
+            <div>
+              <Label className="text-sm">{t('email')}</Label>
+              <Input value={data.email} onChange={e => update('email', e.target.value)} className="h-11 mt-1.5" type="email" />
+            </div>
           </div>
-          <div>
-            <Label className="text-sm">{t('role')}</Label>
-            <Input value={data.role} onChange={e => update('role', e.target.value)} placeholder={t('rolePh')} className="h-11 mt-1.5" />
-          </div>
-          <div>
-            <Label className="text-sm">{t('preferredLanguage')}</Label>
-            <Select value={data.languagePreference} onValueChange={v => update('languagePreference', v)}>
-              <SelectTrigger className="h-11 mt-1.5"><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="en">English</SelectItem>
-                <SelectItem value="ar">العربية</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            <div>
+              <Label className="text-sm">{t('role')}</Label>
+              <Input value={data.role} onChange={e => update('role', e.target.value)} placeholder={t('rolePh')} className="h-11 mt-1.5" />
+            </div>
+            <div>
+              <Label className="text-sm">{t('preferredLanguage')}</Label>
+              <Select value={data.languagePreference} onValueChange={v => update('languagePreference', v)}>
+                <SelectTrigger className="h-11 mt-1.5"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="ar">العربية</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11 cta-press">{t('back')}</Button>
@@ -206,7 +216,18 @@ function PostProjectInner() {
           </div>
         </div>
       )}
-
+        </div>
+        <FormAside
+          steps={[
+            { title: t('projL_s1'), desc: t('projL_s1d') },
+            { title: t('projL_s2'), desc: t('projL_s2d') },
+            { title: t('projL_s3'), desc: t('projL_s3d') },
+          ]}
+          note={t('projL_privacy')}
+        />
+      </div>
+      ) : (
+      <div className="mx-auto max-w-xl py-2">
       {step === 4 && createdId && (
         <Card className="border-2 motion-fade-up" style={{ borderColor: '#14A88E' }}>
           <CardContent className="p-6 text-center">
@@ -227,6 +248,8 @@ function PostProjectInner() {
             <Button onClick={() => router.push('/project/' + createdId)} className="w-full mt-4 h-11" style={{ background: '#142A44' }}>{t('viewProject')}</Button>
           </CardContent>
         </Card>
+      )}
+      </div>
       )}
     </AppShell>
   );
