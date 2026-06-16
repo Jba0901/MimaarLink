@@ -108,6 +108,15 @@
   @media (min-width: 1280px) { .container-x { padding-inline: 3rem; } }
   @media (min-width: 1536px) { .container-x { max-width: 87.5rem; } /* 1400px */ }
 
+  /* ---------- CTA arrow nudge on hover (RTL-safe) ---------- */
+  .cta-arrow { transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1); }
+  a:hover .cta-arrow,
+  button:hover .cta-arrow,
+  .group:hover .cta-arrow { transform: translateX(4px); }
+  html[dir="rtl"] a:hover .cta-arrow,
+  html[dir="rtl"] button:hover .cta-arrow,
+  html[dir="rtl"] .group:hover .cta-arrow { transform: translateX(-4px); }
+
   /* ---------- v2 ambient (soft radial wash, no blobs) ---------- */
   .v2-ambient { position: relative; }
   .v2-ambient::before {
@@ -143,6 +152,10 @@
     line-height: 1.1;
   }
   html[dir="rtl"] .display-title { letter-spacing: 0; line-height: 1.4; }
+
+  /* arrow that gently nudges forward on button hover (RTL-aware) */
+  .btn-arrow { transition: margin-inline-start 220ms ease; }
+  .btn:hover .btn-arrow { margin-inline-start: 0.45rem; }
 
   /* ---------- buttons (v2 = soft-rectangle, rounded-2xl) ---------- */
   .btn {

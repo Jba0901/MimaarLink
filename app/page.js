@@ -9,7 +9,7 @@ import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import {
   Cpu, GitCompare, MapPin, ArrowRight, ArrowUpRight, Building2,
   Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal,
-  Hammer, ShieldCheck, CheckCircle2, FileText, Users,
+  Hammer, ShieldCheck, CheckCircle2, FileText,
   TrendingUp, Landmark, BadgeCheck, Wallet, Scale, Plus, Minus
 } from 'lucide-react';
 
@@ -22,7 +22,7 @@ export default function HomePage() {
   const { t, dir } = useLang();
   const isRTL = dir === 'rtl';
   const Arrow = () =>
-    isRTL ? <ArrowRight className="w-4 h-4 rotate-180 shrink-0" /> : <ArrowRight className="w-4 h-4 shrink-0" />;
+    isRTL ? <ArrowRight className="btn-arrow w-4 h-4 rotate-180 shrink-0" /> : <ArrowRight className="btn-arrow w-4 h-4 shrink-0" />;
 
   const words = t('tagline').trim().split(' ');
   const lastWord = words.length > 1 ? words.pop() : null;
@@ -49,12 +49,12 @@ export default function HomePage() {
               </p>
 
               <div className="motion-fade-up motion-delay-3 mt-8 flex flex-col sm:flex-row gap-3">
-                <Link href="/post-project" className="btn btn-primary soft-shine px-8 text-[15px]" style={{ minHeight: 54 }}>
+                <Link href="/post-project" className="btn btn-primary soft-shine glow-teal px-8 text-[15px]" style={{ minHeight: 56 }}>
                   {t('postProject')} <Arrow />
                 </Link>
-                <Link href="/contractor" className="btn btn-outline px-7 text-[14px]" style={{ minHeight: 54 }}>
+                <Link href="/contractor" className="btn btn-navy px-7 text-[14.5px]" style={{ minHeight: 56 }}>
                   <Hammer className="w-4 h-4 shrink-0" />
-                  {t('joinContractor')}
+                  {t('joinContractor')} <Arrow />
                 </Link>
               </div>
 
@@ -172,42 +172,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ AUDIENCE SPLIT ============ */}
+      {/* ============ AUDIENCE — three clear paths ============ */}
       <section className="py-14 lg:py-20">
         <div className="container-x">
-          <div className="grid lg:grid-cols-2 gap-5">
-            <Reveal>
-              <div className="relative h-full rounded-[28px] border border-[#0EB59E]/20 p-8 sm:p-10 overflow-hidden" style={{ background: 'linear-gradient(150deg, #EAF9F6 0%, #F2FBF9 60%, #FFFFFF 100%)' }}>
-                <div className="eyebrow mb-3">{t('startProjectEyebrow')}</div>
-                <h3 className="display-title text-[24px] sm:text-[30px]">{t('startProjectTitle')}</h3>
-                <p className="mt-3 text-[14.5px] text-muted-foreground leading-relaxed max-w-md">{t('startProjectDesc')}</p>
-                <Link href="/post-project" className="btn btn-primary mt-7 px-7 text-[14px]" style={{ minHeight: 48 }}>
-                  {t('startProjectCta')} <Arrow />
-                </Link>
-                <Building2 className="absolute bottom-[-24px] w-36 h-36 pointer-events-none select-none" style={{ color: 'rgba(14,181,158,0.08)', insetInlineEnd: '-12px' }} />
-              </div>
-            </Reveal>
-
-            <Reveal delay={120}>
-              <div className="relative h-full rounded-[28px] premium-panel glass-line text-white p-8 sm:p-10 overflow-hidden">
-                <div className="inline-flex items-center text-[12px] font-bold mb-3" style={{ color: '#FFD27A' }}>{t('joinContractor')}</div>
-                <h3 className="text-[24px] sm:text-[30px] font-extrabold leading-tight">{t('startContractorTitle')}</h3>
-                <p className="mt-3 text-[14.5px] text-white/65 leading-relaxed max-w-md">{t('startContractorDesc')}</p>
-                <div className="mt-7 flex flex-col sm:flex-row sm:items-center gap-3">
-                  <Link href="/contractor" className="btn btn-amber px-7 text-[14px]" style={{ minHeight: 48 }}>
-                    {t('startContractorCta')} <Arrow />
+          <Reveal>
+            <div className="text-center max-w-2xl mx-auto mb-11">
+              <div className="eyebrow justify-center mb-3">{t('startEyebrow')}</div>
+              <h2 className="display-title text-[26px] sm:text-[34px]">{t('startTitle')}</h2>
+              <p className="mt-3 text-[15px] text-muted-foreground leading-relaxed">{t('startSubtitle')}</p>
+            </div>
+          </Reveal>
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              { href: '/post-project', icon: Building2, eyebrow: t('startProjectEyebrow'), title: t('startProjectTitle'), desc: t('startProjectDesc'), cta: t('startProjectCta'), accent: '#0EB59E', btn: 'btn-primary' },
+              { href: '/contractor', icon: Hammer, eyebrow: t('startContractorEyebrow'), title: t('startContractorTitle'), desc: t('startContractorDesc'), cta: t('startContractorCta'), accent: '#F5A623', btn: 'btn-amber' },
+              { href: '/contractor?type=consultant', icon: ClipboardCheck, eyebrow: t('startConsultantEyebrow'), title: t('startConsultantTitle'), desc: t('startConsultantDesc'), cta: t('startConsultantCta'), accent: '#142A44', btn: 'btn-navy' },
+            ].map((r, i) => (
+              <Reveal key={i} delay={i * 100}>
+                <article
+                  className="group interactive-card relative flex h-full flex-col overflow-hidden rounded-[26px] border border-border bg-white p-7 shadow-soft hover:shadow-card hover:border-transparent"
+                  style={{ borderTopWidth: 3, borderTopColor: r.accent }}
+                >
+                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl transition group-hover:scale-105" style={{ background: `${r.accent}14` }}>
+                    <r.icon className="h-7 w-7" style={{ color: r.accent }} />
+                  </span>
+                  <div className="mt-5 text-[12px] font-bold uppercase tracking-wide" style={{ color: r.accent }}>{r.eyebrow}</div>
+                  <h3 className="mt-1.5 text-[22px] font-extrabold leading-tight text-navy">{r.title}</h3>
+                  <p className="mt-2.5 flex-1 text-[13.5px] leading-relaxed text-muted-foreground">{r.desc}</p>
+                  <Link href={r.href} className={`btn ${r.btn} mt-6 w-full text-[14px]`} style={{ minHeight: 50 }}>
+                    {r.cta} <Arrow />
                   </Link>
-                  <Link
-                    href="/contractor?type=consultant"
-                    className="inline-flex items-center justify-center gap-1.5 text-[13px] font-bold text-white/70 underline underline-offset-4 decoration-white/25 transition-colors hover:text-white tap-highlight"
-                  >
-                    <ClipboardCheck className="h-3.5 w-3.5 shrink-0" />
-                    {t('startConsultantCta')}
-                  </Link>
-                </div>
-                <Users className="absolute bottom-[-18px] w-36 h-36 pointer-events-none select-none" style={{ color: 'rgba(255,255,255,0.05)', insetInlineEnd: '-10px' }} />
-              </div>
-            </Reveal>
+                  <r.icon className="absolute bottom-[-22px] w-28 h-28 pointer-events-none select-none" style={{ color: `${r.accent}0d`, insetInlineEnd: '-10px' }} />
+                </article>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
