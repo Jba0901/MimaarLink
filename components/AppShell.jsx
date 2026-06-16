@@ -17,26 +17,28 @@ function Logo({ className = 'h-8 sm:h-9' }) {
   );
 }
 
-function BrandText({ size = 17 }) {
+function BrandText({ size = 17, onDark = false }) {
   const { t, lang } = useLang();
+  const first = onDark ? '#FFFFFF' : '#0D1B2A';
+  const second = onDark ? '#5EEAD4' : '#0EB59E';
   if (lang === 'ar') {
     const parts = t('appName').split(' ');
     return (
       <span className="font-extrabold leading-tight whitespace-nowrap" style={{ fontSize: size }}>
-        <span style={{ color: '#0D1B2A' }}>{parts[0]}</span>
-        {parts[1] && <span style={{ color: '#0EB59E' }} className="ms-1">{parts[1]}</span>}
+        <span style={{ color: first }}>{parts[0]}</span>
+        {parts[1] && <span style={{ color: second }} className="ms-1">{parts[1]}</span>}
       </span>
     );
   }
   return (
     <span className="font-extrabold leading-tight tracking-tight whitespace-nowrap" style={{ fontSize: size }}>
-      <span style={{ color: '#0D1B2A' }}>Mimaar</span>
-      <span style={{ color: '#0EB59E' }}>Link</span>
+      <span style={{ color: first }}>Mimaar</span>
+      <span style={{ color: second }}>Link</span>
     </span>
   );
 }
 
-export default function AppShell({ children, hideNav = false, hideFooter = false, wide = false }) {
+export default function AppShell({ children, hideNav = false, hideFooter = false, wide = false, bleed = false }) {
   const { t, lang, setLang } = useLang();
   const [scrolled, setScrolled] = useState(false);
 
@@ -47,7 +49,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const container = wide ? 'max-w-5xl' : 'max-w-3xl';
+  const container = wide ? 'max-w-7xl' : 'max-w-3xl';
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -58,40 +60,47 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
             : 'bg-transparent border-b border-transparent'
         }`}
       >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-[58px] sm:h-16 flex items-center justify-between gap-2">
+        <div className="container-x relative h-[58px] sm:h-[68px] flex items-center justify-between gap-2">
           <Link href="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0 shrink tap-highlight">
-            <Logo />
-            <BrandText size={16} />
+            <Logo className="h-8 sm:h-10" />
+            <BrandText size={17} />
           </Link>
+
+          {/* centered desktop nav */}
+          <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+            <HeaderLink href="/" label={t('home')} />
+            <HeaderLink href="/post-project" label={t('postProject')} />
+            <HeaderLink href="/contractor" label={t('providerTypeContractor')} />
+            <HeaderLink href="/contractor?type=consultant" label={t('providerTypeConsultant')} />
+          </nav>
+
           <div className="flex items-center gap-2 shrink-0">
-            <div className="hidden md:flex items-center gap-2">
-              <Link href="/post-project" className="btn btn-primary h-9 px-4 text-[12.5px]">
-                {t('postProject')}
-              </Link>
-              <Link href="/contractor" className="btn btn-outline h-9 px-4 text-[12.5px]">
-                <Hammer className="w-3.5 h-3.5 shrink-0" />
-                {t('joinContractor')}
-              </Link>
-            </div>
+            <Link href="/post-project" className="hidden md:inline-flex btn btn-primary h-10 px-5 text-[13px]">
+              {t('postProject')}
+            </Link>
             <button
               onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-              className="btn btn-outline h-9 px-3 sm:px-3.5 text-[12.5px]"
+              className="btn btn-outline h-10 px-3.5 text-[13px]"
               aria-label="Switch language"
             >
-              <Globe className="w-3.5 h-3.5 shrink-0" />
+              <Globe className="w-4 h-4 shrink-0" />
               {t('language')}
             </button>
           </div>
         </div>
       </header>
 
-      <main className={`flex-1 w-full ${hideNav ? 'pb-10' : 'pb-32'}`}>
-        <div className={`${container} mx-auto px-4 sm:px-6 py-4`}>{children}</div>
-        {!hideFooter && <SiteFooter wide={wide} />}
+      <main className={`flex-1 w-full ${hideNav ? 'pb-10' : 'pb-32 lg:pb-12'}`}>
+        {bleed ? (
+          children
+        ) : (
+          <div className={`${container} mx-auto px-4 sm:px-6 lg:px-8 py-4`}>{children}</div>
+        )}
+        {!hideFooter && <SiteFooter />}
       </main>
 
       {!hideNav && (
-        <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 safe-pad-bottom max-w-[calc(100vw-20px)]">
+        <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 safe-pad-bottom max-w-[calc(100vw-20px)] lg:hidden">
           <div className="flex items-center gap-1 bg-white/95 backdrop-blur-xl rounded-full px-1.5 py-1.5 shadow-lift border border-border">
             <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
             <NavBtn href="/post-project" icon={FilePlus} label={t('postProject')} matches={['/post-project', '/for-projects']} />
@@ -100,6 +109,21 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         </nav>
       )}
     </div>
+  );
+}
+
+function HeaderLink({ href, label }) {
+  const pathname = usePathname();
+  const active = pathname === href.split('?')[0] && !href.includes('?');
+  return (
+    <Link
+      href={href}
+      className={`rounded-full px-3.5 py-2 text-[13px] font-semibold transition-colors tap-highlight ${
+        active ? 'text-navy bg-muted' : 'text-muted-foreground hover:text-navy hover:bg-muted/70'
+      }`}
+    >
+      {label}
+    </Link>
   );
 }
 
@@ -125,40 +149,49 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
   );
 }
 
-function SiteFooter({ wide = false }) {
+function SiteFooter() {
   const { t } = useLang();
   const year = new Date().getFullYear();
   return (
-    <footer className={`${wide ? 'max-w-5xl' : 'max-w-3xl'} mx-auto px-4 sm:px-6 mt-12`}>
-      <div className="border-t border-border pt-8 pb-6">
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6">
-          <div className="max-w-xs">
-            <div className="flex items-center gap-2.5 mb-2.5">
-              <Logo className="h-7" />
-              <BrandText size={15} />
+    <footer className="mt-16 premium-panel text-white">
+      <div className="container-x py-12 lg:py-14">
+        <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
+          <div className="max-w-sm">
+            <div className="flex items-center gap-2.5 mb-3">
+              <Logo className="h-8" />
+              <BrandText size={16} onDark />
             </div>
-            <p className="text-[12.5px] text-muted-foreground leading-relaxed">{t('subtitle')}</p>
-            <p className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold text-muted-foreground">
-              <MapPin className="w-3.5 h-3.5 shrink-0" style={{ color: '#0EB59E' }} />
+            <p className="text-[13px] text-white/55 leading-relaxed">{t('subtitle')}</p>
+            <p className="mt-4 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-white/70">
+              <MapPin className="w-3.5 h-3.5 shrink-0" style={{ color: '#5EEAD4' }} />
               {t('contactLocationValue')}
             </p>
           </div>
-          <div className="flex flex-col items-start sm:items-end gap-3">
-            <div className="flex items-center gap-2">
+
+          <div>
+            <h4 className="text-[12px] font-bold uppercase tracking-wide text-white/40 mb-4">{t('startEyebrow')}</h4>
+            <ul className="space-y-2.5 text-[13px] font-semibold text-white/75">
+              <li><Link href="/post-project" className="hover:text-white transition-colors">{t('postProject')}</Link></li>
+              <li><Link href="/contractor" className="hover:text-white transition-colors">{t('providerTypeContractor')}</Link></li>
+              <li><Link href="/contractor?type=consultant" className="hover:text-white transition-colors">{t('providerTypeConsultant')}</Link></li>
+              <li><Link href="/start-here" className="hover:text-white transition-colors">{t('startTitle')}</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-[12px] font-bold uppercase tracking-wide text-white/40 mb-4">{t('contactTitle')}</h4>
+            <div className="flex items-center gap-2.5">
               <FooterIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} />
               <FooterIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external />
               <FooterIcon href="tel:+97466259219" label={t('contactPhone')} icon={Phone} />
               <FooterIcon href="https://instagram.com/MimaarLink" label={t('contactInstagram')} icon={Instagram} external />
             </div>
-            <div className="flex items-center gap-4 text-[12px] font-semibold text-muted-foreground">
-              <Link href="/post-project" className="hover:text-navy transition-colors">{t('postProject')}</Link>
-              <Link href="/contractor" className="hover:text-navy transition-colors">{t('joinContractor')}</Link>
-            </div>
           </div>
         </div>
-        <p className="mt-7 text-[11.5px] text-muted-foreground/65 font-medium text-center">
+
+        <div className="mt-11 border-t border-white/10 pt-6 text-center text-[11.5px] font-medium text-white/40">
           &copy; {year} {t('appName')} &middot; {t('allRights')}
-        </p>
+        </div>
       </div>
     </footer>
   );
@@ -172,9 +205,9 @@ function FooterIcon({ href, label, icon: Icon, external = false }) {
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-white text-muted-foreground shadow-soft transition-all hover:border-[#0EB59E]/50 hover:text-[#0EB59E] interactive-card tap-highlight"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 transition-all hover:border-[#5EEAD4]/50 hover:text-[#5EEAD4] hover:bg-white/10 tap-highlight"
     >
-      <Icon className="h-[15px] w-[15px]" />
+      <Icon className="h-[16px] w-[16px]" />
     </a>
   );
 }
