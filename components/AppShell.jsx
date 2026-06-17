@@ -134,9 +134,6 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
           </nav>
 
           <div className="flex items-center gap-2 shrink-0">
-            <Link href="/post-project" className="hidden md:inline-flex btn btn-primary h-10 px-5 text-[13px]">
-              {t('postProject')}
-            </Link>
             <ThemeToggle theme={theme} onToggle={toggleTheme} copy={copy} />
             <button
               onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
@@ -274,7 +271,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
 
   return (
     <div
-      className={`fixed inset-0 z-50 transition ${open ? 'pointer-events-auto' : 'pointer-events-none'}`}
+      className={`fixed inset-0 z-50 overflow-hidden transition ${open ? 'pointer-events-auto' : 'pointer-events-none'}`}
       aria-hidden={!open}
     >
       <button
