@@ -211,6 +211,11 @@ function getShellCopy(lang) {
       primary: 'انشر مشروعك',
       secondary: 'انضم كمقدم خدمة',
       social: 'قنوات التواصل',
+      quickTitle: 'اختر المسار',
+      quickSubtitle: 'ابدأ من الخيار الأقرب لك.',
+      moreLinks: 'روابط سريعة',
+      allPaths: 'كل المسارات',
+      appearance: 'المظهر',
     };
   }
   return {
@@ -234,6 +239,11 @@ function getShellCopy(lang) {
     primary: 'Post project',
     secondary: 'Join as provider',
     social: 'Contact channels',
+    quickTitle: 'Choose your path',
+    quickSubtitle: 'Start with the closest option.',
+    moreLinks: 'Quick links',
+    allPaths: 'All paths',
+    appearance: 'Appearance',
   };
 }
 
@@ -259,15 +269,18 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
   useEffect(() => {
     if (typeof window !== 'undefined') setCurrentSearch(window.location.search);
   }, [pathname]);
-  const items = [
-    { href: '/', label: t('home'), desc: copy.homeDesc, icon: Home },
-    { href: '/start-here', label: copy.start, desc: copy.startDesc, icon: Sparkles },
-    { href: '/post-project', label: t('postProject'), desc: copy.projectDesc, icon: Building2, accent: 'teal' },
-    { href: '/contractor', label: t('providerTypeContractor'), desc: copy.contractorDesc, icon: Hammer, accent: 'amber' },
-    { href: '/contractor?type=consultant', label: t('providerTypeConsultant'), desc: copy.consultantDesc, icon: ClipboardList, accent: 'navy' },
-    { href: '/for-projects', label: t('startProjectEyebrow'), desc: copy.projectOwnersDesc, icon: Users },
-    { href: '/for-contractors', label: t('startContractorEyebrow'), desc: copy.contractorsDesc, icon: CheckCircle2 },
+  const actionItems = [
+    { href: '/post-project', label: t('startProjectTitle'), helper: t('startProjectCta'), icon: Building2, accent: 'teal' },
+    { href: '/contractor', label: t('startContractorTitle'), helper: t('startContractorCta'), icon: Hammer, accent: 'amber' },
+    { href: '/contractor?type=consultant', label: t('startConsultantTitle'), helper: t('startConsultantCta'), icon: ClipboardList, accent: 'navy' },
   ];
+  const secondaryItems = [
+    { href: '/', label: t('home'), icon: Home },
+    { href: '/start-here', label: copy.allPaths, icon: Sparkles },
+    { href: '/for-projects', label: t('startProjectEyebrow'), icon: Users },
+    { href: '/for-contractors', label: t('startContractorEyebrow'), icon: CheckCircle2 },
+  ];
+  const isActive = (href) => href.includes('?') ? `${pathname}${currentSearch}` === href : pathname === href;
 
   return (
     <div
@@ -291,7 +304,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="min-h-full px-5 py-6 sm:px-6">
+        <div className="min-h-full px-5 py-5 sm:px-6">
           <div className="flex items-center justify-between gap-3">
             <Link href="/" className="flex items-center gap-2.5 min-w-0 tap-highlight">
               <Logo className="h-9" />
@@ -307,53 +320,50 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
             </button>
           </div>
 
-          <div className="mt-7 rounded-[1.25rem] border border-border bg-muted/60 dark:bg-white/[0.04] p-2">
-            <button
-              type="button"
-              onClick={onThemeToggle}
-              className="w-full flex items-center justify-between gap-3 rounded-2xl bg-white dark:bg-[#0B1624] border border-border px-4 py-3 text-start shadow-soft transition hover:-translate-y-0.5 hover:shadow-card"
-            >
-              <span className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#0B8E7C] dark:bg-[#0B8E7C]/25 dark:text-[#5EEAD4]">
-                  {isDark ? <Sun className="h-[18px] w-[18px]" /> : <Moon className="h-[18px] w-[18px]" />}
-                </span>
-                <span>
-                  <span className="block text-[13px] font-extrabold text-navy">{copy.theme}</span>
-                  <span className="block text-[12px] text-muted-foreground">
-                    {theme === 'dark' ? copy.darkMode : copy.lightMode}
-                  </span>
-                </span>
-              </span>
-              <span className="text-[12px] font-bold text-teal">{copy.themeHint}</span>
-            </button>
-          </div>
+          <section className="mt-6">
+            <p className="text-[12px] font-extrabold text-teal">{t('startEyebrow')}</p>
+            <h2 className="mt-1 text-[25px] font-extrabold leading-tight text-navy">{copy.quickTitle}</h2>
+            <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">{copy.quickSubtitle}</p>
+          </section>
 
-          <nav className="mt-5 space-y-2.5">
-            {items.map((item) => (
-              <DrawerItem
+          <nav className="mt-5 space-y-2.5" aria-label={copy.quickTitle}>
+            {actionItems.map((item) => (
+              <ActionTile
                 key={item.href}
                 item={item}
-                active={
-                  item.href.includes('?')
-                    ? `${pathname}${currentSearch}` === item.href
-                    : pathname === item.href
-                }
+                active={isActive(item.href)}
               />
             ))}
           </nav>
 
-          <div className="mt-7 grid grid-cols-2 gap-2.5">
-            <Link href="/post-project" className="btn btn-primary h-12 px-4 text-[13px]">
-              {copy.primary}
-            </Link>
-            <Link href="/start-here" className="btn btn-navy h-12 px-4 text-[13px]">
-              {copy.secondary}
-            </Link>
+          <div className="mt-6">
+            <p className="mb-2.5 text-[12px] font-extrabold text-muted-foreground">{copy.moreLinks}</p>
+            <div className="grid grid-cols-2 gap-2.5">
+              {secondaryItems.map((item) => (
+                <SecondaryDrawerLink key={item.href} item={item} active={isActive(item.href)} />
+              ))}
+            </div>
           </div>
 
-          <div className="mt-7">
-            <p className="mb-3 text-[12px] font-extrabold uppercase text-muted-foreground">{copy.social}</p>
-            <div className="grid grid-cols-4 gap-2.5">
+          <div className="mt-6 rounded-[1.25rem] border border-border bg-muted/60 dark:bg-white/[0.04] p-2.5">
+            <button
+              type="button"
+              onClick={onThemeToggle}
+              className="flex w-full min-w-0 items-center justify-between gap-2.5 rounded-2xl px-2.5 py-2 text-start transition hover:bg-white dark:hover:bg-white/[0.06]"
+            >
+              <span className="flex min-w-0 items-center gap-2.5">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#0B8E7C] dark:bg-[#0B8E7C]/25 dark:text-[#5EEAD4]">
+                  {isDark ? <Sun className="h-[17px] w-[17px]" /> : <Moon className="h-[17px] w-[17px]" />}
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[12px] font-extrabold text-navy">{copy.appearance}</span>
+                  <span className="block text-[11px] text-muted-foreground">{theme === 'dark' ? copy.darkMode : copy.lightMode}</span>
+                </span>
+              </span>
+              <span className="text-[11.5px] font-extrabold text-teal">{copy.themeHint}</span>
+            </button>
+
+            <div className="mt-2.5 grid grid-cols-4 gap-2.5">
               <FooterIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} variant="surface" />
               <FooterIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external variant="surface" />
               <FooterIcon href="tel:+97466259219" label={t('contactPhone')} icon={Phone} variant="surface" />
@@ -366,31 +376,57 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
   );
 }
 
-function DrawerItem({ item, active }) {
+function ActionTile({ item, active }) {
   const Icon = item.icon;
   const accents = {
-    teal: 'bg-[#D0F2EE] text-[#0B8E7C] dark:bg-[#0B8E7C]/25 dark:text-[#5EEAD4]',
-    amber: 'bg-[#FFF2D7] text-[#9A6100] dark:bg-[#FFB638]/[0.18] dark:text-[#FFCF75]',
-    navy: 'bg-[#EEF2F7] text-[#0D1B2A] dark:bg-white/[0.08] dark:text-white',
+    teal: {
+      icon: 'bg-[#D0F2EE] text-[#0B8E7C] dark:bg-[#0B8E7C]/25 dark:text-[#5EEAD4]',
+      active: 'border-[#0EB59E]/45 bg-[#D0F2EE]/55 dark:bg-[#0B8E7C]/14',
+    },
+    amber: {
+      icon: 'bg-[#FFF2D7] text-[#9A6100] dark:bg-[#FFB638]/[0.18] dark:text-[#FFCF75]',
+      active: 'border-[#FFB638]/55 bg-[#FFF2D7]/70 dark:bg-[#FFB638]/[0.12]',
+    },
+    navy: {
+      icon: 'bg-[#EEF2F7] text-[#0D1B2A] dark:bg-white/[0.08] dark:text-white',
+      active: 'border-[#0D1B2A]/30 bg-[#EEF2F7]/85 dark:border-white/20 dark:bg-white/[0.08]',
+    },
   };
-  const accent = accents[item.accent] || 'bg-muted text-navy dark:bg-white/[0.08] dark:text-white';
+  const accent = accents[item.accent] || accents.teal;
   return (
     <Link
       href={item.href}
-      className={`group flex items-center gap-3 rounded-[1.25rem] border px-3.5 py-3.5 transition-all tap-highlight ${
+      className={`group flex items-center gap-3 rounded-[1.25rem] border px-3.5 py-3 transition-all tap-highlight ${
         active
-          ? 'border-[#0EB59E]/35 bg-[#D0F2EE]/55 dark:bg-[#0B8E7C]/14 shadow-soft'
+          ? `${accent.active} shadow-soft`
           : 'border-border bg-white dark:bg-[#0B1624]/70 hover:-translate-y-0.5 hover:border-[#0EB59E]/35 hover:shadow-card'
       }`}
     >
-      <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${accent}`}>
+      <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${accent.icon}`}>
         <Icon className="h-5 w-5" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-[14px] font-extrabold text-navy leading-snug">{item.label}</span>
-        <span className="mt-0.5 block text-[12px] leading-relaxed text-muted-foreground">{item.desc}</span>
+        <span className="block text-[16px] font-extrabold text-navy leading-snug">{item.label}</span>
+        <span className="mt-0.5 block text-[12px] font-semibold text-muted-foreground">{item.helper}</span>
       </span>
       <ArrowUpRight className="h-[18px] w-[18px] shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+    </Link>
+  );
+}
+
+function SecondaryDrawerLink({ item, active }) {
+  const Icon = item.icon;
+  return (
+    <Link
+      href={item.href}
+      className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[11.5px] font-extrabold leading-tight transition-all tap-highlight ${
+        active
+          ? 'border-[#0EB59E]/35 bg-[#D0F2EE]/55 text-navy dark:bg-[#0B8E7C]/14'
+          : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#0EB59E]/35 dark:bg-[#0B1624]/70'
+      }`}
+    >
+      <Icon className="h-4 w-4 shrink-0" />
+      <span className="min-w-0">{item.label}</span>
     </Link>
   );
 }
