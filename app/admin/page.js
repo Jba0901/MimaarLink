@@ -18,7 +18,7 @@ const statusColor = (s) => {
   if (['verified','approved','meeting_arranged','closed','bids_received'].includes(s)) return '#0EB59E';
   if (['cr_checked'].includes(s)) return '#FFB638';
   if (['suspended'].includes(s)) return '#dc2626';
-  return '#0D1B2A';
+  return '#152B54';
 };
 
 const formatAdminTime = (value, lang = 'en') => {

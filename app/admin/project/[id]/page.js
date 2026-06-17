@@ -264,7 +264,7 @@ export default function AdminProjectPage() {
               <div><Label className="text-xs">{t('exclusions')}</Label><Input value={bidForm.exclusions} onChange={e => setBidForm(f => ({...f, exclusions: e.target.value}))} /></div>
               <div><Label className="text-xs">{t('notes')}</Label><Textarea value={bidForm.notes} onChange={e => setBidForm(f => ({...f, notes: e.target.value}))} /></div>
             </div>
-            <DialogFooter><Button onClick={submitBid} style={{ background: '#0D1B2A' }}>{t('save')}</Button></DialogFooter>
+            <DialogFooter><Button onClick={submitBid} style={{ background: '#152B54' }}>{t('save')}</Button></DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
@@ -359,7 +359,7 @@ export default function AdminProjectPage() {
         </CardContent>
       </Card>
 
-      <Button onClick={saveAll} disabled={saving} className="w-full mt-4 h-12 text-base" style={{ background: '#0D1B2A' }}>
+      <Button onClick={saveAll} disabled={saving} className="w-full mt-4 h-12 text-base" style={{ background: '#152B54' }}>
         {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : t('save')}
       </Button>
 

@@ -13,7 +13,7 @@ const statusColor = (status) => {
   if (status === 'verified') return '#0EB59E';
   if (status === 'cr_checked') return '#FFB638';
   if (status === 'suspended') return '#dc2626';
-  return '#0D1B2A';
+  return '#152B54';
 };
 
 const consultantGradeLabel = (grade, t) => {
@@ -177,7 +177,7 @@ export default function ContractorStatusPage() {
               </CardContent>
             </Card>
 
-            <Button onClick={() => router.push('/')} className="w-full h-11" style={{ background: '#0D1B2A' }}>
+            <Button onClick={() => router.push('/')} className="w-full h-11" style={{ background: '#152B54' }}>
               {t('backToHome')}
             </Button>
           </div>

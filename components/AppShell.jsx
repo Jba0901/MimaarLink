@@ -44,7 +44,7 @@ function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9' }) {
 
 function BrandText({ size = 17, onDark = false }) {
   const { t, lang } = useLang();
-  const first = onDark ? '#FFFFFF' : '#0D1B2A';
+  const first = onDark ? '#FFFFFF' : '#152B54';
   const second = onDark ? '#5EEAD4' : '#0EB59E';
   if (lang === 'ar') {
     const parts = t('appName').split(' ');
@@ -394,8 +394,8 @@ function ActionTile({ item, active }) {
       active: 'border-[#FFB638]/55 bg-[#FFF2D7]/70 dark:bg-[#FFB638]/[0.12]',
     },
     navy: {
-      icon: 'bg-[#EEF2F7] text-[#0D1B2A] dark:bg-white/[0.08] dark:text-white',
-      active: 'border-[#0D1B2A]/30 bg-[#EEF2F7]/85 dark:border-white/20 dark:bg-white/[0.08]',
+      icon: 'bg-[#EEF2F7] text-[#152B54] dark:bg-white/[0.08] dark:text-white',
+      active: 'border-[#152B54]/30 bg-[#EEF2F7]/85 dark:border-white/20 dark:bg-white/[0.08]',
     },
   };
   const accent = accents[item.accent] || accents.teal;

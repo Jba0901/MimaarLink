@@ -306,7 +306,7 @@ function FaqSection({ t }) {
                     <span className="text-[14.5px] font-bold text-navy leading-snug">{it.q}</span>
                     <span
                       className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? 'text-white' : 'text-navy'}`}
-                      style={isOpen ? { background: '#0EB59E' } : { background: 'rgba(13,27,42,0.05)' }}
+                      style={isOpen ? { background: '#0EB59E' } : { background: 'rgba(21,43,84,0.06)' }}
                     >
                       {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
                     </span>

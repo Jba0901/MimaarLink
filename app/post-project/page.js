@@ -170,7 +170,7 @@ function PostProjectInner() {
           </div>
           <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11 cta-press">{t('back')}</Button>
-            <Button onClick={() => { setTried2(true); if (data.description) setStep(3); }} className="flex-1 h-11 cta-press" style={{ background: '#142A44' }}>{t('next')}</Button>
+            <Button onClick={() => { setTried2(true); if (data.description) setStep(3); }} className="flex-1 h-11 cta-press" style={{ background: '#152B54' }}>{t('next')}</Button>
           </div>
         </div>
       )}
@@ -210,7 +210,7 @@ function PostProjectInner() {
           </div>
           <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11 cta-press">{t('back')}</Button>
-            <Button onClick={submit} disabled={submitting} className="flex-1 h-11 cta-press" style={{ background: '#142A44' }}>
+            <Button onClick={submit} disabled={submitting} className="flex-1 h-11 cta-press" style={{ background: '#152B54' }}>
               {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-1.5" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>
@@ -245,7 +245,7 @@ function PostProjectInner() {
                 </Button>
               </div>
             </div>
-            <Button onClick={() => router.push('/project/' + createdId)} className="w-full mt-4 h-11" style={{ background: '#142A44' }}>{t('viewProject')}</Button>
+            <Button onClick={() => router.push('/project/' + createdId)} className="w-full mt-4 h-11" style={{ background: '#152B54' }}>{t('viewProject')}</Button>
           </CardContent>
         </Card>
       )}

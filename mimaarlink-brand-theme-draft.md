@@ -5,7 +5,8 @@ Use this palette consistently across the website, app UI, Instagram profile, pos
 
 | Role | Hex | Usage |
 |---|---:|---|
-| Primary Navy | `#0D1B2A` | Main brand color, main text, dark backgrounds, footer/contact sections, serious business tone |
+| Primary Navy | `#152B54` | Main public brand color, light-mode text, buttons, wordmark, and official ad palette |
+| Deep Night Navy | `#0D1B2A` | Dark-mode foundation, deep panels, footer/contact depth, high-contrast backgrounds |
 | Primary Teal | `#00B59E` | Primary CTA buttons, active states, trust accents, logo accent |
 | Light Teal | `#D0F2EE` | Soft icon backgrounds, highlights, trust cards, subtle surfaces |
 | Amber Accent | `#FFB638` | Contractor emphasis, small attention accents, limited warning/highlight use |
@@ -17,7 +18,8 @@ Use this as the official MimaarLink palette for light mode, dark mode, ads, soci
 ### Core Brand
 | Token | Hex |
 |---|---:|
-| Primary navy | `#0D1B2A` |
+| Primary navy | `#152B54` |
+| Deep night navy | `#0D1B2A` |
 | Primary teal | `#00B59E` |
 | Light teal | `#D0F2EE` |
 | Amber accent | `#FFB638` |
@@ -28,7 +30,7 @@ Use this as the official MimaarLink palette for light mode, dark mode, ads, soci
 |---|---:|---|
 | Page background | `#F5F4F1` | Main soft background |
 | Card background | `#FFFFFF` | Cards, forms, content panels |
-| Main text | `#0D1B2A` | Headlines and strong body text |
+| Main text | `#152B54` | Headlines and strong body text |
 | Muted text | `#5F6B7A` | Secondary descriptions and helper text |
 | Border | `#E3E7EA` | Cards, inputs, separators |
 
@@ -55,7 +57,7 @@ If an ad builder only allows four colors, use:
 
 | Slot | Hex |
 |---|---:|
-| Brand Color 1 | `#0D1B2A` |
+| Brand Color 1 | `#152B54` |
 | Brand Color 2 | `#00B59E` |
 | Additional Color 1 | `#D0F2EE` |
 | Additional Color 2 | `#FFB638` |
@@ -69,7 +71,8 @@ MimaarLink should feel:
 - Modern construction/contractor marketplace, not a handyman app
 
 ## Design Usage Notes
-- Use `#0D1B2A` and `#00B59E` as the dominant brand pair.
+- Use `#152B54` and `#00B59E` as the dominant public brand pair.
+- Use `#0D1B2A` mainly for dark-mode depth and deep navy surfaces.
 - Use `#D0F2EE` for soft icon tiles and gentle accents.
 - Use `#FFB638` sparingly for warm contrast, not as a main color.
 - Keep backgrounds mostly white or very light neutral.
