@@ -497,6 +497,11 @@
   .motion-delay-4 { animation-delay: 360ms; }
 
   /* ---------- accents ---------- */
+  .soft-shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
   .soft-shine::after {
     content: '';
     position: absolute;
