@@ -116,9 +116,12 @@
   }
   .brand-mark .brand-mark-dark { display: none; }
   .dark .brand-mark .brand-mark-light { display: none; }
-  .dark .brand-mark .brand-mark-dark {
-    display: block;
-    filter: drop-shadow(0 12px 18px rgba(0,0,0,0.42));
+  .dark .brand-mark .brand-mark-dark { display: block; }
+  .dark .brand-mark img {
+    filter:
+      drop-shadow(0 0 1px rgba(255,255,255,0.72))
+      drop-shadow(0 8px 18px rgba(0,0,0,0.48))
+      drop-shadow(0 0 14px rgba(94,234,212,0.16));
   }
   .surface-band {
     background:

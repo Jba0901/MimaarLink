@@ -29,12 +29,12 @@ function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9' }) {
   return (
     <span className={`brand-mark ${className} shrink-0`} aria-hidden="true">
       <img
-        src="/logo.png?v=chain"
+        src="/logo.png?v=official-20260618"
         alt=""
         className="brand-mark-light"
       />
       <img
-        src="/logo-dark-transparent.png?v=dark-asset"
+        src="/logo-dark-transparent.png?v=official-20260618"
         alt=""
         className="brand-mark-dark"
       />
