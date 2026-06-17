@@ -238,7 +238,7 @@ export default function HomePage() {
 
 function MarketBand({ t }) {
   const stats = [
-    { value: 'QAR 250B+', label: t('marketStat1Label'), icon: Landmark, animate: true },
+    { value: t('marketStat1Value'), label: t('marketStat1Label'), icon: Landmark, animate: true },
     { value: '10%+', label: t('marketStat2Label'), icon: TrendingUp, animate: true },
     { value: t('marketVisionValue'), label: t('marketVisionLabel'), icon: ShieldCheck, animate: false },
   ];
