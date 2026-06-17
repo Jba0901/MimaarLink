@@ -27,12 +27,29 @@ import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 function Logo({ className = 'h-8 sm:h-9' }) {
   return (
-    <span className={`brand-mark ${className} shrink-0`}>
-      <img
-        src="/logo.png?v=chain"
-        alt="MimaarLink"
+    <svg
+      viewBox="0 0 64 64"
+      aria-hidden="true"
+      focusable="false"
+      className={`brand-mark-svg ${className} w-auto shrink-0`}
+    >
+      <path
+        className="logo-stroke logo-stroke-navy"
+        d="M39.5 13.5H22.25C14.39 13.5 8 19.89 8 27.75S14.39 42 22.25 42H35.5"
       />
-    </span>
+      <path
+        className="logo-stroke logo-stroke-teal"
+        d="M24.5 50.5h17.25C49.61 50.5 56 44.11 56 36.25S49.61 22 41.75 22H28.5"
+      />
+      <path
+        className="logo-stroke logo-stroke-navy logo-stroke-short"
+        d="M21 32h17"
+      />
+      <path
+        className="logo-stroke logo-stroke-teal logo-stroke-short"
+        d="M26 32h17"
+      />
+    </svg>
   );
 }
 
