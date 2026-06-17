@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 
-function Logo({ className = 'h-8 sm:h-9' }) {
+function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9' }) {
   return (
     <span className={`brand-mark ${className} shrink-0`} aria-hidden="true">
       <img
@@ -126,7 +126,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       >
         <div className="container-x relative h-[58px] sm:h-[68px] flex items-center justify-between gap-2">
           <Link href="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0 shrink tap-highlight">
-            <Logo className="h-8 sm:h-10" />
+            <Logo className="h-8 w-8 sm:h-10 sm:w-10" />
             <BrandText size={17} onDark={isDark} />
           </Link>
 
@@ -313,7 +313,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
         <div className="min-h-full px-5 py-5 sm:px-6">
           <div className="flex items-center justify-between gap-3">
             <Link href="/" className="flex items-center gap-2.5 min-w-0 tap-highlight">
-              <Logo className="h-9" />
+              <Logo className="h-9 w-9" />
               <BrandText size={17} onDark={isDark} />
             </Link>
             <button
@@ -484,7 +484,7 @@ function SiteFooter() {
         <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5 mb-3">
-              <Logo className="h-8" />
+              <Logo className="h-8 w-8" />
               <BrandText size={16} onDark />
             </div>
             <p className="text-[13px] text-white/55 leading-relaxed">{t('subtitle')}</p>

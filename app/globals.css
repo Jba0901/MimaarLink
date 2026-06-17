@@ -104,6 +104,7 @@
     display: inline-block;
     aspect-ratio: 1 / 1;
     overflow: visible;
+    flex: 0 0 auto;
   }
   .brand-mark img {
     position: absolute;
@@ -118,8 +119,6 @@
   .dark .brand-mark .brand-mark-dark {
     display: block;
     filter: drop-shadow(0 12px 18px rgba(0,0,0,0.42));
-    transform: scale(1.42);
-    transform-origin: center;
   }
   .surface-band {
     background:
