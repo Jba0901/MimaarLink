@@ -27,10 +27,16 @@ import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 function Logo({ className = 'h-8 sm:h-9' }) {
   return (
-    <span className={`brand-mark ${className} shrink-0`}>
+    <span className={`brand-mark ${className} shrink-0`} aria-hidden="true">
       <img
         src="/logo.png?v=chain"
-        alt="MimaarLink"
+        alt=""
+        className="brand-mark-light"
+      />
+      <img
+        src="/logo-dark-transparent.png?v=dark-asset"
+        alt=""
+        className="brand-mark-dark"
       />
     </span>
   );
