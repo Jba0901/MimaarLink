@@ -243,8 +243,8 @@ function MarketBand({ t }) {
     { value: t('marketVisionValue'), label: t('marketVisionLabel'), icon: ShieldCheck, animate: false },
   ];
   return (
-    <section className="premium-panel text-white">
-      <div className="container-x py-14 lg:py-20">
+    <section className="premium-panel market-skyline-panel text-white">
+      <div className="container-x relative z-10 py-14 lg:py-20">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-center">
           <Reveal>
             <div className="max-w-xl">

@@ -162,6 +162,50 @@
       linear-gradient(180deg, rgba(255,255,255,0.08), transparent 42%),
       linear-gradient(145deg, #102136 0%, #07111D 64%, #040A12 100%);
   }
+  .market-skyline-panel {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .market-skyline-panel::before,
+  .market-skyline-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .market-skyline-panel::before {
+    background-image:
+      linear-gradient(90deg, rgba(7,17,29,0.92) 0%, rgba(7,17,29,0.58) 48%, rgba(7,17,29,0.92) 100%),
+      linear-gradient(180deg, rgba(13,27,42,0.18) 0%, rgba(7,17,29,0.72) 100%),
+      url('/qatar-market-skyline.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+    opacity: 0.92;
+  }
+  .market-skyline-panel::after {
+    background:
+      radial-gradient(720px 340px at 72% 32%, rgba(94,234,212,0.10), transparent 68%),
+      linear-gradient(180deg, rgba(7,17,29,0.04), rgba(7,17,29,0.32));
+    mix-blend-mode: screen;
+    opacity: 0.66;
+  }
+  .market-skyline-panel > .container-x {
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 640px) {
+    .market-skyline-panel::before {
+      background-size: auto 100%;
+      background-position: 58% bottom;
+      opacity: 0.76;
+    }
+    .market-skyline-panel::after {
+      opacity: 0.52;
+    }
+  }
   .glass-line { box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 16px 40px -24px rgba(0,0,0,0.50); }
 
   /* ---------- shadows ---------- */
