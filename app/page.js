@@ -143,7 +143,7 @@ export default function HomePage() {
       </section>
 
       {/* ============ WHY MIMAARLINK (tinted band) ============ */}
-      <section className="py-14 lg:py-20" style={{ background: '#F1F8F7' }}>
+      <section className="surface-band py-14 lg:py-20">
         <div className="container-x">
           <Reveal>
             <div className="text-center max-w-2xl mx-auto mb-11">
@@ -184,25 +184,26 @@ export default function HomePage() {
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              { href: '/post-project', icon: Building2, eyebrow: t('startProjectEyebrow'), title: t('startProjectTitle'), desc: t('startProjectDesc'), cta: t('startProjectCta'), accent: '#0EB59E', btn: 'btn-primary' },
-              { href: '/contractor', icon: Hammer, eyebrow: t('startContractorEyebrow'), title: t('startContractorTitle'), desc: t('startContractorDesc'), cta: t('startContractorCta'), accent: '#F5A623', btn: 'btn-amber' },
-              { href: '/contractor?type=consultant', icon: ClipboardCheck, eyebrow: t('startConsultantEyebrow'), title: t('startConsultantTitle'), desc: t('startConsultantDesc'), cta: t('startConsultantCta'), accent: '#142A44', btn: 'btn-navy' },
+              { href: '/post-project', icon: Building2, eyebrow: t('startProjectEyebrow'), title: t('startProjectTitle'), desc: t('startProjectDesc'), cta: t('startProjectCta'), btn: 'btn-primary', tone: 'teal' },
+              { href: '/contractor', icon: Hammer, eyebrow: t('startContractorEyebrow'), title: t('startContractorTitle'), desc: t('startContractorDesc'), cta: t('startContractorCta'), btn: 'btn-amber', tone: 'amber' },
+              { href: '/contractor?type=consultant', icon: ClipboardCheck, eyebrow: t('startConsultantEyebrow'), title: t('startConsultantTitle'), desc: t('startConsultantDesc'), cta: t('startConsultantCta'), btn: 'btn-navy', tone: 'navy' },
             ].map((r, i) => (
               <Reveal key={i} delay={i * 100}>
                 <article
-                  className="group interactive-card card-sheen relative flex h-full flex-col overflow-hidden rounded-[26px] border border-border bg-white p-7 shadow-soft hover:shadow-card hover:border-transparent"
-                  style={{ borderTopWidth: 3, borderTopColor: r.accent }}
+                  className="group path-card interactive-card card-sheen relative flex h-full flex-col overflow-hidden rounded-[26px] border p-7 shadow-soft hover:shadow-card"
+                  data-tone={r.tone}
+                  style={{ borderTopWidth: 3, borderTopColor: 'var(--path-accent)' }}
                 >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" style={{ background: `${r.accent}14` }}>
-                    <r.icon className="h-7 w-7" style={{ color: r.accent }} />
+                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" style={{ background: 'var(--path-accent-soft)', color: 'var(--path-accent)' }}>
+                    <r.icon className="h-7 w-7" />
                   </span>
-                  <div className="mt-5 text-[12px] font-bold uppercase tracking-wide" style={{ color: r.accent }}>{r.eyebrow}</div>
+                  <div className="mt-5 text-[12px] font-bold uppercase tracking-wide" style={{ color: 'var(--path-accent)' }}>{r.eyebrow}</div>
                   <h3 className="mt-1.5 text-[22px] font-extrabold leading-tight text-navy">{r.title}</h3>
                   <p className="mt-2.5 flex-1 text-[13.5px] leading-relaxed text-muted-foreground">{r.desc}</p>
                   <Link href={r.href} className={`btn ${r.btn} mt-6 w-full text-[14px]`} style={{ minHeight: 50 }}>
                     {r.cta} <Arrow />
                   </Link>
-                  <r.icon className="absolute bottom-[-22px] w-28 h-28 pointer-events-none select-none transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6" style={{ color: `${r.accent}0d`, insetInlineEnd: '-10px' }} />
+                  <r.icon className="absolute bottom-[-22px] w-28 h-28 pointer-events-none select-none transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6" style={{ color: 'var(--path-accent-soft)', insetInlineEnd: '-10px' }} />
                 </article>
               </Reveal>
             ))}
@@ -214,7 +215,7 @@ export default function HomePage() {
       <FaqSection t={t} />
 
       {/* ============ FINAL CTA (teal band) ============ */}
-      <section style={{ background: 'linear-gradient(135deg, #12C3AA 0%, #0B8E7C 100%)' }}>
+      <section className="launch-cta-band">
         <div className="container-x py-16 lg:py-24 text-center text-white">
           <Reveal>
             <h2 className="text-[28px] sm:text-[40px] font-extrabold leading-tight max-w-2xl mx-auto">{t('projL_finalTitle')}</h2>

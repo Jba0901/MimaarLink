@@ -27,12 +27,12 @@ import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 function Logo({ className = 'h-8 sm:h-9' }) {
   return (
-    <img
-      src="/logo.png?v=chain"
-      alt="MimaarLink"
-      className={`${className} w-auto shrink-0`}
-      style={{ objectFit: 'contain' }}
-    />
+    <span className={`brand-mark ${className} shrink-0`}>
+      <img
+        src="/logo.png?v=chain"
+        alt="MimaarLink"
+      />
+    </span>
   );
 }
 
@@ -300,7 +300,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
         role="dialog"
         aria-modal="true"
         aria-label={copy.menu}
-        className={`absolute top-0 bottom-0 right-0 w-[min(88vw,390px)] overflow-y-auto bg-white dark:bg-[#07111D] text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.24)] border-s border-border transition-transform duration-300 ease-out ${
+        className={`absolute top-0 bottom-0 right-0 w-[min(88vw,390px)] overflow-y-auto bg-card text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.24)] border-s border-border transition-transform duration-300 ease-out ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -396,10 +396,11 @@ function ActionTile({ item, active }) {
   return (
     <Link
       href={item.href}
-      className={`group flex items-center gap-3 rounded-[1.25rem] border px-3.5 py-3 transition-all tap-highlight ${
+      data-tone={item.accent}
+      className={`group path-card flex items-center gap-3 rounded-[1.25rem] border px-3.5 py-3 transition-all tap-highlight ${
         active
           ? `${accent.active} shadow-soft`
-          : 'border-border bg-white dark:bg-[#0B1624]/70 hover:-translate-y-0.5 hover:border-[#0EB59E]/35 hover:shadow-card'
+          : 'hover:-translate-y-0.5 hover:border-[#0EB59E]/35 hover:shadow-card'
       }`}
     >
       <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${accent.icon}`}>

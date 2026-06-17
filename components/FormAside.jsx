@@ -14,7 +14,7 @@ export default function FormAside({ steps = [], note }) {
   return (
     <aside className="hidden lg:block">
       <div className="sticky top-20 space-y-3">
-        <div className="rounded-[22px] border border-border bg-white p-5 shadow-soft">
+        <div className="rounded-[22px] border border-border bg-card p-5 shadow-soft">
           <h3 className="text-[13.5px] font-bold text-navy">{t('formAsideTitle')}</h3>
           <ol className="mt-4 space-y-4">
             {steps.map((s, i) => (
@@ -38,7 +38,7 @@ export default function FormAside({ steps = [], note }) {
         </div>
 
         {note && (
-          <div className="flex items-start gap-2.5 rounded-[22px] border border-border bg-white p-4 shadow-soft">
+          <div className="flex items-start gap-2.5 rounded-[22px] border border-border bg-card p-4 shadow-soft">
             <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" style={{ color: '#0EB59E' }} />
             <p className="text-[11.5px] leading-relaxed text-muted-foreground">{note}</p>
           </div>

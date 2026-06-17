@@ -159,7 +159,7 @@ function ContractorApplicationInner() {
                   </Button>
                 </div>
               </div>
-              <Button onClick={() => window.location.href = '/contractor-status/' + createdId} className="w-full mt-4 h-11" style={{ background: '#142A44' }}>{t('viewProviderStatus')}</Button>
+              <Button onClick={() => window.location.href = '/contractor-status/' + createdId} className="form-primary-btn w-full mt-4 h-11">{t('viewProviderStatus')}</Button>
             </>
           )}
         </CardContent>
@@ -215,7 +215,7 @@ function ContractorApplicationInner() {
             <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
           </div>
           <div className="pt-2">
-            <Button onClick={goNextFromBasics} className="w-full h-11 cta-press" style={{ background: '#142A44' }}>{t('next')}</Button>
+            <Button onClick={goNextFromBasics} className="form-primary-btn w-full h-11 cta-press">{t('next')}</Button>
           </div>
         </div>
       )}
@@ -244,7 +244,11 @@ function ContractorApplicationInner() {
             <div className={`grid grid-cols-2 gap-2 ${triedServices && data.categories.length === 0 ? 'p-1.5 rounded-lg ring-1 ring-red-300' : ''}`}>
               {serviceOptions.map(c => (
                 <button key={c} type="button" onClick={() => toggleCat(c)}
-                  className={`interactive-card tap-highlight min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 ${data.categories.includes(c) ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-border bg-white text-navy hover:border-navy/35'}`}>
+                  className={`interactive-card tap-highlight min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 ${
+                    data.categories.includes(c)
+                      ? 'border-[#0EB59E]/50 bg-secondary text-navy shadow-soft dark:border-[#5EEAD4]/45 dark:bg-[#0B8E7C]/15'
+                      : 'border-border bg-card text-navy hover:border-[#0EB59E]/35 dark:bg-[#0B1624]/75'
+                  }`}>
                   <span className="flex items-center justify-between gap-2">
                     <span>{t(`cat_${c}`)}</span>
                     {data.categories.includes(c) && <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-teal" />}
@@ -283,7 +287,7 @@ function ContractorApplicationInner() {
           </div>
           <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11 cta-press">{t('back')}</Button>
-            <Button onClick={goNextFromServices} className="flex-1 h-11 cta-press" style={{ background: '#142A44' }}>{t('next')}</Button>
+            <Button onClick={goNextFromServices} className="form-primary-btn flex-1 h-11 cta-press">{t('next')}</Button>
           </div>
         </div>
       )}
@@ -300,7 +304,7 @@ function ContractorApplicationInner() {
                   {!it.required && <span className="text-muted-foreground ms-1">({t('optional')})</span>}
                 </Label>
                 <div className="text-[11px] text-muted-foreground mt-1">{t('uploadHint')}</div>
-                <label className={`interactive-card tap-highlight mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 ${showError ? 'border-red-400' : 'border-border hover:border-navy/40'}`}>
+                <label className={`interactive-card tap-highlight mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 dark:bg-[#0B8E7C]/10 ${showError ? 'border-red-400' : 'border-border hover:border-[#0EB59E]/40'}`}>
                   <Upload className="w-4 h-4 text-navy" />
                   <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
                   <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />
@@ -320,7 +324,7 @@ function ContractorApplicationInner() {
 
           <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11 cta-press">{t('back')}</Button>
-            <Button onClick={submit} disabled={submitting} className="flex-1 h-11 cta-press" style={{ background: '#142A44' }}>
+            <Button onClick={submit} disabled={submitting} className="form-primary-btn flex-1 h-11 cta-press">
               {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-2" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>
@@ -401,11 +405,11 @@ function ProviderTypeButton({ active, icon: Icon, title, desc, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className={`interactive-card tap-highlight rounded-2xl border p-3 text-start transition ${active ? 'border-navy bg-secondary text-navy shadow-soft' : 'border-border bg-white text-navy hover:border-navy/35'}`}
+      className={`provider-type-card interactive-card tap-highlight rounded-2xl border p-3 text-start transition ${active ? 'is-active shadow-soft' : ''}`}
     >
       <span className="flex items-center justify-between gap-2">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ background: active ? '#D0F2EE' : 'rgba(13,27,42,0.06)' }}>
-          <Icon className="h-4 w-4" style={{ color: active ? '#0EB59E' : '#0D1B2A' }} />
+        <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${active ? 'bg-[#D0F2EE] text-[#0B8E7C] dark:bg-[#0B8E7C]/25 dark:text-[#5EEAD4]' : 'bg-muted text-muted-foreground'}`}>
+          <Icon className="h-4 w-4" />
         </span>
         {active && <CheckCircle2 className="h-4 w-4 shrink-0 text-teal" />}
       </span>

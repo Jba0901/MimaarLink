@@ -29,7 +29,7 @@ export default function StartHerePage() {
               icon={Building2}
               title={t('startProjectTitle')}
               desc={t('startProjectDesc')}
-              accent="#0EB59E"
+              tone="teal"
               Arrow={Arrow}
             />
             <SimpleChoice
@@ -37,7 +37,7 @@ export default function StartHerePage() {
               icon={Hammer}
               title={t('startContractorTitle')}
               desc={t('startContractorDesc')}
-              accent="#F5A623"
+              tone="amber"
               Arrow={Arrow}
             />
             <SimpleChoice
@@ -45,7 +45,7 @@ export default function StartHerePage() {
               icon={ClipboardCheck}
               title={t('startConsultantTitle')}
               desc={t('startConsultantDesc')}
-              accent="#142A44"
+              tone="navy"
               Arrow={Arrow}
             />
           </div>
@@ -69,15 +69,18 @@ export default function StartHerePage() {
   );
 }
 
-function SimpleChoice({ href, icon: Icon, title, desc, accent, Arrow }) {
+function SimpleChoice({ href, icon: Icon, title, desc, tone, Arrow }) {
   return (
     <Link href={href} className="block h-full cursor-pointer tap-highlight">
-      <article className="group interactive-card flex h-full flex-col rounded-[22px] border border-border bg-white p-5 shadow-soft hover:border-[#0EB59E]/35 hover:shadow-card">
+      <article
+        className="group path-card interactive-card flex h-full flex-col rounded-[22px] border p-5 shadow-soft hover:border-[#0EB59E]/35 hover:shadow-card"
+        data-tone={tone}
+      >
         <div className="flex items-center justify-between gap-3">
-          <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[18px]" style={{ background: `${accent}14` }}>
-            <Icon className="h-[23px] w-[23px]" style={{ color: accent }} />
+          <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[18px]" style={{ background: 'var(--path-accent-soft)', color: 'var(--path-accent)' }}>
+            <Icon className="h-[23px] w-[23px]" />
           </span>
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-soft transition group-hover:scale-105" style={{ background: accent }}>
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-soft transition group-hover:scale-105" style={{ background: 'var(--path-accent)' }}>
             <Arrow />
           </span>
         </div>
