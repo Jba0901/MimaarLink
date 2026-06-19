@@ -325,7 +325,7 @@ function ContractorApplicationInner() {
           <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11 cta-press">{t('back')}</Button>
             <Button onClick={submit} disabled={submitting} className="form-primary-btn flex-1 h-11 cta-press">
-              {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-2" />{t('submitting')}</> : t('submit')}
+              {submitting ? <><Loader2 className="w-4 h-4 animate-spin me-2" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>
         </div>

@@ -211,7 +211,7 @@ function PostProjectInner() {
           <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11 cta-press">{t('back')}</Button>
             <Button onClick={submit} disabled={submitting} className="flex-1 h-11 cta-press" style={{ background: '#152B54' }}>
-              {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-1.5" />{t('submitting')}</> : t('submit')}
+              {submitting ? <><Loader2 className="w-4 h-4 animate-spin me-1.5" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>
         </div>

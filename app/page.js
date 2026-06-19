@@ -344,7 +344,7 @@ function MatchPreview({ t }) {
         <ProviderRow icon={ClipboardCheck} title={t('providerTypeConsultant')} sub={t('cstatus_verified')} tone="amber" />
       </div>
 
-      <div className="mt-5 flex items-center justify-center gap-2 rounded-2xl border border-[#0EB59E]/20 bg-[#0EB59E]/8 py-3.5 text-[13px] font-bold text-[#0B6E60]">
+      <div className="mt-5 flex items-center justify-center gap-2 rounded-2xl border border-[#0EB59E]/20 bg-[#0EB59E]/8 py-3.5 text-[13px] font-bold text-[#0B6E60] dark:border-[#5EEAD4]/25 dark:bg-[#5EEAD4]/10 dark:text-[#5EEAD4]">
         <GitCompare className="h-4 w-4 shrink-0" />
         {t('bidComparison')}
       </div>
