@@ -55,7 +55,7 @@
     @apply bg-background text-foreground;
     overflow-x: clip;
     -webkit-font-smoothing: antialiased;
-    text-rendering: geometricPrecision;
+    text-rendering: optimizeLegibility;
   }
   .dark body { color-scheme: dark; }
   html[dir="rtl"] body { font-family: 'Cairo', 'Noto Kufi Arabic', system-ui, sans-serif; }
@@ -509,14 +509,17 @@
     box-shadow: 0 22px 48px -22px rgba(0,0,0,0.65), 0 0 0 1px rgba(94,234,212,0.18);
   }
 
-  /* ---------- scroll reveal ---------- */
+  /* ---------- scroll reveal ----------
+     will-change is scoped to elements that have NOT yet revealed, so the
+     hint (and its dedicated GPU layer) is released the moment the one-shot
+     transition finishes — avoids pinning dozens of permanent layers. */
   .reveal {
     opacity: 0;
     transform: translateY(22px);
     transition: opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1);
-    will-change: opacity, transform;
   }
-  .reveal.is-visible { opacity: 1; transform: none; }
+  .reveal:not(.is-visible) { will-change: opacity, transform; }
+  .reveal.is-visible { opacity: 1; transform: none; will-change: auto; }
 
   /* ---------- load-in fade ---------- */
   .motion-fade-up { animation: motion-fade-up 560ms cubic-bezier(0.22,1,0.36,1) both; }
