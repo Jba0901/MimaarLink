@@ -405,7 +405,7 @@ function ProviderTypeButton({ active, icon: Icon, title, desc, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className={`provider-type-card interactive-card tap-highlight rounded-2xl border p-3 text-start transition ${active ? 'is-active shadow-soft' : ''}`}
+      className={`provider-type-card interactive-card tap-highlight rounded-2xl border p-3 text-start transition ${active ? 'is-active' : ''}`}
     >
       <span className="flex items-center justify-between gap-2">
         <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${active ? 'bg-[#D0F2EE] text-[#0B8E7C] dark:bg-[#0B8E7C]/25 dark:text-[#5EEAD4]' : 'bg-muted text-muted-foreground'}`}>
