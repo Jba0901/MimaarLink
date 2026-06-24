@@ -70,14 +70,11 @@ function AdminInner() {
       setLoadingData(true);
       setLoadError('');
       try {
-        const [projectsRes, contractorsRes] = await Promise.all([
-          fetch('/api/projects'),
-          fetch('/api/contractors'),
-        ]);
-        const [projectsJson, contractorsJson] = await Promise.all([
-          projectsRes.json().catch(() => null),
-          contractorsRes.json().catch(() => null),
-        ]);
+        const projectsRes = await fetch('/api/projects');
+        const projectsJson = await projectsRes.json().catch(() => null);
+
+        const contractorsRes = await fetch('/api/contractors');
+        const contractorsJson = await contractorsRes.json().catch(() => null);
 
         if (projectsRes.status === 401 || contractorsRes.status === 401) {
           localStorage.removeItem('mlAdmin');

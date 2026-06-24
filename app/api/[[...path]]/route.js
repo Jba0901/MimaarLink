@@ -15,6 +15,7 @@ const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABA
 const STORAGE_BUCKET = process.env.SUPABASE_STORAGE_BUCKET || 'mimaarlink-files';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || ADMIN_PASSWORD;
+const SCHEMA_LOCK_KEY = [1296904524, 20260624];
 
 let pool = null;
 let schemaReady = null;
@@ -61,7 +62,12 @@ async function getPool() {
     });
   }
 
-  if (!schemaReady) schemaReady = ensureSchema(pool);
+  if (!schemaReady) {
+    schemaReady = ensureSchema(pool).catch((e) => {
+      schemaReady = null;
+      throw e;
+    });
+  }
   await schemaReady;
   return pool;
 }
@@ -75,6 +81,23 @@ function postgresConnectionString() {
 }
 
 async function ensureSchema(db) {
+  const client = await db.connect();
+  let locked = false;
+  try {
+    await client.query('select pg_advisory_lock($1, $2)', SCHEMA_LOCK_KEY);
+    locked = true;
+    await ensureSchemaUnlocked(client);
+  } finally {
+    if (locked) {
+      await client.query('select pg_advisory_unlock($1, $2)', SCHEMA_LOCK_KEY).catch((e) => {
+        console.warn('Schema lock release skipped:', e.message);
+      });
+    }
+    client.release();
+  }
+}
+
+async function ensureSchemaUnlocked(db) {
   await db.query(`
     create table if not exists requesters (
       id text primary key,
