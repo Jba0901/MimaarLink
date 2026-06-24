@@ -84,12 +84,12 @@ async function ensureSchema(db) {
   const client = await db.connect();
   let locked = false;
   try {
-    await client.query('select pg_advisory_lock($1, $2)', SCHEMA_LOCK_KEY);
+    await client.query('select pg_advisory_lock($1::integer, $2::integer)', SCHEMA_LOCK_KEY);
     locked = true;
     await ensureSchemaUnlocked(client);
   } finally {
     if (locked) {
-      await client.query('select pg_advisory_unlock($1, $2)', SCHEMA_LOCK_KEY).catch((e) => {
+      await client.query('select pg_advisory_unlock($1::integer, $2::integer)', SCHEMA_LOCK_KEY).catch((e) => {
         console.warn('Schema lock release skipped:', e.message);
       });
     }
