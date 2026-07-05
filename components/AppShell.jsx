@@ -118,10 +118,10 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
   return (
     <div className="min-h-screen flex flex-col">
       <header
-        className={`site-header sticky top-0 z-40 transition-all duration-300 ${
+        className={`site-header sticky top-0 z-40 backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-300 ${
           scrolled
-            ? 'is-scrolled backdrop-blur-xl border-b border-border shadow-soft'
-            : 'backdrop-blur-xl border-b border-transparent'
+            ? 'is-scrolled border-b border-border shadow-soft'
+            : 'border-b border-transparent'
         }`}
       >
         <div className="container-x relative h-[58px] sm:h-[68px] flex items-center justify-between gap-2">
@@ -183,7 +183,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
 
       {!hideNav && (
         <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 safe-pad-bottom max-w-[calc(100vw-20px)] lg:hidden">
-          <div className="flex items-center gap-1 bg-white/95 dark:bg-[#0B1624]/95 backdrop-blur-xl rounded-full px-1.5 py-1.5 shadow-lift border border-border">
+          <div className="flex items-center gap-1 bg-white/95 dark:bg-[#0B1624]/95 backdrop-blur-md rounded-full px-1.5 py-1.5 shadow-lift border border-border">
             <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
             <NavBtn href="/post-project" icon={FilePlus} label={t('postProject')} matches={['/post-project', '/for-projects']} />
             <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} matches={['/contractor', '/consultant', '/for-contractors']} />
