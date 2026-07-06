@@ -290,12 +290,12 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
 
   return (
     <div
-      className={`fixed inset-0 z-50 overflow-hidden transition ${open ? 'pointer-events-auto' : 'pointer-events-none'}`}
+      className={`fixed inset-0 z-50 overflow-hidden ${open ? 'pointer-events-auto' : 'pointer-events-none'}`}
       aria-hidden={!open}
     >
       <button
         type="button"
-        className={`absolute inset-0 bg-[#07111D]/35 backdrop-blur-[5px] transition-opacity duration-300 dark:bg-black/60 ${
+        className={`absolute inset-0 bg-[#07111D]/45 transition-opacity duration-300 dark:bg-black/60 ${
           open ? 'opacity-100' : 'opacity-0'
         }`}
         aria-label={copy.closeMenu}
