@@ -5,6 +5,12 @@ Before changing MimaarLink UI, ads, copy, landing pages, social assets, or marke
 - `mimaarlink-design-system.md`
 - `mimaarlink-brand-theme-draft.md`
 
+Before doing MimaarLink strategy, outreach, ads, operations, pricing, provider acquisition, or long-term planning, read:
+
+- `mimaarlink-agent-operating-system.md`
+- `mimaarlink-agent-prompts.md`
+- `mimaarlink-weekly-execution-board.md`
+
 ## Operating Rules
 
 - Treat MimaarLink as a serious Qatar construction/project marketplace.
