@@ -119,6 +119,7 @@ async function ensureSchemaUnlocked(db) {
       files jsonb not null default '[]'::jsonb,
       budget_range text not null default '',
       timeline text not null default '',
+      marketing_attribution jsonb not null default '{}'::jsonb,
       status text not null default 'received',
       created_at timestamptz not null default now(),
       updated_at timestamptz not null default now()
@@ -138,6 +139,7 @@ async function ensureSchemaUnlocked(db) {
       other_category_desc text not null default '',
       service_areas text not null default '',
       project_size_range text not null default '',
+      marketing_attribution jsonb not null default '{}'::jsonb,
       documents jsonb not null default '[]'::jsonb,
       document_checks jsonb not null default '{}'::jsonb,
       verification_status text not null default 'applied',
@@ -201,6 +203,12 @@ async function ensureSchemaUnlocked(db) {
 
     alter table contractors
     add column if not exists consultant_services jsonb not null default '[]'::jsonb;
+
+    alter table projects
+    add column if not exists marketing_attribution jsonb not null default '{}'::jsonb;
+
+    alter table contractors
+    add column if not exists marketing_attribution jsonb not null default '{}'::jsonb;
   `);
 
   await ensureStorageBucket(db);
@@ -302,6 +310,17 @@ function fileForClient(file) {
   if (!file || typeof file !== 'object') return file;
   if (file.url && !file.data) return { ...file, data: file.url };
   return file;
+}
+
+function sanitizeMarketingAttribution(value) {
+  const source = storedObject(value);
+  const allowed = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'landing_path', 'captured_at'];
+  return allowed.reduce((result, key) => {
+    if (typeof source[key] === 'string' && source[key].trim()) {
+      result[key] = source[key].trim().slice(0, key === 'landing_path' ? 160 : 240);
+    }
+    return result;
+  }, {});
 }
 
 function projectFromRow(row) {
@@ -605,7 +624,7 @@ export async function GET(request, { params }) {
         ]);
 
         return ok({
-          project,
+          project: { ...project, marketingAttribution: storedObject(rows[0].marketing_attribution) },
           requester: requesterFromRow(requesterResult.rows[0]),
           bids,
           invites,
@@ -642,7 +661,7 @@ export async function GET(request, { params }) {
       const { rows } = await db.query('select * from contractors where id = $1', [id]);
       const contractor = contractorFromRow(rows[0]);
       if (!contractor) return err('Not found', 404);
-      return ok(contractor);
+      return ok({ ...contractor, marketingAttribution: storedObject(rows[0].marketing_attribution) });
     }
 
     if (path === 'stats') {
@@ -734,6 +753,7 @@ export async function POST(request, { params }) {
         files,
         budgetRange: body.budgetRange || '',
         timeline: body.timeline || '',
+        marketingAttribution: sanitizeMarketingAttribution(body.marketingAttribution),
         status: 'received',
         createdAt: now,
         updatedAt: now,
@@ -741,8 +761,8 @@ export async function POST(request, { params }) {
 
       await db.query(
         `
-        insert into projects (id, requester_id, category, location, description, files, budget_range, timeline, status, created_at, updated_at)
-        values ($1, $2, $3, $4, $5, $6::jsonb, $7, $8, $9, $10, $11)
+        insert into projects (id, requester_id, category, location, description, files, budget_range, timeline, marketing_attribution, status, created_at, updated_at)
+        values ($1, $2, $3, $4, $5, $6::jsonb, $7, $8, $9::jsonb, $10, $11, $12)
         `,
         [
           project.id,
@@ -753,13 +773,15 @@ export async function POST(request, { params }) {
           JSON.stringify(project.files),
           project.budgetRange,
           project.timeline,
+          JSON.stringify(project.marketingAttribution),
           project.status,
           now,
           now,
         ],
       );
 
-      return ok({ project, requester });
+      const { marketingAttribution: _attribution, ...publicProject } = project;
+      return ok({ project: publicProject, requester });
     }
 
     if (path === 'contractors') {
@@ -780,6 +802,7 @@ export async function POST(request, { params }) {
         otherCategoryDesc: body.otherCategoryDesc || '',
         serviceAreas: body.serviceAreas || '',
         projectSizeRange: body.projectSizeRange || '',
+        marketingAttribution: sanitizeMarketingAttribution(body.marketingAttribution),
         documents,
         documentChecks,
         verificationStatus: 'applied',
@@ -792,10 +815,10 @@ export async function POST(request, { params }) {
         insert into contractors (
           id, provider_type, company_name, cr_number, contact_person, whatsapp, email,
           categories, consultant_grade, consultant_services, other_category_desc,
-          service_areas, project_size_range, documents, document_checks,
+          service_areas, project_size_range, marketing_attribution, documents, document_checks,
           verification_status, created_at, updated_at
         )
-        values ($1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9, $10::jsonb, $11, $12, $13, $14::jsonb, $15::jsonb, $16, $17, $18)
+        values ($1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9, $10::jsonb, $11, $12, $13, $14::jsonb, $15::jsonb, $16::jsonb, $17, $18, $19)
         `,
         [
           contractor.id,
@@ -811,6 +834,7 @@ export async function POST(request, { params }) {
           contractor.otherCategoryDesc,
           contractor.serviceAreas,
           contractor.projectSizeRange,
+          JSON.stringify(contractor.marketingAttribution),
           JSON.stringify(contractor.documents),
           JSON.stringify(contractor.documentChecks),
           contractor.verificationStatus,
@@ -819,7 +843,8 @@ export async function POST(request, { params }) {
         ],
       );
 
-      return ok(contractor);
+      const { marketingAttribution: _attribution, ...publicContractor } = contractor;
+      return ok(publicContractor);
     }
 
     if (path === 'bids') {

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AppShell from '@/components/AppShell';
+import AdminAttribution from '@/components/AdminAttribution';
 import { useLang } from '@/lib/LangContext';
 import { CONTRACTOR_STATUSES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -179,6 +180,7 @@ export default function AdminContractorPage() {
               <div className="text-[12px] text-navy mt-0.5 whitespace-pre-wrap leading-relaxed">{c.otherCategoryDesc}</div>
             </div>
           )}
+          <AdminAttribution value={c.marketingAttribution} lang={lang} />
         </CardContent>
       </Card>
 

@@ -1,6 +1,8 @@
 import './globals.css';
+import { Suspense } from 'react';
 import { LangProvider } from '@/lib/LangContext';
 import { Toaster } from '@/components/ui/sonner';
+import MarketingAttribution from '@/components/MarketingAttribution';
 
 export const metadata = {
   title: 'MimaarLink - Contractor and consultant bids in Qatar',
@@ -23,6 +25,9 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <LangProvider>
+          <Suspense fallback={null}>
+            <MarketingAttribution />
+          </Suspense>
           {children}
           <Toaster richColors position="top-center" />
         </LangProvider>

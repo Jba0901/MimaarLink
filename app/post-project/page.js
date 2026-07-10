@@ -15,6 +15,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle2, Upload, X, Loader2, Copy, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
+import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 
 const PROJECT_CATEGORY_ICONS = {
   fitout: Layers,
@@ -56,9 +57,14 @@ function PostProjectInner() {
     }
   }, [sp]);
 
-  const update = (k, v) => setData(d => ({ ...d, [k]: v }));
+  const markFormStarted = () => trackMetaOnce('project_form_start', 'FormStart', { form_type: 'project' }, { custom: true });
+  const update = (k, v) => {
+    markFormStarted();
+    setData(d => ({ ...d, [k]: v }));
+  };
 
   const onFiles = async (e) => {
+    markFormStarted();
     const list = Array.from(e.target.files || []).slice(0, 5);
     const items = [];
     for (const f of list) {
@@ -76,9 +82,14 @@ function PostProjectInner() {
     if (!data.name || !data.phone || phoneDigits < 8) return;
     setSubmitting(true);
     try {
-      const res = await fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      const res = await fetch('/api/projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, marketingAttribution: getMarketingAttribution() }),
+      });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || 'Error');
+      trackMeta('Lead', { content_name: 'project_submission', form_type: 'project' });
       setCreatedId(json.project.id);
       setStep(4);
     } catch (e) { toast.error(e.message); } finally { setSubmitting(false); }

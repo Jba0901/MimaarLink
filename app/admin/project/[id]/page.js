@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AppShell from '@/components/AppShell';
+import AdminAttribution from '@/components/AdminAttribution';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_STATUSES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -204,6 +205,7 @@ export default function AdminProjectPage() {
               <div className="text-muted-foreground">{requester.phone} · {requester.email}</div>
             </div>
           )}
+          <AdminAttribution value={project.marketingAttribution} lang={lang} />
           {project.files && project.files.length > 0 && (
             <div className="pt-2 border-t border-border">
               <div className="text-xs font-semibold mb-1.5">{t('uploadedFiles')}</div>

@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { CheckCircle2, Upload, X, Loader2, Copy, Building2, ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
+import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 
 async function fileToDataURL(file) {
   return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(file); });
@@ -54,12 +55,22 @@ function ContractorApplicationInner() {
     }));
   }, [requestedType]);
 
-  const update = (k, v) => setData(d => ({ ...d, [k]: v }));
+  const markFormStarted = (providerType = data.providerType) => trackMetaOnce(
+    `provider_form_start_${providerType}`,
+    'FormStart',
+    { form_type: 'provider', provider_type: providerType },
+    { custom: true },
+  );
+  const update = (k, v) => {
+    markFormStarted();
+    setData(d => ({ ...d, [k]: v }));
+  };
   const isConsultant = data.providerType === 'consultant';
   const serviceOptions = isConsultant ? CONSULTANT_CATEGORIES : CATEGORIES;
   const serviceLabel = isConsultant ? t('consultantServicesLabel') : t('serviceCategoriesLabel');
 
   const selectProviderType = (providerType) => {
+    markFormStarted(providerType);
     setData(d => ({
       ...d,
       providerType,
@@ -83,6 +94,7 @@ function ContractorApplicationInner() {
   };
 
   const onFiles = async (e, label) => {
+    markFormStarted();
     const list = Array.from(e.target.files || []).slice(0, 3);
     const items = [];
     for (const f of list) {
@@ -124,9 +136,14 @@ function ContractorApplicationInner() {
     }
     setSubmitting(true);
     try {
-      const res = await fetch('/api/contractors', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      const res = await fetch('/api/contractors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, marketingAttribution: getMarketingAttribution() }),
+      });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || 'Error');
+      trackMeta('CompleteRegistration', { content_name: 'provider_application', provider_type: data.providerType });
       setCreatedId(json.id);
       setDone(true);
     } catch (e) { toast.error(e.message); } finally { setSubmitting(false); }

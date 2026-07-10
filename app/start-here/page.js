@@ -5,6 +5,7 @@ import AppShell from '@/components/AppShell';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { useLang } from '@/lib/LangContext';
 import { ArrowRight, Building2, ClipboardCheck, Hammer } from 'lucide-react';
+import { trackMeta } from '@/lib/marketingAttribution';
 
 export default function StartHerePage() {
   const { t, dir } = useLang();
@@ -30,6 +31,7 @@ export default function StartHerePage() {
               title={t('startProjectTitle')}
               desc={t('startProjectDesc')}
               tone="teal"
+              pathType="project"
               Arrow={Arrow}
             />
             <SimpleChoice
@@ -38,6 +40,7 @@ export default function StartHerePage() {
               title={t('startContractorTitle')}
               desc={t('startContractorDesc')}
               tone="amber"
+              pathType="contractor"
               Arrow={Arrow}
             />
             <SimpleChoice
@@ -46,6 +49,7 @@ export default function StartHerePage() {
               title={t('startConsultantTitle')}
               desc={t('startConsultantDesc')}
               tone="navy"
+              pathType="consultant"
               Arrow={Arrow}
             />
           </div>
@@ -56,6 +60,7 @@ export default function StartHerePage() {
               href="https://wa.me/97466259219"
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackMeta('Contact', { contact_method: 'whatsapp' })}
               className="btn btn-outline px-5 text-[13px]"
               style={{ minHeight: 44 }}
             >
@@ -69,9 +74,13 @@ export default function StartHerePage() {
   );
 }
 
-function SimpleChoice({ href, icon: Icon, title, desc, tone, Arrow }) {
+function SimpleChoice({ href, icon: Icon, title, desc, tone, pathType, Arrow }) {
   return (
-    <Link href={href} className="block h-full cursor-pointer tap-highlight">
+    <Link
+      href={href}
+      onClick={() => trackMeta('PathSelected', { path_type: pathType }, { custom: true })}
+      className="block h-full cursor-pointer tap-highlight"
+    >
       <article
         className="group path-card interactive-card flex h-full flex-col rounded-[22px] border p-5 shadow-soft hover:border-[#0EB59E]/35 hover:shadow-card"
         data-tone={tone}
