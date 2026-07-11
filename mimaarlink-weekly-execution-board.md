@@ -147,6 +147,7 @@ Needs professional review:
 |---|---|---|---|
 | `2026-07-11` | No paid ads before one collected manual fee. | Manual validation protects capital and tests willingness to pay. | After Finance verifies QAR 750 collected. |
 | `2026-07-11` | Current admin application counts remain UNKNOWN. | Login page exposes no counts and no authenticated session was used. | Next authorized authenticated admin review. |
+| `2026-07-11` | Long-term moat work is manual data discipline only before first revenue. | Outcome data compounds only through real transactions; premature software does not. | After 10 paid introductions. |
 
 ## Kill / Scale Review
 
