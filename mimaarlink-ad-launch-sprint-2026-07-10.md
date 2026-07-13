@@ -1,10 +1,17 @@
 # MimaarLink First Advertising Sprint
 
 Date: 2026-07-10
+Updated: 2026-07-13
 
 Owner: Jassim
 
 Chief Operator: Codex / Jassim2
+
+Status: `PREPARED - NOT LAUNCHED`
+
+Current command plan: `C:\Users\Q\Documents\Codex\MoneyCEO\MIMAARLINK_MARKETING_COMMAND_PLAN_2026-07-13.md`
+
+Positioning update: MimaarLink should be strategically aggressive internally but calm and helpful externally. Lead with the recipient's actual pain, free owner project posting, suitable contractor/consultant invitations, and organized offer comparison. Do not use generic partnership language where a specific maintenance, fit-out, procurement, or provider-fit problem can be named.
 
 ## Decision
 
@@ -55,6 +62,9 @@ Do not hire three freelancers for the first test. Produce the first six concepts
 
 Do not spend until all items are complete:
 
+- One genuine qualified owner project has completed the manual matching workflow.
+- At least one provider has shown real willingness to accept the revenue structure.
+- The invoice/collection route is verified and Finance verifies the first manual fee if the QAR 750 model is used.
 - Production `/start-here` and `/post-project` work on mobile.
 - Test project submission reaches Supabase and appears in `/admin`.
 - UTM attribution appears in the project admin detail.
@@ -73,7 +83,7 @@ Current technical state on 2026-07-10:
 - Meta Pixel is not present and must not be assumed active.
 - A Meta dataset/pixel ID is still required. Conversions API is a later scale improvement once qualified-lead feedback is worth sending back to Meta.
 
-## 14-Day Campaign
+## First 7-Day Paid Campaign
 
 ### Campaign 1: Project Owner Leads
 
@@ -99,24 +109,19 @@ Use one consolidated owner ad set. Qatar is too small and the budget is too lean
 
 ### Budget Control
 
-Maximum first-test budget: QAR 1,200 over 14 days.
+Maximum first-test budget: QAR 500 over up to 7 days. The earlier QAR 1,200 concept is now a later scale scenario, not the first experiment.
 
 Stage 1, days 1-4:
 
-- QAR 80/day total.
+- QAR 70/day total.
 - One owner ad set.
 - Three project-owner creatives.
 
-Stage 2, days 5-10:
+Stage 2, days 5-7:
 
-- Pause obvious creative losers.
-- Keep the best two creatives and replace a clear loser once enough data exists.
-- Keep QAR 80/day only if there are form starts or a real submission.
-
-Stage 3, days 11-14:
-
-- Increase to QAR 100/day only if at least one real project submission has been reached and the lead is contactable.
-- Otherwise keep the budget flat or pause.
+- Spend the remaining QAR 220 only if there is at least one real form start or contactable submission.
+- Pause obvious creative losers rather than redistributing blindly.
+- Stop at QAR 500 if no qualified project appears; a second experiment requires a new decision and approval.
 
 Do not create a retargeting ad set until the audience is large enough to deliver consistently. Prepare the creative now, but activate retargeting only after meaningful site traffic or form starts exist.
 
@@ -257,8 +262,8 @@ Do not optimize decisions around likes, follows, impressions, or cheap clicks.
 
 Initial success target:
 
-- 5 real project submissions in 14 days.
-- 2-3 qualified submissions.
+- 2 real contactable project submissions in 7 days.
+- At least 1 qualified submission.
 - Form-start to submit rate above 15-20%.
 - Early cost per qualified project at or below QAR 200-300.
 - At least one project reaches a serious provider matching round.
@@ -266,8 +271,8 @@ Initial success target:
 ## Kill Rules
 
 - After QAR 300 with no project form starts: pause and fix creative/offer/landing mismatch.
-- After QAR 600 with form starts but no submission: pause and fix form friction or trust gaps.
-- After QAR 900 with no qualified project: stop paid acquisition and rework the wedge before spending more.
+- After QAR 400 with form starts but no submission: pause and fix form friction or trust gaps.
+- At QAR 500 with no qualified project: stop paid acquisition and rework the wedge before spending more.
 - Replace a creative after roughly 2,000 impressions if outbound CTR remains below 0.7%, or after QAR 150 with no form start.
 - If submissions are unreachable, fake, micro-handyman only, or have no budget/timeline: narrow the copy and qualification fields.
 - If project owners submit but providers will not respond: improve provider supply or project scoping before scaling ads.

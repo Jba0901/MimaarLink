@@ -6,15 +6,15 @@ Week of: `2026-07-11`
 
 Main focus this week:
 
-- Prepare Q's approval-ready manual owner/referral test and move toward the first collected QAR 750 selected-introduction fee.
+- Launch Q's approval-ready pain-first owner/referral test, obtain one genuine qualified project, and learn which recipient pain produces action.
 
 Do not focus on:
 
-- Paid ads, more software, public-tender replacement, micro-handyman jobs, and provider promises before real project demand.
+- Paid ads, more software, public-tender replacement, micro-handyman jobs, and provider promises before real project demand and the payment gate are verified.
 
 Evidence required before more spend/build:
 
-- At least 3 interested replies from 30 approved qualified approaches, one real owner project, owner selection evidence, provider acceptance of the QAR 750 fee, and verified cleared payment.
+- At least 3 interested replies from 30 approved qualified approaches, one real owner project, owner selection evidence, provider acceptance of the revenue structure, a verified invoice/collection route, and verified cleared payment.
 
 ## Scoreboard
 
@@ -39,7 +39,7 @@ Recommendation:
 
 Evidence:
 
-- Thirty owner/referral targets and 20 reserve providers are now recorded in the Money CEO control files.
+- Thirty owner/referral targets and 20 reserve providers are recorded in the Money CEO control files. AP-001 is now segmented by property-management overflow, broker/advisor support, FM provider fit, and platform partnership.
 
 Risk:
 
@@ -53,7 +53,7 @@ Kill condition:
 
 Recommendation:
 
-- Use the 20-provider reserve only after CR, activity, capacity, and fee checks.
+- Use the 20-provider reserve only after identity, CR, activity, capacity, and fee checks. AP-001 M017-M019 correctly approach full-service FM companies as potential providers rather than asking them to surrender their own work.
 
 Targets this week:
 
@@ -61,7 +61,7 @@ Targets this week:
 
 Scripts ready:
 
-- Yes: 20 exact recipient messages are in AP-001; none has been sent.
+- Yes: 20 individually tailored messages are in AP-001; none has been sent.
 
 Risk:
 
@@ -71,11 +71,12 @@ Risk:
 
 Recommendation:
 
-- Use AP-001 only after Q approval; do not run paid ads before one collected manual fee.
+- Use refined AP-001 only after Q approval. Keep paid ads at QAR 0 until the manual workflow, revenue, attribution, Pixel, and response-time gates pass.
 
 Campaign/test:
 
-- Twenty exact property, brokerage, FM, and network referral emails in AP-001.
+- Wave A begins with eight recipients whose stated services expose the clearest maintenance, procurement, property-transition, or owner-comparison pain.
+- The current marketing plan uses direct outreach, warm introductions, organic owner education, and gated paid Meta acquisition in that order.
 
 Success condition:
 
@@ -117,7 +118,7 @@ Evidence required:
 
 Risk:
 
-- MimaarLink's current CR/activity and invoice treatment require review before the first invoice; public provider identity is not verification.
+- Q clarified that free owner posting, review, matching, and comparison are operational. The provider-side invoice and collection route still requires verification before the first payment request; public provider identity is not verification.
 
 Safer wording/process:
 
@@ -129,17 +130,17 @@ Needs professional review:
 
 ## This Week's Actions
 
-1. Q reviews and approves, declines, or revises AP-001 M001-M020.
-2. After approval only, send the exact first batch from `jassimpropvp@gmail.com` and log timestamps.
+1. Q reviews and approves Wave A, all messages, or revisions to refined AP-001.
+2. After approval only, send the exact approved waves from `jassimpropvp@gmail.com` and log timestamps.
 3. Prepare a separate approval packet for any 48-hour follow-up; do not auto-follow-up.
 4. Qualify the first real owner project against budget, timing, scope, location, and decision authority.
-5. Before the first handoff, qualify 5-8 relevant providers and collect QAR 750 from the owner-selected provider.
+5. Before the first paid handoff, qualify 5-8 relevant providers and pass the separate invoice/collection gate.
 
 ## Follow-Up List
 
 | Person/company | Type | Last contact | Next action | Owner | Status |
 |---|---|---|---|---|---|
-| AP-001 M001-M020 | Owner/referral batch | Not contacted | Q approval decision | Jassim | Ready for review |
+| AP-001 M001-M020 | Segmented pain-first batch | Not contacted | Q approval decision | Jassim | Refined; ready for review |
 
 ## Decisions Log
 
@@ -148,6 +149,8 @@ Needs professional review:
 | `2026-07-11` | No paid ads before one collected manual fee. | Manual validation protects capital and tests willingness to pay. | After Finance verifies QAR 750 collected. |
 | `2026-07-11` | Current admin application counts remain UNKNOWN. | Login page exposes no counts and no authenticated session was used. | Next authorized authenticated admin review. |
 | `2026-07-11` | Long-term moat work is manual data discipline only before first revenue. | Outcome data compounds only through real transactions; premature software does not. | After 10 paid introductions. |
+| `2026-07-13` | Pain-first role segmentation replaces one-template partnership outreach. | Property managers, brokers/advisors, FM providers, and platforms do not share the same problem or CTA. | After Wave A results. |
+| `2026-07-13` | First paid Meta experiment is capped at QAR 500 and remains gated. | Direct demand evidence and technical attribution must precede paid scale. | After the manual revenue and launch gates pass. |
 
 ## Kill / Scale Review
 
