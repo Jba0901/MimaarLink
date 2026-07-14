@@ -6,7 +6,7 @@ Week of: `2026-07-11`
 
 Main focus this week:
 
-- Launch Q's approval-ready pain-first owner/referral test, obtain one genuine qualified project, and learn which recipient pain produces action.
+- Monitor the eight-message AP-001 Wave A, obtain one genuine qualified project, and learn which recipient pain produces action before releasing any later wave.
 
 Do not focus on:
 
@@ -20,12 +20,14 @@ Evidence required before more spend/build:
 
 | Metric | Target | Actual | Notes |
 |---|---:|---:|---|
+| Owner/referral messages sent | 30 | 8 | Wave A sent on 2026-07-13 with Q approval; 12 staged messages and all follow-ups remain held. |
+| Interested owner/referral replies | 3 | UNKNOWN | The 2026-07-14 mailbox sweep was blocked by the required profile/session gate; unknown is not zero. |
 | Provider conversations | 30 | 0 |  |
 | Contractor applications | 15 | UNKNOWN | `/admin` requires authentication; unknown is not zero. |
 | Usable/qualified providers | 8 | 0 | 20 public reserve providers researched; none qualified yet. |
 | Consultant applications | 5 | UNKNOWN | `/admin` requires authentication. |
 | Real project posts | 2 | UNKNOWN | `/admin` requires authentication. |
-| Completed bid rounds | 1 | 0 | No approved outreach or live project processed in this sprint. |
+| Completed bid rounds | 1 | 0 | No qualified live project has entered matching in this sprint. |
 | Providers willing to pay | 1 | 0 | Fee willingness has not yet been tested. |
 | Avg manual handling time/project | <2h | TBD |  |
 
@@ -61,7 +63,7 @@ Targets this week:
 
 Scripts ready:
 
-- Yes: 20 individually tailored messages are in AP-001; none has been sent.
+- Yes: 20 individually tailored messages are in AP-001. Eight were sent as Wave A; the remaining 12 and all follow-ups are held.
 
 Risk:
 
@@ -71,11 +73,11 @@ Risk:
 
 Recommendation:
 
-- Use refined AP-001 only after Q approval. Keep paid ads at QAR 0 until the manual workflow, revenue, attribution, Pixel, and response-time gates pass.
+- Monitor Wave A delivery, bounce, and reply evidence before considering another release. Keep paid ads at QAR 0 until the manual workflow, revenue, attribution, Pixel, and response-time gates pass.
 
 Campaign/test:
 
-- Wave A begins with eight recipients whose stated services expose the clearest maintenance, procurement, property-transition, or owner-comparison pain.
+- Wave A reached eight recipients whose stated services expose the clearest maintenance, procurement, property-transition, or owner-comparison pain on 2026-07-13.
 - The current marketing plan uses direct outreach, warm introductions, organic owner education, and gated paid Meta acquisition in that order.
 
 Success condition:
@@ -94,7 +96,7 @@ Recommendation:
 
 Workflow issue:
 
-- Admin counts are unknown without an authenticated session; no metric may be invented.
+- The 2026-07-14 live admin check reached the password login page. Project, contractor, consultant, timestamp, attribution, and follow-up counts remain UNKNOWN without an authenticated session; no metric may be invented.
 
 Handling-time risk:
 
@@ -130,9 +132,9 @@ Needs professional review:
 
 ## This Week's Actions
 
-1. Q reviews and approves Wave A, all messages, or revisions to refined AP-001.
-2. After approval only, send the exact approved waves from `jassimpropvp@gmail.com` and log timestamps.
-3. Prepare a separate approval packet for any 48-hour follow-up; do not auto-follow-up.
+1. Monitor the eight sent Wave A messages from `mimaarlink@gmail.com`; treat Gmail Sent as transmission evidence only.
+2. Keep Waves B-D and all follow-ups held until delivery, bounce, and reply evidence is reconciled.
+3. After 2026-07-15 21:28, prepare a separate evidence-based follow-up packet for non-bounced non-repliers; do not auto-send it.
 4. Qualify the first real owner project against budget, timing, scope, location, and decision authority.
 5. Before the first paid handoff, qualify 5-8 relevant providers and pass the separate invoice/collection gate.
 
@@ -140,7 +142,7 @@ Needs professional review:
 
 | Person/company | Type | Last contact | Next action | Owner | Status |
 |---|---|---|---|---|---|
-| AP-001 M001-M020 | Segmented pain-first batch | Not contacted | Q approval decision | Jassim | Refined; ready for review |
+| AP-001 M001-M020 | Segmented pain-first batch | 8 emails sent 2026-07-13 | Review replies/bounces after 2026-07-15 21:28 | Jassim | Wave A sent; 12 messages and all follow-ups held |
 
 ## Decisions Log
 
@@ -151,6 +153,7 @@ Needs professional review:
 | `2026-07-11` | Long-term moat work is manual data discipline only before first revenue. | Outcome data compounds only through real transactions; premature software does not. | After 10 paid introductions. |
 | `2026-07-13` | Pain-first role segmentation replaces one-template partnership outreach. | Property managers, brokers/advisors, FM providers, and platforms do not share the same problem or CTA. | After Wave A results. |
 | `2026-07-13` | First paid Meta experiment is capped at QAR 500 and remains gated. | Direct demand evidence and technical attribution must precede paid scale. | After the manual revenue and launch gates pass. |
+| `2026-07-13` | Release only the eight-message AP-001 Wave A after live sender, mapping, Arabic-first, and rendering QA. | A staged release preserves measurable evidence and limits unnecessary exposure. | After the 48-hour reply/bounce checkpoint. |
 
 ## Kill / Scale Review
 
