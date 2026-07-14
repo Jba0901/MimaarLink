@@ -121,6 +121,7 @@ Evidence required:
 Risk:
 
 - Q clarified that free owner posting, review, matching, and comparison are operational. The provider-side invoice and collection route still requires verification before the first payment request; public provider identity is not verification.
+- The current admin credential is embedded in tracked server source and client-facing copy. Treat it as exposed; remove the literal, rotate it, and store the replacement only in Vercel environment variables before relying on admin security.
 
 Safer wording/process:
 
@@ -129,6 +130,7 @@ Safer wording/process:
 Needs professional review:
 
 - AP-002 before the first invoice if current CR/activity or accounting treatment remains unclear.
+- Admin credential rotation and production environment setup require Q's action-time approval because they change live access.
 
 ## This Week's Actions
 
