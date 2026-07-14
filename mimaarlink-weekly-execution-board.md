@@ -23,10 +23,10 @@ Evidence required before more spend/build:
 | Owner/referral messages sent | 30 | 8 | Wave A sent on 2026-07-13 with Q approval; 12 staged messages and all follow-ups remain held. |
 | Interested owner/referral replies | 3 | UNKNOWN | The 2026-07-14 mailbox sweep was blocked by the required profile/session gate; unknown is not zero. |
 | Provider conversations | 30 | 0 |  |
-| Contractor applications | 15 | UNKNOWN | `/admin` requires authentication; unknown is not zero. |
-| Usable/qualified providers | 8 | 0 | 20 public reserve providers researched; none qualified yet. |
-| Consultant applications | 5 | UNKNOWN | `/admin` requires authentication. |
-| Real project posts | 2 | UNKNOWN | `/admin` requires authentication. |
+| Contractor applications | 15 | 3 | Authenticated `/admin` check on 2026-07-14: 2 trusted and 1 active - CR checked. |
+| Usable/qualified providers | 8 | 0 | 3 admin-listed contractors and 20 public reserve providers exist, but none has been qualified for availability, project fit, or fee willingness in this sprint. |
+| Consultant applications | 5 | 0 | Authenticated `/admin` check on 2026-07-14. |
+| Real project posts | 2 | 0 | Authenticated `/admin` check on 2026-07-14; no project is available for matching. |
 | Completed bid rounds | 1 | 0 | No qualified live project has entered matching in this sprint. |
 | Providers willing to pay | 1 | 0 | Fee willingness has not yet been tested. |
 | Avg manual handling time/project | <2h | TBD |  |
@@ -96,7 +96,7 @@ Recommendation:
 
 Workflow issue:
 
-- The 2026-07-14 live admin check reached the password login page. Project, contractor, consultant, timestamp, attribution, and follow-up counts remain UNKNOWN without an authenticated session; no metric may be invented.
+- The 2026-07-14 authenticated live admin check shows 0 projects, 3 contractor applications, and 0 consultant applications. Two contractors are trusted and one is active with its CR checked. The latest application is dated 2026-06-07 15:40, so no July application is listed. Attribution and follow-up remain UNKNOWN because those fields are not shown in the admin list.
 
 Handling-time risk:
 
@@ -149,7 +149,7 @@ Needs professional review:
 | Date | Decision | Reason | Revisit when |
 |---|---|---|---|
 | `2026-07-11` | No paid ads before one collected manual fee. | Manual validation protects capital and tests willingness to pay. | After Finance verifies QAR 750 collected. |
-| `2026-07-11` | Current admin application counts remain UNKNOWN. | Login page exposes no counts and no authenticated session was used. | Next authorized authenticated admin review. |
+| `2026-07-14` | Current admin totals are 0 projects, 3 contractors, and 0 consultants. | Authenticated read-only dashboard review; 2 contractors trusted and 1 CR-checked. | Recheck daily for a timestamp or count delta. |
 | `2026-07-11` | Long-term moat work is manual data discipline only before first revenue. | Outcome data compounds only through real transactions; premature software does not. | After 10 paid introductions. |
 | `2026-07-13` | Pain-first role segmentation replaces one-template partnership outreach. | Property managers, brokers/advisors, FM providers, and platforms do not share the same problem or CTA. | After Wave A results. |
 | `2026-07-13` | First paid Meta experiment is capped at QAR 500 and remains gated. | Direct demand evidence and technical attribution must precede paid scale. | After the manual revenue and launch gates pass. |
