@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import PageState from '@/components/PageState';
-import AdminStatusBadge from '@/components/AdminStatusBadge';
+import StatusBadge from '@/components/StatusBadge';
 import { useLang } from '@/lib/LangContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -191,7 +191,7 @@ function AdminInner() {
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="font-semibold text-navy text-sm">{t(`cat_${p.category}`)}</span>
-                        <AdminStatusBadge status={p.status}>{t(`status_${p.status}`)}</AdminStatusBadge>
+                        <StatusBadge status={p.status}>{t(`status_${p.status}`)}</StatusBadge>
                       </div>
                       <div className="text-xs text-muted-foreground mt-0.5 truncate">{p.location}</div>
                       <div className="text-xs text-muted-foreground truncate">{p.description}</div>
@@ -257,7 +257,7 @@ function AdminInner() {
                         ))}
                       </div>
                     </div>
-                    <AdminStatusBadge status={c.verificationStatus}>{t(`cstatus_${c.verificationStatus}`)}</AdminStatusBadge>
+                    <StatusBadge status={c.verificationStatus}>{t(`cstatus_${c.verificationStatus}`)}</StatusBadge>
                   </div>
                 </CardContent>
               </Card>

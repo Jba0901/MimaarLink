@@ -57,22 +57,22 @@ export default function BidsPage() {
                     <div className="flex flex-wrap items-center gap-1.5">
                       <span className="min-w-0 break-words font-semibold text-navy text-base">{c.companyName || t('provider')}</span>
                       {c.providerType && (
-                        <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-semibold text-navy">{providerTypeLabel(c, t)}</span>
+                        <span className="rounded-full bg-secondary px-2 py-1 text-[11px] font-semibold text-navy">{providerTypeLabel(c, t)}</span>
                       )}
                       {c.verificationStatus === 'verified' && <ShieldCheck className="w-4 h-4" style={{ color: '#00B59E' }} />}
                     </div>
                     {c.serviceAreas && <div className="text-xs text-muted-foreground mt-0.5">{c.serviceAreas}</div>}
                   </div>
-                  {isLowest && <Badge style={{ background: '#00B59E' }} className="shrink-0 text-[#152B54] text-[10px]">{t('lowestBid')}</Badge>}
+                  {isLowest && <Badge variant="success" className="shrink-0 text-[11px]">{t('lowestBid')}</Badge>}
                 </div>
 
                 <div className="mt-3 grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">
                   <div className="rounded-xl bg-secondary p-2.5">
-                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground flex items-center gap-1"><Wallet className="w-3 h-3" />{t('price')}</div>
+                    <div className="flex items-center gap-1 text-[11px] uppercase tracking-wide text-muted-foreground"><Wallet className="h-3 w-3" />{t('price')}</div>
                     <div className="text-base font-bold text-navy mt-0.5">{b.price.toLocaleString()} <span className="text-xs font-normal text-muted-foreground">{t('currencyQar')}</span></div>
                   </div>
                   <div className="rounded-xl bg-secondary p-2.5">
-                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground flex items-center gap-1"><Clock className="w-3 h-3" />{t('timeline')}</div>
+                    <div className="flex items-center gap-1 text-[11px] uppercase tracking-wide text-muted-foreground"><Clock className="h-3 w-3" />{t('timeline')}</div>
                     <div className="text-sm font-semibold text-navy mt-0.5">{b.timeline}</div>
                   </div>
                 </div>
@@ -85,7 +85,7 @@ export default function BidsPage() {
 
                 {b.attachments && b.attachments.length > 0 && (
                   <div className="mt-3 border-t border-border pt-3">
-                    <div className="mb-1.5 flex items-center gap-1.5 text-[10px] uppercase tracking-wide text-muted-foreground font-semibold">
+                    <div className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                       <Paperclip className="w-3 h-3" />
                       {t('bidFiles')}
                     </div>

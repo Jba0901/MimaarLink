@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import AdminAttribution from '@/components/AdminAttribution';
-import AdminStatusBadge from '@/components/AdminStatusBadge';
+import StatusBadge from '@/components/StatusBadge';
 import PageState from '@/components/PageState';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_STATUSES } from '@/lib/i18n';
@@ -192,7 +192,7 @@ export default function AdminProjectPage() {
           <h1 className="text-xl font-bold text-navy">{t(`cat_${project.category}`)}</h1>
           <div className="mt-0.5 text-xs text-muted-foreground">{project.location}</div>
         </div>
-        <AdminStatusBadge status={project.status}>{t(`status_${project.status}`)}</AdminStatusBadge>
+        <StatusBadge status={project.status}>{t(`status_${project.status}`)}</StatusBadge>
       </div>
 
       <Card className="mb-3">

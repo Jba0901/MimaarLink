@@ -9,14 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import PageState from '@/components/PageState';
 import StatusTimeline from '@/components/StatusTimeline';
+import StatusBadge from '@/components/StatusBadge';
 import { ClipboardCheck, Download, FileText, Hammer, MapPin, Wallet } from 'lucide-react';
-
-const statusColor = (status) => {
-  if (status === 'verified') return '#00B59E';
-  if (status === 'cr_checked') return '#FFB638';
-  if (status === 'suspended') return '#EF4444';
-  return '#152B54';
-};
 
 const consultantGradeLabel = (grade, t) => {
   if (grade === 'grade_a') return t('gradeA');
@@ -55,7 +49,6 @@ export default function ContractorStatusPage() {
   }
 
   const status = contractor.verificationStatus || 'applied';
-  const statusUsesDarkText = status === 'verified' || status === 'cr_checked';
   const statusOrder = CONTRACTOR_STATUSES.filter((s) => s !== 'suspended');
   const statusIndex = status === 'suspended' ? -1 : statusOrder.indexOf(status);
   const documentChecklist = [
@@ -77,9 +70,9 @@ export default function ContractorStatusPage() {
             <h1 className="display-title text-[24px] sm:text-[28px]">{t('providerStatus')}</h1>
             <p className="text-xs text-muted-foreground mt-1">{contractor.companyName}</p>
           </div>
-          <Badge style={{ background: statusColor(status) }} className={`max-w-full whitespace-normal text-start ${statusUsesDarkText ? 'text-[#152B54]' : 'text-white'}`}>
+          <StatusBadge status={status}>
             {t(`cstatus_${status}`)}
-          </Badge>
+          </StatusBadge>
         </div>
 
         <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
@@ -127,10 +120,10 @@ export default function ContractorStatusPage() {
                       >
                         <FileText className="w-4 h-4 shrink-0" />
                         <span className="min-w-0 flex-1 truncate">{file.name || t('files')}</span>
-                        <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-1 text-[10px] font-semibold text-navy">
+                        <Badge variant="secondary" className="shrink-0 gap-1 border border-border bg-card text-[11px] text-navy">
                           <Download className="w-3 h-3" />
                           {t('download')}
-                        </span>
+                        </Badge>
                       </a>
                     ))}
                   </div>
@@ -160,7 +153,7 @@ export default function ContractorStatusPage() {
                           <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
                           <span className="min-w-0">{doc.label}</span>
                         </div>
-                        <Badge style={{ background: present ? '#00B59E' : '#FFB638' }} className="shrink-0 text-[10px] text-[#152B54]">
+                        <Badge variant={present ? 'success' : 'warning'} className="shrink-0 text-[11px]">
                           {present ? t('present') : t('missing')}
                         </Badge>
                       </div>

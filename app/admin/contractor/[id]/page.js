@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import AdminAttribution from '@/components/AdminAttribution';
-import AdminStatusBadge from '@/components/AdminStatusBadge';
+import StatusBadge from '@/components/StatusBadge';
 import PageState from '@/components/PageState';
 import { useLang } from '@/lib/LangContext';
 import { CONTRACTOR_STATUSES } from '@/lib/i18n';
@@ -152,7 +152,7 @@ export default function AdminContractorPage() {
           <h1 className="min-w-0 break-words text-xl font-bold text-navy">{c.companyName}</h1>
           {c.verificationStatus === 'verified' && <ShieldCheck className="h-5 w-5 shrink-0" style={{ color: '#00B59E' }} />}
         </div>
-        <AdminStatusBadge status={c.verificationStatus}>{t(`cstatus_${c.verificationStatus}`)}</AdminStatusBadge>
+        <StatusBadge status={c.verificationStatus}>{t(`cstatus_${c.verificationStatus}`)}</StatusBadge>
       </div>
 
       <Card className="mb-3">

@@ -9,13 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import PageState from '@/components/PageState';
 import StatusTimeline from '@/components/StatusTimeline';
+import StatusBadge from '@/components/StatusBadge';
 import { FileText, MapPin, Calendar, Wallet, Download } from 'lucide-react';
-
-const statusColor = (status) => (
-  ['approved', 'contractors_invited', 'bids_received', 'shortlisted', 'meeting_arranged', 'closed'].includes(status)
-    ? '#00B59E'
-    : '#152B54'
-);
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -32,14 +27,13 @@ export default function ProjectPage() {
   if (!data || data.error) return <AppShell><PageState kind="missing" title={t('notFound')} actionHref="/" actionLabel={t('backToHome')} /></AppShell>;
 
   const idx = PROJECT_STATUSES.indexOf(data.status);
-  const statusUsesDarkText = statusColor(data.status) === '#00B59E';
 
   return (
     <AppShell wide>
       <div className="mx-auto max-w-5xl">
         <div className="flex flex-col items-start gap-2.5 mb-4 sm:flex-row sm:items-center sm:justify-between">
           <h1 className="display-title text-[24px] sm:text-[28px]">{t('projectStatus')}</h1>
-          <Badge style={{ background: statusColor(data.status) }} className={`max-w-full whitespace-normal text-start ${statusUsesDarkText ? 'text-[#152B54]' : 'text-white'}`}>{t(`status_${data.status}`)}</Badge>
+          <StatusBadge status={data.status}>{t(`status_${data.status}`)}</StatusBadge>
         </div>
 
         <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
@@ -65,10 +59,10 @@ export default function ProjectPage() {
                       <a key={i} href={f.data} download={f.name} className="flex min-h-11 items-center gap-2 text-sm text-navy bg-secondary rounded-xl px-3 py-2 hover:bg-secondary/70">
                         <FileText className="w-4 h-4 shrink-0" />
                         <span className="truncate flex-1">{f.name}</span>
-                        <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-1 text-[10px] font-semibold text-navy">
+                        <Badge variant="secondary" className="shrink-0 gap-1 border border-border bg-card text-[11px] text-navy">
                           <Download className="w-3 h-3" />
                           {t('download')}
-                        </span>
+                        </Badge>
                       </a>
                     ))}
                   </div>
