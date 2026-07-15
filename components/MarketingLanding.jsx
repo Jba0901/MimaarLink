@@ -62,12 +62,14 @@ export default function MarketingLanding({
         <div className="grid sm:grid-cols-3 gap-3.5">
           {benefits.map((b, i) => (
             <Reveal key={i} delay={i * 110}>
-              <div className="interactive-card h-full bg-white border border-border rounded-3xl p-6 shadow-soft" style={{ borderInlineStartWidth: 3, borderInlineStartColor: '#00B59E' }}>
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(0,181,158,0.10)' }}>
+              <div className="interactive-card flex h-full items-start gap-4 rounded-3xl border border-border bg-white p-5 shadow-soft sm:block sm:p-6" style={{ borderInlineStartWidth: 3, borderInlineStartColor: '#00B59E' }}>
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl sm:mb-4 sm:h-12 sm:w-12" style={{ background: 'rgba(0,181,158,0.10)' }}>
                   <b.icon className="w-[22px] h-[22px]" style={{ color: '#00B59E' }} />
                 </div>
-                <h3 className="text-[16px] font-bold text-navy leading-snug">{b.title}</h3>
-                <p className="text-[13px] mt-1.5 leading-relaxed text-muted-foreground">{b.desc}</p>
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-[15.5px] font-bold leading-snug text-navy sm:text-[16px]">{b.title}</h3>
+                  <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground sm:mt-1.5">{b.desc}</p>
+                </div>
               </div>
             </Reveal>
           ))}
@@ -85,7 +87,7 @@ export default function MarketingLanding({
               {popularTypes.map((p, i) => (
                 <span
                   key={i}
-                  className="text-[13px] font-semibold text-navy bg-white border border-border rounded-full px-4 py-2 shadow-soft transition-colors hover:border-[#00B59E]/45"
+                  className="rounded-full border border-border bg-secondary/70 px-4 py-2 text-[13px] font-semibold text-navy"
                 >
                   {p}
                 </span>
@@ -102,15 +104,18 @@ export default function MarketingLanding({
         </Reveal>
         <div className="relative">
           <div className="hidden sm:block absolute top-7 inset-x-[16%] h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-          <div className="grid sm:grid-cols-3 gap-4 sm:gap-3">
+          <div className="grid gap-0 sm:grid-cols-3 sm:gap-3">
             {steps.map((s, i) => (
               <Reveal key={i} delay={i * 110}>
-                <div className="relative text-center px-3">
-                  <div className="relative z-10 mx-auto w-14 h-14 rounded-2xl bg-white border border-border shadow-card flex items-center justify-center">
-                    <span className="text-[18px] font-extrabold text-navy">{i + 1}</span>
+                <div className={`relative flex gap-3.5 px-1 text-start sm:block sm:px-3 sm:text-center ${i < steps.length - 1 ? 'pb-6 sm:pb-0' : ''}`}>
+                  {i < steps.length - 1 && <span className="absolute bottom-0 start-7 top-12 w-px bg-border sm:hidden" aria-hidden="true" />}
+                  <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-border bg-white shadow-card sm:mx-auto sm:h-14 sm:w-14">
+                    <span className="text-[17px] font-extrabold text-navy sm:text-[18px]">{i + 1}</span>
                   </div>
-                  <h3 className="mt-4 text-[16px] font-bold text-navy leading-snug">{s.title}</h3>
-                  <p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground max-w-[240px] mx-auto">{s.desc}</p>
+                  <div className="min-w-0 flex-1 pt-1 sm:pt-0">
+                    <h3 className="text-[16px] font-bold leading-snug text-navy sm:mt-4">{s.title}</h3>
+                    <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground sm:mx-auto sm:mt-1.5 sm:max-w-[240px]">{s.desc}</p>
+                  </div>
                 </div>
               </Reveal>
             ))}

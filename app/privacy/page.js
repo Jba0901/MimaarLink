@@ -31,11 +31,16 @@ export default function PrivacyPage() {
           {ar ? 'يوضح هذا الإشعار طريقة تعامل معمار لينك مع بيانات النماذج وقياس الحملات الإعلانية.' : 'This notice explains how MimaarLink handles form data and advertising measurement.'}
         </p>
 
-        <div className="mt-6 space-y-3">
-          {sections.map(([title, body]) => (
-            <section key={title} className="rounded-2xl border border-border bg-white p-5 shadow-soft">
-              <h2 className="text-base font-bold text-navy">{title}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
+        <div className="mt-6 overflow-hidden rounded-[24px] border border-border bg-white shadow-soft">
+          {sections.map(([title, body], index) => (
+            <section key={title} className={`flex items-start gap-3.5 p-5 sm:p-6 ${index < sections.length - 1 ? 'border-b border-border' : ''}`}>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[12px] font-extrabold text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+                {index + 1}
+              </span>
+              <div className="min-w-0 flex-1">
+                <h2 className="text-[15.5px] font-extrabold leading-snug text-navy sm:text-base">{title}</h2>
+                <p className="mt-1.5 text-[13.5px] leading-relaxed text-muted-foreground sm:text-sm">{body}</p>
+              </div>
             </section>
           ))}
         </div>

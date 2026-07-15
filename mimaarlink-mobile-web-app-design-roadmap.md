@@ -46,6 +46,7 @@ The design goal is a fast, trustworthy Qatar construction marketplace that works
 - Public and admin status badges now use one semantic color map, while success, warning, error, download, checklist, and bid-comparison chips share the same readable mobile badge system.
 - The homepage FAQ now uses one accessible reusable accordion with large mobile rows, 40 px brand icon tiles, keyboard navigation, and visible focus; contact actions share the same focus language.
 - Shared navigation now exposes active-page state, keeps brand and desktop links at least 44 px tall, localizes the language control, and honors reduced-motion preferences across every transition and animation.
+- Campaign landing pages now use compact mobile benefit rows, a connected vertical process, and passive category tags; privacy and measurement surfaces share the same touch-safe hierarchy and avoid covering the homepage app navigation.
 
 These are reusable website primitives for the future app. They do not approve or lock the authenticated app dashboard, account model, notification model, or final app navigation architecture.
 
