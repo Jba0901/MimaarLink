@@ -311,7 +311,7 @@ function MatchPreview({ t }) {
     <div className="float-soft rounded-[24px] bg-white border border-border shadow-lift p-6">
       <div className="flex items-center justify-between gap-3 mb-5">
         <div className="min-w-0">
-          <div className="text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground/70">{t('projectStatus')}</div>
+          <div className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground/75">{t('projectStatus')}</div>
           <div className="truncate text-[15px] font-bold text-navy mt-0.5">{t('status_contractors_invited')}</div>
         </div>
         <span className="pulse-dot flex h-10 w-10 shrink-0 items-center justify-center rounded-full" style={{ background: 'rgba(0,181,158,0.12)' }}>

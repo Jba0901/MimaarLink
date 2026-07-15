@@ -125,7 +125,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         }`}
       >
         <div className="container-x relative h-16 sm:h-[68px] flex items-center justify-between gap-2">
-          <Link href="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0 shrink tap-highlight">
+          <Link href="/" className="flex min-h-11 items-center gap-2 rounded-xl sm:gap-2.5 min-w-0 shrink tap-highlight">
             <Logo className="h-8 w-8 sm:h-10 sm:w-10" />
             <BrandText size={17} onDark={isDark} />
           </Link>
@@ -146,7 +146,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
             <button
               onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
               className="btn btn-outline h-11 px-3.5 text-[13px]"
-              aria-label="Switch language"
+              aria-label={copy.switchLanguage}
             >
               <Globe className="w-4 h-4 shrink-0" />
               {t('language')}
@@ -224,6 +224,7 @@ function getShellCopy(lang) {
       moreLinks: 'روابط سريعة',
       allPaths: 'كل المسارات',
       appearance: 'المظهر',
+      switchLanguage: 'تبديل اللغة',
     };
   }
   return {
@@ -252,6 +253,7 @@ function getShellCopy(lang) {
     moreLinks: 'Quick links',
     allPaths: 'All paths',
     appearance: 'Appearance',
+    switchLanguage: 'Switch language',
   };
 }
 
@@ -314,7 +316,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
       >
         <div className="min-h-full px-5 py-5 sm:px-6">
           <div className="flex items-center justify-between gap-3">
-            <Link href="/" className="flex items-center gap-2.5 min-w-0 tap-highlight">
+            <Link href="/" className="flex min-h-11 items-center gap-2.5 rounded-xl min-w-0 tap-highlight">
               <Logo className="h-9 w-9" />
               <BrandText size={17} onDark={isDark} />
             </Link>
@@ -405,6 +407,7 @@ function ActionTile({ item, active }) {
     <Link
       href={item.href}
       data-tone={item.accent}
+      aria-current={active ? 'page' : undefined}
       className={`group path-card flex items-center gap-3 rounded-[1.25rem] border px-3.5 py-3 transition-all tap-highlight ${
         active
           ? `${accent.active} shadow-soft`
@@ -428,6 +431,7 @@ function SecondaryDrawerLink({ item, active }) {
   return (
     <Link
       href={item.href}
+      aria-current={active ? 'page' : undefined}
       className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[11.5px] font-extrabold leading-tight transition-all tap-highlight ${
         active
           ? 'border-[#00B59E]/35 bg-[#D0F2EE]/55 text-navy dark:bg-[#00B59E]/15'
@@ -446,7 +450,8 @@ function HeaderLink({ href, label }) {
   return (
     <Link
       href={href}
-      className={`rounded-full px-3.5 py-2 text-[13px] font-semibold transition-colors tap-highlight ${
+      aria-current={active ? 'page' : undefined}
+      className={`inline-flex min-h-11 items-center rounded-full px-3.5 py-2 text-[13px] font-semibold transition-colors tap-highlight ${
         active ? 'text-navy bg-muted' : 'text-muted-foreground hover:text-navy hover:bg-muted/70'
       }`}
     >
@@ -462,6 +467,7 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
     <Link
       href={href}
       aria-label={label}
+      aria-current={active ? 'page' : undefined}
       title={label}
       className={
         'flex min-h-[52px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-2xl px-2 py-1.5 transition-all cta-press tap-highlight ' +
