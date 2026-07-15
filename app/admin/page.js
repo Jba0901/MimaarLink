@@ -4,29 +4,16 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import PageState from '@/components/PageState';
+import AdminStatusBadge from '@/components/AdminStatusBadge';
 import { useLang } from '@/lib/LangContext';
-import { PROJECT_STATUSES, CONTRACTOR_STATUSES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Building2, CalendarClock, ChevronRight, ClipboardCheck, Copy, ExternalLink, Lock, Loader2, ShieldCheck } from 'lucide-react';
+import { Building2, CalendarClock, ChevronLeft, ChevronRight, ClipboardCheck, Copy, ExternalLink, Lock, Loader2, ShieldCheck } from 'lucide-react';
 import { toast } from 'sonner';
-
-const statusColor = (s) => {
-  if (['verified','approved','meeting_arranged','closed','bids_received'].includes(s)) return '#00B59E';
-  if (['cr_checked'].includes(s)) return '#FFB638';
-  if (['suspended'].includes(s)) return '#EF4444';
-  return '#152B54';
-};
-
-const statusTextClass = (s) => (
-  ['verified','approved','meeting_arranged','closed','bids_received','cr_checked'].includes(s)
-    ? 'text-[#152B54]'
-    : 'text-white'
-);
 
 const formatAdminTime = (value, lang = 'en') => {
   if (!value) return '-';
@@ -54,7 +41,7 @@ const providerServices = (provider) => (
 );
 
 function AdminInner() {
-  const { t, lang } = useLang();
+  const { t, lang, dir } = useLang();
   const router = useRouter();
   const sp = useSearchParams();
   const initialTab = sp.get('tab') === 'contractors' ? 'contractors' : 'projects';
@@ -130,9 +117,11 @@ function AdminInner() {
     toast.success(t('linkCopied'));
   };
 
+  const Next = dir === 'rtl' ? ChevronLeft : ChevronRight;
+
   if (!authed) return (
-    <AppShell hideNav>
-      <Card className="mt-6">
+    <AppShell hideNav hideFooter>
+      <Card className="mx-auto mt-8 max-w-md">
         <CardContent className="p-6">
           <div className="w-12 h-12 rounded-full mx-auto navy flex items-center justify-center mb-3">
             <Lock className="w-5 h-5 text-white" />
@@ -153,8 +142,8 @@ function AdminInner() {
   );
 
   return (
-    <AppShell>
-      <h1 className="text-2xl font-bold text-navy mb-4">{t('adminTitle')}</h1>
+    <AppShell hideNav hideFooter>
+      <h1 className="display-title mb-4 text-[26px] sm:text-[30px]">{t('adminTitle')}</h1>
       {loadError && (
         <Card className="mb-4 border-red-200 bg-red-50 dark:border-red-500/30 dark:bg-red-500/10">
           <CardContent className="p-4">
@@ -195,27 +184,27 @@ function AdminInner() {
           {loadingData && <PageState kind="loading" compact title={t('loading')} />}
           {!loadingData && !loadError && projects.length === 0 && <PageState kind="empty" compact title={t('noProjects')} />}
           {!loadingData && !loadError && projects.map(p => (
-            <Card key={p.id} className="hover:border-navy transition">
+            <Card key={p.id} className="interactive-card hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/45">
               <CardContent className="p-3.5">
-                <button type="button" onClick={() => router.push(`/admin/project/${p.id}`)} className="w-full text-start">
+                <button type="button" onClick={() => router.push(`/admin/project/${p.id}`)} className="w-full rounded-xl text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="font-semibold text-navy text-sm">{t(`cat_${p.category}`)}</span>
-                        <Badge style={{ background: statusColor(p.status) }} className={`${statusTextClass(p.status)} text-[10px]`}>{t(`status_${p.status}`)}</Badge>
+                        <AdminStatusBadge status={p.status}>{t(`status_${p.status}`)}</AdminStatusBadge>
                       </div>
                       <div className="text-xs text-muted-foreground mt-0.5 truncate">{p.location}</div>
                       <div className="text-xs text-muted-foreground truncate">{p.description}</div>
-                      <div className="mt-1.5 flex items-center gap-1 text-[11px] text-muted-foreground">
+                      <div className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground">
                         <CalendarClock className="h-3.5 w-3.5 shrink-0" />
                         <span>{t('applicationTime')}: {formatAdminTime(p.createdAt, lang)}</span>
                       </div>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
+                    <Next className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
                   </div>
                 </button>
                 <div className="mt-3 rounded-xl bg-secondary p-2.5">
-                  <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-semibold">{t('requesterLink')}</div>
+                  <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">{t('requesterLink')}</div>
                   <div className="mt-1 grid grid-cols-2 gap-2 sm:flex sm:items-center sm:gap-1.5">
                     <code className="col-span-2 min-w-0 truncate text-[11px] text-navy sm:flex-1">/project/{p.id}</code>
                     <Button variant="outline" size="sm" className="h-11 w-full px-3 text-[11px] sm:h-9 sm:w-auto sm:px-2" onClick={() => copyProjectLink(p.id)}>
@@ -241,14 +230,14 @@ function AdminInner() {
             const services = providerServices(c);
 
             return (
-            <Link key={c.id} href={`/admin/contractor/${c.id}`}>
-              <Card className="hover:border-navy transition">
+            <Link key={c.id} href={`/admin/contractor/${c.id}`} className="block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
+              <Card className="interactive-card hover:border-[#00B59E]/45">
                 <CardContent className="p-3.5">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-1.5">
                         <span className="font-semibold text-navy text-sm">{c.companyName}</span>
-                        <Badge variant="outline" className="gap-1 text-[10px]">
+                        <Badge variant="outline" className="gap-1 text-[11px]">
                           <TypeIcon className="h-3 w-3" />
                           {providerTypeLabel(c, t)}
                         </Badge>
@@ -258,17 +247,17 @@ function AdminInner() {
                       {isConsultant && (
                         <div className="text-[11px] text-muted-foreground mt-0.5">{consultantGradeLabel(c.consultantGrade, t)}</div>
                       )}
-                      <div className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground">
+                      <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
                         <CalendarClock className="h-3.5 w-3.5 shrink-0" />
                         <span>{t('applicationTime')}: {formatAdminTime(c.createdAt, lang)}</span>
                       </div>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {services.slice(0,3).map(cat => (
-                          <span key={cat} className="text-[10px] bg-secondary text-navy px-1.5 py-0.5 rounded">{t(`cat_${cat}`)}</span>
+                          <span key={cat} className="rounded-full bg-secondary px-2 py-1 text-[11px] font-medium text-navy">{t(`cat_${cat}`)}</span>
                         ))}
                       </div>
                     </div>
-                    <Badge style={{ background: statusColor(c.verificationStatus) }} className={`${statusTextClass(c.verificationStatus)} shrink-0 text-[10px]`}>{t(`cstatus_${c.verificationStatus}`)}</Badge>
+                    <AdminStatusBadge status={c.verificationStatus}>{t(`cstatus_${c.verificationStatus}`)}</AdminStatusBadge>
                   </div>
                 </CardContent>
               </Card>
@@ -283,5 +272,5 @@ function AdminInner() {
 
 export default function AdminPage() {
   const { t } = useLang();
-  return <Suspense fallback={<AppShell hideNav><PageState kind="loading" title={t('loading')} /></AppShell>}><AdminInner /></Suspense>;
+  return <Suspense fallback={<AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>}><AdminInner /></Suspense>;
 }

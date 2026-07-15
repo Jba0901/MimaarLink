@@ -42,6 +42,7 @@ The design goal is a fast, trustworthy Qatar construction marketplace that works
 - Toast feedback now follows MimaarLink's actual light/dark mode, official success/warning/error colors, and a header-safe mobile offset instead of a separate theme system.
 - Selects, option menus, admin tabs, and mobile sheets now share 44 px touch targets, rounded MimaarLink surfaces, official focus colors, and RTL-safe spacing.
 - Text fields, text areas, phone inputs, file uploads, and default cards now share one touch-safe form language with clear error states and a reusable keyboard-accessible upload dropzone.
+- Admin list and detail screens now suppress public navigation chrome, surface status at the top, use RTL-correct directional cues, and stack dense actions safely on phones.
 
 These are reusable website primitives for the future app. They do not approve or lock the authenticated app dashboard, account model, notification model, or final app navigation architecture.
 

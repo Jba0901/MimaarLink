@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import AdminAttribution from '@/components/AdminAttribution';
+import AdminStatusBadge from '@/components/AdminStatusBadge';
 import PageState from '@/components/PageState';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_STATUSES } from '@/lib/i18n';
@@ -83,8 +84,8 @@ export default function AdminProjectPage() {
     return () => window.removeEventListener('beforeunload', handler);
   }, [statusDraft, note, d]);
 
-  if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
-  if (!d || d.error) return <AppShell><PageState kind="missing" title={t('notFound')} actionHref="/admin" actionLabel={t('backToList')} /></AppShell>;
+  if (loading) return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (!d || d.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} actionHref="/admin" actionLabel={t('backToList')} /></AppShell>;
 
   const { project, requester, bids, invites, notes, contractors } = d;
   const cmap = Object.fromEntries(contractors.map(c => [c.id, c]));
@@ -184,10 +185,15 @@ export default function AdminProjectPage() {
   const Back = dir === 'rtl' ? ArrowRight : ArrowLeft;
 
   return (
-    <AppShell>
-      <button onClick={() => tryNavigate('/admin')} className="mb-3 flex min-h-11 items-center gap-1 text-sm text-navy"><Back className="w-4 h-4" />{t('backToList')}</button>
-      <h1 className="text-xl font-bold text-navy">{t(`cat_${project.category}`)}</h1>
-      <div className="text-xs text-muted-foreground mb-3">{project.location}</div>
+    <AppShell hideNav hideFooter>
+      <Button variant="ghost" onClick={() => tryNavigate('/admin')} className="-ms-3 mb-2 min-h-11 px-3 text-navy"><Back className="h-4 w-4" />{t('backToList')}</Button>
+      <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
+        <div className="min-w-0">
+          <h1 className="text-xl font-bold text-navy">{t(`cat_${project.category}`)}</h1>
+          <div className="mt-0.5 text-xs text-muted-foreground">{project.location}</div>
+        </div>
+        <AdminStatusBadge status={project.status}>{t(`status_${project.status}`)}</AdminStatusBadge>
+      </div>
 
       <Card className="mb-3">
         <CardContent className="p-4 space-y-2">
@@ -203,7 +209,7 @@ export default function AdminProjectPage() {
             <div className="mt-2 pt-2 border-t border-border text-xs space-y-0.5">
               <div><span className="font-semibold">{requester.name}</span> · {requester.role}</div>
               <div className="text-muted-foreground">{requester.company}</div>
-              <div className="text-muted-foreground">{requester.phone} · {requester.email}</div>
+              <div className="break-words text-muted-foreground">{requester.phone} · {requester.email}</div>
             </div>
           )}
           <AdminAttribution value={project.marketingAttribution} lang={lang} />
@@ -213,7 +219,7 @@ export default function AdminProjectPage() {
               <div className="space-y-1">
                 {project.files.map((f, i) => (
                   <a key={i} href={f.data} download={f.name} className="flex min-h-11 items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-xs text-navy">
-                    <FileText className="w-3.5 h-3.5" /><span className="truncate">{f.name}</span>
+                    <FileText className="h-3.5 w-3.5 shrink-0" /><span className="min-w-0 flex-1 truncate">{f.name}</span>
                   </a>
                 ))}
               </div>
@@ -235,9 +241,9 @@ export default function AdminProjectPage() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-2 gap-2 mb-3">
+      <div className="mb-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
         <Dialog open={openAssign} onOpenChange={setOpenAssign}>
-          <DialogTrigger asChild><Button variant="outline" className="h-11"><Plus className="w-4 h-4 me-1" />{t('assignProvider')}</Button></DialogTrigger>
+          <DialogTrigger asChild><Button variant="outline" className="h-auto min-h-11 whitespace-normal py-2 text-center"><Plus className="h-4 w-4" />{t('assignProvider')}</Button></DialogTrigger>
           <DialogContent dir={dir}>
             <DialogHeader><DialogTitle>{t('assignProvider')}</DialogTitle></DialogHeader>
             <Select value={assignContractor} onValueChange={setAssignContractor}>
@@ -249,9 +255,9 @@ export default function AdminProjectPage() {
         </Dialog>
         <Dialog open={openBid} onOpenChange={setOpenBid}>
           <DialogTrigger asChild>
-            <Button className="h-11" style={{ background: '#00B59E' }}><Plus className="w-4 h-4 me-1" />{t('addBid')}</Button>
+            <Button className="h-auto min-h-11 whitespace-normal py-2 text-center" style={{ background: '#00B59E' }}><Plus className="h-4 w-4" />{t('addBid')}</Button>
           </DialogTrigger>
-          <DialogContent dir={dir} className="max-h-[90vh] overflow-y-auto">
+          <DialogContent dir={dir}>
             <DialogHeader><DialogTitle>{t('addBidFor')}</DialogTitle></DialogHeader>
             <div className="space-y-2.5">
               <div>
@@ -286,7 +292,7 @@ export default function AdminProjectPage() {
                   )}
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <Badge variant="outline" className="text-[10px]">{inv.responseStatus}</Badge>
+                  <Badge variant="outline" className="text-[11px]">{inv.responseStatus}</Badge>
                   <button onClick={() => deleteInvite(inv.id)} className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-red-600 hover:bg-red-50 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -324,16 +330,16 @@ export default function AdminProjectPage() {
                         <div className="mt-1.5 space-y-1">
                           {b.attachments.map((f, i) => (
                             <a key={i} href={f.data} download={f.name} className="flex min-h-11 items-center gap-1.5 rounded-xl bg-white px-3 py-2 text-[11px] text-navy">
-                              <FileText className="w-3 h-3" /><span className="truncate">{f.name}</span>
+                              <FileText className="h-3 w-3 shrink-0" /><span className="min-w-0 flex-1 truncate">{f.name}</span>
                             </a>
                           ))}
                         </div>
                       )}
                     </div>
                     <div className="flex gap-1 shrink-0">
-                      <label className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl bg-white text-navy hover:bg-background sm:h-8 sm:w-8 sm:rounded-lg" title={t('uploadAgreement')} aria-label={t('uploadAgreement')}>
+                      <label className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl bg-white text-navy transition hover:bg-background focus-within:outline-none focus-within:ring-2 focus-within:ring-[#00B59E]/30 sm:h-8 sm:w-8 sm:rounded-lg" title={t('uploadAgreement')} aria-label={t('uploadAgreement')}>
                         <Paperclip className="w-3.5 h-3.5" />
-                        <input type="file" className="hidden" accept="image/*,application/pdf" onChange={(e) => uploadBidFile(b.id, b.attachments, e)} />
+                        <input type="file" className="sr-only" accept="image/*,application/pdf" onChange={(e) => uploadBidFile(b.id, b.attachments, e)} />
                       </label>
                       <button onClick={() => deleteBid(b.id)} className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-red-600 hover:bg-red-50 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
                         <Trash2 className="w-3.5 h-3.5" />
@@ -354,8 +360,8 @@ export default function AdminProjectPage() {
           <div className="mt-3 space-y-1.5">
             {notes.map(n => (
               <div key={n.id} className="text-xs bg-secondary rounded-lg p-2">
-                <div className="text-[10px] text-muted-foreground">{new Date(n.createdAt).toLocaleString()}</div>
-                <div className="text-navy">{n.note}</div>
+                <div className="text-[11px] text-muted-foreground">{new Date(n.createdAt).toLocaleString()}</div>
+                <div className="mt-0.5 text-[13px] leading-relaxed text-navy">{n.note}</div>
               </div>
             ))}
           </div>

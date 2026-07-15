@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import AdminAttribution from '@/components/AdminAttribution';
+import AdminStatusBadge from '@/components/AdminStatusBadge';
 import PageState from '@/components/PageState';
 import { useLang } from '@/lib/LangContext';
 import { CONTRACTOR_STATUSES } from '@/lib/i18n';
@@ -70,8 +71,8 @@ export default function AdminContractorPage() {
     return () => window.removeEventListener('beforeunload', handler);
   }, [statusDraft, documentChecksDraft, c]);
 
-  if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
-  if (!c || c.error) return <AppShell><PageState kind="missing" title={t('notFound')} actionHref="/admin?tab=contractors" actionLabel={t('backToList')} /></AppShell>;
+  if (loading) return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (!c || c.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} actionHref="/admin?tab=contractors" actionLabel={t('backToList')} /></AppShell>;
 
   const saveAll = async () => {
     if (!isDirty()) { toast.message(t('saved')); router.push('/admin?tab=contractors'); return; }
@@ -143,12 +144,15 @@ export default function AdminContractorPage() {
   };
 
   return (
-    <AppShell>
-      <button onClick={tryNavigate} className="mb-3 flex min-h-11 items-center gap-1 text-sm text-navy"><Back className="w-4 h-4" />{t('backToList')}</button>
+    <AppShell hideNav hideFooter>
+      <Button variant="ghost" onClick={tryNavigate} className="-ms-3 mb-2 min-h-11 px-3 text-navy"><Back className="h-4 w-4" />{t('backToList')}</Button>
 
-      <div className="flex items-center gap-2 mb-3">
-        <h1 className="text-xl font-bold text-navy">{c.companyName}</h1>
-        {c.verificationStatus === 'verified' && <ShieldCheck className="w-5 h-5" style={{ color: '#00B59E' }} />}
+      <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-2">
+          <h1 className="min-w-0 break-words text-xl font-bold text-navy">{c.companyName}</h1>
+          {c.verificationStatus === 'verified' && <ShieldCheck className="h-5 w-5 shrink-0" style={{ color: '#00B59E' }} />}
+        </div>
+        <AdminStatusBadge status={c.verificationStatus}>{t(`cstatus_${c.verificationStatus}`)}</AdminStatusBadge>
       </div>
 
       <Card className="mb-3">
@@ -161,18 +165,18 @@ export default function AdminContractorPage() {
             <TypeIcon className="h-3.5 w-3.5" />
             {providerTypeLabel(c, t)}
           </div>
-          <div><span className="font-semibold">{t('crNumber')}:</span> {c.crNumber}</div>
-          <div><span className="font-semibold">{t('contactPerson')}:</span> {c.contactPerson}</div>
-          <div><span className="font-semibold">{t('whatsapp')}:</span> {c.whatsapp}</div>
-          {c.email && <div><span className="font-semibold">{t('email')}:</span> {c.email}</div>}
-          <div><span className="font-semibold">{t('serviceAreas')}:</span> {c.serviceAreas}</div>
-          <div><span className="font-semibold">{t('projectSize')}:</span> {c.projectSizeRange}</div>
-          {isConsultant && (
-            <div><span className="font-semibold">{t('consultantGrade')}:</span> {consultantGradeLabel(c.consultantGrade, t)}</div>
-          )}
+          <dl className="grid gap-x-4 gap-y-3 pt-1 sm:grid-cols-2">
+            <div><dt className="text-[11px] text-muted-foreground">{t('crNumber')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.crNumber}</dd></div>
+            <div><dt className="text-[11px] text-muted-foreground">{t('contactPerson')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.contactPerson}</dd></div>
+            <div><dt className="text-[11px] text-muted-foreground">{t('whatsapp')}</dt><dd className="mt-0.5 font-semibold text-navy" dir="ltr">{c.whatsapp}</dd></div>
+            {c.email && <div><dt className="text-[11px] text-muted-foreground">{t('email')}</dt><dd className="mt-0.5 break-all font-semibold text-navy" dir="ltr">{c.email}</dd></div>}
+            <div><dt className="text-[11px] text-muted-foreground">{t('serviceAreas')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.serviceAreas}</dd></div>
+            <div><dt className="text-[11px] text-muted-foreground">{t('projectSize')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.projectSizeRange}</dd></div>
+            {isConsultant && <div><dt className="text-[11px] text-muted-foreground">{t('consultantGrade')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{consultantGradeLabel(c.consultantGrade, t)}</dd></div>}
+          </dl>
           <div className="flex flex-wrap gap-1 pt-1">
             {serviceKeys.map(cat => (
-              <span key={cat} className="text-[10px] bg-secondary text-navy px-1.5 py-0.5 rounded">{t(`cat_${cat}`)}</span>
+              <span key={cat} className="rounded-full bg-secondary px-2 py-1 text-[11px] font-medium text-navy">{t(`cat_${cat}`)}</span>
             ))}
           </div>
           {serviceKeys.includes('other') && c.otherCategoryDesc && (
