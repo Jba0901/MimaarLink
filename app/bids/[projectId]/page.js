@@ -24,7 +24,7 @@ export default function BidsPage() {
   useEffect(() => { load(); }, [projectId]);
 
   if (loading) return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
-  if (!d || d.error) return <AppShell><p>Not found</p></AppShell>;
+  if (!d || d.error) return <AppShell><div className="mx-auto max-w-sm rounded-2xl border border-border bg-card p-6 text-center shadow-soft"><p className="font-semibold text-navy">{t('notFound')}</p></div></AppShell>;
 
   const action = async (act, contractorId) => {
     await fetch('/api/projects/shortlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId, contractorId, action: act }) });
@@ -37,37 +37,44 @@ export default function BidsPage() {
 
   return (
     <AppShell>
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex flex-col items-start gap-2 mb-3 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-xl font-bold text-navy">{t('bidComparison')}</h1>
         <Button variant="ghost" size="sm" onClick={() => router.back()}>{t('back')}</Button>
       </div>
       <p className="text-xs text-muted-foreground mb-4">{t('onlyVerified')}</p>
 
       <div className="space-y-3">
+        {sortedBids.length === 0 && (
+          <Card className="rounded-2xl border-border shadow-soft">
+            <CardContent className="p-6 text-center text-sm leading-relaxed text-muted-foreground">
+              {t('noBidsYet')}
+            </CardContent>
+          </Card>
+        )}
         {sortedBids.map((b) => {
           const c = d.contractors[b.contractorId] || {};
           const isLowest = b.price === lowest;
           return (
-            <Card key={b.id} className={`border-2 ${isLowest ? '' : 'border-border'}`} style={isLowest ? { borderColor: '#0FAE96' } : {}}>
+            <Card key={b.id} className={`rounded-2xl border-2 shadow-soft ${isLowest ? '' : 'border-border'}`} style={isLowest ? { borderColor: '#00B59E' } : {}}>
               <CardContent className="p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-semibold text-navy text-base">{c.companyName || t('provider')}</span>
+                <div className="flex flex-col items-start gap-2 mb-2 sm:flex-row sm:justify-between">
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="min-w-0 break-words font-semibold text-navy text-base">{c.companyName || t('provider')}</span>
                       {c.providerType && (
                         <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-semibold text-navy">{providerTypeLabel(c, t)}</span>
                       )}
-                      {c.verificationStatus === 'verified' && <ShieldCheck className="w-4 h-4" style={{ color: '#0FAE96' }} />}
+                      {c.verificationStatus === 'verified' && <ShieldCheck className="w-4 h-4" style={{ color: '#00B59E' }} />}
                     </div>
                     {c.serviceAreas && <div className="text-xs text-muted-foreground mt-0.5">{c.serviceAreas}</div>}
                   </div>
-                  {isLowest && <Badge style={{ background: '#0FAE96' }} className="text-white text-[10px]">Lowest</Badge>}
+                  {isLowest && <Badge style={{ background: '#00B59E' }} className="shrink-0 text-[#152B54] text-[10px]">{t('lowestBid')}</Badge>}
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 mt-3">
                   <div className="bg-secondary rounded-lg p-2.5">
                     <div className="text-[10px] uppercase tracking-wide text-muted-foreground flex items-center gap-1"><Wallet className="w-3 h-3" />{t('price')}</div>
-                    <div className="text-base font-bold text-navy mt-0.5">{b.price.toLocaleString()} <span className="text-xs font-normal text-muted-foreground">QAR</span></div>
+                    <div className="text-base font-bold text-navy mt-0.5">{b.price.toLocaleString()} <span className="text-xs font-normal text-muted-foreground">{t('currencyQar')}</span></div>
                   </div>
                   <div className="bg-secondary rounded-lg p-2.5">
                     <div className="text-[10px] uppercase tracking-wide text-muted-foreground flex items-center gap-1"><Clock className="w-3 h-3" />{t('timeline')}</div>
@@ -94,7 +101,7 @@ export default function BidsPage() {
                           href={f.data || f.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex items-center gap-2 rounded-lg bg-secondary px-3 py-2 text-xs text-navy hover:bg-secondary/70"
+                          className="flex min-h-11 items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-xs text-navy hover:bg-secondary/70"
                         >
                           <FileText className="w-3.5 h-3.5 shrink-0" />
                           <span className="min-w-0 flex-1 truncate">{f.name || t('files')}</span>
@@ -105,8 +112,8 @@ export default function BidsPage() {
                 )}
 
                 <div className="flex gap-2 mt-3">
-                  <Button variant="outline" size="sm" className="flex-1" onClick={() => action('shortlist', b.contractorId)}>{t('shortlist')}</Button>
-                  <Button size="sm" className="flex-1" style={{ background: '#0D1F3C' }} onClick={() => action('meeting', b.contractorId)}>{t('requestMeeting')}</Button>
+                  <Button variant="outline" size="sm" className="h-11 flex-1" onClick={() => action('shortlist', b.contractorId)}>{t('shortlist')}</Button>
+                  <Button size="sm" className="h-11 flex-1" style={{ background: '#152B54' }} onClick={() => action('meeting', b.contractorId)}>{t('requestMeeting')}</Button>
                 </div>
               </CardContent>
             </Card>

@@ -12,7 +12,7 @@ import { CheckCircle2, Circle, ClipboardCheck, Download, FileText, Hammer, Loade
 const statusColor = (status) => {
   if (status === 'verified') return '#00B59E';
   if (status === 'cr_checked') return '#FFB638';
-  if (status === 'suspended') return '#dc2626';
+  if (status === 'suspended') return '#EF4444';
   return '#152B54';
 };
 
@@ -49,10 +49,11 @@ export default function ContractorStatusPage() {
   }
 
   if (!contractor || contractor.error) {
-    return <AppShell><p className="text-center py-10">Not found</p></AppShell>;
+    return <AppShell><div className="mx-auto max-w-sm rounded-2xl border border-border bg-card p-6 text-center shadow-soft"><p className="font-semibold text-navy">{t('notFound')}</p></div></AppShell>;
   }
 
   const status = contractor.verificationStatus || 'applied';
+  const statusUsesDarkText = status === 'verified' || status === 'cr_checked';
   const statusOrder = CONTRACTOR_STATUSES.filter((s) => s !== 'suspended');
   const statusIndex = status === 'suspended' ? statusOrder.length - 1 : statusOrder.indexOf(status);
   const documentChecklist = [
@@ -69,12 +70,12 @@ export default function ContractorStatusPage() {
   return (
     <AppShell wide>
       <div className="mx-auto max-w-5xl">
-        <div className="flex items-start justify-between gap-3 mb-4">
+        <div className="flex flex-col items-start gap-2.5 mb-4 sm:flex-row sm:justify-between">
           <div>
             <h1 className="display-title text-[24px] sm:text-[28px]">{t('providerStatus')}</h1>
             <p className="text-xs text-muted-foreground mt-1">{contractor.companyName}</p>
           </div>
-          <Badge style={{ background: statusColor(status) }} className="text-white">
+          <Badge style={{ background: statusColor(status) }} className={`max-w-full whitespace-normal text-start ${statusUsesDarkText ? 'text-[#152B54]' : 'text-white'}`}>
             {t(`cstatus_${status}`)}
           </Badge>
         </div>
@@ -120,7 +121,7 @@ export default function ContractorStatusPage() {
                         key={i}
                         href={file.data || file.url}
                         download={file.name}
-                        className="flex items-center gap-2 text-sm text-navy bg-secondary rounded-lg px-3 py-2 hover:bg-secondary/70"
+                        className="flex min-h-11 items-center gap-2 text-sm text-navy bg-secondary rounded-xl px-3 py-2 hover:bg-secondary/70"
                       >
                         <FileText className="w-4 h-4 shrink-0" />
                         <span className="min-w-0 flex-1 truncate">{file.name || t('files')}</span>
@@ -146,7 +147,7 @@ export default function ContractorStatusPage() {
                     const done = i <= statusIndex;
                     return (
                       <div key={s} className="flex items-center gap-2.5">
-                        {done ? <CheckCircle2 className="w-4 h-4" style={{ color: '#0FAE96' }} /> : <Circle className="w-4 h-4 text-muted-foreground/40" />}
+                        {done ? <CheckCircle2 className="w-4 h-4" style={{ color: '#00B59E' }} /> : <Circle className="w-4 h-4 text-muted-foreground/40" />}
                         <span className={`text-sm ${done ? 'text-navy font-medium' : 'text-muted-foreground'}`}>{t(`cstatus_${s}`)}</span>
                       </div>
                     );
@@ -162,7 +163,7 @@ export default function ContractorStatusPage() {
                   {documentChecklist.map((doc) => {
                     const present = Boolean(documentChecks[doc.key]);
                     return (
-                      <div key={doc.key} className="flex items-center justify-between gap-2 text-sm text-navy bg-secondary rounded-lg px-3 py-2">
+                      <div key={doc.key} className="flex min-h-11 items-center justify-between gap-2 text-sm text-navy bg-secondary rounded-xl px-3 py-2">
                         <div className="flex items-center gap-2">
                           <FileText className="w-4 h-4 text-muted-foreground" />
                           <span>{doc.label}</span>

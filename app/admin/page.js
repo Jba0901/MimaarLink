@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 const statusColor = (s) => {
   if (['verified','approved','meeting_arranged','closed','bids_received'].includes(s)) return '#00B59E';
   if (['cr_checked'].includes(s)) return '#FFB638';
-  if (['suspended'].includes(s)) return '#dc2626';
+  if (['suspended'].includes(s)) return '#EF4444';
   return '#152B54';
 };
 
@@ -136,7 +136,7 @@ function AdminInner() {
               <Label>{t('adminPassword')}</Label>
               <Input type="password" value={pwd} onChange={e => setPwd(e.target.value)} onKeyDown={e => e.key === 'Enter' && login()} className="h-11 mt-1.5" />
             </div>
-            <Button onClick={login} disabled={busy} className="w-full h-11" style={{ background: '#0D1F3C' }}>
+            <Button onClick={login} disabled={busy} className="w-full h-11" style={{ background: '#152B54' }}>
               {busy ? <Loader2 className="w-4 h-4 animate-spin" /> : t('login')}
             </Button>
           </div>
@@ -249,7 +249,7 @@ function AdminInner() {
                           <TypeIcon className="h-3 w-3" />
                           {providerTypeLabel(c, t)}
                         </Badge>
-                        {c.verificationStatus === 'verified' && <ShieldCheck className="w-3.5 h-3.5" style={{ color: '#0FAE96' }} />}
+                        {c.verificationStatus === 'verified' && <ShieldCheck className="w-3.5 h-3.5" style={{ color: '#00B59E' }} />}
                       </div>
                       <div className="text-xs text-muted-foreground mt-0.5">{c.contactPerson} · {c.whatsapp}</div>
                       {isConsultant && (

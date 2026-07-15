@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CheckCircle2, Upload, X, Loader2, Copy, Building2, ClipboardCheck } from 'lucide-react';
+import { CheckCircle2, Upload, X, Loader2, Copy, FileText, Building2, ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
@@ -158,10 +158,10 @@ function ContractorApplicationInner() {
 
   if (done) return (
     <AppShell hideNav>
-      <Card className="border-2 mt-4 motion-fade-up" style={{ borderColor: '#0FAE96' }}>
+      <Card className="rounded-[24px] border-2 mt-4 shadow-card motion-fade-up" style={{ borderColor: '#00B59E' }}>
         <CardContent className="p-6 text-center">
-          <div className="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-3" style={{ background: 'rgba(15,174,150,0.15)' }}>
-            <CheckCircle2 className="w-7 h-7" style={{ color: '#0FAE96' }} />
+          <div className="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-3" style={{ background: 'rgba(0,181,158,0.14)' }}>
+            <CheckCircle2 className="w-7 h-7" style={{ color: '#00B59E' }} />
           </div>
           <h2 className="text-xl font-bold text-navy">{t('contractorDone')}</h2>
           <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{isConsultant ? t('consultantDoneDesc') : t('contractorDoneDesc')}</p>
@@ -171,7 +171,7 @@ function ContractorApplicationInner() {
                 <div className="text-[11px] text-muted-foreground mb-1">{t('saveProviderLink')}</div>
                 <div className="flex items-center gap-2">
                   <code className="text-[11px] flex-1 truncate">/contractor-status/{createdId}</code>
-                  <Button size="sm" variant="outline" onClick={() => { navigator.clipboard.writeText(window.location.origin + '/contractor-status/' + createdId); toast.success(t('linkCopied')); }}>
+                  <Button size="sm" variant="outline" aria-label={t('copyLink')} title={t('copyLink')} onClick={() => { navigator.clipboard.writeText(window.location.origin + '/contractor-status/' + createdId); toast.success(t('linkCopied')); }}>
                     <Copy className="w-3.5 h-3.5" />
                   </Button>
                 </div>
@@ -286,7 +286,7 @@ function ContractorApplicationInner() {
                 placeholder={t('otherCategoryPh')}
                 rows={3}
                 maxLength={300}
-                className={`w-full mt-1.5 rounded-md border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-1 ${triedServices && !otherDescValid ? 'border-red-400 focus-visible:ring-red-400' : 'border-input focus-visible:ring-ring'}`}
+                className={`w-full mt-1.5 rounded-xl border bg-background px-3.5 py-2.5 text-base shadow-sm outline-none focus-visible:ring-2 md:text-sm ${triedServices && !otherDescValid ? 'border-red-400 focus-visible:ring-red-400' : 'border-input focus-visible:ring-ring/60'}`}
               />
               <div className="text-[11px] text-muted-foreground mt-1">{t('otherCategoryHelp')}</div>
               {triedServices && !otherDescValid && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
@@ -329,9 +329,18 @@ function ContractorApplicationInner() {
                 {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
                 <div className="mt-1 space-y-1">
                   {filesForLabel.map((f, i) => (
-                    <div key={i} className="flex items-center justify-between text-xs bg-secondary rounded-lg px-3 py-1.5">
-                      <span className="truncate">{f.name}</span>
-                      <button onClick={() => update('documents', data.documents.filter(x => x !== f))} className="text-muted-foreground"><X className="w-3.5 h-3.5" /></button>
+                    <div key={i} className="flex min-h-11 items-center gap-2 text-xs bg-secondary rounded-xl ps-3 pe-1">
+                      <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
+                      <span className="min-w-0 flex-1 truncate text-start">{f.name}</span>
+                      <button
+                        type="button"
+                        onClick={() => update('documents', data.documents.filter(x => x !== f))}
+                        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-muted-foreground hover:bg-white/80 hover:text-red-600"
+                        aria-label={`${t('removeFile')}: ${f.name}`}
+                        title={t('removeFile')}
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -342,7 +351,7 @@ function ContractorApplicationInner() {
           <div className="flex gap-2 pt-2">
             <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11 cta-press">{t('back')}</Button>
             <Button onClick={submit} disabled={submitting} className="form-primary-btn flex-1 h-11 cta-press">
-              {submitting ? <><Loader2 className="w-4 h-4 animate-spin mr-2" />{t('submitting')}</> : t('submit')}
+              {submitting ? <><Loader2 className="w-4 h-4 animate-spin me-2" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>
         </div>

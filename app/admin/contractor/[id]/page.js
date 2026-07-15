@@ -70,7 +70,7 @@ export default function AdminContractorPage() {
   }, [statusDraft, documentChecksDraft, c]);
 
   if (loading) return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
-  if (!c || c.error) return <AppShell><p>Not found</p></AppShell>;
+  if (!c || c.error) return <AppShell><div className="mx-auto max-w-sm rounded-2xl border border-border bg-card p-6 text-center shadow-soft"><p className="font-semibold text-navy">{t('notFound')}</p></div></AppShell>;
 
   const saveAll = async () => {
     if (!isDirty()) { toast.message(t('saved')); router.push('/admin?tab=contractors'); return; }
@@ -147,7 +147,7 @@ export default function AdminContractorPage() {
 
       <div className="flex items-center gap-2 mb-3">
         <h1 className="text-xl font-bold text-navy">{c.companyName}</h1>
-        {c.verificationStatus === 'verified' && <ShieldCheck className="w-5 h-5" style={{ color: '#0FAE96' }} />}
+        {c.verificationStatus === 'verified' && <ShieldCheck className="w-5 h-5" style={{ color: '#00B59E' }} />}
       </div>
 
       <Card className="mb-3">

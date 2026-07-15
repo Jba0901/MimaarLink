@@ -4,9 +4,16 @@ import React from 'react';
 
 export default function FormProgress({ step, total, label, title, desc }) {
   return (
-    <section className="mb-5 rounded-3xl border border-border bg-card p-5 shadow-card motion-fade-up">
+    <section
+      className="mb-5 rounded-3xl border border-border bg-card p-5 shadow-card motion-fade-up"
+      role="progressbar"
+      aria-valuemin={1}
+      aria-valuemax={total}
+      aria-valuenow={step}
+      aria-label={`${label} ${step} / ${total}`}
+    >
       <div className="mb-3 flex items-center justify-between gap-3">
-        <span className="rounded-full px-3 py-1 text-[11px] font-bold" style={{ background: '#D0F2EE', color: '#0B6E60' }}>
+        <span className="rounded-full px-3 py-1 text-[11px] font-bold" style={{ background: '#D0F2EE', color: '#152B54' }}>
           {label} {step}/{total}
         </span>
         <span className="text-[11px] font-bold text-muted-foreground">
@@ -21,6 +28,7 @@ export default function FormProgress({ step, total, label, title, desc }) {
             <div
               key={n}
               className={`h-2 flex-1 rounded-full transition-all duration-300 ${done ? 'progress-live' : ''}`}
+              aria-hidden="true"
               style={done
                 ? { background: '#00B59E' }
                 : { background: 'hsl(var(--muted))' }}

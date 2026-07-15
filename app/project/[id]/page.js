@@ -21,16 +21,16 @@ export default function ProjectPage() {
   }, [id]);
 
   if (loading) return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
-  if (!data || data.error) return <AppShell><p className="text-center py-10">Not found</p></AppShell>;
+  if (!data || data.error) return <AppShell><div className="mx-auto max-w-sm rounded-2xl border border-border bg-card p-6 text-center shadow-soft"><p className="font-semibold text-navy">{t('notFound')}</p></div></AppShell>;
 
   const idx = PROJECT_STATUSES.indexOf(data.status);
 
   return (
     <AppShell wide>
       <div className="mx-auto max-w-5xl">
-        <div className="flex items-center justify-between gap-3 mb-4">
+        <div className="flex flex-col items-start gap-2.5 mb-4 sm:flex-row sm:items-center sm:justify-between">
           <h1 className="display-title text-[24px] sm:text-[28px]">{t('projectStatus')}</h1>
-          <Badge style={{ background: '#0FAE96' }} className="text-white">{t(`status_${data.status}`)}</Badge>
+          <Badge style={{ background: '#00B59E' }} className="max-w-full whitespace-normal text-start text-[#152B54]">{t(`status_${data.status}`)}</Badge>
         </div>
 
         <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
@@ -53,7 +53,7 @@ export default function ProjectPage() {
                   <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('uploadedFiles')}</div>
                   <div className="space-y-1.5">
                     {data.files.map((f, i) => (
-                      <a key={i} href={f.data} download={f.name} className="flex items-center gap-2 text-sm text-navy bg-secondary rounded-lg px-3 py-2 hover:bg-secondary/70">
+                      <a key={i} href={f.data} download={f.name} className="flex min-h-11 items-center gap-2 text-sm text-navy bg-secondary rounded-xl px-3 py-2 hover:bg-secondary/70">
                         <FileText className="w-4 h-4 shrink-0" />
                         <span className="truncate flex-1">{f.name}</span>
                         <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-1 text-[10px] font-semibold text-navy">
@@ -78,7 +78,7 @@ export default function ProjectPage() {
                     const done = i <= idx;
                     return (
                       <div key={s} className="flex items-center gap-2.5">
-                        {done ? <CheckCircle2 className="w-4 h-4" style={{ color: '#0FAE96' }} /> : <Circle className="w-4 h-4 text-muted-foreground/40" />}
+                        {done ? <CheckCircle2 className="w-4 h-4" style={{ color: '#00B59E' }} /> : <Circle className="w-4 h-4 text-muted-foreground/40" />}
                         <span className={`text-sm ${done ? 'text-navy font-medium' : 'text-muted-foreground'}`}>{t(`status_${s}`)}</span>
                       </div>
                     );
@@ -87,15 +87,15 @@ export default function ProjectPage() {
               </CardContent>
             </Card>
 
-            <Card style={{ background: 'rgba(15,174,150,0.08)' }}>
+            <Card className="bg-[#D0F2EE]/55 dark:bg-[#142A44]">
               <CardContent className="p-4 sm:p-5">
-                <div className="text-xs uppercase tracking-wide font-semibold mb-1" style={{ color: '#0FAE96' }}>{t('nextStep')}</div>
+                <div className="text-xs uppercase tracking-wide font-semibold mb-1" style={{ color: '#152B54' }}>{t('nextStep')}</div>
                 <div className="text-sm text-navy">{t(`msg_${data.status}`)}</div>
               </CardContent>
             </Card>
 
             {['bids_received', 'shortlisted', 'meeting_arranged'].includes(data.status) ? (
-              <Button onClick={() => router.push(`/bids/${id}`)} className="w-full h-12 text-base" style={{ background: '#0D1F3C' }}>
+              <Button onClick={() => router.push(`/bids/${id}`)} className="w-full h-12 text-base" style={{ background: '#152B54' }}>
                 {t('viewBids')}
               </Button>
             ) : (
