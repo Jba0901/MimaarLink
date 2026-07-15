@@ -527,8 +527,8 @@ function SiteFooter() {
 
 function FooterIcon({ href, label, icon: Icon, external = false, variant = 'footer' }) {
   const classes = variant === 'surface'
-    ? 'border-border bg-white text-navy shadow-soft hover:border-[#00B59E]/45 hover:bg-[#D0F2EE]/45 dark:bg-[#0D1B2A] dark:text-white/85 dark:hover:text-[#00B59E]'
-    : 'border-white/15 bg-white/5 text-white/80 hover:border-[#00B59E]/50 hover:text-[#00B59E] hover:bg-white/10';
+    ? 'border-border bg-white text-navy shadow-soft hover:border-[#00B59E]/45 hover:bg-[#D0F2EE]/45 focus-visible:ring-offset-background dark:bg-[#0D1B2A] dark:text-white/85 dark:hover:text-[#00B59E]'
+    : 'border-white/15 bg-white/5 text-white/80 hover:border-[#00B59E]/50 hover:text-[#00B59E] hover:bg-white/10 focus-visible:ring-offset-[#0D1B2A]';
   return (
     <a
       href={href}
@@ -536,7 +536,7 @@ function FooterIcon({ href, label, icon: Icon, external = false, variant = 'foot
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all tap-highlight ${classes}`}
+      className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all tap-highlight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/50 focus-visible:ring-offset-2 ${classes}`}
     >
       <Icon className="h-[16px] w-[16px]" />
     </a>

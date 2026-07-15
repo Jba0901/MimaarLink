@@ -1,16 +1,17 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/AppShell';
 import Reveal from '@/components/Reveal';
 import CountUp from '@/components/CountUp';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import {
   Cpu, GitCompare, MapPin, ArrowRight, ArrowUpRight, Building2,
   Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal,
   Hammer, ShieldCheck, CheckCircle2, FileText,
-  TrendingUp, Landmark, BadgeCheck, Wallet, Scale, Plus, Minus
+  TrendingUp, Landmark, BadgeCheck, Wallet, Scale
 } from 'lucide-react';
 
 const CAT_ICONS = {
@@ -281,7 +282,6 @@ function MarketBand({ t }) {
 
 function FaqSection({ t }) {
   const items = [1, 2, 3, 4, 5].map((n) => ({ q: t(`faqQ${n}`), a: t(`faqA${n}`) }));
-  const [open, setOpen] = useState(0);
   return (
     <section className="py-14 lg:py-20">
       <div className="container-x">
@@ -292,34 +292,14 @@ function FaqSection({ t }) {
           </div>
         </Reveal>
         <Reveal>
-          <div className="mx-auto max-w-3xl grid gap-2.5">
-            {items.map((it, i) => {
-              const isOpen = open === i;
-              return (
-                <div key={i} className={`rounded-2xl border bg-white shadow-soft transition-colors ${isOpen ? 'border-[#00B59E]/40' : 'border-border'}`}>
-                  <button
-                    type="button"
-                    onClick={() => setOpen(isOpen ? -1 : i)}
-                    aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between gap-3 px-5 py-4 text-start tap-highlight sm:px-6 sm:py-5"
-                  >
-                    <span className="text-[14.5px] font-bold text-navy leading-snug">{it.q}</span>
-                    <span
-                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? 'text-[#152B54]' : 'text-navy'}`}
-                      style={isOpen ? { background: '#00B59E' } : { background: 'rgba(21,43,84,0.06)' }}
-                    >
-                      {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                    </span>
-                  </button>
-                  <div className="grid transition-all duration-300 ease-out" style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}>
-                    <div className="overflow-hidden">
-                      <p className="px-5 pb-4 text-[13.5px] leading-relaxed text-muted-foreground sm:px-6 sm:pb-5">{it.a}</p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <Accordion type="single" collapsible defaultValue="faq-0" className="mx-auto grid max-w-3xl gap-2.5">
+            {items.map((it, i) => (
+              <AccordionItem key={i} value={`faq-${i}`}>
+                <AccordionTrigger>{it.q}</AccordionTrigger>
+                <AccordionContent>{it.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </Reveal>
       </div>
     </section>
