@@ -46,10 +46,9 @@ export default function PrivacyPage() {
 
         <p className="mt-5 text-sm text-muted-foreground">
           {ar ? 'للتواصل: ' : 'Contact: '}
-          <a className="font-semibold text-teal" href="mailto:MimaarLink@gmail.com">MimaarLink@gmail.com</a>
+          <a className="font-semibold text-navy underline decoration-[#00B59E] decoration-2 underline-offset-4 transition-colors hover:text-[#00B59E]" href="mailto:MimaarLink@gmail.com">MimaarLink@gmail.com</a>
         </p>
       </div>
     </AppShell>
   );
 }
-

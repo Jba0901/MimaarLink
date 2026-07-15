@@ -21,6 +21,12 @@ const statusColor = (s) => {
   return '#152B54';
 };
 
+const statusTextClass = (s) => (
+  ['verified','approved','meeting_arranged','closed','bids_received','cr_checked'].includes(s)
+    ? 'text-[#152B54]'
+    : 'text-white'
+);
+
 const formatAdminTime = (value, lang = 'en') => {
   if (!value) return '-';
   const date = new Date(value);
@@ -149,16 +155,16 @@ function AdminInner() {
     <AppShell>
       <h1 className="text-2xl font-bold text-navy mb-4">{t('adminTitle')}</h1>
       {loadError && (
-        <Card className="mb-4 border-red-200 bg-red-50">
+        <Card className="mb-4 border-red-200 bg-red-50 dark:border-red-500/30 dark:bg-red-500/10">
           <CardContent className="p-4">
-            <div className="text-sm font-semibold text-red-700">Admin data could not load</div>
-            <p className="mt-1 text-xs leading-relaxed text-red-700/80">{loadError}</p>
-            <div className="mt-3 flex gap-2">
+            <div className="text-sm font-semibold text-red-700 dark:text-red-200">Admin data could not load</div>
+            <p className="mt-1 text-xs leading-relaxed text-red-700/80 dark:text-red-200/80">{loadError}</p>
+            <div className="mt-3 flex flex-wrap gap-2">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => window.location.reload()}
-                className="h-9"
+                className="h-11 sm:h-9"
               >
                 Try again
               </Button>
@@ -171,7 +177,7 @@ function AdminInner() {
                   setAuthed(false);
                   setLoadError('');
                 }}
-                className="h-9"
+                className="h-11 sm:h-9"
               >
                 Log out
               </Button>
@@ -198,9 +204,9 @@ function AdminInner() {
                 <button type="button" onClick={() => router.push(`/admin/project/${p.id}`)} className="w-full text-start">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span className="font-semibold text-navy text-sm">{t(`cat_${p.category}`)}</span>
-                        <Badge style={{ background: statusColor(p.status) }} className="text-white text-[10px]">{t(`status_${p.status}`)}</Badge>
+                        <Badge style={{ background: statusColor(p.status) }} className={`${statusTextClass(p.status)} text-[10px]`}>{t(`status_${p.status}`)}</Badge>
                       </div>
                       <div className="text-xs text-muted-foreground mt-0.5 truncate">{p.location}</div>
                       <div className="text-xs text-muted-foreground truncate">{p.description}</div>
@@ -212,15 +218,15 @@ function AdminInner() {
                     <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0 mt-0.5" />
                   </div>
                 </button>
-                <div className="mt-3 rounded-lg bg-secondary p-2">
+                <div className="mt-3 rounded-xl bg-secondary p-2.5">
                   <div className="text-[10px] uppercase tracking-wide text-muted-foreground font-semibold">{t('requesterLink')}</div>
-                  <div className="mt-1 flex items-center gap-1.5">
-                    <code className="min-w-0 flex-1 truncate text-[11px] text-navy">/project/{p.id}</code>
-                    <Button variant="outline" size="sm" className="h-8 px-2 text-[11px]" onClick={() => copyProjectLink(p.id)}>
+                  <div className="mt-1 grid grid-cols-2 gap-2 sm:flex sm:items-center sm:gap-1.5">
+                    <code className="col-span-2 min-w-0 truncate text-[11px] text-navy sm:flex-1">/project/{p.id}</code>
+                    <Button variant="outline" size="sm" className="h-11 w-full px-3 text-[11px] sm:h-9 sm:w-auto sm:px-2" onClick={() => copyProjectLink(p.id)}>
                       <Copy className="w-3.5 h-3.5" />
                       <span className="ms-1">{t('copyLink')}</span>
                     </Button>
-                    <Button variant="outline" size="sm" className="h-8 px-2 text-[11px]" onClick={() => window.open(`/project/${p.id}`, '_blank', 'noopener,noreferrer')}>
+                    <Button variant="outline" size="sm" className="h-11 w-full px-3 text-[11px] sm:h-9 sm:w-auto sm:px-2" onClick={() => window.open(`/project/${p.id}`, '_blank', 'noopener,noreferrer')}>
                       <ExternalLink className="w-3.5 h-3.5" />
                       <span className="ms-1">{t('openLink')}</span>
                     </Button>
@@ -251,7 +257,7 @@ function AdminInner() {
                         </Badge>
                         {c.verificationStatus === 'verified' && <ShieldCheck className="w-3.5 h-3.5" style={{ color: '#00B59E' }} />}
                       </div>
-                      <div className="text-xs text-muted-foreground mt-0.5">{c.contactPerson} · {c.whatsapp}</div>
+                      <div className="mt-0.5 break-words text-xs text-muted-foreground">{c.contactPerson} · {c.whatsapp}</div>
                       {isConsultant && (
                         <div className="text-[11px] text-muted-foreground mt-0.5">{consultantGradeLabel(c.consultantGrade, t)}</div>
                       )}
@@ -265,7 +271,7 @@ function AdminInner() {
                         ))}
                       </div>
                     </div>
-                    <Badge style={{ background: statusColor(c.verificationStatus) }} className="text-white text-[10px] shrink-0">{t(`cstatus_${c.verificationStatus}`)}</Badge>
+                    <Badge style={{ background: statusColor(c.verificationStatus) }} className={`${statusTextClass(c.verificationStatus)} shrink-0 text-[10px]`}>{t(`cstatus_${c.verificationStatus}`)}</Badge>
                   </div>
                 </CardContent>
               </Card>

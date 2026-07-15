@@ -143,7 +143,7 @@ export default function AdminContractorPage() {
 
   return (
     <AppShell>
-      <button onClick={tryNavigate} className="flex items-center gap-1 text-sm text-navy mb-3"><Back className="w-4 h-4" />{t('backToList')}</button>
+      <button onClick={tryNavigate} className="mb-3 flex min-h-11 items-center gap-1 text-sm text-navy"><Back className="w-4 h-4" />{t('backToList')}</button>
 
       <div className="flex items-center gap-2 mb-3">
         <h1 className="text-xl font-bold text-navy">{c.companyName}</h1>
@@ -188,7 +188,7 @@ export default function AdminContractorPage() {
         <CardContent className="p-4">
           <Label className="text-xs uppercase tracking-wide font-semibold text-muted-foreground">{t('verificationStatus')}</Label>
           <Select value={statusDraft || c.verificationStatus} onValueChange={setStatusDraft}>
-            <SelectTrigger className="mt-2"><SelectValue /></SelectTrigger>
+            <SelectTrigger className="mt-2 h-11"><SelectValue /></SelectTrigger>
             <SelectContent>{CONTRACTOR_STATUSES.map(s => <SelectItem key={s} value={s}>{t(`cstatus_${s}`)}</SelectItem>)}</SelectContent>
           </Select>
         </CardContent>
@@ -197,13 +197,13 @@ export default function AdminContractorPage() {
       <Card className="mb-3">
         <CardContent className="p-4">
           <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('providerStatusLink')}</div>
-          <div className="mt-2 flex items-center gap-1.5">
-            <code className="min-w-0 flex-1 truncate text-[11px] text-navy">/contractor-status/{id}</code>
-            <Button variant="outline" size="sm" className="h-8 px-2 text-[11px]" onClick={copyContractorLink}>
+          <div className="mt-2 grid grid-cols-2 gap-2 sm:flex sm:items-center sm:gap-1.5">
+            <code className="col-span-2 min-w-0 truncate text-[11px] text-navy sm:flex-1">/contractor-status/{id}</code>
+            <Button variant="outline" size="sm" className="h-11 w-full px-3 text-[11px] sm:h-9 sm:w-auto sm:px-2" onClick={copyContractorLink}>
               <Copy className="w-3.5 h-3.5" />
               <span className="ms-1">{t('copyLink')}</span>
             </Button>
-            <Button variant="outline" size="sm" className="h-8 px-2 text-[11px]" onClick={() => window.open(`/contractor-status/${id}`, '_blank', 'noopener,noreferrer')}>
+            <Button variant="outline" size="sm" className="h-11 w-full px-3 text-[11px] sm:h-9 sm:w-auto sm:px-2" onClick={() => window.open(`/contractor-status/${id}`, '_blank', 'noopener,noreferrer')}>
               <ExternalLink className="w-3.5 h-3.5" />
               <span className="ms-1">{t('openLink')}</span>
             </Button>
@@ -218,13 +218,13 @@ export default function AdminContractorPage() {
             {documentChecklist.map((doc) => {
               const present = Boolean(documentChecksDraft[doc.key]);
               return (
-                <div key={doc.key} className="flex items-center justify-between gap-2 rounded-lg bg-secondary px-3 py-2 text-xs">
+                <div key={doc.key} className="flex flex-col items-start gap-2 rounded-xl bg-secondary px-3 py-2 text-xs sm:flex-row sm:items-center sm:justify-between">
                   <span className="font-medium text-navy">{doc.label}</span>
-                  <div className="flex items-center gap-1">
+                  <div className="grid w-full grid-cols-2 gap-2 sm:w-auto">
                     <button
                       type="button"
                       onClick={() => setDocumentPresent(doc.key, true)}
-                      className={`rounded-full px-2.5 py-1 text-[10px] font-semibold transition ${present ? 'text-white' : 'bg-white text-muted-foreground hover:text-navy'}`}
+                      className={`min-h-11 rounded-full px-3 text-[11px] font-semibold transition sm:min-h-9 ${present ? 'text-[#152B54]' : 'bg-white text-muted-foreground hover:text-navy'}`}
                       style={present ? { background: '#00B59E' } : {}}
                     >
                       {t('present')}
@@ -232,7 +232,7 @@ export default function AdminContractorPage() {
                     <button
                       type="button"
                       onClick={() => setDocumentPresent(doc.key, false)}
-                      className={`rounded-full px-2.5 py-1 text-[10px] font-semibold transition ${!present ? 'text-white' : 'bg-white text-muted-foreground hover:text-navy'}`}
+                      className={`min-h-11 rounded-full px-3 text-[11px] font-semibold transition sm:min-h-9 ${!present ? 'text-[#152B54]' : 'bg-white text-muted-foreground hover:text-navy'}`}
                       style={!present ? { background: '#FFB638' } : {}}
                     >
                       {t('missing')}
@@ -251,7 +251,7 @@ export default function AdminContractorPage() {
             <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documents')}</div>
             <div className="space-y-1.5">
               {c.documents.map((f, i) => (
-                <a key={i} href={f.data} download={f.name} className="flex items-center gap-2 text-xs text-navy bg-secondary rounded-lg px-2 py-2">
+                <a key={i} href={f.data} download={f.name} className="flex min-h-11 items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-xs text-navy">
                   <FileText className="w-3.5 h-3.5" />
                   <span className="truncate flex-1">{f.name}</span>
                   <span className="text-[10px] text-muted-foreground">{f.label}</span>

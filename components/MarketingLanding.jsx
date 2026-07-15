@@ -36,7 +36,7 @@ export default function MarketingLanding({
         <section className="relative z-10 pt-6 pb-10 lg:pt-14 lg:pb-12 text-center">
           <div className="max-w-2xl mx-auto">
             {eyebrow && (
-              <div className="motion-fade-up inline-flex items-center gap-1.5 rounded-full border border-[#00B59E]/25 bg-[#00B59E]/8 px-3 py-1.5 text-[12px] font-bold text-[#0B8E7C] mb-5">
+              <div className="motion-fade-up mb-5 inline-flex items-center gap-1.5 rounded-full border border-[#00B59E]/25 bg-[#00B59E]/8 px-3 py-1.5 text-[12px] font-bold text-navy">
                 {eyebrow}
               </div>
             )}
@@ -48,7 +48,7 @@ export default function MarketingLanding({
               {subtitle}
             </p>
             <div className="motion-fade-up motion-delay-3 mt-7">
-              <Link href={ctaHref} className="btn btn-primary soft-shine px-9 text-[15px]" style={{ minHeight: 52 }}>
+              <Link href={ctaHref} className="btn btn-primary soft-shine w-full px-9 text-[15px] sm:w-auto" style={{ minHeight: 52 }}>
                 {ctaLabel} <Arrow />
               </Link>
               {ctaSubtext && <p className="mt-3 text-[12.5px] text-muted-foreground/80">{ctaSubtext}</p>}
@@ -132,8 +132,8 @@ export default function MarketingLanding({
           <div className="rounded-[28px] premium-panel glass-line text-white px-6 py-10 sm:px-10 sm:py-12 shadow-card relative overflow-hidden text-center">
             <div className="relative max-w-xl mx-auto">
               <h3 className="text-[24px] sm:text-[30px] font-extrabold leading-tight">{finalTitle}</h3>
-              <p className="text-[14px] text-white/60 mt-2.5 mb-7">{finalSub}</p>
-              <Link href={ctaHref} className="btn btn-primary soft-shine px-9 text-[15px]" style={{ minHeight: 52 }}>
+              <p className="mb-7 mt-2.5 text-[14px] text-white/75">{finalSub}</p>
+              <Link href={ctaHref} className="btn btn-primary soft-shine w-full px-9 text-[15px] sm:w-auto" style={{ minHeight: 52 }}>
                 {ctaLabel} <Arrow />
               </Link>
             </div>
