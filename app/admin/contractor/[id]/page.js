@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import AdminAttribution from '@/components/AdminAttribution';
+import PageState from '@/components/PageState';
 import { useLang } from '@/lib/LangContext';
 import { CONTRACTOR_STATUSES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -69,8 +70,8 @@ export default function AdminContractorPage() {
     return () => window.removeEventListener('beforeunload', handler);
   }, [statusDraft, documentChecksDraft, c]);
 
-  if (loading) return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
-  if (!c || c.error) return <AppShell><div className="mx-auto max-w-sm rounded-2xl border border-border bg-card p-6 text-center shadow-soft"><p className="font-semibold text-navy">{t('notFound')}</p></div></AppShell>;
+  if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (!c || c.error) return <AppShell><PageState kind="missing" title={t('notFound')} actionHref="/admin?tab=contractors" actionLabel={t('backToList')} /></AppShell>;
 
   const saveAll = async () => {
     if (!isDirty()) { toast.message(t('saved')); router.push('/admin?tab=contractors'); return; }

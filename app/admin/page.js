@@ -3,6 +3,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
+import PageState from '@/components/PageState';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_STATUSES, CONTRACTOR_STATUSES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -185,20 +186,15 @@ function AdminInner() {
           </CardContent>
         </Card>
       )}
-      {loadingData && (
-        <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
-          <Loader2 className="h-4 w-4 animate-spin" />
-          Loading admin data...
-        </div>
-      )}
       <Tabs value={tab} onValueChange={setTab}>
         <TabsList className="grid w-full grid-cols-2 mb-4">
-          <TabsTrigger value="projects">{t('projects')} ({projects.length})</TabsTrigger>
-          <TabsTrigger value="contractors">{t('contractors')} ({contractors.length})</TabsTrigger>
+          <TabsTrigger value="projects">{t('projects')} ({loadingData ? '…' : projects.length})</TabsTrigger>
+          <TabsTrigger value="contractors">{t('contractors')} ({loadingData ? '…' : contractors.length})</TabsTrigger>
         </TabsList>
         <TabsContent value="projects" className="space-y-2">
-          {projects.length === 0 && <p className="text-center text-sm text-muted-foreground py-6">{t('noProjects')}</p>}
-          {projects.map(p => (
+          {loadingData && <PageState kind="loading" compact title={t('loading')} />}
+          {!loadingData && !loadError && projects.length === 0 && <PageState kind="empty" compact title={t('noProjects')} />}
+          {!loadingData && !loadError && projects.map(p => (
             <Card key={p.id} className="hover:border-navy transition">
               <CardContent className="p-3.5">
                 <button type="button" onClick={() => router.push(`/admin/project/${p.id}`)} className="w-full text-start">
@@ -237,8 +233,9 @@ function AdminInner() {
           ))}
         </TabsContent>
         <TabsContent value="contractors" className="space-y-2">
-          {contractors.length === 0 && <p className="text-center text-sm text-muted-foreground py-6">{t('noContractors')}</p>}
-          {contractors.map(c => {
+          {loadingData && <PageState kind="loading" compact title={t('loading')} />}
+          {!loadingData && !loadError && contractors.length === 0 && <PageState kind="empty" compact title={t('noContractors')} />}
+          {!loadingData && !loadError && contractors.map(c => {
             const isConsultant = c.providerType === 'consultant';
             const TypeIcon = isConsultant ? ClipboardCheck : Building2;
             const services = providerServices(c);
@@ -285,5 +282,6 @@ function AdminInner() {
 }
 
 export default function AdminPage() {
-  return <Suspense fallback={null}><AdminInner /></Suspense>;
+  const { t } = useLang();
+  return <Suspense fallback={<AppShell hideNav><PageState kind="loading" title={t('loading')} /></AppShell>}><AdminInner /></Suspense>;
 }

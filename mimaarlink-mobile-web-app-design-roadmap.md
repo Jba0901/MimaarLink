@@ -36,6 +36,8 @@ The design goal is a fast, trustworthy Qatar construction marketplace that works
 - Project and provider progress now use one reusable `StatusTimeline` component with a distinct current step, completed steps, and upcoming steps.
 - Bid summary cards and actions adapt at 360 px and 390 px so Arabic and English labels have enough room without awkward wrapping.
 - Focused acquisition and form routes can intentionally hide the bottom navigation while retaining the same header, brand, and interaction rules.
+- Dynamic routes and admin lists now use one localized `PageState` pattern for loading, empty, and missing-data states instead of blank screens or bare spinners.
+- Dialogs, confirmation alerts, and the future drawer primitive now share phone-safe margins, rounded surfaces, readable RTL/LTR headers, full-width mobile actions, and 44 px close controls.
 
 These are reusable website primitives for the future app. They do not approve or lock the authenticated app dashboard, account model, notification model, or final app navigation architecture.
 

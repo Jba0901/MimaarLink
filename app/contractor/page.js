@@ -2,6 +2,7 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
+import PageState from '@/components/PageState';
 import FormProgress from '@/components/FormProgress';
 import FormAside from '@/components/FormAside';
 import { useLang } from '@/lib/LangContext';
@@ -21,8 +22,9 @@ async function fileToDataURL(file) {
 }
 
 export default function ContractorPage() {
+  const { t } = useLang();
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<AppShell hideFooter hideNav wide><PageState kind="loading" title={t('loading')} /></AppShell>}>
       <ContractorApplicationInner />
     </Suspense>
   );

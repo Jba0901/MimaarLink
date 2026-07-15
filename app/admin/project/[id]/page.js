@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import AdminAttribution from '@/components/AdminAttribution';
+import PageState from '@/components/PageState';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_STATUSES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -82,8 +83,8 @@ export default function AdminProjectPage() {
     return () => window.removeEventListener('beforeunload', handler);
   }, [statusDraft, note, d]);
 
-  if (loading) return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
-  if (!d || d.error) return <AppShell><div className="mx-auto max-w-sm rounded-2xl border border-border bg-card p-6 text-center shadow-soft"><p className="font-semibold text-navy">{t('notFound')}</p></div></AppShell>;
+  if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (!d || d.error) return <AppShell><PageState kind="missing" title={t('notFound')} actionHref="/admin" actionLabel={t('backToList')} /></AppShell>;
 
   const { project, requester, bids, invites, notes, contractors } = d;
   const cmap = Object.fromEntries(contractors.map(c => [c.id, c]));
@@ -274,7 +275,7 @@ export default function AdminProjectPage() {
       <Card className="mb-3">
         <CardContent className="p-4">
           <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('invitedProviders')} ({invites.length})</div>
-          {invites.length === 0 && <p className="text-xs text-muted-foreground">—</p>}
+          {invites.length === 0 && <PageState kind="empty" compact title={t('noInvitesYet')} />}
           <div className="space-y-1.5">
             {invites.map(inv => (
               <div key={inv.id} className="flex items-center justify-between rounded-xl bg-secondary p-2 text-sm">
@@ -299,7 +300,7 @@ export default function AdminProjectPage() {
       <Card className="mb-3">
         <CardContent className="p-4">
           <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('bids')} ({bids.length})</div>
-          {bids.length === 0 && <p className="text-xs text-muted-foreground">—</p>}
+          {bids.length === 0 && <PageState kind="empty" compact title={t('noAdminBidsYet')} />}
           <div className="space-y-2">
             {bids.map(b => {
               const fileCount = (b.attachments || []).length;

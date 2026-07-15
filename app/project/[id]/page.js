@@ -7,8 +7,9 @@ import { PROJECT_STATUSES } from '@/lib/i18n';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import PageState from '@/components/PageState';
 import StatusTimeline from '@/components/StatusTimeline';
-import { FileText, MapPin, Calendar, Wallet, Loader2, Download } from 'lucide-react';
+import { FileText, MapPin, Calendar, Wallet, Download } from 'lucide-react';
 
 const statusColor = (status) => (
   ['approved', 'contractors_invited', 'bids_received', 'shortlisted', 'meeting_arranged', 'closed'].includes(status)
@@ -27,8 +28,8 @@ export default function ProjectPage() {
     fetch(`/api/projects/${id}`).then(r => r.json()).then(d => { setData(d); setLoading(false); }).catch(() => setLoading(false));
   }, [id]);
 
-  if (loading) return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
-  if (!data || data.error) return <AppShell><div className="mx-auto max-w-sm rounded-2xl border border-border bg-card p-6 text-center shadow-soft"><p className="font-semibold text-navy">{t('notFound')}</p></div></AppShell>;
+  if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (!data || data.error) return <AppShell><PageState kind="missing" title={t('notFound')} actionHref="/" actionLabel={t('backToHome')} /></AppShell>;
 
   const idx = PROJECT_STATUSES.indexOf(data.status);
   const statusUsesDarkText = statusColor(data.status) === '#00B59E';
@@ -97,7 +98,7 @@ export default function ProjectPage() {
                 {t('viewBids')}
               </Button>
             ) : (
-              <p className="text-xs text-center text-muted-foreground">{t('noBidsYet')}</p>
+              <PageState kind="empty" compact title={t('noBidsYet')} />
             )}
           </div>
         </div>

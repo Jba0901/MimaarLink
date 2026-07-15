@@ -2,6 +2,7 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
+import PageState from '@/components/PageState';
 import FormProgress from '@/components/FormProgress';
 import FormAside from '@/components/FormAside';
 import { useLang } from '@/lib/LangContext';
@@ -331,5 +332,6 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
 }
 
 export default function PostProjectPage() {
-  return <Suspense fallback={null}><PostProjectInner /></Suspense>;
+  const { t } = useLang();
+  return <Suspense fallback={<AppShell hideFooter hideNav wide><PageState kind="loading" title={t('loading')} /></AppShell>}><PostProjectInner /></Suspense>;
 }

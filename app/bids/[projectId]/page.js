@@ -6,7 +6,8 @@ import { useLang } from '@/lib/LangContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ShieldCheck, Clock, Wallet, FileWarning, FileCheck2, FileText, Loader2, Paperclip } from 'lucide-react';
+import PageState from '@/components/PageState';
+import { ShieldCheck, Clock, Wallet, FileWarning, FileCheck2, FileText, Paperclip } from 'lucide-react';
 import { toast } from 'sonner';
 
 const providerTypeLabel = (provider, t) => (
@@ -23,8 +24,8 @@ export default function BidsPage() {
   const load = () => fetch(`/api/projects/${projectId}/bids`).then(r => r.json()).then(j => { setD(j); setLoading(false); });
   useEffect(() => { load(); }, [projectId]);
 
-  if (loading) return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
-  if (!d || d.error) return <AppShell><div className="mx-auto max-w-sm rounded-2xl border border-border bg-card p-6 text-center shadow-soft"><p className="font-semibold text-navy">{t('notFound')}</p></div></AppShell>;
+  if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (!d || d.error) return <AppShell><PageState kind="missing" title={t('notFound')} actionHref="/" actionLabel={t('backToHome')} /></AppShell>;
 
   const action = async (act, contractorId) => {
     await fetch('/api/projects/shortlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId, contractorId, action: act }) });
@@ -44,13 +45,7 @@ export default function BidsPage() {
       <p className="text-xs text-muted-foreground mb-4">{t('onlyVerified')}</p>
 
       <div className="space-y-3">
-        {sortedBids.length === 0 && (
-          <Card className="rounded-2xl border-border shadow-soft">
-            <CardContent className="p-6 text-center text-sm leading-relaxed text-muted-foreground">
-              {t('noBidsYet')}
-            </CardContent>
-          </Card>
-        )}
+        {sortedBids.length === 0 && <PageState kind="empty" compact title={t('noBidsYet')} />}
         {sortedBids.map((b) => {
           const c = d.contractors[b.contractorId] || {};
           const isLowest = b.price === lowest;

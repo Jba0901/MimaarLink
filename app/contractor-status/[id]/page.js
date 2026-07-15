@@ -7,8 +7,9 @@ import { useLang } from '@/lib/LangContext';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import PageState from '@/components/PageState';
 import StatusTimeline from '@/components/StatusTimeline';
-import { ClipboardCheck, Download, FileText, Hammer, Loader2, MapPin, Wallet } from 'lucide-react';
+import { ClipboardCheck, Download, FileText, Hammer, MapPin, Wallet } from 'lucide-react';
 
 const statusColor = (status) => {
   if (status === 'verified') return '#00B59E';
@@ -46,11 +47,11 @@ export default function ContractorStatusPage() {
   }, [id]);
 
   if (loading) {
-    return <AppShell><div className="py-10 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-navy" /></div></AppShell>;
+    return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
   }
 
   if (!contractor || contractor.error) {
-    return <AppShell><div className="mx-auto max-w-sm rounded-2xl border border-border bg-card p-6 text-center shadow-soft"><p className="font-semibold text-navy">{t('notFound')}</p></div></AppShell>;
+    return <AppShell><PageState kind="missing" title={t('notFound')} actionHref="/" actionLabel={t('backToHome')} /></AppShell>;
   }
 
   const status = contractor.verificationStatus || 'applied';
