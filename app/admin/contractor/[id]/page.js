@@ -225,7 +225,7 @@ export default function AdminContractorPage() {
                       type="button"
                       onClick={() => setDocumentPresent(doc.key, true)}
                       className={`rounded-full px-2.5 py-1 text-[10px] font-semibold transition ${present ? 'text-white' : 'bg-white text-muted-foreground hover:text-navy'}`}
-                      style={present ? { background: '#0EB59E' } : {}}
+                      style={present ? { background: '#00B59E' } : {}}
                     >
                       {t('present')}
                     </button>

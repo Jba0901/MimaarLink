@@ -64,7 +64,7 @@ export default function StartHerePage() {
               className="btn btn-outline px-5 text-[13px]"
               style={{ minHeight: 44 }}
             >
-              <WhatsAppIcon className="h-[15px] w-[15px]" style={{ color: '#0EB59E' }} />
+              <WhatsAppIcon className="h-[15px] w-[15px]" style={{ color: '#00B59E' }} />
               {t('contactWhatsapp')}
             </a>
           </div>
@@ -82,7 +82,7 @@ function SimpleChoice({ href, icon: Icon, title, desc, tone, pathType, Arrow }) 
       className="block h-full cursor-pointer tap-highlight"
     >
       <article
-        className="group path-card interactive-card flex h-full flex-col rounded-[22px] border p-5 shadow-soft hover:border-[#0EB59E]/35 hover:shadow-card"
+        className="group path-card interactive-card flex h-full flex-col rounded-[22px] border p-5 shadow-soft hover:border-[#00B59E]/35 hover:shadow-card"
         data-tone={tone}
       >
         <div className="flex items-center justify-between gap-3">

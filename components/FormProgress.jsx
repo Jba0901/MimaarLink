@@ -22,7 +22,7 @@ export default function FormProgress({ step, total, label, title, desc }) {
               key={n}
               className={`h-2 flex-1 rounded-full transition-all duration-300 ${done ? 'progress-live' : ''}`}
               style={done
-                ? { background: 'linear-gradient(90deg, #12C3AA, #0BA890)' }
+                ? { background: '#00B59E' }
                 : { background: 'hsl(var(--muted))' }}
             />
           );

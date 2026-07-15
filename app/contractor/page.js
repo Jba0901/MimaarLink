@@ -263,8 +263,8 @@ function ContractorApplicationInner() {
                 <button key={c} type="button" onClick={() => toggleCat(c)}
                   className={`interactive-card tap-highlight min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 ${
                     data.categories.includes(c)
-                      ? 'border-[#0EB59E]/50 bg-secondary text-navy shadow-soft dark:border-[#5EEAD4]/45 dark:bg-[#0B8E7C]/15'
-                      : 'border-border bg-card text-navy hover:border-[#0EB59E]/35 dark:bg-[#0B1624]/75'
+                      ? 'border-[#00B59E]/50 bg-secondary text-navy shadow-soft dark:border-[#5EEAD4]/45 dark:bg-[#0B8E7C]/15'
+                      : 'border-border bg-card text-navy hover:border-[#00B59E]/35 dark:bg-[#0B1624]/75'
                   }`}>
                   <span className="flex items-center justify-between gap-2">
                     <span>{t(`cat_${c}`)}</span>
@@ -321,7 +321,7 @@ function ContractorApplicationInner() {
                   {!it.required && <span className="text-muted-foreground ms-1">({t('optional')})</span>}
                 </Label>
                 <div className="text-[11px] text-muted-foreground mt-1">{t('uploadHint')}</div>
-                <label className={`interactive-card tap-highlight mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 dark:bg-[#0B8E7C]/10 ${showError ? 'border-red-400' : 'border-border hover:border-[#0EB59E]/40'}`}>
+                <label className={`interactive-card tap-highlight mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 dark:bg-[#0B8E7C]/10 ${showError ? 'border-red-400' : 'border-border hover:border-[#00B59E]/40'}`}>
                   <Upload className="w-4 h-4 text-navy" />
                   <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
                   <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />

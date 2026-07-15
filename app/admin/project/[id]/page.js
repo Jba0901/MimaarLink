@@ -248,7 +248,7 @@ export default function AdminProjectPage() {
         </Dialog>
         <Dialog open={openBid} onOpenChange={setOpenBid}>
           <DialogTrigger asChild>
-            <Button className="h-11" style={{ background: '#0EB59E' }}><Plus className="w-4 h-4 me-1" />{t('addBid')}</Button>
+            <Button className="h-11" style={{ background: '#00B59E' }}><Plus className="w-4 h-4 me-1" />{t('addBid')}</Button>
           </DialogTrigger>
           <DialogContent dir={dir} className="max-h-[90vh] overflow-y-auto">
             <DialogHeader><DialogTitle>{t('addBidFor')}</DialogTitle></DialogHeader>

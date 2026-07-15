@@ -24,7 +24,7 @@ export default function FormAside({ steps = [], note }) {
                 )}
                 <span
                   className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white shadow-soft"
-                  style={{ background: 'linear-gradient(180deg, #12C3AA, #0BA890)' }}
+                  style={{ background: '#00B59E' }}
                 >
                   {i + 1}
                 </span>
@@ -39,7 +39,7 @@ export default function FormAside({ steps = [], note }) {
 
         {note && (
           <div className="flex items-start gap-2.5 rounded-[22px] border border-border bg-card p-4 shadow-soft">
-            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" style={{ color: '#0EB59E' }} />
+            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" style={{ color: '#00B59E' }} />
             <p className="text-[11.5px] leading-relaxed text-muted-foreground">{note}</p>
           </div>
         )}
@@ -51,7 +51,7 @@ export default function FormAside({ steps = [], note }) {
           className="btn btn-outline w-full text-[12.5px]"
           style={{ minHeight: 44 }}
         >
-          <WhatsAppIcon className="h-[15px] w-[15px]" style={{ color: '#0EB59E' }} />
+          <WhatsAppIcon className="h-[15px] w-[15px]" style={{ color: '#00B59E' }} />
           {t('startWhatsapp')}
         </a>
       </div>

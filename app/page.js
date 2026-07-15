@@ -34,7 +34,7 @@ export default function HomePage() {
         <div className="container-x relative z-10 pt-10 pb-14 lg:pt-20 lg:pb-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
-              <div className="motion-fade-up inline-flex items-center gap-1.5 rounded-full border border-[#0EB59E]/25 bg-[#0EB59E]/8 px-3.5 py-1.5 text-[12.5px] font-bold text-[#0B8E7C] mb-6">
+              <div className="motion-fade-up inline-flex items-center gap-1.5 rounded-full border border-[#00B59E]/25 bg-[#00B59E]/8 px-3.5 py-1.5 text-[12.5px] font-bold text-[#0B8E7C] mb-6">
                 <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
                 {t('heroBadge')}
               </div>
@@ -61,7 +61,7 @@ export default function HomePage() {
               <div className="motion-fade-up motion-delay-4 mt-8 flex flex-wrap items-center gap-x-6 gap-y-2.5">
                 {[t('benefit_ai'), t('benefit_bids'), t('benefit_local')].map((b, i) => (
                   <span key={i} className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-muted-foreground">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: '#0EB59E' }} />
+                    <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: '#00B59E' }} />
                     {b}
                   </span>
                 ))}
@@ -96,7 +96,7 @@ export default function HomePage() {
                 <Reveal key={i} delay={i * 110}>
                   <div className="relative text-center px-3">
                     <div className="relative z-10 mx-auto w-16 h-16 rounded-2xl bg-white border border-border shadow-card flex items-center justify-center">
-                      <s.icon className="w-7 h-7" style={{ color: '#0EB59E' }} />
+                      <s.icon className="w-7 h-7" style={{ color: '#00B59E' }} />
                       <span className="absolute -top-2 w-6 h-6 rounded-full navy text-white text-[11px] font-bold flex items-center justify-center shadow-soft" style={{ insetInlineEnd: '-8px' }}>
                         {i + 1}
                       </span>
@@ -128,9 +128,9 @@ export default function HomePage() {
               return (
                 <Reveal key={c} delay={Math.min(i * 60, 360)}>
                   <Link href={`/post-project?category=${c}`} className="block tap-highlight">
-                    <div className="interactive-card h-full min-h-[124px] rounded-2xl bg-white border border-border shadow-soft p-5 flex flex-col items-center justify-center gap-3.5 hover:border-[#0EB59E]/45">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'rgba(14,181,158,0.10)' }}>
-                        <Icon className="w-6 h-6" style={{ color: '#0EB59E' }} />
+                    <div className="interactive-card h-full min-h-[124px] rounded-2xl bg-white border border-border shadow-soft p-5 flex flex-col items-center justify-center gap-3.5 hover:border-[#00B59E]/45">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'rgba(0,181,158,0.10)' }}>
+                        <Icon className="w-6 h-6" style={{ color: '#00B59E' }} />
                       </div>
                       <span className="text-[12.5px] font-bold text-navy text-center leading-tight">{t(`cat_${c}`)}</span>
                     </div>
@@ -159,9 +159,9 @@ export default function HomePage() {
               { icon: MapPin, title: t('why4Title'), desc: t('why4Desc') },
             ].map((w, i) => (
               <Reveal key={i} delay={i * 90}>
-                <div className="interactive-card h-full rounded-[22px] border border-border bg-white p-6 shadow-soft hover:border-[#0EB59E]/40">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl" style={{ background: 'rgba(14,181,158,0.10)' }}>
-                    <w.icon className="h-[22px] w-[22px]" style={{ color: '#0EB59E' }} />
+                <div className="interactive-card h-full rounded-[22px] border border-border bg-white p-6 shadow-soft hover:border-[#00B59E]/40">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl" style={{ background: 'rgba(0,181,158,0.10)' }}>
+                    <w.icon className="h-[22px] w-[22px]" style={{ color: '#00B59E' }} />
                   </span>
                   <h3 className="mt-5 text-[16px] font-bold text-navy leading-snug">{w.title}</h3>
                   <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">{w.desc}</p>
@@ -296,7 +296,7 @@ function FaqSection({ t }) {
             {items.map((it, i) => {
               const isOpen = open === i;
               return (
-                <div key={i} className={`rounded-2xl border bg-white shadow-soft transition-colors ${isOpen ? 'border-[#0EB59E]/40' : 'border-border'}`}>
+                <div key={i} className={`rounded-2xl border bg-white shadow-soft transition-colors ${isOpen ? 'border-[#00B59E]/40' : 'border-border'}`}>
                   <button
                     type="button"
                     onClick={() => setOpen(isOpen ? -1 : i)}
@@ -306,7 +306,7 @@ function FaqSection({ t }) {
                     <span className="text-[14.5px] font-bold text-navy leading-snug">{it.q}</span>
                     <span
                       className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? 'text-white' : 'text-navy'}`}
-                      style={isOpen ? { background: '#0EB59E' } : { background: 'rgba(21,43,84,0.06)' }}
+                      style={isOpen ? { background: '#00B59E' } : { background: 'rgba(21,43,84,0.06)' }}
                     >
                       {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
                     </span>
@@ -334,8 +334,8 @@ function MatchPreview({ t }) {
           <div className="text-[10.5px] font-bold uppercase tracking-wide text-muted-foreground/70">{t('projectStatus')}</div>
           <div className="truncate text-[15px] font-bold text-navy mt-0.5">{t('status_contractors_invited')}</div>
         </div>
-        <span className="pulse-dot flex h-10 w-10 shrink-0 items-center justify-center rounded-full" style={{ background: 'rgba(14,181,158,0.12)' }}>
-          <Cpu className="h-[18px] w-[18px]" style={{ color: '#0EB59E' }} />
+        <span className="pulse-dot flex h-10 w-10 shrink-0 items-center justify-center rounded-full" style={{ background: 'rgba(0,181,158,0.12)' }}>
+          <Cpu className="h-[18px] w-[18px]" style={{ color: '#00B59E' }} />
         </span>
       </div>
 
@@ -344,7 +344,7 @@ function MatchPreview({ t }) {
         <ProviderRow icon={ClipboardCheck} title={t('providerTypeConsultant')} sub={t('cstatus_verified')} tone="amber" />
       </div>
 
-      <div className="mt-5 flex items-center justify-center gap-2 rounded-2xl border border-[#0EB59E]/20 bg-[#0EB59E]/8 py-3.5 text-[13px] font-bold text-[#0B6E60]">
+      <div className="mt-5 flex items-center justify-center gap-2 rounded-2xl border border-[#00B59E]/20 bg-[#00B59E]/8 py-3.5 text-[13px] font-bold text-[#0B6E60]">
         <GitCompare className="h-4 w-4 shrink-0" />
         {t('bidComparison')}
       </div>
@@ -353,8 +353,8 @@ function MatchPreview({ t }) {
 }
 
 function ProviderRow({ icon: Icon, title, sub, tone }) {
-  const bg = tone === 'amber' ? 'rgba(255,182,56,0.14)' : 'rgba(14,181,158,0.12)';
-  const fg = tone === 'amber' ? '#C8860B' : '#0EB59E';
+  const bg = tone === 'amber' ? 'rgba(255,182,56,0.14)' : 'rgba(0,181,158,0.12)';
+  const fg = tone === 'amber' ? '#C8860B' : '#00B59E';
   return (
     <div className="flex items-center gap-3 rounded-2xl border border-border bg-background px-4 py-3.5">
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl" style={{ background: bg }}>
@@ -363,7 +363,7 @@ function ProviderRow({ icon: Icon, title, sub, tone }) {
       <div className="min-w-0 flex-1">
         <div className="text-[13.5px] font-bold text-navy leading-tight truncate">{title}</div>
         <div className="mt-0.5 inline-flex items-center gap-1 text-[11.5px] font-semibold text-muted-foreground">
-          <CheckCircle2 className="h-3 w-3 shrink-0" style={{ color: '#0EB59E' }} />
+          <CheckCircle2 className="h-3 w-3 shrink-0" style={{ color: '#00B59E' }} />
           {sub}
         </div>
       </div>

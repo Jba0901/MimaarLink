@@ -45,7 +45,7 @@ function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9' }) {
 function BrandText({ size = 17, onDark = false }) {
   const { t, lang } = useLang();
   const first = onDark ? '#FFFFFF' : '#152B54';
-  const second = onDark ? '#5EEAD4' : '#0EB59E';
+  const second = onDark ? '#5EEAD4' : '#00B59E';
   if (lang === 'ar') {
     const parts = t('appName').split(' ');
     return (
@@ -124,7 +124,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
             : 'backdrop-blur-xl border-b border-transparent'
         }`}
       >
-        <div className="container-x relative h-[58px] sm:h-[68px] flex items-center justify-between gap-2">
+        <div className="container-x relative h-16 sm:h-[68px] flex items-center justify-between gap-2">
           <Link href="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0 shrink tap-highlight">
             <Logo className="h-8 w-8 sm:h-10 sm:w-10" />
             <BrandText size={17} onDark={isDark} />
@@ -140,10 +140,12 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
           </nav>
 
           <div className="flex items-center gap-2 shrink-0">
-            <ThemeToggle theme={theme} onToggle={toggleTheme} copy={copy} />
+            <span className="hidden sm:inline-flex">
+              <ThemeToggle theme={theme} onToggle={toggleTheme} copy={copy} />
+            </span>
             <button
               onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-              className="btn btn-outline h-10 px-3.5 text-[13px]"
+              className="btn btn-outline h-11 px-3.5 text-[13px]"
               aria-label="Switch language"
             >
               <Globe className="w-4 h-4 shrink-0" />
@@ -151,7 +153,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
             </button>
             <button
               onClick={() => setMenuOpen(true)}
-              className="btn btn-outline h-10 w-10 px-0"
+              className="btn btn-outline h-11 w-11 px-0"
               aria-label={copy.openMenu}
               aria-expanded={menuOpen}
               aria-controls="site-menu-drawer"
@@ -260,7 +262,7 @@ function ThemeToggle({ theme, onToggle, copy }) {
     <button
       type="button"
       onClick={onToggle}
-      className="btn btn-outline h-10 w-10 px-0"
+      className="btn btn-outline h-11 w-11 px-0"
       aria-label={isDark ? copy.lightMode : copy.darkMode}
       title={isDark ? copy.lightMode : copy.darkMode}
     >
@@ -319,7 +321,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
             <button
               type="button"
               onClick={onClose}
-              className="btn btn-outline h-10 w-10 px-0 rounded-full"
+              className="btn btn-outline h-11 w-11 px-0 rounded-full"
               aria-label={copy.closeMenu}
             >
               <X className="h-[18px] w-[18px]" />
@@ -387,7 +389,7 @@ function ActionTile({ item, active }) {
   const accents = {
     teal: {
       icon: 'bg-[#D0F2EE] text-[#0B8E7C] dark:bg-[#0B8E7C]/25 dark:text-[#5EEAD4]',
-      active: 'border-[#0EB59E]/45 bg-[#D0F2EE]/55 dark:bg-[#0B8E7C]/14',
+      active: 'border-[#00B59E]/45 bg-[#D0F2EE]/55 dark:bg-[#0B8E7C]/14',
     },
     amber: {
       icon: 'bg-[#FFF2D7] text-[#9A6100] dark:bg-[#FFB638]/[0.18] dark:text-[#FFCF75]',
@@ -406,7 +408,7 @@ function ActionTile({ item, active }) {
       className={`group path-card flex items-center gap-3 rounded-[1.25rem] border px-3.5 py-3 transition-all tap-highlight ${
         active
           ? `${accent.active} shadow-soft`
-          : 'hover:-translate-y-0.5 hover:border-[#0EB59E]/35 hover:shadow-card'
+          : 'hover:-translate-y-0.5 hover:border-[#00B59E]/35 hover:shadow-card'
       }`}
     >
       <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${accent.icon}`}>
@@ -428,8 +430,8 @@ function SecondaryDrawerLink({ item, active }) {
       href={item.href}
       className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[11.5px] font-extrabold leading-tight transition-all tap-highlight ${
         active
-          ? 'border-[#0EB59E]/35 bg-[#D0F2EE]/55 text-navy dark:bg-[#0B8E7C]/14'
-          : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#0EB59E]/35 dark:bg-[#0B1624]/70'
+          ? 'border-[#00B59E]/35 bg-[#D0F2EE]/55 text-navy dark:bg-[#0B8E7C]/14'
+          : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#00B59E]/35 dark:bg-[#0B1624]/70'
       }`}
     >
       <Icon className="h-4 w-4 shrink-0" />
@@ -462,12 +464,12 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
       aria-label={label}
       title={label}
       className={
-        'flex items-center gap-1.5 py-2 rounded-full transition-all cta-press tap-highlight ' +
+        'flex min-h-11 items-center gap-1.5 py-2 rounded-full transition-all cta-press tap-highlight ' +
         (active
           ? 'text-white shadow-soft px-3.5'
           : 'text-muted-foreground hover:text-navy hover:bg-muted px-3 sm:px-3.5')
       }
-      style={active ? { background: 'linear-gradient(180deg, #12C3AA, #0BA890)' } : undefined}
+      style={active ? { background: '#00B59E' } : undefined}
     >
       <Icon className="w-4 h-4 shrink-0" />
       <span className={`text-[11px] font-bold whitespace-nowrap ${active ? '' : 'hidden sm:inline'}`}>{label}</span>
@@ -525,7 +527,7 @@ function SiteFooter() {
 
 function FooterIcon({ href, label, icon: Icon, external = false, variant = 'footer' }) {
   const classes = variant === 'surface'
-    ? 'border-border bg-white text-navy shadow-soft hover:border-[#0EB59E]/45 hover:text-[#0B8E7C] hover:bg-[#D0F2EE]/45 dark:bg-[#0B1624] dark:text-white/85 dark:hover:text-[#5EEAD4]'
+    ? 'border-border bg-white text-navy shadow-soft hover:border-[#00B59E]/45 hover:text-[#0B8E7C] hover:bg-[#D0F2EE]/45 dark:bg-[#0B1624] dark:text-white/85 dark:hover:text-[#5EEAD4]'
     : 'border-white/15 bg-white/5 text-white/80 hover:border-[#5EEAD4]/50 hover:text-[#5EEAD4] hover:bg-white/10';
   return (
     <a
@@ -534,7 +536,7 @@ function FooterIcon({ href, label, icon: Icon, external = false, variant = 'foot
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition-all tap-highlight ${classes}`}
+      className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all tap-highlight ${classes}`}
     >
       <Icon className="h-[16px] w-[16px]" />
     </a>

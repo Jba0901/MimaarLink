@@ -36,7 +36,7 @@ export default function MarketingLanding({
         <section className="relative z-10 pt-6 pb-10 lg:pt-14 lg:pb-12 text-center">
           <div className="max-w-2xl mx-auto">
             {eyebrow && (
-              <div className="motion-fade-up inline-flex items-center gap-1.5 rounded-full border border-[#0EB59E]/25 bg-[#0EB59E]/8 px-3 py-1.5 text-[12px] font-bold text-[#0B8E7C] mb-5">
+              <div className="motion-fade-up inline-flex items-center gap-1.5 rounded-full border border-[#00B59E]/25 bg-[#00B59E]/8 px-3 py-1.5 text-[12px] font-bold text-[#0B8E7C] mb-5">
                 {eyebrow}
               </div>
             )}
@@ -62,9 +62,9 @@ export default function MarketingLanding({
         <div className="grid sm:grid-cols-3 gap-3.5">
           {benefits.map((b, i) => (
             <Reveal key={i} delay={i * 110}>
-              <div className="interactive-card h-full bg-white border border-border rounded-3xl p-6 shadow-soft" style={{ borderInlineStartWidth: 3, borderInlineStartColor: '#0EB59E' }}>
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(14,181,158,0.10)' }}>
-                  <b.icon className="w-[22px] h-[22px]" style={{ color: '#0EB59E' }} />
+              <div className="interactive-card h-full bg-white border border-border rounded-3xl p-6 shadow-soft" style={{ borderInlineStartWidth: 3, borderInlineStartColor: '#00B59E' }}>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(0,181,158,0.10)' }}>
+                  <b.icon className="w-[22px] h-[22px]" style={{ color: '#00B59E' }} />
                 </div>
                 <h3 className="text-[16px] font-bold text-navy leading-snug">{b.title}</h3>
                 <p className="text-[13px] mt-1.5 leading-relaxed text-muted-foreground">{b.desc}</p>
@@ -85,7 +85,7 @@ export default function MarketingLanding({
               {popularTypes.map((p, i) => (
                 <span
                   key={i}
-                  className="text-[13px] font-semibold text-navy bg-white border border-border rounded-full px-4 py-2 shadow-soft transition-colors hover:border-[#0EB59E]/45"
+                  className="text-[13px] font-semibold text-navy bg-white border border-border rounded-full px-4 py-2 shadow-soft transition-colors hover:border-[#00B59E]/45"
                 >
                   {p}
                 </span>
@@ -119,7 +119,7 @@ export default function MarketingLanding({
         {privacyLine && (
           <Reveal delay={150}>
             <div className="mt-7 flex items-center justify-center gap-2.5 px-1">
-              <ShieldCheck className="w-4 h-4 shrink-0" style={{ color: '#0EB59E' }} />
+              <ShieldCheck className="w-4 h-4 shrink-0" style={{ color: '#00B59E' }} />
               <p className="text-[12.5px] text-muted-foreground leading-relaxed text-center">{privacyLine}</p>
             </div>
           </Reveal>

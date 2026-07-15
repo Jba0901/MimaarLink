@@ -10,7 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle2, Circle, ClipboardCheck, Download, FileText, Hammer, Loader2, MapPin, Wallet } from 'lucide-react';
 
 const statusColor = (status) => {
-  if (status === 'verified') return '#0EB59E';
+  if (status === 'verified') return '#00B59E';
   if (status === 'cr_checked') return '#FFB638';
   if (status === 'suspended') return '#dc2626';
   return '#152B54';
@@ -167,7 +167,7 @@ export default function ContractorStatusPage() {
                           <FileText className="w-4 h-4 text-muted-foreground" />
                           <span>{doc.label}</span>
                         </div>
-                        <Badge style={{ background: present ? '#0EB59E' : '#FFB638' }} className="text-white text-[10px]">
+                        <Badge style={{ background: present ? '#00B59E' : '#FFB638' }} className="text-[#152B54] text-[10px]">
                           {present ? t('present') : t('missing')}
                         </Badge>
                       </div>
