@@ -45,7 +45,7 @@ function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9' }) {
 function BrandText({ size = 17, onDark = false }) {
   const { t, lang } = useLang();
   const first = onDark ? '#FFFFFF' : '#152B54';
-  const second = onDark ? '#5EEAD4' : '#00B59E';
+  const second = '#00B59E';
   if (lang === 'ar') {
     const parts = t('appName').split(' ');
     return (
@@ -184,8 +184,8 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       </main>
 
       {!hideNav && (
-        <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 safe-pad-bottom max-w-[calc(100vw-20px)] lg:hidden">
-          <div className="flex items-center gap-1 bg-white/95 dark:bg-[#0B1624]/95 backdrop-blur-xl rounded-full px-1.5 py-1.5 shadow-lift border border-border">
+        <nav className="safe-pad-bottom fixed bottom-3 left-1/2 z-40 w-[min(94vw,360px)] -translate-x-1/2 lg:hidden" aria-label={copy.quickTitle}>
+          <div className="grid grid-cols-3 gap-1 rounded-[22px] border border-border bg-white/95 p-1.5 shadow-lift backdrop-blur-xl dark:bg-[#0D1B2A]/95">
             <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
             <NavBtn href="/post-project" icon={FilePlus} label={t('postProject')} matches={['/post-project', '/for-projects']} />
             <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} matches={['/contractor', '/consultant', '/for-contractors']} />
@@ -360,7 +360,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
               className="flex w-full min-w-0 items-center justify-between gap-2.5 rounded-2xl px-2.5 py-2 text-start transition hover:bg-white dark:hover:bg-white/[0.06]"
             >
               <span className="flex min-w-0 items-center gap-2.5">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#0B8E7C] dark:bg-[#0B8E7C]/25 dark:text-[#5EEAD4]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/20 dark:text-[#00B59E]">
                   {isDark ? <Sun className="h-[17px] w-[17px]" /> : <Moon className="h-[17px] w-[17px]" />}
                 </span>
                 <span className="min-w-0">
@@ -388,16 +388,16 @@ function ActionTile({ item, active }) {
   const Icon = item.icon;
   const accents = {
     teal: {
-      icon: 'bg-[#D0F2EE] text-[#0B8E7C] dark:bg-[#0B8E7C]/25 dark:text-[#5EEAD4]',
-      active: 'border-[#00B59E]/45 bg-[#D0F2EE]/55 dark:bg-[#0B8E7C]/14',
+      icon: 'bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/20 dark:text-[#00B59E]',
+      active: 'border-[#00B59E]/45 bg-[#D0F2EE]/55 dark:bg-[#00B59E]/15',
     },
     amber: {
-      icon: 'bg-[#FFF2D7] text-[#9A6100] dark:bg-[#FFB638]/[0.18] dark:text-[#FFCF75]',
-      active: 'border-[#FFB638]/55 bg-[#FFF2D7]/70 dark:bg-[#FFB638]/[0.12]',
+      icon: 'bg-[#FFB638]/20 text-[#152B54] dark:bg-[#FFB638]/20 dark:text-[#FFB638]',
+      active: 'border-[#FFB638]/55 bg-[#FFB638]/15 dark:bg-[#FFB638]/[0.12]',
     },
     navy: {
-      icon: 'bg-[#EEF2F7] text-[#152B54] dark:bg-white/[0.08] dark:text-white',
-      active: 'border-[#152B54]/30 bg-[#EEF2F7]/85 dark:border-white/20 dark:bg-white/[0.08]',
+      icon: 'bg-[#F5F4F1] text-[#152B54] dark:bg-white/[0.08] dark:text-white',
+      active: 'border-[#152B54]/30 bg-[#F5F4F1] dark:border-white/20 dark:bg-white/[0.08]',
     },
   };
   const accent = accents[item.accent] || accents.teal;
@@ -430,8 +430,8 @@ function SecondaryDrawerLink({ item, active }) {
       href={item.href}
       className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[11.5px] font-extrabold leading-tight transition-all tap-highlight ${
         active
-          ? 'border-[#00B59E]/35 bg-[#D0F2EE]/55 text-navy dark:bg-[#0B8E7C]/14'
-          : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#00B59E]/35 dark:bg-[#0B1624]/70'
+          ? 'border-[#00B59E]/35 bg-[#D0F2EE]/55 text-navy dark:bg-[#00B59E]/15'
+          : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#00B59E]/35 dark:bg-[#0D1B2A]/70'
       }`}
     >
       <Icon className="h-4 w-4 shrink-0" />
@@ -464,15 +464,15 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
       aria-label={label}
       title={label}
       className={
-        'flex min-h-11 items-center gap-1.5 py-2 rounded-full transition-all cta-press tap-highlight ' +
+        'flex min-h-[52px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-2xl px-2 py-1.5 transition-all cta-press tap-highlight ' +
         (active
-          ? 'text-white shadow-soft px-3.5'
-          : 'text-muted-foreground hover:text-navy hover:bg-muted px-3 sm:px-3.5')
+          ? 'text-[#152B54] shadow-soft'
+          : 'text-muted-foreground hover:bg-muted hover:text-navy')
       }
       style={active ? { background: '#00B59E' } : undefined}
     >
-      <Icon className="w-4 h-4 shrink-0" />
-      <span className={`text-[11px] font-bold whitespace-nowrap ${active ? '' : 'hidden sm:inline'}`}>{label}</span>
+      <Icon className="h-[18px] w-[18px] shrink-0" />
+      <span className="max-w-full truncate text-[10px] font-bold leading-tight sm:text-[11px]">{label}</span>
     </Link>
   );
 }
@@ -489,25 +489,25 @@ function SiteFooter() {
               <Logo className="h-8 w-8" />
               <BrandText size={16} onDark />
             </div>
-            <p className="text-[13px] text-white/55 leading-relaxed">{t('subtitle')}</p>
+            <p className="text-[13px] leading-relaxed text-white/70">{t('subtitle')}</p>
             <p className="mt-4 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-white/70">
-              <MapPin className="w-3.5 h-3.5 shrink-0" style={{ color: '#5EEAD4' }} />
+              <MapPin className="w-3.5 h-3.5 shrink-0" style={{ color: '#00B59E' }} />
               {t('contactLocationValue')}
             </p>
           </div>
 
           <div>
-            <h4 className="text-[12px] font-bold uppercase tracking-wide text-white/40 mb-4">{t('startEyebrow')}</h4>
-            <ul className="space-y-2.5 text-[13px] font-semibold text-white/75">
-              <li><Link href="/post-project" className="hover:text-white transition-colors">{t('postProject')}</Link></li>
-              <li><Link href="/contractor" className="hover:text-white transition-colors">{t('providerTypeContractor')}</Link></li>
-              <li><Link href="/contractor?type=consultant" className="hover:text-white transition-colors">{t('providerTypeConsultant')}</Link></li>
-              <li><Link href="/start-here" className="hover:text-white transition-colors">{t('startTitle')}</Link></li>
+            <h4 className="mb-2 text-[12px] font-bold uppercase tracking-wide text-white/60">{t('startEyebrow')}</h4>
+            <ul className="text-[13px] font-semibold text-white/75">
+              <li><Link href="/post-project" className="inline-flex min-h-11 items-center transition-colors hover:text-white">{t('postProject')}</Link></li>
+              <li><Link href="/contractor" className="inline-flex min-h-11 items-center transition-colors hover:text-white">{t('providerTypeContractor')}</Link></li>
+              <li><Link href="/contractor?type=consultant" className="inline-flex min-h-11 items-center transition-colors hover:text-white">{t('providerTypeConsultant')}</Link></li>
+              <li><Link href="/start-here" className="inline-flex min-h-11 items-center transition-colors hover:text-white">{t('startTitle')}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-[12px] font-bold uppercase tracking-wide text-white/40 mb-4">{t('contactTitle')}</h4>
+            <h4 className="mb-4 text-[12px] font-bold uppercase tracking-wide text-white/60">{t('contactTitle')}</h4>
             <div className="flex items-center gap-2.5">
               <FooterIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} />
               <FooterIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external />
@@ -517,7 +517,7 @@ function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-11 border-t border-white/10 pt-6 text-center text-[11.5px] font-medium text-white/40">
+        <div className="mt-11 border-t border-white/10 pt-6 text-center text-[11.5px] font-medium text-white/60">
           &copy; {year} {t('appName')} &middot; {t('allRights')}
         </div>
       </div>
@@ -527,8 +527,8 @@ function SiteFooter() {
 
 function FooterIcon({ href, label, icon: Icon, external = false, variant = 'footer' }) {
   const classes = variant === 'surface'
-    ? 'border-border bg-white text-navy shadow-soft hover:border-[#00B59E]/45 hover:text-[#0B8E7C] hover:bg-[#D0F2EE]/45 dark:bg-[#0B1624] dark:text-white/85 dark:hover:text-[#5EEAD4]'
-    : 'border-white/15 bg-white/5 text-white/80 hover:border-[#5EEAD4]/50 hover:text-[#5EEAD4] hover:bg-white/10';
+    ? 'border-border bg-white text-navy shadow-soft hover:border-[#00B59E]/45 hover:bg-[#D0F2EE]/45 dark:bg-[#0D1B2A] dark:text-white/85 dark:hover:text-[#00B59E]'
+    : 'border-white/15 bg-white/5 text-white/80 hover:border-[#00B59E]/50 hover:text-[#00B59E] hover:bg-white/10';
   return (
     <a
       href={href}

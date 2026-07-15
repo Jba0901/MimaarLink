@@ -28,13 +28,13 @@ export default function HomePage() {
   const lastWord = words.length > 1 ? words.pop() : null;
 
   return (
-    <AppShell hideNav wide bleed>
+    <AppShell wide bleed>
       {/* ============ HERO ============ */}
       <section className="v2-ambient">
         <div className="container-x relative z-10 pt-10 pb-14 lg:pt-20 lg:pb-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
-              <div className="motion-fade-up inline-flex items-center gap-1.5 rounded-full border border-[#00B59E]/25 bg-[#00B59E]/8 px-3.5 py-1.5 text-[12.5px] font-bold text-[#0B8E7C] mb-6">
+              <div className="motion-fade-up mb-6 inline-flex items-center gap-1.5 rounded-full border border-[#00B59E]/25 bg-[#00B59E]/8 px-3.5 py-1.5 text-[12.5px] font-bold text-navy">
                 <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
                 {t('heroBadge')}
               </div>
@@ -117,7 +117,7 @@ export default function HomePage() {
           <Reveal>
             <div className="flex items-end justify-between mb-8 gap-3">
               <h2 className="display-title text-[26px] sm:text-[34px]">{t('serviceCategories')}</h2>
-              <Link href="/post-project" className="inline-flex items-center gap-1 text-[13px] font-bold text-[#0B8E7C] shrink-0 tap-highlight">
+              <Link href="/post-project" className="inline-flex min-h-11 shrink-0 items-center gap-1 text-[13px] font-bold text-navy underline decoration-[#00B59E] decoration-2 underline-offset-4 tap-highlight">
                 {t('seeAll')} <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -221,7 +221,7 @@ export default function HomePage() {
             <h2 className="text-[28px] sm:text-[40px] font-extrabold leading-tight max-w-2xl mx-auto">{t('projL_finalTitle')}</h2>
             <p className="mt-4 text-[15px] sm:text-[16px] text-white/85 max-w-xl mx-auto">{t('projL_finalSub')}</p>
             <div className="mt-9 flex flex-col sm:flex-row justify-center gap-3">
-              <Link href="/post-project" className="btn px-8 text-[15px]" style={{ minHeight: 54, background: '#fff', color: '#0B6E60' }}>
+              <Link href="/post-project" className="btn px-8 text-[15px]" style={{ minHeight: 54, background: '#fff', color: '#152B54' }}>
                 {t('postProject')} <Arrow />
               </Link>
               <Link href="/contractor" className="btn btn-ghost-light px-7 text-[14px]" style={{ minHeight: 54 }}>
@@ -248,13 +248,13 @@ function MarketBand({ t }) {
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-center">
           <Reveal>
             <div className="max-w-xl">
-              <div className="inline-flex items-center gap-1.5 text-[12.5px] font-bold mb-4" style={{ color: '#5EEAD4' }}>
+              <div className="mb-4 inline-flex items-center gap-1.5 text-[12.5px] font-bold" style={{ color: '#00B59E' }}>
                 <Landmark className="h-3.5 w-3.5 shrink-0" />
                 {t('contactLocationValue')}
               </div>
               <h2 className="text-[26px] sm:text-[36px] font-extrabold leading-tight">{t('marketTitle')}</h2>
-              <p className="mt-4 text-[14px] sm:text-[15px] leading-relaxed text-white/65">{t('marketSubtitle')}</p>
-              <p className="mt-5 text-[11.5px] text-white/40">{t('marketSource')}</p>
+              <p className="mt-4 text-[14px] leading-relaxed text-white/75 sm:text-[15px]">{t('marketSubtitle')}</p>
+              <p className="mt-5 text-[11.5px] text-white/60">{t('marketSource')}</p>
             </div>
           </Reveal>
 
@@ -263,12 +263,12 @@ function MarketBand({ t }) {
               <Reveal key={i} delay={i * 130} className="h-full">
                 <div className="stat-card card-sheen h-full rounded-2xl p-5">
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10">
-                    <s.icon className="h-[19px] w-[19px]" style={{ color: '#5EEAD4' }} />
+                    <s.icon className="h-[19px] w-[19px]" style={{ color: '#00B59E' }} />
                   </span>
                   {s.animate
                     ? <CountUp value={s.value} className="mt-4 block text-[30px] sm:text-[32px] font-black leading-none text-white" />
                     : <span className="mt-4 block text-[30px] sm:text-[32px] font-black leading-none text-white"><bdi dir="ltr">{s.value}</bdi></span>}
-                  <p className="mt-2.5 text-[12px] leading-relaxed text-white/55">{s.label}</p>
+                  <p className="mt-2.5 text-[12px] leading-relaxed text-white/70">{s.label}</p>
                 </div>
               </Reveal>
             ))}
@@ -305,7 +305,7 @@ function FaqSection({ t }) {
                   >
                     <span className="text-[14.5px] font-bold text-navy leading-snug">{it.q}</span>
                     <span
-                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? 'text-white' : 'text-navy'}`}
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? 'text-[#152B54]' : 'text-navy'}`}
                       style={isOpen ? { background: '#00B59E' } : { background: 'rgba(21,43,84,0.06)' }}
                     >
                       {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
@@ -344,7 +344,7 @@ function MatchPreview({ t }) {
         <ProviderRow icon={ClipboardCheck} title={t('providerTypeConsultant')} sub={t('cstatus_verified')} tone="amber" />
       </div>
 
-      <div className="mt-5 flex items-center justify-center gap-2 rounded-2xl border border-[#00B59E]/20 bg-[#00B59E]/8 py-3.5 text-[13px] font-bold text-[#0B6E60]">
+      <div className="mt-5 flex items-center justify-center gap-2 rounded-2xl border border-[#00B59E]/20 bg-[#00B59E]/8 py-3.5 text-[13px] font-bold text-navy">
         <GitCompare className="h-4 w-4 shrink-0" />
         {t('bidComparison')}
       </div>
@@ -354,7 +354,7 @@ function MatchPreview({ t }) {
 
 function ProviderRow({ icon: Icon, title, sub, tone }) {
   const bg = tone === 'amber' ? 'rgba(255,182,56,0.14)' : 'rgba(0,181,158,0.12)';
-  const fg = tone === 'amber' ? '#C8860B' : '#00B59E';
+  const fg = tone === 'amber' ? '#152B54' : '#00B59E';
   return (
     <div className="flex items-center gap-3 rounded-2xl border border-border bg-background px-4 py-3.5">
       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl" style={{ background: bg }}>

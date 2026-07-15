@@ -71,12 +71,12 @@ export default function BidsPage() {
                   {isLowest && <Badge style={{ background: '#00B59E' }} className="shrink-0 text-[#152B54] text-[10px]">{t('lowestBid')}</Badge>}
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 mt-3">
-                  <div className="bg-secondary rounded-lg p-2.5">
+                <div className="mt-3 grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">
+                  <div className="rounded-xl bg-secondary p-2.5">
                     <div className="text-[10px] uppercase tracking-wide text-muted-foreground flex items-center gap-1"><Wallet className="w-3 h-3" />{t('price')}</div>
                     <div className="text-base font-bold text-navy mt-0.5">{b.price.toLocaleString()} <span className="text-xs font-normal text-muted-foreground">{t('currencyQar')}</span></div>
                   </div>
-                  <div className="bg-secondary rounded-lg p-2.5">
+                  <div className="rounded-xl bg-secondary p-2.5">
                     <div className="text-[10px] uppercase tracking-wide text-muted-foreground flex items-center gap-1"><Clock className="w-3 h-3" />{t('timeline')}</div>
                     <div className="text-sm font-semibold text-navy mt-0.5">{b.timeline}</div>
                   </div>
@@ -111,9 +111,9 @@ export default function BidsPage() {
                   </div>
                 )}
 
-                <div className="flex gap-2 mt-3">
-                  <Button variant="outline" size="sm" className="h-11 flex-1" onClick={() => action('shortlist', b.contractorId)}>{t('shortlist')}</Button>
-                  <Button size="sm" className="h-11 flex-1" style={{ background: '#152B54' }} onClick={() => action('meeting', b.contractorId)}>{t('requestMeeting')}</Button>
+                <div className="mt-3 flex flex-col gap-2 min-[390px]:flex-row">
+                  <Button variant="outline" size="sm" className="h-11 w-full flex-1" onClick={() => action('shortlist', b.contractorId)}>{t('shortlist')}</Button>
+                  <Button size="sm" className="h-11 w-full flex-1" style={{ background: '#152B54' }} onClick={() => action('meeting', b.contractorId)}>{t('requestMeeting')}</Button>
                 </div>
               </CardContent>
             </Card>

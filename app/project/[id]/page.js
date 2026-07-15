@@ -7,7 +7,14 @@ import { PROJECT_STATUSES } from '@/lib/i18n';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle2, Circle, FileText, MapPin, Calendar, Wallet, Loader2, Download } from 'lucide-react';
+import StatusTimeline from '@/components/StatusTimeline';
+import { FileText, MapPin, Calendar, Wallet, Loader2, Download } from 'lucide-react';
+
+const statusColor = (status) => (
+  ['approved', 'contractors_invited', 'bids_received', 'shortlisted', 'meeting_arranged', 'closed'].includes(status)
+    ? '#00B59E'
+    : '#152B54'
+);
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -24,13 +31,14 @@ export default function ProjectPage() {
   if (!data || data.error) return <AppShell><div className="mx-auto max-w-sm rounded-2xl border border-border bg-card p-6 text-center shadow-soft"><p className="font-semibold text-navy">{t('notFound')}</p></div></AppShell>;
 
   const idx = PROJECT_STATUSES.indexOf(data.status);
+  const statusUsesDarkText = statusColor(data.status) === '#00B59E';
 
   return (
     <AppShell wide>
       <div className="mx-auto max-w-5xl">
         <div className="flex flex-col items-start gap-2.5 mb-4 sm:flex-row sm:items-center sm:justify-between">
           <h1 className="display-title text-[24px] sm:text-[28px]">{t('projectStatus')}</h1>
-          <Badge style={{ background: '#00B59E' }} className="max-w-full whitespace-normal text-start text-[#152B54]">{t(`status_${data.status}`)}</Badge>
+          <Badge style={{ background: statusColor(data.status) }} className={`max-w-full whitespace-normal text-start ${statusUsesDarkText ? 'text-[#152B54]' : 'text-white'}`}>{t(`status_${data.status}`)}</Badge>
         </div>
 
         <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
@@ -73,23 +81,13 @@ export default function ProjectPage() {
             <Card>
               <CardContent className="p-4 sm:p-5">
                 <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-3">{t('statusTimeline')}</div>
-                <div className="space-y-2">
-                  {PROJECT_STATUSES.map((s, i) => {
-                    const done = i <= idx;
-                    return (
-                      <div key={s} className="flex items-center gap-2.5">
-                        {done ? <CheckCircle2 className="w-4 h-4" style={{ color: '#00B59E' }} /> : <Circle className="w-4 h-4 text-muted-foreground/40" />}
-                        <span className={`text-sm ${done ? 'text-navy font-medium' : 'text-muted-foreground'}`}>{t(`status_${s}`)}</span>
-                      </div>
-                    );
-                  })}
-                </div>
+                <StatusTimeline statuses={PROJECT_STATUSES} currentIndex={idx} getLabel={(status) => t(`status_${status}`)} />
               </CardContent>
             </Card>
 
             <Card className="bg-[#D0F2EE]/55 dark:bg-[#142A44]">
               <CardContent className="p-4 sm:p-5">
-                <div className="text-xs uppercase tracking-wide font-semibold mb-1" style={{ color: '#152B54' }}>{t('nextStep')}</div>
+                <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-navy">{t('nextStep')}</div>
                 <div className="text-sm text-navy">{t(`msg_${data.status}`)}</div>
               </CardContent>
             </Card>

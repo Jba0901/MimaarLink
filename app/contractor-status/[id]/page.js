@@ -7,7 +7,8 @@ import { useLang } from '@/lib/LangContext';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle2, Circle, ClipboardCheck, Download, FileText, Hammer, Loader2, MapPin, Wallet } from 'lucide-react';
+import StatusTimeline from '@/components/StatusTimeline';
+import { ClipboardCheck, Download, FileText, Hammer, Loader2, MapPin, Wallet } from 'lucide-react';
 
 const statusColor = (status) => {
   if (status === 'verified') return '#00B59E';
@@ -55,7 +56,7 @@ export default function ContractorStatusPage() {
   const status = contractor.verificationStatus || 'applied';
   const statusUsesDarkText = status === 'verified' || status === 'cr_checked';
   const statusOrder = CONTRACTOR_STATUSES.filter((s) => s !== 'suspended');
-  const statusIndex = status === 'suspended' ? statusOrder.length - 1 : statusOrder.indexOf(status);
+  const statusIndex = status === 'suspended' ? -1 : statusOrder.indexOf(status);
   const documentChecklist = [
     { key: 'cr', label: t('uploadCR') },
     { key: 'trade', label: t('uploadTrade') },
@@ -97,15 +98,15 @@ export default function ContractorStatusPage() {
                   <div className="text-sm text-muted-foreground leading-relaxed">{contractor.otherCategoryDesc}</div>
                 )}
                 {contractor.serviceAreas && (
-                  <div className="flex items-center gap-2 text-sm text-navy">
-                    <MapPin className="w-4 h-4 text-muted-foreground" />
-                    {contractor.serviceAreas}
+                  <div className="flex items-start gap-2 text-sm text-navy">
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                    <span>{contractor.serviceAreas}</span>
                   </div>
                 )}
                 {contractor.projectSizeRange && (
-                  <div className="flex items-center gap-2 text-sm text-navy">
-                    <Wallet className="w-4 h-4 text-muted-foreground" />
-                    {contractor.projectSizeRange}
+                  <div className="flex items-start gap-2 text-sm text-navy">
+                    <Wallet className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                    <span>{contractor.projectSizeRange}</span>
                   </div>
                 )}
               </CardContent>
@@ -142,17 +143,7 @@ export default function ContractorStatusPage() {
             <Card>
               <CardContent className="p-4 sm:p-5">
                 <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-3">{t('statusTimeline')}</div>
-                <div className="space-y-2">
-                  {statusOrder.map((s, i) => {
-                    const done = i <= statusIndex;
-                    return (
-                      <div key={s} className="flex items-center gap-2.5">
-                        {done ? <CheckCircle2 className="w-4 h-4" style={{ color: '#00B59E' }} /> : <Circle className="w-4 h-4 text-muted-foreground/40" />}
-                        <span className={`text-sm ${done ? 'text-navy font-medium' : 'text-muted-foreground'}`}>{t(`cstatus_${s}`)}</span>
-                      </div>
-                    );
-                  })}
-                </div>
+                <StatusTimeline statuses={statusOrder} currentIndex={statusIndex} getLabel={(item) => t(`cstatus_${item}`)} />
               </CardContent>
             </Card>
 
@@ -163,12 +154,12 @@ export default function ContractorStatusPage() {
                   {documentChecklist.map((doc) => {
                     const present = Boolean(documentChecks[doc.key]);
                     return (
-                      <div key={doc.key} className="flex min-h-11 items-center justify-between gap-2 text-sm text-navy bg-secondary rounded-xl px-3 py-2">
-                        <div className="flex items-center gap-2">
-                          <FileText className="w-4 h-4 text-muted-foreground" />
-                          <span>{doc.label}</span>
+                      <div key={doc.key} className="flex min-h-11 items-center justify-between gap-2 rounded-xl bg-secondary px-3 py-2 text-sm text-navy">
+                        <div className="flex min-w-0 items-center gap-2">
+                          <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
+                          <span className="min-w-0">{doc.label}</span>
                         </div>
-                        <Badge style={{ background: present ? '#00B59E' : '#FFB638' }} className="text-[#152B54] text-[10px]">
+                        <Badge style={{ background: present ? '#00B59E' : '#FFB638' }} className="shrink-0 text-[10px] text-[#152B54]">
                           {present ? t('present') : t('missing')}
                         </Badge>
                       </div>

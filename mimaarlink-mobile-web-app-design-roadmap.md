@@ -30,6 +30,15 @@ The design goal is a fast, trustworthy Qatar construction marketplace that works
 
 `AppShell`, `FormProgress`, status patterns, upload areas, project cards, provider cards, and bid rows should become the first shared app components.
 
+## Website Foundation Implemented
+
+- The homepage, bid comparison, and public status journeys now share a clear three-destination mobile navigation pattern through `AppShell`.
+- Project and provider progress now use one reusable `StatusTimeline` component with a distinct current step, completed steps, and upcoming steps.
+- Bid summary cards and actions adapt at 360 px and 390 px so Arabic and English labels have enough room without awkward wrapping.
+- Focused acquisition and form routes can intentionally hide the bottom navigation while retaining the same header, brand, and interaction rules.
+
+These are reusable website primitives for the future app. They do not approve or lock the authenticated app dashboard, account model, notification model, or final app navigation architecture.
+
 ## Proposed Mobile Information Architecture
 
 ### Project owner journey
@@ -55,7 +64,7 @@ The design goal is a fast, trustworthy Qatar construction marketplace that works
 - Contact and support.
 - Clear loading, empty, success, warning, and error states.
 
-Authentication, persistent dashboards, provider opportunity feeds, and the final bottom-navigation structure are major product decisions and require Q's approval before implementation.
+Authentication, persistent dashboards, provider opportunity feeds, and the future authenticated app's final navigation structure are major product decisions and require Q's approval before implementation.
 
 ## Delivery Phases
 
