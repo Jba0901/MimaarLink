@@ -25,7 +25,7 @@ export default function FileUploadDropzone({
       </span>
       <span className="min-w-0 flex-1">
         <span className="block text-sm font-bold text-foreground">{label}</span>
-        {hint && <span className="mt-0.5 block text-[11px] leading-5 text-muted-foreground">{hint}</span>}
+        {hint && <span className="mt-0.5 block text-[12px] leading-5 text-muted-foreground">{hint}</span>}
       </span>
       <input
         {...inputProps}

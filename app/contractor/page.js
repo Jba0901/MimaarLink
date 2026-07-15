@@ -195,7 +195,7 @@ function ContractorApplicationInner() {
         <div className="space-y-3.5">
           <div>
             <Label className="text-sm mb-2 block">{t('providerTypeLabel')}</Label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid gap-2 min-[420px]:grid-cols-2">
               <ProviderTypeButton
                 active={data.providerType === 'contractor'}
                 icon={Building2}
@@ -251,10 +251,10 @@ function ContractorApplicationInner() {
             <Label className="text-sm mb-2 block">
               {serviceLabel} <span className="text-red-600">*</span>
             </Label>
-            <div className={`grid grid-cols-2 gap-2 ${triedServices && data.categories.length === 0 ? 'p-1.5 rounded-lg ring-1 ring-red-300' : ''}`}>
+            <div className={`grid grid-cols-1 gap-2 min-[360px]:grid-cols-2 ${triedServices && data.categories.length === 0 ? 'rounded-xl p-1.5 ring-1 ring-red-300' : ''}`}>
               {serviceOptions.map(c => (
-                <button key={c} type="button" onClick={() => toggleCat(c)}
-                  className={`interactive-card tap-highlight min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 ${
+                <button key={c} type="button" onClick={() => toggleCat(c)} aria-pressed={data.categories.includes(c)}
+                  className={`interactive-card tap-highlight min-h-12 rounded-xl border px-3 py-2 text-start text-[13px] font-semibold ${
                     data.categories.includes(c)
                       ? 'border-[#00B59E]/50 bg-[#D0F2EE]/55 text-navy shadow-soft dark:border-[#00B59E]/45 dark:bg-[#00B59E]/15'
                       : 'border-border bg-card text-navy hover:border-[#00B59E]/35 dark:bg-[#0D1B2A]/75'
@@ -266,7 +266,7 @@ function ContractorApplicationInner() {
                 </button>
               ))}
             </div>
-            {triedServices && data.categories.length === 0 && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+            {triedServices && data.categories.length === 0 && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
           </div>
           {hasOther && (
             <div>
@@ -282,8 +282,8 @@ function ContractorApplicationInner() {
                 aria-invalid={triedServices && !otherDescValid}
                 className="mt-1.5"
               />
-              <div className="text-[11px] text-muted-foreground mt-1">{t('otherCategoryHelp')}</div>
-              {triedServices && !otherDescValid && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+              <div className="mt-1 text-[12px] leading-relaxed text-muted-foreground">{t('otherCategoryHelp')}</div>
+              {triedServices && !otherDescValid && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
             </div>
           )}
           <div className="grid gap-3.5 sm:grid-cols-2">
@@ -323,7 +323,7 @@ function ContractorApplicationInner() {
                   onChange={(e) => onFiles(e, it.key)}
                   accept="image/*,application/pdf"
                 />
-                {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+                {showError && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
                 <div className="mt-1 space-y-1">
                   {filesForLabel.map((f, i) => (
                     <div key={i} className="flex min-h-11 items-center gap-2 text-xs bg-secondary rounded-xl ps-3 pe-1">
@@ -400,7 +400,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
             className="min-w-0 flex-1 bg-transparent px-3 text-base outline-none md:text-sm"
           />
         </div>
-        {showError && <div className="text-[11px] text-red-600 mt-1">{errMsg}</div>}
+        {showError && <div className="mt-1 text-[12px] text-red-600">{errMsg}</div>}
       </div>
     );
   }
@@ -420,7 +420,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
         aria-invalid={showError}
         className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
       />
-      {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+      {showError && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
     </div>
   );
 }
@@ -430,16 +430,21 @@ function ProviderTypeButton({ active, icon: Icon, title, desc, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className={`provider-type-card interactive-card tap-highlight rounded-2xl border p-3 text-start transition ${active ? 'is-active shadow-soft' : ''}`}
+      aria-pressed={active}
+      className={`provider-type-card interactive-card tap-highlight rounded-2xl border p-3.5 text-start transition ${active ? 'is-active shadow-soft' : ''}`}
     >
-      <span className="flex items-center justify-between gap-2">
-        <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${active ? 'bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/20 dark:text-[#00B59E]' : 'bg-muted text-muted-foreground'}`}>
-          <Icon className="h-4 w-4" />
+      <span className="flex items-start gap-3">
+        <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/20 dark:text-[#00B59E]' : 'bg-muted text-muted-foreground'}`}>
+          <Icon className="h-5 w-5" />
         </span>
-        {active && <CheckCircle2 className="h-4 w-4 shrink-0 text-teal" />}
+        <span className="min-w-0 flex-1">
+          <span className="flex items-start justify-between gap-2">
+            <span className="block text-[13.5px] font-bold leading-tight">{title}</span>
+            {active && <CheckCircle2 className="h-4 w-4 shrink-0 text-teal" />}
+          </span>
+          <span className="mt-1 block text-[12px] leading-relaxed text-muted-foreground">{desc}</span>
+        </span>
       </span>
-      <span className="mt-2 block text-[13px] font-bold leading-tight">{title}</span>
-      <span className="mt-1 block text-[11px] leading-relaxed text-muted-foreground">{desc}</span>
     </button>
   );
 }

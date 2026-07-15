@@ -30,7 +30,7 @@ export default function FormAside({ steps = [], note }) {
                 </span>
                 <div className="min-w-0">
                   <div className="text-[12.5px] font-bold text-navy leading-snug">{s.title}</div>
-                  <div className="mt-0.5 text-[11.5px] leading-relaxed text-muted-foreground">{s.desc}</div>
+                  <div className="mt-0.5 text-[12px] leading-relaxed text-muted-foreground">{s.desc}</div>
                 </div>
               </li>
             ))}
@@ -40,7 +40,7 @@ export default function FormAside({ steps = [], note }) {
         {note && (
           <div className="flex items-start gap-2.5 rounded-[22px] border border-border bg-card p-4 shadow-soft">
             <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" style={{ color: '#00B59E' }} />
-            <p className="text-[11.5px] leading-relaxed text-muted-foreground">{note}</p>
+            <p className="text-[12px] leading-relaxed text-muted-foreground">{note}</p>
           </div>
         )}
 

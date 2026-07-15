@@ -137,7 +137,7 @@ function PostProjectInner() {
         <div className="space-y-3.5">
           <div>
             <Label className="text-sm">
-              {t('location')} <span className="ms-1 text-[11px] font-normal text-muted-foreground">({t('optional')})</span>
+              {t('location')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>
             </Label>
             <Input value={data.location} onChange={e => update('location', e.target.value)} placeholder={t('locationPh')} className="h-11 mt-1.5" />
           </div>
@@ -150,7 +150,7 @@ function PostProjectInner() {
               aria-invalid={tried2 && !data.description}
               className={`mt-1.5 min-h-[110px] ${tried2 && !data.description ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
             />
-            {tried2 && !data.description && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+            {tried2 && !data.description && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
           </div>
           <div className="grid gap-3.5 sm:grid-cols-2">
             <div>
@@ -298,7 +298,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
             className="min-w-0 flex-1 bg-transparent px-3 text-base outline-none md:text-sm"
           />
         </div>
-        {showError && <div className="text-[11px] text-red-600 mt-1">{errMsg}</div>}
+        {showError && <div className="mt-1 text-[12px] text-red-600">{errMsg}</div>}
       </div>
     );
   }
@@ -318,7 +318,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
         aria-invalid={showError}
         className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
       />
-      {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
+      {showError && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
     </div>
   );
 }

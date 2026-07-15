@@ -47,6 +47,7 @@ The design goal is a fast, trustworthy Qatar construction marketplace that works
 - The homepage FAQ now uses one accessible reusable accordion with large mobile rows, 40 px brand icon tiles, keyboard navigation, and visible focus; contact actions share the same focus language.
 - Shared navigation now exposes active-page state, keeps brand and desktop links at least 44 px tall, localizes the language control, and honors reduced-motion preferences across every transition and animation.
 - Campaign landing pages now use compact mobile benefit rows, a connected vertical process, and passive category tags; privacy and measurement surfaces share the same touch-safe hierarchy and avoid covering the homepage app navigation.
+- Project and provider forms now keep guidance and validation at least 12 px, stack provider-role choices below 420 px, and delay two-column service options until 360 px so Arabic and English remain readable on the smallest supported phone.
 
 These are reusable website primitives for the future app. They do not approve or lock the authenticated app dashboard, account model, notification model, or final app navigation architecture.
 
