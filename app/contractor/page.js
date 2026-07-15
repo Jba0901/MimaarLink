@@ -6,13 +6,15 @@ import PageState from '@/components/PageState';
 import SuccessPanel from '@/components/SuccessPanel';
 import FormProgress from '@/components/FormProgress';
 import FormAside from '@/components/FormAside';
+import FileUploadDropzone from '@/components/FileUploadDropzone';
 import { useLang } from '@/lib/LangContext';
 import { CATEGORIES, CONSULTANT_CATEGORIES, CONSULTANT_GRADES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CheckCircle2, Upload, X, Loader2, FileText, Building2, ClipboardCheck } from 'lucide-react';
+import { CheckCircle2, X, Loader2, FileText, Building2, ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
@@ -271,13 +273,14 @@ function ContractorApplicationInner() {
               <Label className="text-sm">
                 {t('otherCategoryLabel')} <span className="text-red-600">*</span>
               </Label>
-              <textarea
+              <Textarea
                 value={data.otherCategoryDesc}
                 onChange={e => update('otherCategoryDesc', e.target.value)}
                 placeholder={t('otherCategoryPh')}
                 rows={3}
                 maxLength={300}
-                className={`w-full mt-1.5 rounded-xl border bg-background px-3.5 py-2.5 text-base shadow-sm outline-none focus-visible:ring-2 md:text-sm ${triedServices && !otherDescValid ? 'border-red-400 focus-visible:ring-red-400' : 'border-input focus-visible:ring-ring/60'}`}
+                aria-invalid={triedServices && !otherDescValid}
+                className="mt-1.5"
               />
               <div className="text-[11px] text-muted-foreground mt-1">{t('otherCategoryHelp')}</div>
               {triedServices && !otherDescValid && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
@@ -311,12 +314,15 @@ function ContractorApplicationInner() {
                   {it.label}{it.required && <span className="text-red-600 ms-1">*</span>}
                   {!it.required && <span className="text-muted-foreground ms-1">({t('optional')})</span>}
                 </Label>
-                <div className="text-[11px] text-muted-foreground mt-1">{t('uploadHint')}</div>
-                <label className={`interactive-card tap-highlight mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 dark:bg-[#00B59E]/10 ${showError ? 'border-red-400' : 'border-border hover:border-[#00B59E]/40'}`}>
-                  <Upload className="w-4 h-4 text-navy" />
-                  <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
-                  <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />
-                </label>
+                <FileUploadDropzone
+                  className="mt-1.5 min-h-[72px]"
+                  label={t('uploadFiles')}
+                  hint={t('uploadHint')}
+                  error={showError}
+                  multiple
+                  onChange={(e) => onFiles(e, it.key)}
+                  accept="image/*,application/pdf"
+                />
                 {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}
                 <div className="mt-1 space-y-1">
                   {filesForLabel.map((f, i) => (
@@ -382,7 +388,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
         <Label className="text-sm">
           {label} <span className="text-red-600">*</span>
         </Label>
-        <div dir="ltr" className={`mt-1.5 flex items-stretch h-11 rounded-md overflow-hidden border ${showError ? 'border-red-400' : 'border-input'} focus-within:ring-1 ${showError ? 'focus-within:ring-red-400' : 'focus-within:ring-ring'}`}>
+        <div dir="ltr" className={`mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-red-400 focus-within:ring-2 focus-within:ring-red-400/25' : 'border-input hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/60 focus-within:ring-2 focus-within:ring-[#00B59E]/25'}`}>
           <div className="px-3 flex items-center bg-secondary text-navy text-sm font-semibold select-none border-e border-input shrink-0">
             {PREFIX}
           </div>
@@ -390,7 +396,8 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
             value={localPart}
             onChange={e => handleLocalChange(e.target.value)}
             inputMode="tel"
-            className="flex-1 px-3 bg-background outline-none text-sm"
+            aria-invalid={showError}
+            className="min-w-0 flex-1 bg-transparent px-3 text-base outline-none md:text-sm"
           />
         </div>
         {showError && <div className="text-[11px] text-red-600 mt-1">{errMsg}</div>}
@@ -410,6 +417,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
         placeholder={placeholder}
         inputMode={inputMode}
         type={type}
+        aria-invalid={showError}
         className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
       />
       {showError && <div className="text-[11px] text-red-600 mt-1">{t('requireField')}</div>}

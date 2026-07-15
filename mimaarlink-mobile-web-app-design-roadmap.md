@@ -41,6 +41,7 @@ The design goal is a fast, trustworthy Qatar construction marketplace that works
 - Project and provider submissions now end in one reusable `SuccessPanel` with a consistent saved-link block, touch-safe copy control, and direct status action.
 - Toast feedback now follows MimaarLink's actual light/dark mode, official success/warning/error colors, and a header-safe mobile offset instead of a separate theme system.
 - Selects, option menus, admin tabs, and mobile sheets now share 44 px touch targets, rounded MimaarLink surfaces, official focus colors, and RTL-safe spacing.
+- Text fields, text areas, phone inputs, file uploads, and default cards now share one touch-safe form language with clear error states and a reusable keyboard-accessible upload dropzone.
 
 These are reusable website primitives for the future app. They do not approve or lock the authenticated app dashboard, account model, notification model, or final app navigation architecture.
 
