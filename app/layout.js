@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
             <MarketingAttribution />
           </Suspense>
           {children}
-          <Toaster richColors position="top-center" />
+          <Toaster />
         </LangProvider>
       </body>
     </html>

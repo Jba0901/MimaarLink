@@ -1,8 +1,9 @@
 'use client';
 import React, { useEffect, useState, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import PageState from '@/components/PageState';
+import SuccessPanel from '@/components/SuccessPanel';
 import FormProgress from '@/components/FormProgress';
 import FormAside from '@/components/FormAside';
 import { useLang } from '@/lib/LangContext';
@@ -12,8 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle2, Upload, X, Loader2, Copy, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal } from 'lucide-react';
+import { Upload, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
@@ -38,7 +38,6 @@ async function fileToDataURL(file) {
 
 function PostProjectInner() {
   const { t } = useLang();
-  const router = useRouter();
   const sp = useSearchParams();
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
@@ -248,29 +247,16 @@ function PostProjectInner() {
         />
       </div>
       ) : (
-      <div className="mx-auto max-w-xl py-2">
-      {step === 4 && createdId && (
-        <Card className="rounded-[24px] border-2 shadow-card motion-fade-up" style={{ borderColor: '#00B59E' }}>
-          <CardContent className="p-6 text-center">
-            <div className="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-3" style={{ background: 'rgba(0,181,158,0.14)' }}>
-              <CheckCircle2 className="w-7 h-7" style={{ color: '#00B59E' }} />
-            </div>
-            <h2 className="text-xl font-bold text-navy">{t('confirmation')}</h2>
-            <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{t('confirmationDesc')}</p>
-            <div className="mt-4 p-3 rounded-lg bg-secondary text-start">
-              <div className="text-[11px] text-muted-foreground mb-1">{t('saveLink')}</div>
-              <div className="flex items-center gap-2">
-                <code className="text-[11px] flex-1 truncate">/project/{createdId}</code>
-                <Button size="sm" variant="outline" aria-label={t('copyLink')} title={t('copyLink')} onClick={() => { navigator.clipboard.writeText(window.location.origin + '/project/' + createdId); toast.success(t('linkCopied')); }}>
-                  <Copy className="w-3.5 h-3.5" />
-                </Button>
-              </div>
-            </div>
-            <Button onClick={() => router.push('/project/' + createdId)} className="w-full mt-4 h-11" style={{ background: '#152B54' }}>{t('viewProject')}</Button>
-          </CardContent>
-        </Card>
-      )}
-      </div>
+        <SuccessPanel
+          title={t('confirmation')}
+          description={t('confirmationDesc')}
+          referenceLabel={t('saveLink')}
+          referencePath={`/project/${createdId}`}
+          copyLabel={t('copyLink')}
+          copiedLabel={t('linkCopied')}
+          actionHref={`/project/${createdId}`}
+          actionLabel={t('viewProject')}
+        />
       )}
     </AppShell>
   );

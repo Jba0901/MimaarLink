@@ -76,7 +76,7 @@
   .light-teal { background-color: #D0F2EE; }
   .amber { background-color: #FFB638; }
   .text-amber { color: #FFB638; }
-  .dark .text-teal { color: #5EEAD4; }
+  .dark .text-teal { color: #00B59E; }
 
   /* ---------- dark mode compatibility for existing page surfaces ---------- */
   .dark .bg-white { background-color: hsl(var(--card)) !important; }
@@ -92,7 +92,7 @@
   .dark input,
   .dark textarea,
   .dark select {
-    background-color: #0B1624;
+    background-color: #0D1B2A;
     color: hsl(var(--foreground));
   }
   .dark input::placeholder,
@@ -437,21 +437,21 @@
     border-color: rgba(0,181,158,0.50);
   }
   .dark .provider-type-card {
-    background: rgba(11,22,36,0.82);
+    background: rgba(13,27,42,0.82);
     border-color: rgba(248,250,252,0.12);
   }
   .dark .provider-type-card.is-active {
-    background: linear-gradient(180deg, rgba(0,181,158,0.16), rgba(11,22,36,0.96));
-    border-color: rgba(94,234,212,0.42);
-    box-shadow: 0 16px 34px -26px rgba(94,234,212,0.42);
+    background: linear-gradient(180deg, rgba(0,181,158,0.16), rgba(13,27,42,0.96));
+    border-color: rgba(0,181,158,0.42);
+    box-shadow: 0 16px 34px -26px rgba(0,181,158,0.42);
   }
   .form-primary-btn {
-    background: linear-gradient(180deg, #1D3A66, #152B54) !important;
+    background: #152B54 !important;
     color: #fff !important;
   }
   .dark .form-primary-btn {
-    background: linear-gradient(180deg, #1E3A57, #102137) !important;
-    border: 1px solid rgba(94,234,212,0.22) !important;
+    background: #152B54 !important;
+    border: 1px solid rgba(0,181,158,0.28) !important;
   }
   .cta-press { position: relative; overflow: hidden; transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease; }
   .cta-press:hover { filter: brightness(1.04); }

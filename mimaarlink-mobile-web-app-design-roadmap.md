@@ -38,6 +38,8 @@ The design goal is a fast, trustworthy Qatar construction marketplace that works
 - Focused acquisition and form routes can intentionally hide the bottom navigation while retaining the same header, brand, and interaction rules.
 - Dynamic routes and admin lists now use one localized `PageState` pattern for loading, empty, and missing-data states instead of blank screens or bare spinners.
 - Dialogs, confirmation alerts, and the future drawer primitive now share phone-safe margins, rounded surfaces, readable RTL/LTR headers, full-width mobile actions, and 44 px close controls.
+- Project and provider submissions now end in one reusable `SuccessPanel` with a consistent saved-link block, touch-safe copy control, and direct status action.
+- Toast feedback now follows MimaarLink's actual light/dark mode, official success/warning/error colors, and a header-safe mobile offset instead of a separate theme system.
 
 These are reusable website primitives for the future app. They do not approve or lock the authenticated app dashboard, account model, notification model, or final app navigation architecture.
 

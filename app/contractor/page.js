@@ -3,6 +3,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import PageState from '@/components/PageState';
+import SuccessPanel from '@/components/SuccessPanel';
 import FormProgress from '@/components/FormProgress';
 import FormAside from '@/components/FormAside';
 import { useLang } from '@/lib/LangContext';
@@ -10,9 +11,8 @@ import { CATEGORIES, CONSULTANT_CATEGORIES, CONSULTANT_GRADES } from '@/lib/i18n
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CheckCircle2, Upload, X, Loader2, Copy, FileText, Building2, ClipboardCheck } from 'lucide-react';
+import { CheckCircle2, Upload, X, Loader2, FileText, Building2, ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
@@ -159,30 +159,19 @@ function ContractorApplicationInner() {
   ];
 
   if (done) return (
-    <AppShell hideNav>
-      <Card className="rounded-[24px] border-2 mt-4 shadow-card motion-fade-up" style={{ borderColor: '#00B59E' }}>
-        <CardContent className="p-6 text-center">
-          <div className="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-3" style={{ background: 'rgba(0,181,158,0.14)' }}>
-            <CheckCircle2 className="w-7 h-7" style={{ color: '#00B59E' }} />
-          </div>
-          <h2 className="text-xl font-bold text-navy">{t('contractorDone')}</h2>
-          <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{isConsultant ? t('consultantDoneDesc') : t('contractorDoneDesc')}</p>
-          {createdId && (
-            <>
-              <div className="mt-4 p-3 rounded-lg bg-secondary text-start">
-                <div className="text-[11px] text-muted-foreground mb-1">{t('saveProviderLink')}</div>
-                <div className="flex items-center gap-2">
-                  <code className="text-[11px] flex-1 truncate">/contractor-status/{createdId}</code>
-                  <Button size="sm" variant="outline" aria-label={t('copyLink')} title={t('copyLink')} onClick={() => { navigator.clipboard.writeText(window.location.origin + '/contractor-status/' + createdId); toast.success(t('linkCopied')); }}>
-                    <Copy className="w-3.5 h-3.5" />
-                  </Button>
-                </div>
-              </div>
-              <Button onClick={() => window.location.href = '/contractor-status/' + createdId} className="form-primary-btn w-full mt-4 h-11">{t('viewProviderStatus')}</Button>
-            </>
-          )}
-        </CardContent>
-      </Card>
+    <AppShell hideFooter hideNav wide>
+      {createdId && (
+        <SuccessPanel
+          title={t('contractorDone')}
+          description={isConsultant ? t('consultantDoneDesc') : t('contractorDoneDesc')}
+          referenceLabel={t('saveProviderLink')}
+          referencePath={`/contractor-status/${createdId}`}
+          copyLabel={t('copyLink')}
+          copiedLabel={t('linkCopied')}
+          actionHref={`/contractor-status/${createdId}`}
+          actionLabel={t('viewProviderStatus')}
+        />
+      )}
     </AppShell>
   );
 
@@ -265,8 +254,8 @@ function ContractorApplicationInner() {
                 <button key={c} type="button" onClick={() => toggleCat(c)}
                   className={`interactive-card tap-highlight min-h-[46px] text-start text-[12.5px] font-semibold rounded-xl border px-3 py-2 ${
                     data.categories.includes(c)
-                      ? 'border-[#00B59E]/50 bg-secondary text-navy shadow-soft dark:border-[#5EEAD4]/45 dark:bg-[#0B8E7C]/15'
-                      : 'border-border bg-card text-navy hover:border-[#00B59E]/35 dark:bg-[#0B1624]/75'
+                      ? 'border-[#00B59E]/50 bg-[#D0F2EE]/55 text-navy shadow-soft dark:border-[#00B59E]/45 dark:bg-[#00B59E]/15'
+                      : 'border-border bg-card text-navy hover:border-[#00B59E]/35 dark:bg-[#0D1B2A]/75'
                   }`}>
                   <span className="flex items-center justify-between gap-2">
                     <span>{t(`cat_${c}`)}</span>
@@ -323,7 +312,7 @@ function ContractorApplicationInner() {
                   {!it.required && <span className="text-muted-foreground ms-1">({t('optional')})</span>}
                 </Label>
                 <div className="text-[11px] text-muted-foreground mt-1">{t('uploadHint')}</div>
-                <label className={`interactive-card tap-highlight mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 dark:bg-[#0B8E7C]/10 ${showError ? 'border-red-400' : 'border-border hover:border-[#00B59E]/40'}`}>
+                <label className={`interactive-card tap-highlight mt-1.5 flex items-center justify-center gap-2 h-16 rounded-xl border-2 border-dashed cursor-pointer bg-secondary/50 dark:bg-[#00B59E]/10 ${showError ? 'border-red-400' : 'border-border hover:border-[#00B59E]/40'}`}>
                   <Upload className="w-4 h-4 text-navy" />
                   <span className="text-sm text-navy font-medium">{t('uploadFiles')}</span>
                   <input type="file" multiple className="hidden" onChange={(e) => onFiles(e, it.key)} accept="image/*,application/pdf" />
@@ -436,7 +425,7 @@ function ProviderTypeButton({ active, icon: Icon, title, desc, onClick }) {
       className={`provider-type-card interactive-card tap-highlight rounded-2xl border p-3 text-start transition ${active ? 'is-active shadow-soft' : ''}`}
     >
       <span className="flex items-center justify-between gap-2">
-        <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${active ? 'bg-[#D0F2EE] text-[#0B8E7C] dark:bg-[#0B8E7C]/25 dark:text-[#5EEAD4]' : 'bg-muted text-muted-foreground'}`}>
+        <span className={`flex h-9 w-9 items-center justify-center rounded-xl ${active ? 'bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/20 dark:text-[#00B59E]' : 'bg-muted text-muted-foreground'}`}>
           <Icon className="h-4 w-4" />
         </span>
         {active && <CheckCircle2 className="h-4 w-4 shrink-0 text-teal" />}
