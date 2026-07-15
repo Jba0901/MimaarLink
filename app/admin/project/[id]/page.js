@@ -288,7 +288,7 @@ export default function AdminProjectPage() {
                 <div className="min-w-0 flex-1 me-2">
                   <span className="block text-navy truncate">{cmap[inv.contractorId]?.companyName || inv.contractorId}</span>
                   {cmap[inv.contractorId] && (
-                    <span className="block text-[10px] text-muted-foreground">{providerTypeLabel(cmap[inv.contractorId], t)}</span>
+                    <span className="block text-[11px] text-muted-foreground">{providerTypeLabel(cmap[inv.contractorId], t)}</span>
                   )}
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
@@ -314,14 +314,14 @@ export default function AdminProjectPage() {
                 <div key={b.id} className="rounded-xl bg-secondary p-2.5">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-semibold text-navy text-sm truncate">{cmap[b.contractorId]?.companyName}</span>
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="min-w-0 flex-1 basis-[120px] truncate text-sm font-semibold text-navy">{cmap[b.contractorId]?.companyName}</span>
                         {cmap[b.contractorId] && (
-                          <span className="text-[10px] bg-white text-navy px-1.5 py-0.5 rounded-full">{providerTypeLabel(cmap[b.contractorId], t)}</span>
+                          <span className="shrink-0 rounded-full bg-white px-1.5 py-0.5 text-[11px] text-navy">{providerTypeLabel(cmap[b.contractorId], t)}</span>
                         )}
                         {fileCount > 0 && (
-                          <span className="inline-flex items-center gap-0.5 text-[10px] bg-white text-navy px-1.5 py-0.5 rounded-full">
-                            <Paperclip className="w-2.5 h-2.5" />{fileCount}
+                          <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-white px-1.5 py-0.5 text-[11px] text-navy">
+                            <Paperclip className="h-3 w-3" />{fileCount}
                           </span>
                         )}
                       </div>

@@ -181,7 +181,7 @@ export default function AdminContractorPage() {
           </div>
           {serviceKeys.includes('other') && c.otherCategoryDesc && (
             <div className="pt-2 mt-1 border-t border-border">
-              <div className="text-[10px] uppercase tracking-wide font-semibold text-muted-foreground">{t('otherCategoryLabel')}</div>
+              <div className="text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">{t('otherCategoryLabel')}</div>
               <div className="text-[12px] text-navy mt-0.5 whitespace-pre-wrap leading-relaxed">{c.otherCategoryDesc}</div>
             </div>
           )}
@@ -257,9 +257,9 @@ export default function AdminContractorPage() {
             <div className="space-y-1.5">
               {c.documents.map((f, i) => (
                 <a key={i} href={f.data} download={f.name} className="flex min-h-11 items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-xs text-navy">
-                  <FileText className="w-3.5 h-3.5" />
-                  <span className="truncate flex-1">{f.name}</span>
-                  <span className="text-[10px] text-muted-foreground">{f.label}</span>
+                  <FileText className="h-3.5 w-3.5 shrink-0" />
+                  <span className="min-w-0 flex-1 truncate">{f.name}</span>
+                  <span className="max-w-[38%] shrink-0 truncate text-[12px] text-muted-foreground">{f.label}</span>
                 </a>
               ))}
             </div>

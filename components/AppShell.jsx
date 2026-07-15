@@ -477,8 +477,8 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
       }
       style={active ? { background: '#00B59E' } : undefined}
     >
-      <Icon className="h-[18px] w-[18px] shrink-0" />
-      <span className="max-w-full truncate text-[10px] font-bold leading-tight sm:text-[11px]">{label}</span>
+      <Icon className="h-[19px] w-[19px] shrink-0" />
+      <span className="max-w-full truncate text-[11px] font-bold leading-tight">{label}</span>
     </Link>
   );
 }
