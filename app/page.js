@@ -81,29 +81,32 @@ export default function HomePage() {
       <MarketBand t={t} />
 
       {/* ============ PROCESS STEPPER ============ */}
-      <section className="py-14 lg:py-20">
+      <section className="py-12 lg:py-20">
         <div className="container-x">
           <Reveal>
-            <h2 className="display-title text-[26px] sm:text-[34px] text-center mb-12">{t('howItWorks')}</h2>
+            <h2 className="mb-8 text-center display-title text-[26px] sm:mb-12 sm:text-[34px]">{t('howItWorks')}</h2>
           </Reveal>
           <div className="relative mx-auto max-w-5xl">
             <div className="hidden sm:block absolute top-8 inset-x-[16%] h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-            <div className="grid sm:grid-cols-3 gap-8 sm:gap-6">
+            <div className="grid gap-0 sm:grid-cols-3 sm:gap-6">
               {[
                 { icon: FileText, title: t('step1Title').replace(/^[\d.\s٠-٩]+/, ''), desc: t('step1Desc') },
                 { icon: Cpu, title: t('step2Title').replace(/^[\d.\s٠-٩]+/, ''), desc: t('step2Desc') },
                 { icon: GitCompare, title: t('step3Title').replace(/^[\d.\s٠-٩]+/, ''), desc: t('step3Desc') },
               ].map((s, i) => (
                 <Reveal key={i} delay={i * 110}>
-                  <div className="relative text-center px-3">
-                    <div className="relative z-10 mx-auto w-16 h-16 rounded-2xl bg-white border border-border shadow-card flex items-center justify-center">
-                      <s.icon className="w-7 h-7" style={{ color: '#00B59E' }} />
+                  <div className={`relative flex gap-3.5 px-1 text-start sm:block sm:px-3 sm:text-center ${i < 2 ? 'pb-6 sm:pb-0' : ''}`}>
+                    {i < 2 && <span className="absolute bottom-0 start-7 top-14 w-px bg-border sm:hidden" aria-hidden="true" />}
+                    <div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-border bg-white shadow-card sm:mx-auto sm:h-16 sm:w-16">
+                      <s.icon className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: '#00B59E' }} />
                       <span className="absolute -top-2 w-6 h-6 rounded-full navy text-white text-[11px] font-bold flex items-center justify-center shadow-soft" style={{ insetInlineEnd: '-8px' }}>
                         {i + 1}
                       </span>
                     </div>
-                    <h3 className="mt-5 text-[17px] font-bold text-navy leading-snug">{s.title}</h3>
-                    <p className="mt-2 text-[13.5px] leading-relaxed text-muted-foreground max-w-[260px] mx-auto">{s.desc}</p>
+                    <div className="min-w-0 flex-1 pt-1 sm:pt-0">
+                      <h3 className="text-[16px] font-bold leading-snug text-navy sm:mt-5 sm:text-[17px]">{s.title}</h3>
+                      <p className="mt-1 text-[13.5px] leading-relaxed text-muted-foreground sm:mx-auto sm:mt-2 sm:max-w-[260px]">{s.desc}</p>
+                    </div>
                   </div>
                 </Reveal>
               ))}
@@ -144,10 +147,10 @@ export default function HomePage() {
       </section>
 
       {/* ============ WHY MIMAARLINK (tinted band) ============ */}
-      <section className="surface-band py-14 lg:py-20">
+      <section className="surface-band py-12 lg:py-20">
         <div className="container-x">
           <Reveal>
-            <div className="text-center max-w-2xl mx-auto mb-11">
+            <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-11">
               <h2 className="display-title text-[26px] sm:text-[34px]">{t('whyTitle')}</h2>
               <p className="mt-3 text-[15px] text-muted-foreground leading-relaxed">{t('whySubtitle')}</p>
             </div>
@@ -160,12 +163,14 @@ export default function HomePage() {
               { icon: MapPin, title: t('why4Title'), desc: t('why4Desc') },
             ].map((w, i) => (
               <Reveal key={i} delay={i * 90}>
-                <div className="interactive-card h-full rounded-[22px] border border-border bg-white p-6 shadow-soft hover:border-[#00B59E]/40">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl" style={{ background: 'rgba(0,181,158,0.10)' }}>
+                <div className="interactive-card flex h-full items-start gap-4 rounded-[22px] border border-border bg-white p-5 shadow-soft hover:border-[#00B59E]/40 sm:block sm:p-6">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl sm:mb-5 sm:h-12 sm:w-12" style={{ background: 'rgba(0,181,158,0.10)' }}>
                     <w.icon className="h-[22px] w-[22px]" style={{ color: '#00B59E' }} />
                   </span>
-                  <h3 className="mt-5 text-[16px] font-bold text-navy leading-snug">{w.title}</h3>
-                  <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">{w.desc}</p>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-[15.5px] font-bold leading-snug text-navy sm:text-[16px]">{w.title}</h3>
+                    <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground sm:mt-2">{w.desc}</p>
+                  </div>
                 </div>
               </Reveal>
             ))}

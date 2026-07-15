@@ -48,6 +48,7 @@ The design goal is a fast, trustworthy Qatar construction marketplace that works
 - Shared navigation now exposes active-page state, keeps brand and desktop links at least 44 px tall, localizes the language control, and honors reduced-motion preferences across every transition and animation.
 - Campaign landing pages now use compact mobile benefit rows, a connected vertical process, and passive category tags; privacy and measurement surfaces share the same touch-safe hierarchy and avoid covering the homepage app navigation.
 - Project and provider forms now keep guidance and validation at least 12 px, stack provider-role choices below 420 px, and delay two-column service options until 360 px so Arabic and English remain readable on the smallest supported phone.
+- The homepage process now becomes a connected RTL-safe vertical journey on phones, and its trust benefits become compact icon-and-copy rows while retaining the established desktop grids.
 
 These are reusable website primitives for the future app. They do not approve or lock the authenticated app dashboard, account model, notification model, or final app navigation architecture.
 
