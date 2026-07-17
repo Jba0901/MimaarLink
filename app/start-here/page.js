@@ -14,17 +14,17 @@ export default function StartHerePage() {
 
   return (
     <AppShell hideNav hideFooter wide>
-      <div className="v2-ambient -mx-4 sm:-mx-6 px-4 sm:px-6 flex min-h-[calc(100vh-130px)] flex-col justify-center py-8">
+      <div className="v2-ambient -mx-4 flex min-h-[calc(100svh-120px)] flex-col justify-center px-4 py-5 sm:-mx-6 sm:min-h-[calc(100vh-130px)] sm:px-6 sm:py-8">
         <div className="relative z-10 mx-auto w-full max-w-md sm:max-w-3xl lg:max-w-4xl">
-          <div className="mb-8 text-center motion-fade-up">
-            <div className="eyebrow justify-center mb-3">{t('startEyebrow')}</div>
+          <div className="mb-5 text-center motion-fade-up sm:mb-8">
+            <div className="eyebrow mb-2.5 justify-center sm:mb-3">{t('startEyebrow')}</div>
             <h1 className="display-title text-[30px] sm:text-[36px]">{t('startTitle')}</h1>
-            <p className="mx-auto mt-3 max-w-[420px] text-[13.5px] sm:text-[14.5px] leading-relaxed text-muted-foreground">
+            <p className="mx-auto mt-2.5 max-w-[420px] text-[13.5px] leading-relaxed text-muted-foreground sm:mt-3 sm:text-[14.5px]">
               {t('startSubtitle')}
             </p>
           </div>
 
-          <div className="grid gap-3 motion-fade-up motion-delay-1 sm:grid-cols-3">
+          <div className="grid gap-2.5 motion-fade-up motion-delay-1 sm:grid-cols-3 sm:gap-3">
             <SimpleChoice
               href="/post-project"
               icon={Building2}
@@ -54,8 +54,8 @@ export default function StartHerePage() {
             />
           </div>
 
-          <div className="mt-7 text-center motion-fade-up motion-delay-2">
-            <p className="mb-2.5 text-[12.5px] font-medium text-muted-foreground">{t('startHelpTitle')}</p>
+          <div className="mt-5 text-center motion-fade-up motion-delay-2 sm:mt-7">
+            <p className="mb-2 text-[12.5px] font-medium text-muted-foreground sm:mb-2.5">{t('startHelpTitle')}</p>
             <a
               href="https://wa.me/97466259219"
               target="_blank"
@@ -82,19 +82,27 @@ function SimpleChoice({ href, icon: Icon, title, desc, tone, pathType, Arrow }) 
       className="block h-full cursor-pointer tap-highlight"
     >
       <article
-        className="group path-card interactive-card flex h-full flex-col rounded-[22px] border p-5 shadow-soft hover:border-[#00B59E]/35 hover:shadow-card"
+        className="group path-card interactive-card relative flex h-full min-h-[104px] items-center gap-3 rounded-[20px] border p-3.5 shadow-soft hover:border-[#00B59E]/35 hover:shadow-card sm:min-h-0 sm:flex-col sm:items-stretch sm:gap-0 sm:rounded-[22px] sm:p-5"
         data-tone={tone}
       >
-        <div className="flex items-center justify-between gap-3">
-          <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-[18px]" style={{ background: 'var(--path-accent-soft)', color: 'var(--path-accent)' }}>
-            <Icon className="h-[23px] w-[23px]" />
-          </span>
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-soft transition group-hover:scale-105" style={{ background: 'var(--path-accent)' }}>
-            <Arrow />
-          </span>
+        <span
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl sm:h-[52px] sm:w-[52px] sm:rounded-[18px]"
+          style={{ background: 'var(--path-accent-soft)', color: 'var(--path-accent)' }}
+          aria-hidden="true"
+        >
+          <Icon className="h-[22px] w-[22px] sm:h-[23px] sm:w-[23px]" />
+        </span>
+        <div className="min-w-0 flex-1 sm:mt-4">
+          <h2 className="text-[16px] font-extrabold leading-tight text-navy sm:text-[17px]">{title}</h2>
+          <p className="mt-1 text-[12.5px] leading-5 text-muted-foreground sm:mt-1.5 sm:leading-relaxed">{desc}</p>
         </div>
-        <h2 className="mt-4 text-[17px] font-extrabold leading-tight text-navy">{title}</h2>
-        <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">{desc}</p>
+        <span
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-soft transition group-hover:scale-105 sm:absolute sm:top-5"
+          style={{ background: 'var(--path-accent)', insetInlineEnd: '1.25rem' }}
+          aria-hidden="true"
+        >
+          <Arrow />
+        </span>
       </article>
     </Link>
   );
