@@ -688,6 +688,52 @@
   }
 }
 
+@media (max-width: 1023px) and (max-height: 480px) {
+  .project-form-title {
+    margin-bottom: 0.125rem !important;
+    font-size: 1.375rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .project-form-subtitle,
+  .form-progress-description {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .project-form-subtitle {
+    margin-bottom: 0.5rem !important;
+    font-size: 0.75rem !important;
+    line-height: 1.125rem !important;
+  }
+
+  .form-progress {
+    margin-bottom: 0.75rem !important;
+    padding: 0.75rem !important;
+    border-radius: 1rem !important;
+  }
+
+  .form-progress-description {
+    margin-top: 0.375rem !important;
+    line-height: 1.125rem !important;
+  }
+
+  .form-progress-track {
+    margin-top: 0.5rem !important;
+  }
+
+  .project-category-summary {
+    margin-bottom: 0.75rem !important;
+    padding: 0.625rem !important;
+  }
+
+  .project-contact-heading {
+    display: none;
+  }
+}
+
 @media (max-width: 1023px) and (max-height: 480px) and (orientation: landscape) {
   .mobile-bottom-nav {
     display: none;

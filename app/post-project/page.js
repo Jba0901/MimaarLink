@@ -45,7 +45,7 @@ function SelectedCategorySummary({ category, t, onChange }) {
   return (
     <section
       aria-label={t('selectedCategory')}
-      className="mb-4 flex min-w-0 items-center gap-3 rounded-2xl border border-[#00B59E]/25 bg-[#D0F2EE]/35 p-3 shadow-soft dark:bg-[#00B59E]/10"
+      className="project-category-summary mb-4 flex min-w-0 items-center gap-3 rounded-2xl border border-[#00B59E]/25 bg-[#D0F2EE]/35 p-3 shadow-soft dark:bg-[#00B59E]/10"
     >
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] dark:bg-[#00B59E]/15">
         <Icon className="h-5 w-5 text-teal" aria-hidden="true" />
@@ -137,10 +137,10 @@ function PostProjectInner() {
   return (
     <AppShell hideFooter hideNav wide>
       {step < 4 ? (
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
-        <div className="w-full lg:max-w-2xl">
-          <h1 className="display-title mb-1 break-words text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{t('postTitle')}</h1>
-          <p className="mb-3 break-words text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-4 sm:text-[13.5px]">{t('subtitle')}</p>
+      <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
+        <div className="project-form-flow min-w-0 w-full lg:max-w-2xl">
+          <h1 className="project-form-title display-title mb-1 break-words text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{t('postTitle')}</h1>
+          <p className="project-form-subtitle mb-3 break-words text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-4 sm:text-[13.5px]">{t('subtitle')}</p>
           <FormProgress
             step={step}
             total={3}
@@ -242,7 +242,7 @@ function PostProjectInner() {
               </div>
             )}
           </div>
-          <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
+          <div className="grid gap-2 pt-2 min-[280px]:grid-cols-2">
             <Button variant="outline" onClick={() => showStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={() => { setTried2(true); if (data.description) showStep(3); else focusFormField('project-description'); }} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
           </div>
@@ -251,7 +251,7 @@ function PostProjectInner() {
 
       {step === 3 && (
         <div className="space-y-3.5">
-          <h2 className="text-base font-semibold text-navy">{t('contactDetails')}</h2>
+          <h2 className="project-contact-heading text-base font-semibold text-navy">{t('contactDetails')}</h2>
           <div className="grid gap-3.5 sm:grid-cols-2">
             <RequiredField id="project-name" label={t('name')} value={data.name} onChange={v => update('name', v)} tried={tried3} t={t} />
             <div>
@@ -284,7 +284,7 @@ function PostProjectInner() {
               </NativeSelect>
             </div>
           </div>
-          <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
+          <div className="grid gap-2 pt-2 min-[280px]:grid-cols-2">
             <Button variant="outline" onClick={() => showStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
               {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submit')}

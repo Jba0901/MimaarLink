@@ -5,7 +5,7 @@ import React from 'react';
 export default function FormProgress({ step, total, label, title, desc }) {
   return (
     <section
-      className="mb-4 rounded-[20px] border border-border bg-card p-4 shadow-soft motion-fade-up sm:mb-5 sm:rounded-3xl sm:p-5 sm:shadow-card"
+      className="form-progress mb-4 rounded-[20px] border border-border bg-card p-4 shadow-soft motion-fade-up sm:mb-5 sm:rounded-3xl sm:p-5 sm:shadow-card"
       role="progressbar"
       aria-valuemin={1}
       aria-valuemax={total}
@@ -32,8 +32,8 @@ export default function FormProgress({ step, total, label, title, desc }) {
           <h2 className="display-title mt-0.5 break-words text-[17px] leading-tight sm:text-[19px]">{title}</h2>
         </div>
       </div>
-      {desc && <p className="mt-2.5 break-words text-[12.5px] leading-relaxed text-muted-foreground sm:mt-3">{desc}</p>}
-      <div className="mt-3 flex items-center gap-1.5">
+      {desc && <p className="form-progress-description mt-2.5 break-words text-[12.5px] leading-relaxed text-muted-foreground sm:mt-3">{desc}</p>}
+      <div className="form-progress-track mt-3 flex items-center gap-1.5">
         {Array.from({ length: total }, (_, i) => {
           const n = i + 1;
           const done = n <= step;
