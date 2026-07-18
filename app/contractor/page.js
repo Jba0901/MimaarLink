@@ -296,9 +296,9 @@ function ContractorApplicationInner() {
               <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
             </div>
           </div>
-          <div className="flex gap-2 pt-2">
-            <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11 cta-press">{t('back')}</Button>
-            <Button onClick={goNextFromServices} className="form-primary-btn flex-1 h-11 cta-press">{t('next')}</Button>
+          <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
+            <Button variant="outline" onClick={() => setStep(1)} className="h-11 w-full cta-press">{t('back')}</Button>
+            <Button onClick={goNextFromServices} className="form-primary-btn h-11 w-full cta-press">{t('next')}</Button>
           </div>
         </div>
       )}
@@ -345,9 +345,9 @@ function ContractorApplicationInner() {
             );
           })}
 
-          <div className="flex gap-2 pt-2">
-            <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11 cta-press">{t('back')}</Button>
-            <Button onClick={submit} disabled={submitting} className="form-primary-btn flex-1 h-11 cta-press">
+          <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
+            <Button variant="outline" onClick={() => setStep(2)} className="h-11 w-full cta-press">{t('back')}</Button>
+            <Button onClick={submit} disabled={submitting} className="form-primary-btn h-11 w-full cta-press">
               {submitting ? <><Loader2 className="w-4 h-4 animate-spin me-2" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>

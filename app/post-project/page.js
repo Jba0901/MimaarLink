@@ -192,9 +192,9 @@ function PostProjectInner() {
               </div>
             )}
           </div>
-          <div className="flex gap-2 pt-2">
-            <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-11 cta-press">{t('back')}</Button>
-            <Button onClick={() => { setTried2(true); if (data.description) setStep(3); }} className="flex-1 h-11 cta-press" style={{ background: '#152B54' }}>{t('next')}</Button>
+          <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
+            <Button variant="outline" onClick={() => setStep(1)} className="h-11 w-full cta-press">{t('back')}</Button>
+            <Button onClick={() => { setTried2(true); if (data.description) setStep(3); }} className="h-11 w-full cta-press" style={{ background: '#152B54' }}>{t('next')}</Button>
           </div>
         </div>
       )}
@@ -232,9 +232,9 @@ function PostProjectInner() {
               </Select>
             </div>
           </div>
-          <div className="flex gap-2 pt-2">
-            <Button variant="outline" onClick={() => setStep(2)} className="flex-1 h-11 cta-press">{t('back')}</Button>
-            <Button onClick={submit} disabled={submitting} className="flex-1 h-11 cta-press" style={{ background: '#152B54' }}>
+          <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
+            <Button variant="outline" onClick={() => setStep(2)} className="h-11 w-full cta-press">{t('back')}</Button>
+            <Button onClick={submit} disabled={submitting} className="h-11 w-full cta-press" style={{ background: '#152B54' }}>
               {submitting ? <><Loader2 className="w-4 h-4 animate-spin me-1.5" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>
