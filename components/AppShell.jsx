@@ -197,7 +197,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         {bleed ? (
           children
         ) : (
-          <div className={`${container} mx-auto px-4 sm:px-6 lg:px-8 py-4`}>{children}</div>
+          <div className={`${container} app-content-x mx-auto py-4`}>{children}</div>
         )}
         {!hideFooter && <SiteFooter flush={flushFooter} />}
       </main>
@@ -361,7 +361,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle, clos
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="min-h-full px-5 py-5 sm:px-6">
+        <div className="menu-drawer-content min-h-full">
           <div className="flex items-center justify-between gap-3">
             <Link href="/" className="flex min-h-11 items-center gap-2.5 rounded-xl min-w-0 tap-highlight">
               <Logo className="h-9 w-9" />

@@ -220,7 +220,10 @@
 
   /* ---------- misc ---------- */
   .cream { background-color: #F5F4F1; }
-  .site-header { background-color: rgba(255,255,255,0.72); }
+  .site-header {
+    background-color: rgba(255,255,255,0.72);
+    padding-top: env(safe-area-inset-top);
+  }
   .site-header.is-scrolled { background-color: rgba(255,255,255,0.88); }
   .dark .site-header { background-color: rgba(7,17,29,0.76); }
   .dark .site-header.is-scrolled { background-color: rgba(7,17,29,0.92); }
@@ -248,11 +251,45 @@
     width: 100%;
     max-width: 80rem; /* 1280px */
     margin-inline: auto;
-    padding-inline: 1rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
   }
-  @media (min-width: 640px) { .container-x { padding-inline: 1.5rem; } }
-  @media (min-width: 1024px) { .container-x { padding-inline: 2.5rem; } }
-  @media (min-width: 1280px) { .container-x { padding-inline: 3rem; } }
+  .app-content-x {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  .menu-drawer-content {
+    padding: max(1.25rem, env(safe-area-inset-top)) max(1.25rem, env(safe-area-inset-right)) max(1.25rem, env(safe-area-inset-bottom)) 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container-x {
+      padding-left: max(1.5rem, env(safe-area-inset-left));
+      padding-right: max(1.5rem, env(safe-area-inset-right));
+    }
+    .app-content-x {
+      padding-left: max(1.5rem, env(safe-area-inset-left));
+      padding-right: max(1.5rem, env(safe-area-inset-right));
+    }
+    .menu-drawer-content {
+      padding: max(1.5rem, env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) 1.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-x {
+      padding-left: max(2.5rem, env(safe-area-inset-left));
+      padding-right: max(2.5rem, env(safe-area-inset-right));
+    }
+    .app-content-x {
+      padding-left: max(2rem, env(safe-area-inset-left));
+      padding-right: max(2rem, env(safe-area-inset-right));
+    }
+  }
+  @media (min-width: 1280px) {
+    .container-x {
+      padding-left: max(3rem, env(safe-area-inset-left));
+      padding-right: max(3rem, env(safe-area-inset-right));
+    }
+  }
   @media (min-width: 1536px) { .container-x { max-width: 87.5rem; } /* 1400px */ }
 
   /* ---------- CTA arrow nudge on hover (RTL-safe) ---------- */
