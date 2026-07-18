@@ -206,7 +206,7 @@ export default function AdminProjectPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4 space-y-2">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('projectDetailsTitle')}</div>
+          <div className="text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('projectDetailsTitle')}</div>
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
             <CalendarClock className="h-3.5 w-3.5 shrink-0" />
             <span className="min-w-0 break-words">{t('applicationTime')}: {formatAdminTime(project.createdAt, lang)}</span>
@@ -237,7 +237,7 @@ export default function AdminProjectPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4 space-y-2">
-          <Label className="text-xs uppercase tracking-wide font-semibold text-muted-foreground">{t('changeStatus')}</Label>
+          <Label className="text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('changeStatus')}</Label>
           <Select value={statusDraft || project.status} onValueChange={changeStatus}>
             <SelectTrigger className="h-11"><SelectValue /></SelectTrigger>
             <SelectContent>{PROJECT_STATUSES.map(s => <SelectItem key={s} value={s}>{t(`status_${s}`)}</SelectItem>)}</SelectContent>
@@ -287,7 +287,7 @@ export default function AdminProjectPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4">
-          <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('invitedProviders')} ({invites.length})</div>
+          <div className="mb-3 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('invitedProviders')} ({invites.length})</div>
           {invites.length === 0 && <PageState kind="empty" compact title={t('noInvitesYet')} />}
           <div className="space-y-1.5">
             {invites.map(inv => (
@@ -312,7 +312,7 @@ export default function AdminProjectPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4">
-          <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('bids')} ({bids.length})</div>
+          <div className="mb-3 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('bids')} ({bids.length})</div>
           {bids.length === 0 && <PageState kind="empty" compact title={t('noAdminBidsYet')} />}
           <div className="space-y-2">
             {bids.map(b => {
@@ -334,11 +334,11 @@ export default function AdminProjectPage() {
                       </div>
                       <div className="mt-2 grid grid-cols-2 gap-1.5">
                         <div className="min-w-0 rounded-xl border border-border/70 bg-card p-2.5">
-                          <div className="flex items-center gap-1 text-[12px] font-semibold uppercase tracking-wide text-muted-foreground"><Wallet className="h-3 w-3 shrink-0" aria-hidden="true" />{t('price')}</div>
+                          <div className="flex items-center gap-1 text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide"><Wallet className="h-3 w-3 shrink-0" aria-hidden="true" />{t('price')}</div>
                           <div className="mt-0.5 break-words text-[13px] font-bold leading-snug text-navy">{b.price.toLocaleString()} <span className="text-[12px] font-normal text-muted-foreground">{t('currencyQar')}</span></div>
                         </div>
                         <div className="min-w-0 rounded-xl border border-border/70 bg-card p-2.5">
-                          <div className="flex items-center gap-1 text-[12px] font-semibold uppercase tracking-wide text-muted-foreground"><Clock className="h-3 w-3 shrink-0" aria-hidden="true" />{t('timeline')}</div>
+                          <div className="flex items-center gap-1 text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide"><Clock className="h-3 w-3 shrink-0" aria-hidden="true" />{t('timeline')}</div>
                           <div className="mt-0.5 break-words text-[13px] font-bold leading-snug text-navy">{b.timeline || '-'}</div>
                         </div>
                       </div>
@@ -371,7 +371,7 @@ export default function AdminProjectPage() {
 
       <Card>
         <CardContent className="p-4">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('adminNotes')}</div>
+          <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('adminNotes')}</div>
           <Textarea value={note} onChange={e => setNote(e.target.value)} placeholder={t('addNote')} className="min-h-[60px]" />
           <div className="mt-3 space-y-1.5">
             {notes.map(n => (

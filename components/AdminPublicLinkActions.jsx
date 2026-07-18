@@ -22,7 +22,7 @@ export default function AdminPublicLinkActions({
         className
       )}
     >
-      <div className="break-words text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="break-words text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{label}</div>
       <div className={cn('mt-2 flex min-h-11 min-w-0 items-center gap-2 rounded-xl border border-border/70 px-3 py-2', inset ? 'bg-card' : 'bg-secondary/60')}>
         <Link2 className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
         <code className="min-w-0 flex-1 truncate text-[12px] text-navy" dir="ltr" title={path}>{path}</code>

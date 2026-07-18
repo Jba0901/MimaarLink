@@ -183,7 +183,7 @@ export default function AdminContractorPage() {
           </div>
           {serviceKeys.includes('other') && c.otherCategoryDesc && (
             <div className="pt-2 mt-1 border-t border-border">
-              <div className="text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">{t('otherCategoryLabel')}</div>
+              <div className="text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('otherCategoryLabel')}</div>
               <div className="text-[12px] text-navy mt-0.5 whitespace-pre-wrap leading-relaxed">{c.otherCategoryDesc}</div>
             </div>
           )}
@@ -193,7 +193,7 @@ export default function AdminContractorPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4">
-          <Label className="text-xs uppercase tracking-wide font-semibold text-muted-foreground">{t('verificationStatus')}</Label>
+          <Label className="text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('verificationStatus')}</Label>
           <Select value={statusDraft || c.verificationStatus} onValueChange={setStatusDraft}>
             <SelectTrigger className="mt-2 h-11"><SelectValue /></SelectTrigger>
             <SelectContent>{CONTRACTOR_STATUSES.map(s => <SelectItem key={s} value={s}>{t(`cstatus_${s}`)}</SelectItem>)}</SelectContent>
@@ -213,7 +213,7 @@ export default function AdminContractorPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documentChecklist')}</div>
+          <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('documentChecklist')}</div>
           <div className="space-y-1.5">
             {documentChecklist.map((doc) => {
               const present = Boolean(documentChecksDraft[doc.key]);
@@ -250,7 +250,7 @@ export default function AdminContractorPage() {
       {c.documents && c.documents.length > 0 && (
         <Card>
           <CardContent className="p-4">
-            <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documents')}</div>
+            <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('documents')}</div>
             <div className="space-y-1.5">
               {c.documents.map((f, i) => (
                 <ResultFileLink key={i} file={f} fallbackLabel={t('files')} secondaryLabel={f.label} actionLabel={t('download')} />

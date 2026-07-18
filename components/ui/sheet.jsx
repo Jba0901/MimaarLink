@@ -82,7 +82,7 @@ SheetFooter.displayName = "SheetFooter"
 const SheetTitle = React.forwardRef(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
-    className={cn("text-xl font-bold tracking-tight text-foreground", className)}
+    className={cn("text-xl font-bold text-foreground ltr:tracking-tight", className)}
     {...props} />
 ))
 SheetTitle.displayName = SheetPrimitive.Title.displayName

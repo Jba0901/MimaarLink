@@ -17,7 +17,7 @@ export default function AdminAttribution({ value, lang = 'en' }) {
 
   return (
     <div className="mt-3 border-t border-border pt-3">
-      <div className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">
+      <div className="mb-2 text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">
         {arabic ? 'مصدر الطلب' : 'Application source'}
       </div>
       <div className="grid gap-1.5 sm:grid-cols-2">
