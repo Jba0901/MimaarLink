@@ -61,7 +61,7 @@ export default function BidsPage() {
                       <ProviderIcon className="h-5 w-5" />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <div className="min-w-0 break-words text-base font-bold leading-snug text-navy">{c.companyName || t('provider')}</div>
+                      <div dir="auto" className="min-w-0 break-words text-base font-bold leading-snug text-navy">{c.companyName || t('provider')}</div>
                       <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                         {c.providerType && <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">{providerTypeLabel(c, t)}</Badge>}
                         {c.verificationStatus === 'verified' && (
@@ -72,7 +72,7 @@ export default function BidsPage() {
                         )}
                         {isLowest && <Badge variant="success" className="max-w-full whitespace-normal text-start text-[12px] leading-4">{t('lowestBid')}</Badge>}
                       </div>
-                      {c.serviceAreas && <div className="mt-1.5 break-words text-[13px] leading-relaxed text-muted-foreground">{c.serviceAreas}</div>}
+                      {c.serviceAreas && <div dir="auto" className="mt-1.5 break-words text-[13px] leading-relaxed text-muted-foreground">{c.serviceAreas}</div>}
                     </div>
                   </div>
 
@@ -88,14 +88,14 @@ export default function BidsPage() {
                     </div>
                     <div className="min-w-0 rounded-[14px] border border-border/70 bg-secondary/70 p-3">
                       <div className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Clock className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('timeline')}</span></div>
-                      <div className="mt-1 break-words text-sm font-semibold leading-snug text-navy">{b.timeline || '—'}</div>
+                      <div dir="auto" className="mt-1 break-words text-sm font-semibold leading-snug text-navy">{b.timeline || '—'}</div>
                     </div>
                   </div>
 
                   <div className="mt-3 space-y-1.5">
-                    {b.warranty && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileCheck2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('warranty')}:</span> {b.warranty}</span></div>}
-                    {b.exclusions && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileWarning className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FFB638]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('exclusions')}:</span> {b.exclusions}</span></div>}
-                    {b.notes && <div className="break-words text-[13px] leading-relaxed text-muted-foreground">{b.notes}</div>}
+                    {b.warranty && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileCheck2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('warranty')}:</span><span dir="auto" className="mt-0.5 block">{b.warranty}</span></span></div>}
+                    {b.exclusions && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileWarning className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FFB638]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('exclusions')}:</span><span dir="auto" className="mt-0.5 block">{b.exclusions}</span></span></div>}
+                    {b.notes && <div dir="auto" className="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-muted-foreground">{b.notes}</div>}
                   </div>
 
                   {b.attachments && b.attachments.length > 0 && (

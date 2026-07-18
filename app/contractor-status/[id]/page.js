@@ -72,7 +72,7 @@ export default function ContractorStatusPage() {
           </span>
           <div className="min-w-0 flex-1">
             <h1 className="display-title break-words text-[22px] sm:text-[28px]">{t('providerStatus')}</h1>
-            <p className="mt-1 break-words text-[13px] font-semibold leading-snug text-muted-foreground">{contractor.companyName}</p>
+            <p dir="auto" className="mt-1 break-words text-[13px] font-semibold leading-snug text-muted-foreground">{contractor.companyName}</p>
             <div className="mt-2 flex flex-wrap items-center gap-1.5">
               <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">
                 {isConsultant ? t('providerTypeConsultant') : t('providerTypeContractor')}
@@ -96,18 +96,18 @@ export default function ContractorStatusPage() {
                   <div className="break-words text-sm leading-relaxed text-muted-foreground">{consultantGradeLabel(contractor.consultantGrade, t)}</div>
                 )}
                 {contractor.otherCategoryDesc && (
-                  <div className="break-words text-sm leading-relaxed text-muted-foreground">{contractor.otherCategoryDesc}</div>
+                  <div dir="auto" className="break-words text-sm leading-relaxed text-muted-foreground">{contractor.otherCategoryDesc}</div>
                 )}
                 {contractor.serviceAreas && (
                   <div className="flex items-start gap-2 text-sm text-navy">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-                    <span className="min-w-0 break-words">{contractor.serviceAreas}</span>
+                    <span dir="auto" className="min-w-0 break-words">{contractor.serviceAreas}</span>
                   </div>
                 )}
                 {contractor.projectSizeRange && (
                   <div className="flex items-start gap-2 text-sm text-navy">
                     <Wallet className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-                    <span className="min-w-0 break-words">{contractor.projectSizeRange}</span>
+                    <span dir="ltr" className="min-w-0 break-words">{contractor.projectSizeRange}</span>
                   </div>
                 )}
               </CardContent>

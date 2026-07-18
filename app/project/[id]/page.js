@@ -49,10 +49,10 @@ export default function ProjectPage() {
               <CardContent className="p-4 space-y-2.5 sm:p-5">
                 <div className="text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('projectSummary')}</div>
                 <div className="break-words text-base font-bold text-navy">{t(`cat_${data.category}`)}</div>
-                {data.location && <div className="flex items-start gap-2 text-sm text-navy"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span className="min-w-0 break-words">{data.location}</span></div>}
-                <div className="break-words text-sm leading-relaxed text-muted-foreground">{data.description}</div>
-                {data.timeline && <div className="flex items-start gap-2 text-sm text-navy"><Calendar className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span className="min-w-0 break-words">{data.timeline}</span></div>}
-                {data.budgetRange && <div className="flex items-start gap-2 text-sm text-navy"><Wallet className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span className="min-w-0 break-words">{data.budgetRange}</span></div>}
+                {data.location && <div className="flex items-start gap-2 text-sm text-navy"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span dir="auto" className="min-w-0 break-words">{data.location}</span></div>}
+                <div dir="auto" className="break-words text-sm leading-relaxed text-muted-foreground">{data.description}</div>
+                {data.timeline && <div className="flex items-start gap-2 text-sm text-navy"><Calendar className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span dir="auto" className="min-w-0 break-words">{data.timeline}</span></div>}
+                {data.budgetRange && <div className="flex items-start gap-2 text-sm text-navy"><Wallet className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span dir="ltr" className="min-w-0 break-words">{data.budgetRange}</span></div>}
               </CardContent>
             </Card>
 
