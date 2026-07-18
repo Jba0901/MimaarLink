@@ -145,11 +145,12 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
             </span>
             <button
               onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-              className="btn btn-outline h-11 px-3.5 text-[13px]"
+              className="btn btn-outline h-11 w-11 px-0 text-[13px] min-[360px]:w-auto min-[360px]:px-3.5"
               aria-label={copy.switchLanguage}
+              title={copy.switchLanguage}
             >
               <Globe className="w-4 h-4 shrink-0" />
-              {t('language')}
+              <span className="hidden min-[360px]:inline">{t('language')}</span>
             </button>
             <button
               onClick={() => setMenuOpen(true)}
@@ -470,7 +471,7 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
       aria-current={active ? 'page' : undefined}
       title={label}
       className={
-        'flex min-h-[52px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-2xl px-2 py-1.5 transition-all cta-press tap-highlight ' +
+        'flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-2xl px-2 py-1.5 transition-all cta-press tap-highlight ' +
         (active
           ? 'text-[#152B54] shadow-soft'
           : 'text-muted-foreground hover:bg-muted hover:text-navy')
@@ -478,7 +479,9 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
       style={active ? { background: '#00B59E' } : undefined}
     >
       <Icon className="h-[19px] w-[19px] shrink-0" />
-      <span className="max-w-full truncate text-[11px] font-bold leading-tight">{label}</span>
+      <span className="line-clamp-2 max-w-full text-center text-[10.5px] font-bold leading-[1.15] min-[360px]:text-[11px] min-[360px]:leading-tight">
+        {label}
+      </span>
     </Link>
   );
 }
