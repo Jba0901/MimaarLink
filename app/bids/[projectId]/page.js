@@ -8,12 +8,42 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import PageState from '@/components/PageState';
-import { BookmarkPlus, Building2, CalendarCheck2, ClipboardCheck, ShieldCheck, Clock, Wallet, FileWarning, FileCheck2, Loader2, Paperclip } from 'lucide-react';
+import { BookmarkPlus, Building2, CalendarCheck2, ChevronDown, ClipboardCheck, ShieldCheck, Clock, Wallet, FileWarning, FileCheck2, Loader2, Paperclip } from 'lucide-react';
 import { toast } from 'sonner';
 
 const providerTypeLabel = (provider, t) => (
   provider?.providerType === 'consultant' ? t('providerTypeConsultant') : t('providerTypeContractor')
 );
+
+const BidDetailsContent = ({ bid, t }) => {
+  const hasNarrative = bid.warranty || bid.exclusions || bid.notes;
+
+  return (
+    <>
+      {hasNarrative && (
+        <div className="space-y-1.5">
+          {bid.warranty && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileCheck2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('warranty')}:</span><span dir="auto" className="mt-0.5 block">{bid.warranty}</span></span></div>}
+          {bid.exclusions && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileWarning className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FFB638]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('exclusions')}:</span><span dir="auto" className="mt-0.5 block">{bid.exclusions}</span></span></div>}
+          {bid.notes && <div dir="auto" className="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-muted-foreground">{bid.notes}</div>}
+        </div>
+      )}
+
+      {bid.attachments && bid.attachments.length > 0 && (
+        <div className={`${hasNarrative ? 'mt-3 border-t border-border pt-3' : ''}`}>
+          <div className="mb-1.5 flex items-center gap-1.5 text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">
+            <Paperclip className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            {t('bidFiles')}
+          </div>
+          <div className="space-y-1.5">
+            {bid.attachments.map((file, index) => (
+              <ResultFileLink key={index} file={file} fallbackLabel={t('files')} actionLabel={t('openLink')} newTab />
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 
 export default function BidsPage() {
   const { projectId } = useParams();
@@ -92,6 +122,13 @@ export default function BidsPage() {
             const c = d.contractors[b.contractorId] || {};
             const isLowest = b.price === lowest;
             const ProviderIcon = c.providerType === 'consultant' ? ClipboardCheck : Building2;
+            const hasBidDetails = b.warranty || b.exclusions || b.notes || (b.attachments && b.attachments.length > 0);
+            const detailSummary = [
+              b.warranty && t('warranty'),
+              b.exclusions && t('exclusions'),
+              b.notes && t('notes'),
+              b.attachments?.length && `${b.attachments.length} ${t(b.attachments.length === 1 ? 'fileSingular' : 'files')}`,
+            ].filter(Boolean).join(' · ');
             const shortlistActionKey = `shortlist:${b.contractorId}`;
             const meetingActionKey = `meeting:${b.contractorId}`;
             const actionsDisabled = Boolean(pendingAction);
@@ -135,24 +172,28 @@ export default function BidsPage() {
                     </div>
                   </div>
 
-                  <div className="mt-3 space-y-1.5">
-                    {b.warranty && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileCheck2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('warranty')}:</span><span dir="auto" className="mt-0.5 block">{b.warranty}</span></span></div>}
-                    {b.exclusions && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileWarning className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FFB638]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('exclusions')}:</span><span dir="auto" className="mt-0.5 block">{b.exclusions}</span></span></div>}
-                    {b.notes && <div dir="auto" className="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-muted-foreground">{b.notes}</div>}
-                  </div>
+                  {hasBidDetails && (
+                    <>
+                      <details className="group mt-3 overflow-hidden rounded-[14px] border border-border bg-secondary/35 md:hidden">
+                        <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2.5 px-3 py-2.5 marker:content-none [&::-webkit-details-marker]:hidden">
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+                            <FileCheck2 className="h-4 w-4" />
+                          </span>
+                          <span className="min-w-0 flex-1 text-start">
+                            <span className="block text-[13px] font-bold leading-snug text-navy">{t('reviewBidDetails')}</span>
+                            <span className="mt-0.5 block break-words text-[11px] leading-snug text-muted-foreground">{detailSummary}</span>
+                          </span>
+                          <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+                        </summary>
+                        <div className="border-t border-border bg-background/70 p-3">
+                          <BidDetailsContent bid={b} t={t} />
+                        </div>
+                      </details>
 
-                  {b.attachments && b.attachments.length > 0 && (
-                    <div className="mt-3 border-t border-border pt-3">
-                      <div className="mb-1.5 flex items-center gap-1.5 text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">
-                        <Paperclip className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                        {t('bidFiles')}
+                      <div className="mt-3 hidden md:block">
+                        <BidDetailsContent bid={b} t={t} />
                       </div>
-                      <div className="space-y-1.5">
-                        {b.attachments.map((f, i) => (
-                          <ResultFileLink key={i} file={f} fallbackLabel={t('files')} actionLabel={t('openLink')} newTab />
-                        ))}
-                      </div>
-                    </div>
+                    </>
                   )}
 
                   <div className="mt-3 flex flex-col gap-2 border-t border-border pt-3 min-[390px]:flex-row">
