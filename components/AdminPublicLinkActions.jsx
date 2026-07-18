@@ -22,17 +22,17 @@ export default function AdminPublicLinkActions({
         className
       )}
     >
-      <div className="break-words text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
+      <div className="break-words text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">{label}</div>
       <div className={cn('mt-2 flex min-h-11 min-w-0 items-center gap-2 rounded-xl border border-border/70 px-3 py-2', inset ? 'bg-card' : 'bg-secondary/60')}>
         <Link2 className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
-        <code className="min-w-0 flex-1 truncate text-[11px] text-navy" dir="ltr" title={path}>{path}</code>
+        <code className="min-w-0 flex-1 truncate text-[12px] text-navy" dir="ltr" title={path}>{path}</code>
       </div>
       <div className="mt-2 grid grid-cols-2 gap-2">
-        <Button type="button" variant="navy" size="sm" className="h-11 w-full px-2 text-[11px] sm:h-9" onClick={onCopy}>
+        <Button type="button" variant="navy" size="sm" className="h-auto min-h-11 w-full whitespace-normal px-2 py-2 text-[12px] sm:min-h-9 sm:py-1.5" onClick={onCopy}>
           <Copy className="h-3.5 w-3.5" aria-hidden="true" />
           {copyLabel}
         </Button>
-        <Button type="button" variant="outline" size="sm" className="h-11 w-full px-2 text-[11px] sm:h-9" onClick={onOpen}>
+        <Button type="button" variant="outline" size="sm" className="h-auto min-h-11 w-full whitespace-normal px-2 py-2 text-[12px] sm:min-h-9 sm:py-1.5" onClick={onOpen}>
           <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
           {openLabel}
         </Button>

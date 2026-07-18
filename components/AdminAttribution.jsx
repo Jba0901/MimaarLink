@@ -17,13 +17,13 @@ export default function AdminAttribution({ value, lang = 'en' }) {
 
   return (
     <div className="mt-3 border-t border-border pt-3">
-      <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+      <div className="mb-2 text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">
         {arabic ? 'مصدر الطلب' : 'Application source'}
       </div>
       <div className="grid gap-1.5 sm:grid-cols-2">
         {rows.map(([key, labels]) => (
           <div key={key} className="rounded-xl bg-secondary px-3 py-2.5 text-xs">
-            <div className="text-[11px] text-muted-foreground">{arabic ? labels[1] : labels[0]}</div>
+            <div className="text-[12px] text-muted-foreground">{arabic ? labels[1] : labels[0]}</div>
             <div className="truncate font-semibold text-navy" dir="ltr" title={attribution[key]}>
               {attribution[key]}
             </div>

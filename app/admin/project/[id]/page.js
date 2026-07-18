@@ -295,11 +295,11 @@ export default function AdminProjectPage() {
                 <div className="min-w-0">
                   <span className="block break-words font-semibold leading-snug text-navy min-[390px]:truncate">{cmap[inv.contractorId]?.companyName || inv.contractorId}</span>
                   {cmap[inv.contractorId] && (
-                    <span className="mt-0.5 block break-words text-[11px] text-muted-foreground">{providerTypeLabel(cmap[inv.contractorId], t)}</span>
+                    <span className="mt-0.5 block break-words text-[12px] text-muted-foreground">{providerTypeLabel(cmap[inv.contractorId], t)}</span>
                   )}
                 </div>
                 <div className="flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-2 min-[390px]:shrink-0 min-[390px]:justify-end min-[390px]:border-0 min-[390px]:pt-0">
-                  <Badge variant={inviteResponseVariant(inv.responseStatus)} className="min-w-0 max-w-full whitespace-normal text-start text-[11px]">{inv.responseStatus || '-'}</Badge>
+                  <Badge variant={inviteResponseVariant(inv.responseStatus)} className="min-w-0 max-w-full whitespace-normal text-start text-[12px]">{inv.responseStatus || '-'}</Badge>
                   <Button type="button" variant="destructiveOutline" size="icon" onClick={() => deleteInvite(inv.id)} className="shrink-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
                     <Trash2 className="w-3.5 h-3.5" />
                   </Button>
@@ -324,21 +324,21 @@ export default function AdminProjectPage() {
                       <div className="flex flex-wrap items-center gap-1.5">
                         <span className="min-w-0 flex-1 basis-full break-words text-sm font-semibold leading-snug text-navy min-[390px]:basis-[120px] min-[390px]:truncate">{cmap[b.contractorId]?.companyName || b.contractorId || t('provider')}</span>
                         {cmap[b.contractorId] && (
-                          <Badge variant="outline" className="shrink-0 text-[11px]">{providerTypeLabel(cmap[b.contractorId], t)}</Badge>
+                          <Badge variant="outline" className="shrink-0 text-[12px]">{providerTypeLabel(cmap[b.contractorId], t)}</Badge>
                         )}
                         {fileCount > 0 && (
-                          <Badge variant="info" className="shrink-0 gap-1 text-[11px]">
+                          <Badge variant="info" className="shrink-0 gap-1 text-[12px]">
                             <Paperclip className="h-3 w-3" />{fileCount}
                           </Badge>
                         )}
                       </div>
                       <div className="mt-2 grid grid-cols-2 gap-1.5">
                         <div className="min-w-0 rounded-xl border border-border/70 bg-card p-2.5">
-                          <div className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground"><Wallet className="h-3 w-3 shrink-0" aria-hidden="true" />{t('price')}</div>
-                          <div className="mt-0.5 break-words text-[13px] font-bold leading-snug text-navy">{b.price.toLocaleString()} <span className="text-[11px] font-normal text-muted-foreground">{t('currencyQar')}</span></div>
+                          <div className="flex items-center gap-1 text-[12px] font-semibold uppercase tracking-wide text-muted-foreground"><Wallet className="h-3 w-3 shrink-0" aria-hidden="true" />{t('price')}</div>
+                          <div className="mt-0.5 break-words text-[13px] font-bold leading-snug text-navy">{b.price.toLocaleString()} <span className="text-[12px] font-normal text-muted-foreground">{t('currencyQar')}</span></div>
                         </div>
                         <div className="min-w-0 rounded-xl border border-border/70 bg-card p-2.5">
-                          <div className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground"><Clock className="h-3 w-3 shrink-0" aria-hidden="true" />{t('timeline')}</div>
+                          <div className="flex items-center gap-1 text-[12px] font-semibold uppercase tracking-wide text-muted-foreground"><Clock className="h-3 w-3 shrink-0" aria-hidden="true" />{t('timeline')}</div>
                           <div className="mt-0.5 break-words text-[13px] font-bold leading-snug text-navy">{b.timeline || '-'}</div>
                         </div>
                       </div>
@@ -351,12 +351,12 @@ export default function AdminProjectPage() {
                       )}
                     </div>
                     <div className="grid grid-cols-2 gap-2 border-t border-border/70 pt-3 min-[390px]:flex min-[390px]:shrink-0 min-[390px]:gap-1 min-[390px]:border-0 min-[390px]:pt-0">
-                      <label className="flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-border bg-card px-3 text-[11px] font-semibold text-navy transition-[border-color,background-color] hover:border-[#00B59E]/35 hover:bg-[#D0F2EE]/35 focus-within:outline-none focus-within:ring-2 focus-within:ring-[#00B59E]/30 dark:hover:bg-[#00B59E]/10 min-[390px]:w-11 min-[390px]:px-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('uploadAgreement')} aria-label={t('uploadAgreement')}>
+                      <label className="flex h-auto min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-border bg-card px-3 py-2 text-[12px] font-semibold text-navy transition-[border-color,background-color] hover:border-[#00B59E]/35 hover:bg-[#D0F2EE]/35 focus-within:outline-none focus-within:ring-2 focus-within:ring-[#00B59E]/30 dark:hover:bg-[#00B59E]/10 min-[390px]:w-11 min-[390px]:px-0 min-[390px]:py-0 sm:h-8 sm:min-h-8 sm:w-8 sm:rounded-lg" title={t('uploadAgreement')} aria-label={t('uploadAgreement')}>
                         <Paperclip className="w-3.5 h-3.5" />
                         <span className="min-[390px]:sr-only">{t('uploadAgreement')}</span>
                         <input type="file" className="sr-only" accept="image/*,application/pdf" onChange={(e) => uploadBidFile(b.id, b.attachments, e)} />
                       </label>
-                      <Button type="button" variant="destructiveOutline" size="sm" onClick={() => deleteBid(b.id)} className="w-full text-[11px] min-[390px]:w-11 min-[390px]:px-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
+                      <Button type="button" variant="destructiveOutline" size="sm" onClick={() => deleteBid(b.id)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-[12px] min-[390px]:w-11 min-[390px]:px-0 min-[390px]:py-0 sm:h-8 sm:min-h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
                         <Trash2 className="w-3.5 h-3.5" />
                         <span className="min-[390px]:sr-only">{t('delete')}</span>
                       </Button>
@@ -375,9 +375,9 @@ export default function AdminProjectPage() {
           <Textarea value={note} onChange={e => setNote(e.target.value)} placeholder={t('addNote')} className="min-h-[60px]" />
           <div className="mt-3 space-y-1.5">
             {notes.map(n => (
-              <div key={n.id} className="text-xs bg-secondary rounded-lg p-2">
-                <div className="text-[11px] text-muted-foreground">{new Date(n.createdAt).toLocaleString()}</div>
-                <div className="mt-0.5 text-[13px] leading-relaxed text-navy">{n.note}</div>
+              <div key={n.id} className="rounded-xl border border-border/70 bg-secondary/60 p-3 text-xs">
+                <div className="break-words text-[12px] text-muted-foreground">{new Date(n.createdAt).toLocaleString()}</div>
+                <div className="mt-0.5 whitespace-pre-wrap break-words text-[13px] leading-relaxed text-navy">{n.note}</div>
               </div>
             ))}
           </div>

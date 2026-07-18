@@ -163,22 +163,22 @@ export default function AdminContractorPage() {
             <CalendarClock className="h-3.5 w-3.5 shrink-0" />
             <span className="min-w-0 break-words">{t('applicationTime')}: {formatAdminTime(c.createdAt, lang)}</span>
           </div>
-          <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-border bg-secondary px-2.5 py-1 text-[11px] font-semibold text-navy">
-            <TypeIcon className="h-3.5 w-3.5" />
+          <div className="mb-2 inline-flex max-w-full items-center gap-1.5 rounded-full border border-border bg-secondary px-2.5 py-1 text-[12px] font-semibold text-navy">
+            <TypeIcon className="h-3.5 w-3.5 shrink-0" />
             {providerTypeLabel(c, t)}
           </div>
           <dl className="grid gap-x-4 gap-y-3 pt-1 sm:grid-cols-2">
-            <div><dt className="text-[11px] text-muted-foreground">{t('crNumber')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.crNumber}</dd></div>
-            <div><dt className="text-[11px] text-muted-foreground">{t('contactPerson')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.contactPerson}</dd></div>
-            <div><dt className="text-[11px] text-muted-foreground">{t('whatsapp')}</dt><dd className="mt-0.5 font-semibold text-navy" dir="ltr">{c.whatsapp}</dd></div>
-            {c.email && <div><dt className="text-[11px] text-muted-foreground">{t('email')}</dt><dd className="mt-0.5 break-all font-semibold text-navy" dir="ltr">{c.email}</dd></div>}
-            <div><dt className="text-[11px] text-muted-foreground">{t('serviceAreas')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.serviceAreas}</dd></div>
-            <div><dt className="text-[11px] text-muted-foreground">{t('projectSize')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.projectSizeRange}</dd></div>
-            {isConsultant && <div><dt className="text-[11px] text-muted-foreground">{t('consultantGrade')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{consultantGradeLabel(c.consultantGrade, t)}</dd></div>}
+            <div><dt className="text-[12px] text-muted-foreground">{t('crNumber')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.crNumber}</dd></div>
+            <div><dt className="text-[12px] text-muted-foreground">{t('contactPerson')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.contactPerson}</dd></div>
+            <div><dt className="text-[12px] text-muted-foreground">{t('whatsapp')}</dt><dd className="mt-0.5 font-semibold text-navy" dir="ltr">{c.whatsapp}</dd></div>
+            {c.email && <div><dt className="text-[12px] text-muted-foreground">{t('email')}</dt><dd className="mt-0.5 break-all font-semibold text-navy" dir="ltr">{c.email}</dd></div>}
+            <div><dt className="text-[12px] text-muted-foreground">{t('serviceAreas')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.serviceAreas}</dd></div>
+            <div><dt className="text-[12px] text-muted-foreground">{t('projectSize')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.projectSizeRange}</dd></div>
+            {isConsultant && <div><dt className="text-[12px] text-muted-foreground">{t('consultantGrade')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{consultantGradeLabel(c.consultantGrade, t)}</dd></div>}
           </dl>
           <div className="flex flex-wrap gap-1 pt-1">
             {serviceKeys.map(cat => (
-              <span key={cat} className="rounded-full bg-secondary px-2 py-1 text-[11px] font-medium text-navy">{t(`cat_${cat}`)}</span>
+              <span key={cat} className="max-w-full break-words rounded-full bg-secondary px-2 py-1 text-[12px] font-medium text-navy">{t(`cat_${cat}`)}</span>
             ))}
           </div>
           {serviceKeys.includes('other') && c.otherCategoryDesc && (
@@ -225,7 +225,7 @@ export default function AdminContractorPage() {
                       type="button"
                       onClick={() => setDocumentPresent(doc.key, true)}
                       aria-pressed={present}
-                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/35 sm:min-h-9 ${present ? 'border-[#00B59E]/55 bg-[#00B59E] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#00B59E]/35 hover:text-navy'}`}
+                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[12px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/35 sm:min-h-9 ${present ? 'border-[#00B59E]/55 bg-[#00B59E] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#00B59E]/35 hover:text-navy'}`}
                     >
                       <Check className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                       {t('present')}
@@ -234,7 +234,7 @@ export default function AdminContractorPage() {
                       type="button"
                       onClick={() => setDocumentPresent(doc.key, false)}
                       aria-pressed={!present}
-                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB638]/45 sm:min-h-9 ${!present ? 'border-[#FFB638]/65 bg-[#FFB638] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#FFB638]/45 hover:text-navy'}`}
+                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[12px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB638]/45 sm:min-h-9 ${!present ? 'border-[#FFB638]/65 bg-[#FFB638] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#FFB638]/45 hover:text-navy'}`}
                     >
                       <X className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                       {t('missing')}
