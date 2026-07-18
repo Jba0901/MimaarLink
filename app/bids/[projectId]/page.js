@@ -8,7 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import PageState from '@/components/PageState';
-import { BookmarkPlus, Building2, CalendarCheck2, ClipboardCheck, ShieldCheck, Clock, Wallet, FileWarning, FileCheck2, Paperclip } from 'lucide-react';
+import { BookmarkPlus, Building2, CalendarCheck2, ClipboardCheck, ShieldCheck, Clock, Wallet, FileWarning, FileCheck2, Loader2, Paperclip } from 'lucide-react';
 import { toast } from 'sonner';
 
 const providerTypeLabel = (provider, t) => (
@@ -21,6 +21,7 @@ export default function BidsPage() {
   const { t } = useLang();
   const [d, setD] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [pendingAction, setPendingAction] = useState(null);
 
   const load = () => fetch(`/api/projects/${projectId}/bids`).then(r => r.json()).then(j => { setD(j); setLoading(false); });
   useEffect(() => { load(); }, [projectId]);
@@ -29,9 +30,17 @@ export default function BidsPage() {
   if (!d || d.error) return <AppShell><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
 
   const action = async (act, contractorId) => {
-    await fetch('/api/projects/shortlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId, contractorId, action: act }) });
-    toast.success(act === 'meeting' ? t('bidRequest') : t('shortlistDone'));
-    load();
+    if (pendingAction) return;
+
+    const actionKey = `${act}:${contractorId}`;
+    setPendingAction(actionKey);
+    try {
+      await fetch('/api/projects/shortlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId, contractorId, action: act }) });
+      toast.success(act === 'meeting' ? t('bidRequest') : t('shortlistDone'));
+      await load();
+    } finally {
+      setPendingAction(null);
+    }
   };
 
   const sortedBids = [...d.bids].sort((a, b) => a.price - b.price);
@@ -52,6 +61,9 @@ export default function BidsPage() {
             const c = d.contractors[b.contractorId] || {};
             const isLowest = b.price === lowest;
             const ProviderIcon = c.providerType === 'consultant' ? ClipboardCheck : Building2;
+            const shortlistActionKey = `shortlist:${b.contractorId}`;
+            const meetingActionKey = `meeting:${b.contractorId}`;
+            const actionsDisabled = Boolean(pendingAction);
             return (
               <Card key={b.id} className={`overflow-hidden rounded-[18px] border shadow-soft ${isLowest ? 'border-[#00B59E]/70 bg-[#D0F2EE]/10 ring-1 ring-[#00B59E]/15 dark:bg-[#00B59E]/[0.04]' : 'border-border'}`}>
                 {isLowest && <div className="h-1 bg-[#00B59E]" aria-hidden="true" />}
@@ -113,8 +125,8 @@ export default function BidsPage() {
                   )}
 
                   <div className="mt-3 flex flex-col gap-2 border-t border-border pt-3 min-[390px]:flex-row">
-                    <Button variant="outline" size="sm" className="h-auto min-h-11 w-full flex-1 whitespace-normal py-2 text-center leading-snug" onClick={() => action('shortlist', b.contractorId)}><BookmarkPlus className="h-4 w-4" aria-hidden="true" />{t('shortlist')}</Button>
-                    <Button variant="brand" size="sm" className="h-auto min-h-11 w-full flex-1 whitespace-normal py-2 text-center leading-snug" onClick={() => action('meeting', b.contractorId)}><CalendarCheck2 className="h-4 w-4" aria-hidden="true" />{t('requestMeeting')}</Button>
+                    <Button variant="outline" size="sm" disabled={actionsDisabled} aria-busy={pendingAction === shortlistActionKey || undefined} className="h-auto min-h-11 w-full flex-1 whitespace-normal py-2 text-center leading-snug" onClick={() => action('shortlist', b.contractorId)}>{pendingAction === shortlistActionKey ? <Loader2 className="animate-spin" aria-hidden="true" /> : <BookmarkPlus className="h-4 w-4" aria-hidden="true" />}{t('shortlist')}</Button>
+                    <Button variant="brand" size="sm" disabled={actionsDisabled} aria-busy={pendingAction === meetingActionKey || undefined} className="h-auto min-h-11 w-full flex-1 whitespace-normal py-2 text-center leading-snug" onClick={() => action('meeting', b.contractorId)}>{pendingAction === meetingActionKey ? <Loader2 className="animate-spin" aria-hidden="true" /> : <CalendarCheck2 className="h-4 w-4" aria-hidden="true" />}{t('requestMeeting')}</Button>
                   </div>
                 </CardContent>
               </Card>
