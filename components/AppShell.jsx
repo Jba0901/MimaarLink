@@ -596,9 +596,10 @@ function FooterIcon({ href, label, icon: Icon, external = false, variant = 'foot
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className={`inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all tap-highlight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/50 focus-visible:ring-offset-2 ${classes}`}
+      className={`cta-press tap-highlight relative inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/50 focus-visible:ring-offset-2 ${classes}`}
     >
-      <Icon className="h-[16px] w-[16px]" />
+      <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+      {external && <ArrowUpRight className="absolute end-1 top-1 h-2.5 w-2.5 text-[#00B59E]" aria-hidden="true" />}
     </a>
   );
 }
