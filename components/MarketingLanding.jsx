@@ -42,11 +42,11 @@ export default function MarketingLanding({
     <AppShell hideNav wide>
       <div className="v2-ambient -mx-4 sm:-mx-6 px-4 sm:px-6">
         {/* ============ HERO ============ */}
-        <section className="relative z-10 pb-8 pt-3 text-center sm:pb-10 sm:pt-6 lg:pb-12 lg:pt-14">
+        <section className="landing-hero relative z-10 pb-8 pt-3 text-center sm:pb-10 sm:pt-6 lg:pb-12 lg:pt-14">
           <div className="mx-auto max-w-2xl">
             {eyebrow && (
               <div
-                className="motion-fade-up mb-4 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-bold text-navy sm:mb-5"
+                className="landing-hero-eyebrow motion-fade-up mb-4 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-bold text-navy sm:mb-5"
                 style={{ borderColor: `${accentColor}40`, background: accentSoft }}
               >
                 {eyebrow}
@@ -56,14 +56,14 @@ export default function MarketingLanding({
               {words.join(' ')}{' '}
               <span style={{ color: accentColor }}>{accentWords.join(' ')}</span>
             </h1>
-            <p className="motion-fade-up motion-delay-2 mx-auto mt-3.5 max-w-lg text-[14.5px] leading-7 text-muted-foreground sm:mt-4 sm:text-[15px] sm:leading-relaxed">
+            <p className="landing-hero-subtitle motion-fade-up motion-delay-2 mx-auto mt-3.5 max-w-lg text-[14.5px] leading-7 text-muted-foreground sm:mt-4 sm:text-[15px] sm:leading-relaxed">
               {subtitle}
             </p>
-            <div className="motion-fade-up motion-delay-3 mt-6 sm:mt-7">
+            <div className="landing-hero-action motion-fade-up motion-delay-3 mt-6 sm:mt-7">
               <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
                 {ctaLabel} <Arrow />
               </Link>
-              {ctaSubtext && <p className="mt-3 text-[12.5px] text-muted-foreground/80">{ctaSubtext}</p>}
+              {ctaSubtext && <p className="landing-hero-subtext mt-3 text-[12.5px] text-muted-foreground/80">{ctaSubtext}</p>}
             </div>
           </div>
         </section>
