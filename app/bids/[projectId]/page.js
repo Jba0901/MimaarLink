@@ -35,9 +35,12 @@ export default function BidsPage() {
     const actionKey = `${act}:${contractorId}`;
     setPendingAction(actionKey);
     try {
-      await fetch('/api/projects/shortlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId, contractorId, action: act }) });
+      const response = await fetch('/api/projects/shortlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId, contractorId, action: act }) });
+      if (!response.ok) throw new Error('Bid action failed');
       toast.success(act === 'meeting' ? t('bidRequest') : t('shortlistDone'));
       await load();
+    } catch {
+      toast.error(t('actionFailed'));
     } finally {
       setPendingAction(null);
     }
