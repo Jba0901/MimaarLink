@@ -23,9 +23,10 @@ export default function SuccessPanel({
   };
 
   return (
-    <div className="mx-auto w-full max-w-xl py-2">
+    <div className="mx-auto w-full max-w-xl pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 sm:py-8">
       <section
         className="motion-fade-up overflow-hidden rounded-[24px] border border-[#00B59E]/40 bg-card shadow-card sm:rounded-[28px]"
+        role="status"
         aria-live="polite"
       >
         <div className="h-1.5 bg-[#00B59E]" />
@@ -34,13 +35,13 @@ export default function SuccessPanel({
             <CheckCircle2 className="h-7 w-7 text-[#00B59E] sm:h-8 sm:w-8" />
           </span>
 
-          <h1 className="mt-3 break-words text-[20px] font-extrabold leading-tight text-navy sm:mt-4 sm:text-[24px]">{title}</h1>
+          <h1 className="mt-3 break-words text-[20px] font-extrabold leading-snug text-navy sm:mt-4 sm:text-[24px]">{title}</h1>
           <p className="mx-auto mt-2 max-w-md break-words text-[13.5px] leading-relaxed text-muted-foreground sm:text-sm">{description}</p>
 
-          <div className="mt-5 rounded-2xl bg-secondary/60 p-2.5 text-start sm:mt-6 sm:p-4">
+          <div className="mt-5 rounded-2xl border border-border/70 bg-secondary/45 p-2.5 text-start sm:mt-6 sm:p-4">
             <div className="mb-2 break-words text-[12px] font-semibold leading-relaxed text-muted-foreground">{referenceLabel}</div>
             <div className="grid min-w-0 gap-2 min-[360px]:grid-cols-[minmax(0,1fr)_auto]">
-              <code className="min-w-0 flex-1 truncate rounded-xl bg-card px-3 py-2.5 text-[12px] text-navy" dir="ltr">
+              <code className="flex min-h-11 min-w-0 items-center break-all rounded-xl border border-border/70 bg-card px-3 py-2 text-start text-[12px] leading-5 text-navy shadow-sm" dir="ltr" title={referencePath}>
                 {referencePath}
               </code>
               <Button
@@ -58,7 +59,7 @@ export default function SuccessPanel({
             </div>
           </div>
 
-          <Button asChild variant="navy" size="lg" className="mt-4 h-auto min-h-12 w-full whitespace-normal py-2.5 text-center text-sm leading-snug">
+          <Button asChild variant="brand" size="lg" className="mt-4 h-auto min-h-12 w-full whitespace-normal py-2.5 text-center text-sm leading-snug">
             <Link href={actionHref}>{actionLabel}</Link>
           </Button>
         </div>

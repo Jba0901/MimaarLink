@@ -7,21 +7,25 @@ const stateVisuals = {
     icon: Loader2,
     iconClass: 'animate-spin text-[#00B59E]',
     tileClass: 'bg-[#D0F2EE]/70 dark:bg-[#00B59E]/15',
+    panelClass: '',
   },
   empty: {
     icon: Inbox,
     iconClass: 'text-[#152B54] dark:text-[#00B59E]',
     tileClass: 'bg-[#D0F2EE]/70 dark:bg-[#00B59E]/15',
+    panelClass: '',
   },
   missing: {
     icon: SearchX,
-    iconClass: 'text-[#152B54] dark:text-[#00B59E]',
-    tileClass: 'bg-[#D0F2EE]/70 dark:bg-[#00B59E]/15',
+    iconClass: 'text-[#FFB638]',
+    tileClass: 'bg-[#FFB638]/15',
+    panelClass: 'border border-[#FFB638]/30 bg-[#FFB638]/[0.03] dark:bg-[#FFB638]/[0.06]',
   },
   error: {
     icon: TriangleAlert,
     iconClass: 'text-[#EF4444]',
-    tileClass: 'bg-[#EF4444]/10',
+    tileClass: 'bg-[#EF4444]/10 dark:bg-[#EF4444]/15',
+    panelClass: 'border border-[#EF4444]/30 bg-[#EF4444]/[0.03] dark:bg-[#EF4444]/[0.06]',
   },
 };
 
@@ -45,9 +49,9 @@ export default function PageState({
         compact
           ? 'rounded-2xl bg-secondary/55 px-4 py-6'
           : 'rounded-[22px] border border-border bg-card p-5 shadow-soft sm:rounded-[24px] sm:p-8'
-      } ${className}`}
-      role={kind === 'loading' ? 'status' : undefined}
-      aria-live={kind === 'loading' ? 'polite' : undefined}
+      } ${visual.panelClass} ${className}`}
+      role={kind === 'loading' ? 'status' : kind === 'error' ? 'alert' : undefined}
+      aria-live={kind === 'loading' ? 'polite' : kind === 'error' ? 'assertive' : undefined}
     >
       <span
         className={`mx-auto flex items-center justify-center rounded-2xl ${visual.tileClass} ${
@@ -57,8 +61,8 @@ export default function PageState({
       >
         <Icon className={`${compact ? 'h-5 w-5' : 'h-6 w-6'} ${visual.iconClass}`} />
       </span>
-      <Heading className={`${compact ? 'mt-3 text-sm' : 'mt-4 text-[20px]'} font-bold leading-snug text-navy`}>{title}</Heading>
-      {description && <p className="mx-auto mt-2 max-w-sm text-[14px] leading-6 text-muted-foreground">{description}</p>}
+      <Heading className={`${compact ? 'mt-3 text-sm' : 'mt-4 text-[20px]'} min-w-0 break-words font-bold leading-snug text-navy`}>{title}</Heading>
+      {description && <p className="mx-auto mt-2 max-w-sm break-words text-[14px] leading-6 text-muted-foreground">{description}</p>}
       {actionHref && actionLabel && (
         <Link
           href={actionHref}
@@ -73,7 +77,7 @@ export default function PageState({
   if (compact) return content;
 
   return (
-    <div className={`mx-auto flex w-full max-w-md items-center justify-center py-8 ${fullHeight ? 'min-h-screen' : 'min-h-[46vh]'}`}>
+    <div className={`mx-auto flex w-full max-w-md items-center justify-center pb-[max(2rem,env(safe-area-inset-bottom))] pt-6 sm:pt-8 ${fullHeight ? 'min-h-[100dvh]' : 'min-h-[46dvh]'}`}>
       {content}
     </div>
   );
