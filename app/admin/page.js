@@ -130,8 +130,8 @@ function AdminInner() {
           <h1 className="text-xl font-bold text-navy text-center">{t('adminTitle')}</h1>
           <div className="mt-5 space-y-3">
             <div>
-              <Label>{t('adminPassword')}</Label>
-              <Input type="password" value={pwd} onChange={e => setPwd(e.target.value)} onKeyDown={e => e.key === 'Enter' && login()} className="h-11 mt-1.5" />
+              <Label htmlFor="admin-password">{t('adminPassword')}</Label>
+              <Input id="admin-password" type="password" autoComplete="current-password" value={pwd} onChange={e => setPwd(e.target.value)} onKeyDown={e => e.key === 'Enter' && login()} className="h-11 mt-1.5" />
             </div>
             <Button variant="navy" onClick={login} disabled={busy} aria-busy={busy} className="w-full">
               {busy ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('loading')}</> : t('login')}
@@ -153,7 +153,7 @@ function AdminInner() {
                 <TriangleAlert className="h-5 w-5" />
               </span>
               <div className="min-w-0 flex-1">
-                <div className="text-sm font-bold text-[#EF4444]">Admin data could not load</div>
+                <div className="text-sm font-bold text-[#EF4444]">{t('adminDataLoadError')}</div>
                 <p className="mt-1 break-words text-xs leading-relaxed text-muted-foreground">{loadError}</p>
               </div>
             </div>
@@ -165,7 +165,7 @@ function AdminInner() {
                 className="h-11 sm:h-9"
               >
                 <RefreshCw className="h-4 w-4" aria-hidden="true" />
-                Try again
+                {t('tryAgain')}
               </Button>
               <Button
                 variant="outline"
@@ -179,7 +179,7 @@ function AdminInner() {
                 className="h-11 sm:h-9"
               >
                 <LogOut className="h-4 w-4" aria-hidden="true" />
-                Log out
+                {t('logOut')}
               </Button>
             </div>
           </CardContent>
