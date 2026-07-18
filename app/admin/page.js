@@ -52,6 +52,7 @@ function AdminInner() {
   const [busy, setBusy] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [loadError, setLoadError] = useState('');
+  const [loadAttempt, setLoadAttempt] = useState(0);
   const [projects, setProjects] = useState([]);
   const [contractors, setContractors] = useState([]);
 
@@ -93,7 +94,13 @@ function AdminInner() {
     };
 
     loadAdminData();
-  }, [authed]);
+  }, [authed, loadAttempt]);
+
+  const retryAdminData = () => {
+    setLoadingData(true);
+    setLoadError('');
+    setLoadAttempt((attempt) => attempt + 1);
+  };
 
   const login = async () => {
     setBusy(true);
@@ -146,7 +153,7 @@ function AdminInner() {
     <AppShell hideNav hideFooter>
       <h1 className="display-title mb-4 text-[26px] sm:text-[30px]">{t('adminTitle')}</h1>
       {loadError && (
-        <Card className="mb-4 border-[#EF4444]/35 bg-[#EF4444]/[0.06] dark:border-[#EF4444]/40 dark:bg-[#EF4444]/10">
+        <Card role="alert" aria-live="assertive" className="mb-4 border-[#EF4444]/35 bg-[#EF4444]/[0.06] dark:border-[#EF4444]/40 dark:bg-[#EF4444]/10">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EF4444]/10 text-[#EF4444]" aria-hidden="true">
@@ -154,14 +161,14 @@ function AdminInner() {
               </span>
               <div className="min-w-0 flex-1">
                 <div className="text-sm font-bold text-[#EF4444]">{t('adminDataLoadError')}</div>
-                <p className="mt-1 break-words text-xs leading-relaxed text-muted-foreground">{loadError}</p>
+                <p className="mt-1 break-words text-xs leading-relaxed text-muted-foreground">{t('adminDataLoadErrorDesc')}</p>
               </div>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-2">
               <Button
                 variant="navy"
                 size="sm"
-                onClick={() => window.location.reload()}
+                onClick={retryAdminData}
                 className="h-11 sm:h-9"
               >
                 <RefreshCw className="h-4 w-4" aria-hidden="true" />
