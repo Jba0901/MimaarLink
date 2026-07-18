@@ -424,6 +424,31 @@
     border-color: color-mix(in srgb, var(--path-accent) 42%, hsl(var(--border)));
     box-shadow: 0 18px 42px -24px var(--path-glow);
   }
+  .path-card-action {
+    background: var(--path-accent-soft);
+    border: 1px solid color-mix(in srgb, var(--path-accent) 34%, transparent);
+    color: var(--path-accent);
+    transition: background-color 180ms ease, border-color 180ms ease, transform 160ms ease;
+  }
+  .path-card[data-tone="amber"] .path-card-compact-action,
+  .dark .path-card[data-tone="navy"] .path-card-compact-action {
+    color: #152B54;
+  }
+  .path-card[data-primary="true"] .path-card-action {
+    background: #00B59E;
+    border-color: #00B59E;
+    color: #FFFFFF;
+    box-shadow: 0 10px 24px -12px rgba(0,181,158,0.58);
+  }
+  .group:hover .path-card-action {
+    border-color: color-mix(in srgb, var(--path-accent) 58%, transparent);
+  }
+  .group:active .path-card-action { transform: translateY(1px) scale(0.99); }
+  .dark .path-card[data-primary="true"] .path-card-action {
+    background: #0D9488;
+    border-color: #2DD4BF;
+    color: #FFFFFF;
+  }
   .provider-type-card {
     background: hsl(var(--card));
     color: hsl(var(--foreground));

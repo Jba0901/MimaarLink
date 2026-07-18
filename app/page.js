@@ -2,6 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/AppShell';
+import AudiencePathCard from '@/components/AudiencePathCard';
 import Reveal from '@/components/Reveal';
 import CountUp from '@/components/CountUp';
 import { useLang } from '@/lib/LangContext';
@@ -53,7 +54,7 @@ export default function HomePage() {
                 <Link href="/post-project" className="btn btn-primary soft-shine glow-teal px-8 text-[15px]" style={{ minHeight: 56 }}>
                   {t('postProject')} <Arrow />
                 </Link>
-                <Link href="/contractor" className="btn btn-navy px-7 text-[14.5px]" style={{ minHeight: 56 }}>
+                <Link href="/contractor" className="btn btn-outline px-7 text-[14.5px]" style={{ minHeight: 56 }}>
                   <Hammer className="w-4 h-4 shrink-0" />
                   {t('joinContractor')} <Arrow />
                 </Link>
@@ -190,27 +191,17 @@ export default function HomePage() {
           </Reveal>
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              { href: '/post-project', icon: Building2, eyebrow: t('startProjectEyebrow'), title: t('startProjectTitle'), desc: t('startProjectDesc'), cta: t('startProjectCta'), btn: 'btn-primary', tone: 'teal' },
-              { href: '/contractor', icon: Hammer, eyebrow: t('startContractorEyebrow'), title: t('startContractorTitle'), desc: t('startContractorDesc'), cta: t('startContractorCta'), btn: 'btn-amber', tone: 'amber' },
-              { href: '/contractor?type=consultant', icon: ClipboardCheck, eyebrow: t('startConsultantEyebrow'), title: t('startConsultantTitle'), desc: t('startConsultantDesc'), cta: t('startConsultantCta'), btn: 'btn-navy', tone: 'navy' },
+              { href: '/post-project', icon: Building2, eyebrow: t('startProjectEyebrow'), title: t('startProjectTitle'), desc: t('startProjectDesc'), cta: t('startProjectCta'), tone: 'teal' },
+              { href: '/contractor', icon: Hammer, eyebrow: t('startContractorEyebrow'), title: t('startContractorTitle'), desc: t('startContractorDesc'), cta: t('startContractorCta'), tone: 'amber' },
+              { href: '/contractor?type=consultant', icon: ClipboardCheck, eyebrow: t('startConsultantEyebrow'), title: t('startConsultantTitle'), desc: t('startConsultantDesc'), cta: t('startConsultantCta'), tone: 'navy' },
             ].map((r, i) => (
               <Reveal key={i} delay={i * 100}>
-                <article
-                  className="group path-card interactive-card card-sheen relative flex h-full flex-col overflow-hidden rounded-[26px] border p-7 shadow-soft hover:shadow-card"
-                  data-tone={r.tone}
-                  style={{ borderTopWidth: 3, borderTopColor: 'var(--path-accent)' }}
-                >
-                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" style={{ background: 'var(--path-accent-soft)', color: 'var(--path-accent)' }}>
-                    <r.icon className="h-7 w-7" />
-                  </span>
-                  <div className="mt-5 text-[12px] font-bold uppercase tracking-wide" style={{ color: 'var(--path-accent)' }}>{r.eyebrow}</div>
-                  <h3 className="mt-1.5 text-[22px] font-extrabold leading-tight text-navy">{r.title}</h3>
-                  <p className="mt-2.5 flex-1 text-[13.5px] leading-relaxed text-muted-foreground">{r.desc}</p>
-                  <Link href={r.href} className={`btn ${r.btn} mt-6 w-full text-[14px]`} style={{ minHeight: 50 }}>
-                    {r.cta} <Arrow />
-                  </Link>
-                  <r.icon className="absolute bottom-[-22px] w-28 h-28 pointer-events-none select-none transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6" style={{ color: 'var(--path-accent-soft)', insetInlineEnd: '-10px' }} />
-                </article>
+                <AudiencePathCard
+                  {...r}
+                  pathType={i === 0 ? 'project' : i === 1 ? 'contractor' : 'consultant'}
+                  detailed
+                  primary={i === 0}
+                />
               </Reveal>
             ))}
           </div>

@@ -1,16 +1,14 @@
 'use client';
 import React from 'react';
-import Link from 'next/link';
 import AppShell from '@/components/AppShell';
+import AudiencePathCard from '@/components/AudiencePathCard';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import { useLang } from '@/lib/LangContext';
-import { ArrowRight, Building2, ClipboardCheck, Hammer } from 'lucide-react';
+import { Building2, ClipboardCheck, Hammer } from 'lucide-react';
 import { trackMeta } from '@/lib/marketingAttribution';
 
 export default function StartHerePage() {
-  const { t, dir } = useLang();
-  const isRTL = dir === 'rtl';
-  const Arrow = () => isRTL ? <ArrowRight className="h-4 w-4 rotate-180" /> : <ArrowRight className="h-4 w-4" />;
+  const { t } = useLang();
 
   return (
     <AppShell hideNav hideFooter wide>
@@ -25,32 +23,29 @@ export default function StartHerePage() {
           </div>
 
           <div className="grid gap-2.5 motion-fade-up motion-delay-1 sm:grid-cols-3 sm:gap-3">
-            <SimpleChoice
+            <AudiencePathCard
               href="/post-project"
               icon={Building2}
               title={t('startProjectTitle')}
               desc={t('startProjectDesc')}
               tone="teal"
               pathType="project"
-              Arrow={Arrow}
             />
-            <SimpleChoice
+            <AudiencePathCard
               href="/contractor"
               icon={Hammer}
               title={t('startContractorTitle')}
               desc={t('startContractorDesc')}
               tone="amber"
               pathType="contractor"
-              Arrow={Arrow}
             />
-            <SimpleChoice
+            <AudiencePathCard
               href="/contractor?type=consultant"
               icon={ClipboardCheck}
               title={t('startConsultantTitle')}
               desc={t('startConsultantDesc')}
               tone="navy"
               pathType="consultant"
-              Arrow={Arrow}
             />
           </div>
 
@@ -71,39 +66,5 @@ export default function StartHerePage() {
         </div>
       </div>
     </AppShell>
-  );
-}
-
-function SimpleChoice({ href, icon: Icon, title, desc, tone, pathType, Arrow }) {
-  return (
-    <Link
-      href={href}
-      onClick={() => trackMeta('PathSelected', { path_type: pathType }, { custom: true })}
-      className="block h-full cursor-pointer tap-highlight"
-    >
-      <article
-        className="group path-card interactive-card relative flex h-full min-h-[104px] items-center gap-3 rounded-[20px] border p-3.5 shadow-soft hover:border-[#00B59E]/35 hover:shadow-card sm:min-h-0 sm:flex-col sm:items-stretch sm:gap-0 sm:rounded-[22px] sm:p-5"
-        data-tone={tone}
-      >
-        <span
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl sm:h-[52px] sm:w-[52px] sm:rounded-[18px]"
-          style={{ background: 'var(--path-accent-soft)', color: 'var(--path-accent)' }}
-          aria-hidden="true"
-        >
-          <Icon className="h-[22px] w-[22px] sm:h-[23px] sm:w-[23px]" />
-        </span>
-        <div className="min-w-0 flex-1 sm:mt-4">
-          <h2 className="text-[16px] font-extrabold leading-tight text-navy sm:text-[17px]">{title}</h2>
-          <p className="mt-1 text-[12.5px] leading-5 text-muted-foreground sm:mt-1.5 sm:leading-relaxed">{desc}</p>
-        </div>
-        <span
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-soft transition group-hover:scale-105 sm:absolute sm:top-5"
-          style={{ background: 'var(--path-accent)', insetInlineEnd: '1.25rem' }}
-          aria-hidden="true"
-        >
-          <Arrow />
-        </span>
-      </article>
-    </Link>
   );
 }
