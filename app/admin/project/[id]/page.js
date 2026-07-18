@@ -17,7 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, ArrowRight, CalendarClock, Clock, Plus, ShieldCheck, Loader2, ExternalLink, Trash2, Paperclip, Wallet } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Building2, CalendarClock, ClipboardCheck, Clock, FileCheck2, FileWarning, Plus, ShieldCheck, Loader2, ExternalLink, Trash2, Paperclip, Wallet } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 
@@ -290,22 +290,39 @@ export default function AdminProjectPage() {
           <div className="mb-3 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('invitedProviders')} ({invites.length})</div>
           {invites.length === 0 && <PageState kind="empty" compact title={t('noInvitesYet')} />}
           <div className="space-y-1.5">
-            {invites.map(inv => (
-              <div key={inv.id} className="grid gap-2 rounded-2xl border border-border/70 bg-secondary/60 p-3 text-sm min-[390px]:grid-cols-[minmax(0,1fr)_auto] min-[390px]:items-center">
-                <div className="min-w-0">
-                  <span className="block break-words font-semibold leading-snug text-navy min-[390px]:truncate">{cmap[inv.contractorId]?.companyName || inv.contractorId}</span>
-                  {cmap[inv.contractorId] && (
-                    <span className="mt-0.5 block break-words text-[12px] text-muted-foreground">{providerTypeLabel(cmap[inv.contractorId], t)}</span>
-                  )}
+            {invites.map(inv => {
+              const provider = cmap[inv.contractorId];
+              const ProviderIcon = provider?.providerType === 'consultant' ? ClipboardCheck : Building2;
+              return (
+                <div key={inv.id} className="rounded-2xl border border-border/70 bg-secondary/60 p-3 text-sm">
+                  <div className="flex min-w-0 items-start gap-2.5">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+                      <ProviderIcon className="h-5 w-5" />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <span className="block break-words font-semibold leading-snug text-navy">{provider?.companyName || inv.contractorId}</span>
+                      {provider && (
+                        <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                          <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">{providerTypeLabel(provider, t)}</Badge>
+                          {provider.verificationStatus === 'verified' && (
+                            <Badge variant="outline" className="max-w-full gap-1 whitespace-normal text-start text-[12px] text-[#00B59E]">
+                              <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
+                              {t('cstatus_verified')}
+                            </Badge>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="mt-3 flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-3">
+                    <Badge variant={inviteResponseVariant(inv.responseStatus)} className="min-w-0 max-w-full whitespace-normal text-start text-[12px] capitalize">{inv.responseStatus || '-'}</Badge>
+                    <Button type="button" variant="destructiveOutline" size="icon" onClick={() => deleteInvite(inv.id)} className="shrink-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </Button>
+                  </div>
                 </div>
-                <div className="flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-2 min-[390px]:shrink-0 min-[390px]:justify-end min-[390px]:border-0 min-[390px]:pt-0">
-                  <Badge variant={inviteResponseVariant(inv.responseStatus)} className="min-w-0 max-w-full whitespace-normal text-start text-[12px]">{inv.responseStatus || '-'}</Badge>
-                  <Button type="button" variant="destructiveOutline" size="icon" onClick={() => deleteInvite(inv.id)} className="shrink-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </Button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>
@@ -317,48 +334,81 @@ export default function AdminProjectPage() {
           <div className="space-y-2">
             {bids.map(b => {
               const fileCount = (b.attachments || []).length;
+              const provider = cmap[b.contractorId];
+              const ProviderIcon = provider?.providerType === 'consultant' ? ClipboardCheck : Building2;
               return (
-                <div key={b.id} className="rounded-2xl border border-border/70 bg-secondary/60 p-3">
-                  <div className="flex flex-col gap-3 min-[390px]:flex-row min-[390px]:items-start min-[390px]:justify-between">
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="min-w-0 flex-1 basis-full break-words text-sm font-semibold leading-snug text-navy min-[390px]:basis-[120px] min-[390px]:truncate">{cmap[b.contractorId]?.companyName || b.contractorId || t('provider')}</span>
-                        {cmap[b.contractorId] && (
-                          <Badge variant="outline" className="shrink-0 text-[12px]">{providerTypeLabel(cmap[b.contractorId], t)}</Badge>
-                        )}
-                        {fileCount > 0 && (
-                          <Badge variant="info" className="shrink-0 gap-1 text-[12px]">
-                            <Paperclip className="h-3 w-3" />{fileCount}
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="mt-2 grid grid-cols-2 gap-1.5">
-                        <div className="min-w-0 rounded-xl border border-border/70 bg-card p-2.5">
-                          <div className="flex items-center gap-1 text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide"><Wallet className="h-3 w-3 shrink-0" aria-hidden="true" />{t('price')}</div>
-                          <div className="mt-0.5 break-words text-[13px] font-bold leading-snug text-navy">{b.price.toLocaleString()} <span className="text-[12px] font-normal text-muted-foreground">{t('currencyQar')}</span></div>
+                <div key={b.id} className="overflow-hidden rounded-2xl border border-border/70 bg-secondary/60">
+                  <div className="p-3 sm:p-4">
+                    <div className="flex min-w-0 items-start gap-2.5">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+                        <ProviderIcon className="h-5 w-5" />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <span className="block break-words text-sm font-semibold leading-snug text-navy">{provider?.companyName || b.contractorId || t('provider')}</span>
+                        <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                          {provider && <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">{providerTypeLabel(provider, t)}</Badge>}
+                          {provider?.verificationStatus === 'verified' && (
+                            <Badge variant="outline" className="max-w-full gap-1 whitespace-normal text-start text-[12px] text-[#00B59E]">
+                              <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
+                              {t('cstatus_verified')}
+                            </Badge>
+                          )}
+                          {fileCount > 0 && (
+                            <Badge variant="info" className="max-w-full shrink-0 gap-1 whitespace-normal text-start text-[12px]">
+                              <Paperclip className="h-3 w-3" aria-hidden="true" />{fileCount}
+                            </Badge>
+                          )}
                         </div>
-                        <div className="min-w-0 rounded-xl border border-border/70 bg-card p-2.5">
-                          <div className="flex items-center gap-1 text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide"><Clock className="h-3 w-3 shrink-0" aria-hidden="true" />{t('timeline')}</div>
-                          <div className="mt-0.5 break-words text-[13px] font-bold leading-snug text-navy">{b.timeline || '-'}</div>
+                      </div>
+                    </div>
+
+                    <div className="mt-3 grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">
+                      <div className="min-w-0 rounded-[14px] border border-[#00B59E]/30 bg-[#D0F2EE]/40 p-3 dark:bg-[#00B59E]/10">
+                        <div className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Wallet className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('price')}</span></div>
+                        <div className="mt-1 min-w-0 text-navy" dir="ltr">
+                          <span className="inline-flex min-w-0 max-w-full items-baseline gap-1">
+                            <span className="min-w-0 break-all text-[20px] font-extrabold leading-none tabular-nums sm:text-[22px]">{b.price.toLocaleString()}</span>
+                            <span className="shrink-0 text-xs font-semibold text-muted-foreground">{t('currencyQar')}</span>
+                          </span>
                         </div>
                       </div>
-                      {fileCount > 0 && (
-                        <div className="mt-2 space-y-1.5">
+                      <div className="min-w-0 rounded-[14px] border border-border/70 bg-card p-3">
+                        <div className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Clock className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('timeline')}</span></div>
+                        <div className="mt-1 break-words text-sm font-semibold leading-snug text-navy">{b.timeline || '-'}</div>
+                      </div>
+                    </div>
+
+                    {(b.warranty || b.exclusions || b.notes) && (
+                      <div className="mt-3 space-y-1.5">
+                        {b.warranty && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileCheck2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('warranty')}:</span> {b.warranty}</span></div>}
+                        {b.exclusions && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileWarning className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FFB638]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('exclusions')}:</span> {b.exclusions}</span></div>}
+                        {b.notes && <div className="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-muted-foreground">{b.notes}</div>}
+                      </div>
+                    )}
+
+                    {fileCount > 0 && (
+                      <div className="mt-3 border-t border-border/70 pt-3">
+                        <div className="mb-1.5 flex min-w-0 items-center gap-1.5 text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">
+                          <Paperclip className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                          <span className="min-w-0 break-words">{t('bidFiles')}</span>
+                        </div>
+                        <div className="space-y-1.5">
                           {b.attachments.map((f, i) => (
                             <ResultFileLink key={i} file={f} fallbackLabel={t('files')} actionLabel={t('download')} />
                           ))}
                         </div>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-2 gap-2 border-t border-border/70 pt-3 min-[390px]:flex min-[390px]:shrink-0 min-[390px]:gap-1 min-[390px]:border-0 min-[390px]:pt-0">
-                      <label className="flex h-auto min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-border bg-card px-3 py-2 text-[12px] font-semibold text-navy transition-[border-color,background-color] hover:border-[#00B59E]/35 hover:bg-[#D0F2EE]/35 focus-within:outline-none focus-within:ring-2 focus-within:ring-[#00B59E]/30 dark:hover:bg-[#00B59E]/10 min-[390px]:w-11 min-[390px]:px-0 min-[390px]:py-0 sm:h-8 sm:min-h-8 sm:w-8 sm:rounded-lg" title={t('uploadAgreement')} aria-label={t('uploadAgreement')}>
-                        <Paperclip className="w-3.5 h-3.5" />
-                        <span className="min-[390px]:sr-only">{t('uploadAgreement')}</span>
+                      </div>
+                    )}
+
+                    <div className="mt-3 grid grid-cols-2 gap-2 border-t border-border/70 pt-3">
+                      <label className="flex h-auto min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-border bg-card px-3 py-2 text-center text-[12px] font-semibold leading-snug text-navy transition-[border-color,background-color] hover:border-[#00B59E]/35 hover:bg-[#D0F2EE]/35 focus-within:outline-none focus-within:ring-2 focus-within:ring-[#00B59E]/30 dark:hover:bg-[#00B59E]/10" title={t('uploadAgreement')} aria-label={t('uploadAgreement')}>
+                        <Paperclip className="h-3.5 w-3.5 shrink-0" />
+                        <span className="min-w-0 break-words">{t('uploadAgreement')}</span>
                         <input type="file" className="sr-only" accept="image/*,application/pdf" onChange={(e) => uploadBidFile(b.id, b.attachments, e)} />
                       </label>
-                      <Button type="button" variant="destructiveOutline" size="sm" onClick={() => deleteBid(b.id)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-[12px] min-[390px]:w-11 min-[390px]:px-0 min-[390px]:py-0 sm:h-8 sm:min-h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
-                        <Trash2 className="w-3.5 h-3.5" />
-                        <span className="min-[390px]:sr-only">{t('delete')}</span>
+                      <Button type="button" variant="destructiveOutline" size="sm" onClick={() => deleteBid(b.id)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-[12px] leading-snug" title={t('delete')} aria-label={t('delete')}>
+                        <Trash2 className="h-3.5 w-3.5 shrink-0" />
+                        <span className="min-w-0 break-words">{t('delete')}</span>
                       </Button>
                     </div>
                   </div>
