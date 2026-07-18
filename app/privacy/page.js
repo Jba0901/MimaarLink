@@ -27,21 +27,19 @@ export default function PrivacyPage() {
     <AppShell hideNav>
       <div className="mx-auto max-w-3xl py-4 sm:py-8">
         <div className="eyebrow">{ar ? 'الخصوصية' : 'Privacy'}</div>
-        <h1 className="display-title mt-3 text-[30px] sm:text-[38px]">{ar ? 'إشعار الخصوصية والقياس' : 'Privacy and measurement notice'}</h1>
-        <p className="mt-3 max-w-2xl text-[14px] leading-6 text-muted-foreground">
+        <h1 className="display-title mt-3 break-words text-[30px] sm:text-[38px]">{ar ? 'إشعار الخصوصية والقياس' : 'Privacy and measurement notice'}</h1>
+        <p className="mt-3 max-w-2xl break-words text-[14px] leading-6 text-muted-foreground">
           {ar ? 'يوضح هذا الإشعار طريقة تعامل معمار لينك مع بيانات النماذج وقياس الحملات الإعلانية.' : 'This notice explains how MimaarLink handles form data and advertising measurement.'}
         </p>
 
-        <div className="mt-6 overflow-hidden rounded-[20px] border border-border bg-white shadow-soft sm:rounded-[24px]">
+        <div className="mt-6 overflow-hidden rounded-[20px] border border-border bg-card shadow-soft sm:rounded-[24px]">
           {sections.map(([title, body], index) => (
-            <section key={title} className={`flex flex-col items-start gap-2.5 p-3.5 min-[390px]:flex-row min-[390px]:gap-3.5 min-[390px]:p-4 sm:p-6 ${index < sections.length - 1 ? 'border-b border-border' : ''}`}>
+            <section key={title} className={`grid grid-cols-[40px_minmax(0,1fr)] items-start gap-x-3 gap-y-2.5 p-3.5 min-[390px]:gap-x-3.5 min-[390px]:p-4 sm:p-6 ${index < sections.length - 1 ? 'border-b border-border' : ''}`}>
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[12px] font-extrabold text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
                 {index + 1}
               </span>
-              <div className="min-w-0 flex-1">
-                <h2 className="text-[15.5px] font-extrabold leading-snug text-navy sm:text-base">{title}</h2>
-                <p className="mt-1.5 text-[13.5px] leading-6 text-muted-foreground sm:text-sm sm:leading-relaxed">{body}</p>
-              </div>
+              <h2 className="min-w-0 self-center break-words text-[15.5px] font-extrabold leading-snug text-navy sm:text-base">{title}</h2>
+              <p className="col-span-2 min-w-0 break-words text-[13.5px] leading-6 text-muted-foreground min-[390px]:col-span-1 min-[390px]:col-start-2 sm:text-sm sm:leading-relaxed">{body}</p>
             </section>
           ))}
         </div>

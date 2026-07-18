@@ -65,7 +65,7 @@ export default function MarketingAttribution() {
       role="region"
       aria-labelledby="marketing-consent-title"
       aria-describedby="marketing-consent-description"
-      className={`fixed inset-x-3 z-[100] mx-auto max-w-xl rounded-[20px] border border-border bg-white p-3.5 shadow-lift sm:rounded-[22px] sm:p-5 ${
+      className={`fixed inset-x-2.5 z-[100] mx-auto max-w-xl rounded-[20px] border border-[#00B59E]/25 bg-card p-3.5 shadow-lift sm:inset-x-3 sm:rounded-[22px] sm:p-5 ${
         sitsAboveMobileNav
           ? 'bottom-[calc(5.75rem+env(safe-area-inset-bottom))] lg:bottom-4'
           : 'bottom-[calc(0.75rem+env(safe-area-inset-bottom))]'
