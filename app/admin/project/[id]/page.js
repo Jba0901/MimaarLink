@@ -17,7 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, ArrowRight, CalendarClock, Plus, ShieldCheck, FileText, Loader2, ExternalLink, Trash2, Paperclip } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CalendarClock, Clock, Plus, ShieldCheck, Loader2, ExternalLink, Trash2, Paperclip, Wallet } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 
@@ -43,6 +43,14 @@ const providerOptionLabel = (provider, t) => {
   if (!provider) return '';
   const status = provider.verificationStatus ? t(`cstatus_${provider.verificationStatus}`) : '';
   return `${provider.companyName} - ${providerTypeLabel(provider, t)}${status ? ` - ${status}` : ''}`;
+};
+
+const inviteResponseVariant = (status) => {
+  const normalized = String(status || '').toLowerCase();
+  if (['accepted', 'responded', 'submitted'].includes(normalized)) return 'success';
+  if (['declined', 'rejected'].includes(normalized)) return 'destructive';
+  if (['pending', 'sent'].includes(normalized)) return 'warning';
+  return 'outline';
 };
 
 export default function AdminProjectPage() {
@@ -279,19 +287,19 @@ export default function AdminProjectPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('invitedProviders')} ({invites.length})</div>
+          <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('invitedProviders')} ({invites.length})</div>
           {invites.length === 0 && <PageState kind="empty" compact title={t('noInvitesYet')} />}
           <div className="space-y-1.5">
             {invites.map(inv => (
-              <div key={inv.id} className="grid gap-2 rounded-xl bg-secondary p-2.5 text-sm min-[390px]:grid-cols-[minmax(0,1fr)_auto] min-[390px]:items-center">
+              <div key={inv.id} className="grid gap-2 rounded-2xl border border-border/70 bg-secondary/60 p-3 text-sm min-[390px]:grid-cols-[minmax(0,1fr)_auto] min-[390px]:items-center">
                 <div className="min-w-0">
                   <span className="block break-words font-semibold leading-snug text-navy min-[390px]:truncate">{cmap[inv.contractorId]?.companyName || inv.contractorId}</span>
                   {cmap[inv.contractorId] && (
-                    <span className="mt-0.5 block text-[11px] text-muted-foreground">{providerTypeLabel(cmap[inv.contractorId], t)}</span>
+                    <span className="mt-0.5 block break-words text-[11px] text-muted-foreground">{providerTypeLabel(cmap[inv.contractorId], t)}</span>
                   )}
                 </div>
                 <div className="flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-2 min-[390px]:shrink-0 min-[390px]:justify-end min-[390px]:border-0 min-[390px]:pt-0">
-                  <Badge variant="outline" className="min-w-0 max-w-full whitespace-normal text-start text-[11px]">{inv.responseStatus}</Badge>
+                  <Badge variant={inviteResponseVariant(inv.responseStatus)} className="min-w-0 max-w-full whitespace-normal text-start text-[11px]">{inv.responseStatus || '-'}</Badge>
                   <Button type="button" variant="destructiveOutline" size="icon" onClick={() => deleteInvite(inv.id)} className="shrink-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
                     <Trash2 className="w-3.5 h-3.5" />
                   </Button>
@@ -304,39 +312,46 @@ export default function AdminProjectPage() {
 
       <Card className="mb-3">
         <CardContent className="p-4">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('bids')} ({bids.length})</div>
+          <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('bids')} ({bids.length})</div>
           {bids.length === 0 && <PageState kind="empty" compact title={t('noAdminBidsYet')} />}
           <div className="space-y-2">
             {bids.map(b => {
               const fileCount = (b.attachments || []).length;
               return (
-                <div key={b.id} className="rounded-xl bg-secondary p-2.5">
-                  <div className="flex flex-col gap-2 min-[390px]:flex-row min-[390px]:items-start min-[390px]:justify-between">
+                <div key={b.id} className="rounded-2xl border border-border/70 bg-secondary/60 p-3">
+                  <div className="flex flex-col gap-3 min-[390px]:flex-row min-[390px]:items-start min-[390px]:justify-between">
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="min-w-0 flex-1 basis-[120px] truncate text-sm font-semibold text-navy">{cmap[b.contractorId]?.companyName}</span>
+                        <span className="min-w-0 flex-1 basis-full break-words text-sm font-semibold leading-snug text-navy min-[390px]:basis-[120px] min-[390px]:truncate">{cmap[b.contractorId]?.companyName || b.contractorId || t('provider')}</span>
                         {cmap[b.contractorId] && (
-                          <span className="shrink-0 rounded-full bg-white px-1.5 py-0.5 text-[11px] text-navy">{providerTypeLabel(cmap[b.contractorId], t)}</span>
+                          <Badge variant="outline" className="shrink-0 text-[11px]">{providerTypeLabel(cmap[b.contractorId], t)}</Badge>
                         )}
                         {fileCount > 0 && (
-                          <span className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-white px-1.5 py-0.5 text-[11px] text-navy">
+                          <Badge variant="info" className="shrink-0 gap-1 text-[11px]">
                             <Paperclip className="h-3 w-3" />{fileCount}
-                          </span>
+                          </Badge>
                         )}
                       </div>
-                      <div className="mt-0.5 text-xs text-muted-foreground">{b.price.toLocaleString()} {t('currencyQar')} · {b.timeline}</div>
+                      <div className="mt-2 grid grid-cols-2 gap-1.5">
+                        <div className="min-w-0 rounded-xl border border-border/70 bg-card p-2.5">
+                          <div className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground"><Wallet className="h-3 w-3 shrink-0" aria-hidden="true" />{t('price')}</div>
+                          <div className="mt-0.5 break-words text-[13px] font-bold leading-snug text-navy">{b.price.toLocaleString()} <span className="text-[11px] font-normal text-muted-foreground">{t('currencyQar')}</span></div>
+                        </div>
+                        <div className="min-w-0 rounded-xl border border-border/70 bg-card p-2.5">
+                          <div className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground"><Clock className="h-3 w-3 shrink-0" aria-hidden="true" />{t('timeline')}</div>
+                          <div className="mt-0.5 break-words text-[13px] font-bold leading-snug text-navy">{b.timeline || '-'}</div>
+                        </div>
+                      </div>
                       {fileCount > 0 && (
-                        <div className="mt-1.5 space-y-1">
+                        <div className="mt-2 space-y-1.5">
                           {b.attachments.map((f, i) => (
-                            <a key={i} href={f.data} download={f.name} className="flex min-h-11 items-center gap-1.5 rounded-xl bg-white px-3 py-2 text-[11px] text-navy">
-                              <FileText className="h-3 w-3 shrink-0" /><span className="min-w-0 flex-1 truncate">{f.name}</span>
-                            </a>
+                            <ResultFileLink key={i} file={f} fallbackLabel={t('files')} actionLabel={t('download')} />
                           ))}
                         </div>
                       )}
                     </div>
-                    <div className="grid grid-cols-2 gap-2 border-t border-border/70 pt-2 min-[390px]:flex min-[390px]:shrink-0 min-[390px]:gap-1 min-[390px]:border-0 min-[390px]:pt-0">
-                      <label className="flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-white px-3 text-[11px] font-semibold text-navy transition hover:bg-background focus-within:outline-none focus-within:ring-2 focus-within:ring-[#00B59E]/30 min-[390px]:w-11 min-[390px]:px-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('uploadAgreement')} aria-label={t('uploadAgreement')}>
+                    <div className="grid grid-cols-2 gap-2 border-t border-border/70 pt-3 min-[390px]:flex min-[390px]:shrink-0 min-[390px]:gap-1 min-[390px]:border-0 min-[390px]:pt-0">
+                      <label className="flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-border bg-card px-3 text-[11px] font-semibold text-navy transition-[border-color,background-color] hover:border-[#00B59E]/35 hover:bg-[#D0F2EE]/35 focus-within:outline-none focus-within:ring-2 focus-within:ring-[#00B59E]/30 dark:hover:bg-[#00B59E]/10 min-[390px]:w-11 min-[390px]:px-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('uploadAgreement')} aria-label={t('uploadAgreement')}>
                         <Paperclip className="w-3.5 h-3.5" />
                         <span className="min-[390px]:sr-only">{t('uploadAgreement')}</span>
                         <input type="file" className="sr-only" accept="image/*,application/pdf" onChange={(e) => uploadBidFile(b.id, b.attachments, e)} />
