@@ -397,7 +397,7 @@ function ContractorApplicationInner() {
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
             <Button variant="outline" onClick={() => setStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
-              {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submit')}
+              {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submitProvider')}
             </Button>
           </div>
         </div>
