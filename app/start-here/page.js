@@ -12,7 +12,7 @@ export default function StartHerePage() {
 
   return (
     <AppShell hideNav hideFooter wide>
-      <div className="v2-ambient -mx-4 flex min-h-[calc(100svh-120px)] flex-col justify-center px-4 py-5 sm:-mx-6 sm:min-h-[calc(100vh-130px)] sm:px-6 sm:py-8">
+      <div className="v2-ambient -mx-4 flex min-h-[calc(100svh-120px)] flex-col justify-center px-4 py-5 sm:-mx-6 sm:min-h-[calc(100dvh-130px)] sm:px-6 sm:py-8">
         <div className="relative z-10 mx-auto w-full max-w-md sm:max-w-3xl lg:max-w-4xl">
           <div className="mb-5 text-center motion-fade-up sm:mb-8">
             <div className="eyebrow mb-2.5 justify-center sm:mb-3">{t('startEyebrow')}</div>

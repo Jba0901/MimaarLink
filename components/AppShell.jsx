@@ -132,7 +132,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
   const toggleTheme = () => setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="app-viewport flex flex-col">
       <header
         className={`site-header sticky top-0 z-40 transition-all duration-300 ${
           scrolled

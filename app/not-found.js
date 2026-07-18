@@ -8,7 +8,7 @@ export default function NotFound() {
   const arabic = lang === 'ar';
 
   return (
-    <main className="v2-ambient min-h-screen px-4 sm:px-6">
+    <main className="v2-ambient app-viewport app-content-x">
       <PageState
         kind="missing"
         title={arabic ? 'الصفحة غير موجودة' : 'Page not found'}

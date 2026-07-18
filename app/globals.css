@@ -220,6 +220,10 @@
 
   /* ---------- misc ---------- */
   .cream { background-color: #F5F4F1; }
+  .app-viewport {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
   .site-header {
     background-color: rgba(255,255,255,0.72);
     padding-top: env(safe-area-inset-top);

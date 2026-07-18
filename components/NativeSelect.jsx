@@ -12,7 +12,7 @@ const NativeSelect = React.forwardRef(({
     <select
       ref={ref}
       className={cn(
-        'min-h-11 w-full appearance-none rounded-xl border border-input bg-card ps-3.5 pe-10 text-start text-sm text-foreground shadow-soft ring-offset-background transition-[border-color,box-shadow,background-color] hover:border-[#00B59E]/45 focus:border-[#00B59E]/60 focus:outline-none focus:ring-2 focus:ring-[#00B59E]/25 disabled:cursor-not-allowed disabled:opacity-50',
+        'min-h-11 w-full appearance-none rounded-xl border border-input bg-card ps-3.5 pe-10 text-start text-base text-foreground shadow-soft ring-offset-background transition-[border-color,box-shadow,background-color] hover:border-[#00B59E]/45 focus:border-[#00B59E]/60 focus:outline-none focus:ring-2 focus:ring-[#00B59E]/25 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm [@media(pointer:coarse)]:!text-base',
         className,
       )}
       {...props}
