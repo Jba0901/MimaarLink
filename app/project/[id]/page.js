@@ -19,12 +19,30 @@ export default function ProjectPage() {
   const { t } = useLang();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
-  useEffect(() => {
-    fetch(`/api/projects/${id}`).then(r => r.json()).then(d => { setData(d); setLoading(false); }).catch(() => setLoading(false));
-  }, [id]);
+  const load = async () => {
+    setLoading(true);
+    setLoadError(false);
+    try {
+      const response = await fetch(`/api/projects/${id}`);
+      if (response.status === 404) {
+        setData({ error: true });
+        return;
+      }
+      if (!response.ok) throw new Error('Project status failed to load');
+      setData(await response.json());
+    } catch {
+      setLoadError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { load(); }, [id]);
 
   if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (loadError) return <AppShell><PageState kind="error" title={t('statusLoadErrorTitle')} description={t('statusLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={load} actionVariant="primary" /></AppShell>;
   if (!data || data.error) return <AppShell><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
 
   const idx = PROJECT_STATUSES.indexOf(data.status);

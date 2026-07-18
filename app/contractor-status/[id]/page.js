@@ -30,19 +30,34 @@ export default function ContractorStatusPage() {
   const { t } = useLang();
   const [contractor, setContractor] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
-  useEffect(() => {
-    fetch(`/api/contractor-status/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setContractor(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [id]);
+  const load = async () => {
+    setLoading(true);
+    setLoadError(false);
+    try {
+      const response = await fetch(`/api/contractor-status/${id}`);
+      if (response.status === 404) {
+        setContractor({ error: true });
+        return;
+      }
+      if (!response.ok) throw new Error('Provider status failed to load');
+      setContractor(await response.json());
+    } catch {
+      setLoadError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { load(); }, [id]);
 
   if (loading) {
     return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
+  }
+
+  if (loadError) {
+    return <AppShell><PageState kind="error" title={t('statusLoadErrorTitle')} description={t('statusLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={load} actionVariant="primary" /></AppShell>;
   }
 
   if (!contractor || contractor.error) {
