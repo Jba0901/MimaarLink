@@ -33,38 +33,38 @@ export default function HomePage() {
     <AppShell wide bleed flushFooter>
       {/* ============ HERO ============ */}
       <section className="v2-ambient">
-        <div className="container-x relative z-10 pt-10 pb-14 lg:pt-20 lg:pb-24">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="container-x relative z-10 pb-10 pt-6 sm:pb-14 sm:pt-10 lg:pb-24 lg:pt-20">
+          <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
             <div>
-              <div className="motion-fade-up mb-6 inline-flex items-center gap-1.5 rounded-full border border-[#00B59E]/25 bg-[#00B59E]/8 px-3.5 py-1.5 text-[12.5px] font-bold text-navy">
+              <div className="motion-fade-up mb-4 inline-flex items-center gap-1.5 rounded-full border border-[#00B59E]/25 bg-[#00B59E]/8 px-3 py-1.5 text-[12px] font-bold leading-snug text-navy sm:mb-6 sm:px-3.5 sm:text-[12.5px]">
                 <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
                 {t('heroBadge')}
               </div>
 
-              <h1 className="motion-fade-up motion-delay-1 display-title text-[34px] sm:text-[48px] lg:text-[58px]">
+              <h1 className="motion-fade-up motion-delay-1 display-title break-words text-[31px] min-[390px]:text-[34px] sm:text-[48px] lg:text-[58px]">
                 {words.join(' ')}{' '}
                 {lastWord && <span className="text-teal">{lastWord}</span>}
               </h1>
 
-              <p className="motion-fade-up motion-delay-2 mt-5 text-[15px] sm:text-[17px] text-muted-foreground leading-relaxed max-w-xl">
+              <p className="motion-fade-up motion-delay-2 mt-3.5 max-w-xl break-words text-[14px] leading-6 text-muted-foreground sm:mt-5 sm:text-[17px] sm:leading-relaxed">
                 {t('subtitle')}
               </p>
 
-              <div className="motion-fade-up motion-delay-3 mt-8 flex flex-col sm:flex-row gap-3">
-                <Link href="/post-project" className="btn btn-primary soft-shine glow-teal px-8 text-[15px]" style={{ minHeight: 56 }}>
+              <div className="motion-fade-up motion-delay-3 mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:gap-3">
+                <Link href="/post-project" className="btn btn-primary soft-shine glow-teal min-h-[52px] px-8 text-[15px] sm:min-h-14">
                   {t('postProject')} <Arrow />
                 </Link>
-                <Link href="/contractor" className="btn btn-outline px-7 text-[14.5px]" style={{ minHeight: 56 }}>
+                <Link href="/contractor" className="btn btn-outline min-h-[52px] px-7 text-[14.5px] sm:min-h-14">
                   <Hammer className="w-4 h-4 shrink-0" />
                   {t('joinContractor')} <Arrow />
                 </Link>
               </div>
 
-              <div className="motion-fade-up motion-delay-4 mt-8 flex flex-wrap items-center gap-x-6 gap-y-2.5">
+              <div className="motion-fade-up motion-delay-4 mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 sm:mt-8 sm:gap-x-6 sm:gap-y-2.5">
                 {[t('benefit_ai'), t('benefit_bids'), t('benefit_local')].map((b, i) => (
-                  <span key={i} className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-muted-foreground">
+                  <span key={i} className="inline-flex min-w-0 items-center gap-1.5 text-[12.5px] font-semibold leading-snug text-muted-foreground sm:text-[13px]">
                     <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: '#00B59E' }} />
-                    {b}
+                    <span className="min-w-0 break-words">{b}</span>
                   </span>
                 ))}
               </div>
@@ -82,10 +82,10 @@ export default function HomePage() {
       <MarketBand t={t} />
 
       {/* ============ PROCESS STEPPER ============ */}
-      <section className="py-12 lg:py-20">
+      <section className="py-10 sm:py-12 lg:py-20">
         <div className="container-x">
           <Reveal>
-            <h2 className="mb-8 text-center display-title text-[26px] sm:mb-12 sm:text-[34px]">{t('howItWorks')}</h2>
+            <h2 className="mb-7 text-center display-title text-[26px] sm:mb-12 sm:text-[34px]">{t('howItWorks')}</h2>
           </Reveal>
           <div className="relative mx-auto max-w-5xl">
             <div className="hidden sm:block absolute top-8 inset-x-[16%] h-px bg-gradient-to-r from-transparent via-border to-transparent" />
@@ -98,7 +98,7 @@ export default function HomePage() {
                 <Reveal key={i} delay={i * 110}>
                   <div className={`relative flex gap-3.5 px-1 text-start sm:block sm:px-3 sm:text-center ${i < 2 ? 'pb-6 sm:pb-0' : ''}`}>
                     {i < 2 && <span className="absolute bottom-0 start-7 top-14 w-px bg-border sm:hidden" aria-hidden="true" />}
-                    <div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-border bg-white shadow-card sm:mx-auto sm:h-16 sm:w-16">
+                    <div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-border bg-card shadow-card sm:mx-auto sm:h-16 sm:w-16">
                       <s.icon className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: '#00B59E' }} />
                       <span className="absolute -top-2 flex h-6 w-6 items-center justify-center rounded-full text-[12px] font-bold text-white shadow-soft navy" style={{ insetInlineEnd: '-8px' }}>
                         {i + 1}
@@ -120,8 +120,8 @@ export default function HomePage() {
       <section className="py-10 sm:py-12 lg:py-16">
         <div className="container-x">
           <Reveal>
-            <div className="mb-6 flex items-center justify-between gap-3 sm:mb-8">
-              <h2 className="display-title text-[26px] sm:text-[34px]">{t('serviceCategories')}</h2>
+            <div className="mb-6 flex min-w-0 flex-col items-start gap-1 min-[390px]:flex-row min-[390px]:items-center min-[390px]:justify-between min-[390px]:gap-3 sm:mb-8">
+              <h2 className="display-title min-w-0 break-words text-[26px] sm:text-[34px]">{t('serviceCategories')}</h2>
               <Link href="/post-project" className="inline-flex min-h-11 shrink-0 items-center gap-1 text-[13px] font-bold text-navy underline decoration-[#00B59E] decoration-2 underline-offset-4 tap-highlight">
                 {t('seeAll')} <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
@@ -136,11 +136,11 @@ export default function HomePage() {
                     href={`/post-project?category=${c}`}
                     className="group block h-full rounded-[20px] tap-highlight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D]"
                   >
-                    <div className="interactive-card flex h-full min-h-[116px] flex-col items-center justify-center gap-3 rounded-[20px] border border-border bg-white p-3.5 shadow-soft group-hover:border-[#00B59E]/45 min-[390px]:min-h-[124px] min-[390px]:gap-3.5 min-[390px]:p-4 sm:p-5">
+                    <div className="interactive-card flex h-full min-h-[116px] min-w-0 flex-col items-center justify-center gap-3 rounded-[20px] border border-border bg-card p-3.5 shadow-soft group-hover:border-[#00B59E]/45 min-[390px]:min-h-[124px] min-[390px]:gap-3.5 min-[390px]:p-4 sm:p-5">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl min-[390px]:h-12 min-[390px]:w-12" style={{ background: 'rgba(0,181,158,0.10)' }}>
                         <Icon className="h-[22px] w-[22px] min-[390px]:h-6 min-[390px]:w-6" style={{ color: '#00B59E' }} aria-hidden="true" />
                       </div>
-                      <span className="text-center text-[12.5px] font-bold leading-5 text-navy">{t(`cat_${c}`)}</span>
+                      <span className="min-w-0 break-words text-center text-[12.5px] font-bold leading-5 text-navy">{t(`cat_${c}`)}</span>
                     </div>
                   </Link>
                 </Reveal>
@@ -151,15 +151,15 @@ export default function HomePage() {
       </section>
 
       {/* ============ WHY MIMAARLINK (tinted band) ============ */}
-      <section className="surface-band py-12 lg:py-20">
+      <section className="surface-band py-10 sm:py-12 lg:py-20">
         <div className="container-x">
           <Reveal>
-            <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-11">
+            <div className="mx-auto mb-7 max-w-2xl text-center sm:mb-11">
               <h2 className="display-title text-[26px] sm:text-[34px]">{t('whyTitle')}</h2>
               <p className="mt-3 text-[15px] text-muted-foreground leading-relaxed">{t('whySubtitle')}</p>
             </div>
           </Reveal>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
             {[
               { icon: BadgeCheck, title: t('why1Title'), desc: t('why1Desc') },
               { icon: Wallet, title: t('why2Title'), desc: t('why2Desc') },
@@ -167,7 +167,7 @@ export default function HomePage() {
               { icon: MapPin, title: t('why4Title'), desc: t('why4Desc') },
             ].map((w, i) => (
               <Reveal key={i} delay={i * 90}>
-                <div className="interactive-card flex h-full items-start gap-4 rounded-[22px] border border-border bg-white p-5 shadow-soft hover:border-[#00B59E]/40 sm:block sm:p-6">
+                <div className="interactive-card flex h-full items-start gap-3 rounded-[20px] border border-border bg-card p-3.5 shadow-soft hover:border-[#00B59E]/40 min-[390px]:gap-3.5 min-[390px]:p-4 sm:block sm:rounded-[22px] sm:p-6">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl sm:mb-5 sm:h-12 sm:w-12" style={{ background: 'rgba(0,181,158,0.10)' }}>
                     <w.icon className="h-[22px] w-[22px]" style={{ color: '#00B59E' }} />
                   </span>
@@ -183,10 +183,10 @@ export default function HomePage() {
       </section>
 
       {/* ============ AUDIENCE — three clear paths ============ */}
-      <section className="py-14 lg:py-20">
+      <section className="py-12 sm:py-14 lg:py-20">
         <div className="container-x">
           <Reveal>
-            <div className="text-center max-w-2xl mx-auto mb-11">
+            <div className="mx-auto mb-7 max-w-2xl text-center sm:mb-11">
               <div className="eyebrow justify-center mb-3">{t('startEyebrow')}</div>
               <h2 className="display-title text-[26px] sm:text-[34px]">{t('startTitle')}</h2>
               <p className="mt-3 text-[15px] text-muted-foreground leading-relaxed">{t('startSubtitle')}</p>
@@ -216,7 +216,7 @@ export default function HomePage() {
 
       {/* ============ FINAL CTA (teal band) ============ */}
       <section className="launch-cta-band">
-        <div className="container-x py-12 text-center text-white sm:py-16 lg:py-24">
+        <div className="container-x py-10 text-center text-white sm:py-16 lg:py-24">
           <Reveal>
             <h2 className="mx-auto max-w-2xl text-[26px] font-extrabold leading-snug sm:text-[40px] sm:leading-tight">{t('projL_finalTitle')}</h2>
             <p className="mx-auto mt-3 max-w-xl text-[14px] leading-6 text-white/85 sm:mt-4 sm:text-[16px]">{t('projL_finalSub')}</p>
@@ -244,8 +244,8 @@ function MarketBand({ t }) {
   ];
   return (
     <section className="premium-panel market-skyline-panel text-white">
-      <div className="container-x relative z-10 py-10 sm:py-14 lg:py-20">
-        <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+      <div className="container-x relative z-10 py-8 sm:py-14 lg:py-20">
+        <div className="grid items-center gap-6 sm:gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <Reveal>
             <div className="max-w-xl">
               <div className="mb-4 inline-flex items-center gap-1.5 text-[12.5px] font-bold" style={{ color: '#00B59E' }}>
@@ -284,10 +284,10 @@ function MarketBand({ t }) {
 function FaqSection({ t }) {
   const items = [1, 2, 3, 4, 5].map((n) => ({ q: t(`faqQ${n}`), a: t(`faqA${n}`) }));
   return (
-    <section className="py-14 lg:py-20">
+    <section className="py-12 sm:py-14 lg:py-20">
       <div className="container-x">
         <Reveal>
-          <div className="text-center max-w-2xl mx-auto mb-10">
+          <div className="mx-auto mb-7 max-w-2xl text-center sm:mb-10">
             <h2 className="display-title text-[26px] sm:text-[34px]">{t('faqTitle')}</h2>
             <p className="mt-3 text-[15px] text-muted-foreground leading-relaxed">{t('faqSubtitle')}</p>
           </div>
@@ -309,7 +309,7 @@ function FaqSection({ t }) {
 
 function MatchPreview({ t }) {
   return (
-    <div className="float-soft rounded-[24px] bg-white border border-border shadow-lift p-6">
+    <div className="float-soft rounded-[24px] border border-border bg-card p-6 shadow-lift">
       <div className="flex items-center justify-between gap-3 mb-5">
         <div className="min-w-0">
           <div className="text-[12px] font-bold text-muted-foreground/75 ltr:uppercase ltr:tracking-wide">{t('projectStatus')}</div>
