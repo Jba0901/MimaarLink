@@ -141,9 +141,9 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         }`}
       >
         <div className="container-x relative h-16 sm:h-[68px] flex items-center justify-between gap-2">
-          <Link href="/" className="flex min-h-11 items-center gap-2 rounded-xl sm:gap-2.5 min-w-0 shrink tap-highlight">
+          <Link href="/" aria-label={t('appName')} className="flex min-h-11 items-center gap-2 rounded-xl sm:gap-2.5 min-w-0 shrink tap-highlight">
             <Logo className="h-8 w-8 sm:h-10 sm:w-10" priority />
-            <BrandText size={17} onDark={isDark} />
+            <span className="max-[263px]:hidden"><BrandText size={17} onDark={isDark} /></span>
           </Link>
 
           {/* centered desktop nav */}
