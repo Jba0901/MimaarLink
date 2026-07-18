@@ -1,6 +1,6 @@
 # MimaarLink Weekly Execution Board
 
-Week of: `2026-07-11`
+Week of: `2026-07-11` (Week 1 closeout through `2026-07-18`)
 
 ## Chief Operator Decision
 
@@ -21,12 +21,12 @@ Evidence required before more spend/build:
 | Metric | Target | Actual | Notes |
 |---|---:|---:|---|
 | Owner/referral messages sent | 30 | 8 | Wave A sent on 2026-07-13 with Q approval; 12 staged messages and all follow-ups remain held. |
-| Interested owner/referral replies | 3 | UNKNOWN | The 2026-07-15 mailbox sweep was blocked before mailbox verification because Chrome control could not attach to Profile 1; unknown is not zero. |
+| Interested owner/referral replies | 3 | UNKNOWN | Last observed count was 0 on 2026-07-15. Gmail failed to load on 2026-07-18, so current reply and bounce state remains unknown. |
 | Provider conversations | 30 | 0 |  |
-| Contractor applications | 15 | 3 | Authenticated `/admin` recheck on 2026-07-15: unchanged at 2 trusted and 1 active - CR checked. |
+| Contractor applications | 15 | UNKNOWN CURRENT | Last authenticated `/admin` checkpoint on 2026-07-15 was 3: 2 trusted and 1 active - CR checked. The 2026-07-18 visit redirected to the public homepage. |
 | Usable/qualified providers | 8 | 0 | 3 admin-listed contractors and 20 public reserve providers exist, but none has been qualified for availability, project fit, or fee willingness in this sprint. |
-| Consultant applications | 5 | 0 | Authenticated `/admin` recheck on 2026-07-15. |
-| Real project posts | 2 | 0 | Authenticated `/admin` recheck on 2026-07-15; no project is available for matching. |
+| Consultant applications | 5 | UNKNOWN CURRENT | Last authenticated checkpoint on 2026-07-15 was 0; current dashboard access was unavailable on 2026-07-18. |
+| Real project posts | 2 | UNKNOWN CURRENT | Last authenticated checkpoint on 2026-07-15 was 0; current dashboard access was unavailable on 2026-07-18. |
 | Completed bid rounds | 1 | 0 | No qualified live project has entered matching in this sprint. |
 | Providers willing to pay | 1 | 0 | Fee willingness has not yet been tested. |
 | Avg manual handling time/project | <2h | TBD |  |
@@ -97,7 +97,7 @@ Recommendation:
 Workflow issue:
 
 - The 2026-07-15 authenticated live admin recheck remains 0 projects, 3 contractor applications, and 0 consultant applications. Two contractors are trusted and one is active with its CR checked. The latest application is dated 2026-06-07 15:40. Attribution and follow-up remain UNKNOWN because those fields are not shown in the admin list.
-- Gmail and WhatsApp evidence collection is blocked because Chrome control cannot attach to Profile 1 even though Chrome, the extension, and its native manifest are present. Do not treat blocked access as no replies or no unread chats.
+- The 2026-07-18 Profile 1 sweep verified `MimaarLink / +974 6625 9219` and zero unread WhatsApp chats. Gmail failed at its loading page before identity/content verification. `/admin` redirected to the public homepage, so current applications remain unknown rather than copied from the last checkpoint.
 
 Handling-time risk:
 
