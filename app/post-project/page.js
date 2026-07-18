@@ -101,8 +101,8 @@ function PostProjectInner() {
       {step < 4 ? (
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
         <div className="w-full lg:max-w-2xl">
-          <h1 className="display-title text-[26px] sm:text-[30px] mb-1.5 motion-fade-up">{t('postTitle')}</h1>
-          <p className="text-[13.5px] text-muted-foreground mb-4 motion-fade-up motion-delay-1 leading-relaxed">{t('subtitle')}</p>
+          <h1 className="display-title mb-1 text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{t('postTitle')}</h1>
+          <p className="mb-3 text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-4 sm:text-[13.5px]">{t('subtitle')}</p>
           <FormProgress
             step={step}
             total={3}
