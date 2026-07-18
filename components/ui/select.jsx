@@ -16,7 +16,7 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex min-h-11 w-full items-center justify-between gap-3 whitespace-nowrap rounded-xl border border-input bg-card px-3.5 py-2 text-start text-sm shadow-soft ring-offset-background transition-[border-color,box-shadow,background-color] data-[placeholder]:text-muted-foreground hover:border-[#00B59E]/45 focus:border-[#00B59E]/60 focus:outline-none focus:ring-2 focus:ring-[#00B59E]/25 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+      "flex min-h-11 w-full items-center justify-between gap-3 whitespace-nowrap rounded-xl border border-input bg-card px-3.5 py-2 text-start text-sm shadow-soft ring-offset-background transition-[border-color,box-shadow,background-color] data-[placeholder]:text-muted-foreground hover:border-[#00B59E]/45 focus:border-[#00B59E]/60 focus:outline-none focus:ring-2 focus:ring-[#00B59E]/25 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:min-w-0 [&>span]:line-clamp-1",
       className
     )}
     {...props}>
@@ -49,22 +49,23 @@ const SelectScrollDownButton = React.forwardRef(({ className, ...props }, ref) =
 SelectScrollDownButton.displayName =
   SelectPrimitive.ScrollDownButton.displayName
 
-const SelectContent = React.forwardRef(({ className, children, position = "popper", ...props }, ref) => (
+const SelectContent = React.forwardRef(({ className, children, position = "popper", collisionPadding = 12, ...props }, ref) => (
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        "relative z-50 max-h-[min(var(--radix-select-content-available-height),20rem)] min-w-[10rem] overflow-y-auto overflow-x-hidden rounded-2xl border border-border bg-popover text-popover-foreground shadow-lift data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-select-content-transform-origin]",
+        "relative z-50 max-h-[min(var(--radix-select-content-available-height),20rem)] max-w-[calc(100vw_-_max(12px,env(safe-area-inset-left))_-_max(12px,env(safe-area-inset-right)))] min-w-[10rem] overflow-y-auto overflow-x-hidden rounded-2xl border border-border bg-popover text-popover-foreground shadow-lift data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-select-content-transform-origin]",
         position === "popper" &&
           "data-[side=bottom]:translate-y-1.5 data-[side=left]:-translate-x-1.5 data-[side=right]:translate-x-1.5 data-[side=top]:-translate-y-1.5",
         className
       )}
       position={position}
+      collisionPadding={collisionPadding}
       {...props}>
       <SelectScrollUpButton />
       <SelectPrimitive.Viewport
         className={cn("p-1.5", position === "popper" &&
-          "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]")}>
+          "h-[var(--radix-select-trigger-height)] w-full min-w-[min(var(--radix-select-trigger-width),calc(100vw_-_max(12px,env(safe-area-inset-left))_-_max(12px,env(safe-area-inset-right))))]")}>
         {children}
       </SelectPrimitive.Viewport>
       <SelectScrollDownButton />
@@ -85,7 +86,7 @@ const SelectItem = React.forwardRef(({ className, children, ...props }, ref) => 
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex min-h-11 w-full cursor-default select-none items-center rounded-xl py-2 pe-9 ps-3 text-start text-sm outline-none transition-colors focus:bg-[#D0F2EE]/65 focus:text-[#152B54] data-[state=checked]:bg-[#D0F2EE]/45 data-[state=checked]:font-semibold data-[state=checked]:text-[#152B54] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-[#00B59E]/15 dark:focus:text-[#00B59E] dark:data-[state=checked]:bg-[#00B59E]/15 dark:data-[state=checked]:text-[#00B59E]",
+      "relative flex min-h-11 w-full cursor-default select-none items-center whitespace-normal rounded-xl py-2 pe-9 ps-3 text-start text-sm outline-none transition-colors focus:bg-[#D0F2EE]/65 focus:text-[#152B54] data-[state=checked]:bg-[#D0F2EE]/45 data-[state=checked]:font-semibold data-[state=checked]:text-[#152B54] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-[#00B59E]/15 dark:focus:text-[#00B59E] dark:data-[state=checked]:bg-[#00B59E]/15 dark:data-[state=checked]:text-[#00B59E] [&>span:last-child]:min-w-0 [&>span:last-child]:break-words",
       className
     )}
     {...props}>
