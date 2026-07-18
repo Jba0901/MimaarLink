@@ -284,16 +284,16 @@ export default function AdminProjectPage() {
           {invites.length === 0 && <PageState kind="empty" compact title={t('noInvitesYet')} />}
           <div className="space-y-1.5">
             {invites.map(inv => (
-              <div key={inv.id} className="flex items-center justify-between rounded-xl bg-secondary p-2 text-sm">
-                <div className="min-w-0 flex-1 me-2">
-                  <span className="block text-navy truncate">{cmap[inv.contractorId]?.companyName || inv.contractorId}</span>
+              <div key={inv.id} className="grid gap-2 rounded-xl bg-secondary p-2.5 text-sm min-[390px]:grid-cols-[minmax(0,1fr)_auto] min-[390px]:items-center">
+                <div className="min-w-0">
+                  <span className="block break-words font-semibold leading-snug text-navy min-[390px]:truncate">{cmap[inv.contractorId]?.companyName || inv.contractorId}</span>
                   {cmap[inv.contractorId] && (
-                    <span className="block text-[11px] text-muted-foreground">{providerTypeLabel(cmap[inv.contractorId], t)}</span>
+                    <span className="mt-0.5 block text-[11px] text-muted-foreground">{providerTypeLabel(cmap[inv.contractorId], t)}</span>
                   )}
                 </div>
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <Badge variant="outline" className="text-[11px]">{inv.responseStatus}</Badge>
-                  <button onClick={() => deleteInvite(inv.id)} className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-red-600 hover:bg-red-50 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
+                <div className="flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-2 min-[390px]:shrink-0 min-[390px]:justify-end min-[390px]:border-0 min-[390px]:pt-0">
+                  <Badge variant="outline" className="min-w-0 max-w-full whitespace-normal text-start text-[11px]">{inv.responseStatus}</Badge>
+                  <button onClick={() => deleteInvite(inv.id)} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-red-600 transition hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-200 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
@@ -312,7 +312,7 @@ export default function AdminProjectPage() {
               const fileCount = (b.attachments || []).length;
               return (
                 <div key={b.id} className="rounded-xl bg-secondary p-2.5">
-                  <div className="flex items-start justify-between gap-2">
+                  <div className="flex flex-col gap-2 min-[390px]:flex-row min-[390px]:items-start min-[390px]:justify-between">
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-1.5">
                         <span className="min-w-0 flex-1 basis-[120px] truncate text-sm font-semibold text-navy">{cmap[b.contractorId]?.companyName}</span>
@@ -336,13 +336,15 @@ export default function AdminProjectPage() {
                         </div>
                       )}
                     </div>
-                    <div className="flex gap-1 shrink-0">
-                      <label className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-xl bg-white text-navy transition hover:bg-background focus-within:outline-none focus-within:ring-2 focus-within:ring-[#00B59E]/30 sm:h-8 sm:w-8 sm:rounded-lg" title={t('uploadAgreement')} aria-label={t('uploadAgreement')}>
+                    <div className="grid grid-cols-2 gap-2 border-t border-border/70 pt-2 min-[390px]:flex min-[390px]:shrink-0 min-[390px]:gap-1 min-[390px]:border-0 min-[390px]:pt-0">
+                      <label className="flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-white px-3 text-[11px] font-semibold text-navy transition hover:bg-background focus-within:outline-none focus-within:ring-2 focus-within:ring-[#00B59E]/30 min-[390px]:w-11 min-[390px]:px-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('uploadAgreement')} aria-label={t('uploadAgreement')}>
                         <Paperclip className="w-3.5 h-3.5" />
+                        <span className="min-[390px]:sr-only">{t('uploadAgreement')}</span>
                         <input type="file" className="sr-only" accept="image/*,application/pdf" onChange={(e) => uploadBidFile(b.id, b.attachments, e)} />
                       </label>
-                      <button onClick={() => deleteBid(b.id)} className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-red-600 hover:bg-red-50 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
+                      <button onClick={() => deleteBid(b.id)} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-white px-3 text-[11px] font-semibold text-red-600 transition hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-200 min-[390px]:w-11 min-[390px]:px-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
                         <Trash2 className="w-3.5 h-3.5" />
+                        <span className="min-[390px]:sr-only">{t('delete')}</span>
                       </button>
                     </div>
                   </div>
