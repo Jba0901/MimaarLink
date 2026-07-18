@@ -50,7 +50,10 @@
 
 @layer base {
   * { @apply border-border; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: clip;
+  }
   body {
     @apply bg-background text-foreground;
     overflow-x: clip;
@@ -651,6 +654,19 @@
   .pulse-dot::after { display: none; }
   .float-soft,
   .active-glow { animation: none; }
+}
+
+[data-sonner-toast][data-y-position='top'][data-front='true'] {
+  --y: translateY(0) scale(0.98) !important;
+  transform-origin: top center;
+}
+
+[data-sonner-toast][data-y-position='top'][data-front='true'][data-mounted='true'] {
+  --y: translateY(0) scale(1) !important;
+}
+
+[data-sonner-toast][data-y-position='top'][data-front='true'][data-removed='true'][data-swipe-out='false'] {
+  --y: translateY(-0.5rem) scale(0.98) !important;
 }
 
 @media (max-width: 1023px) and (max-height: 480px) and (orientation: landscape) {
