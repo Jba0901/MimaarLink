@@ -5,6 +5,7 @@ import { lazy, Suspense } from 'react';
 const SuccessPanel = lazy(() => import('@/components/SuccessPanel'));
 const FileUploadDropzone = lazy(() => import('@/components/FileUploadDropzone'));
 const NativeSelect = lazy(() => import('@/components/NativeSelect'));
+const SubmissionRetryNotice = lazy(() => import('@/components/SubmissionRetryNotice'));
 
 export function LazySuccessPanel(props) {
   return (
@@ -32,6 +33,14 @@ export function LazyNativeSelect(props) {
   return (
     <Suspense fallback={<div aria-hidden="true" className="h-11 animate-pulse rounded-xl border border-border bg-card" />}>
       <NativeSelect {...props} />
+    </Suspense>
+  );
+}
+
+export function LazySubmissionRetryNotice(props) {
+  return (
+    <Suspense fallback={null}>
+      <SubmissionRetryNotice {...props} />
     </Suspense>
   );
 }

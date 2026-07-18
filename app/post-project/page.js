@@ -5,7 +5,7 @@ import AppShell from '@/components/AppShell';
 import FormProgress from '@/components/FormProgress';
 import DesktopFormAside from '@/components/DesktopFormAside';
 import InlineFieldMessage from '@/components/InlineFieldMessage';
-import { LazyFileUploadDropzone, LazyNativeSelect, LazySuccessPanel } from '@/components/LazyFormControls';
+import { LazyFileUploadDropzone, LazyNativeSelect, LazySubmissionRetryNotice, LazySuccessPanel } from '@/components/LazyFormControls';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -14,7 +14,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal, PencilLine } from 'lucide-react';
 import { toast } from 'sonner';
-import { fileSignature, MAX_FILE_SIZE_BYTES } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 import { focusFormField } from '@/lib/focusFormField';
 
@@ -28,15 +27,6 @@ const PROJECT_CATEGORY_ICONS = {
 };
 
 const MAX_PROJECT_FILES = 5;
-
-async function fileToDataURL(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
 
 function SelectedCategorySummary({ category, t, onChange }) {
   const Icon = PROJECT_CATEGORY_ICONS[category] || MoreHorizontal;
@@ -71,6 +61,8 @@ function PostProjectInner() {
   const sp = useSearchParams();
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
+  const [processingFiles, setProcessingFiles] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [createdId, setCreatedId] = useState(null);
   const [tried2, setTried2] = useState(false);
   const [tried3, setTried3] = useState(false);
@@ -98,38 +90,6 @@ function PostProjectInner() {
     setData(d => ({ ...d, [k]: v }));
   };
 
-  const onFiles = async (e) => {
-    markFormStarted();
-    const selected = Array.from(e.target.files || []);
-    const seenFiles = new Set(data.files.map(fileSignature));
-    let duplicateName = '';
-    const uniqueFiles = selected.filter(file => {
-      const signature = fileSignature(file);
-      if (seenFiles.has(signature)) {
-        duplicateName ||= file.name;
-        return false;
-      }
-      seenFiles.add(signature);
-      return true;
-    });
-    if (duplicateName) {
-      toast.warning(`${t('fileAlreadySelected')} ${duplicateName}`);
-    }
-    const remainingSlots = Math.max(0, MAX_PROJECT_FILES - data.files.length);
-    if (uniqueFiles.length > remainingSlots) {
-      toast.warning(t('fileLimitExceeded').replace('{max}', MAX_PROJECT_FILES));
-    }
-    const list = uniqueFiles.slice(0, remainingSlots);
-    const items = [];
-    for (const f of list) {
-      if (f.size > MAX_FILE_SIZE_BYTES) { toast.error(`${t('fileTooLarge')} ${f.name}`); continue; }
-      const dataUrl = await fileToDataURL(f);
-      items.push({ name: f.name, type: f.type, size: f.size, data: dataUrl });
-    }
-    setData(d => ({ ...d, files: [...d.files, ...items].slice(0, MAX_PROJECT_FILES) }));
-    e.target.value = '';
-  };
-
   const submit = async () => {
     setTried3(true);
     const phoneDigits = (data.phone || '').replace(/\D/g, '').length;
@@ -137,6 +97,7 @@ function PostProjectInner() {
       focusFormField(!data.name ? 'project-name' : 'project-phone');
       return;
     }
+    setSubmitError(false);
     setSubmitting(true);
     try {
       const res = await fetch('/api/projects', {
@@ -149,7 +110,10 @@ function PostProjectInner() {
       trackMeta('Lead', { content_name: 'project_submission', form_type: 'project' });
       setCreatedId(json.project.id);
       setStep(4);
-    } catch (e) { toast.error(e.message); } finally { setSubmitting(false); }
+    } catch {
+      setSubmitError(true);
+      toast.error(t('actionFailed'));
+    } finally { setSubmitting(false); }
   };
 
   return (
@@ -235,9 +199,16 @@ function PostProjectInner() {
               label={data.files.length >= MAX_PROJECT_FILES ? `${data.files.length}/${MAX_PROJECT_FILES} ${t('files')}` : `${t('uploadFiles')} · ${data.files.length}/${MAX_PROJECT_FILES}`}
               hint={data.files.length >= MAX_PROJECT_FILES ? t('fileLimitReached') : t('uploadHint')}
               hasFiles={data.files.length > 0}
-              disabled={data.files.length >= MAX_PROJECT_FILES}
+              busy={processingFiles}
+              disabled={processingFiles || data.files.length >= MAX_PROJECT_FILES}
+              selectedFiles={data.files}
+              maxFiles={MAX_PROJECT_FILES}
+              onBusyChange={setProcessingFiles}
+              onFilesReady={(items) => {
+                markFormStarted();
+                setData(d => ({ ...d, files: [...d.files, ...items].slice(0, MAX_PROJECT_FILES) }));
+              }}
               multiple
-              onChange={onFiles}
               accept="image/*,application/pdf"
             />
             {data.files.length > 0 && (
@@ -254,6 +225,7 @@ function PostProjectInner() {
                         update('files', data.files.filter((_, j) => j !== i));
                         focusFormField('project-files');
                       }}
+                      disabled={processingFiles}
                       className="shrink-0"
                       aria-label={`${t('removeFile')}: ${f.name}`}
                       title={t('removeFile')}
@@ -266,8 +238,8 @@ function PostProjectInner() {
             )}
           </div>
           <div className="grid grid-cols-1 gap-2 pt-2 min-[280px]:grid-cols-2">
-            <Button variant="outline" onClick={() => showStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
-            <Button variant="navy" onClick={() => { setTried2(true); if (data.description) showStep(3); else focusFormField('project-description'); }} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
+            <Button variant="outline" onClick={() => showStep(1)} disabled={processingFiles} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
+            <Button variant="navy" onClick={() => { setTried2(true); if (data.description) showStep(3); else focusFormField('project-description'); }} disabled={processingFiles} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
           </div>
         </div>
       )}
@@ -307,9 +279,12 @@ function PostProjectInner() {
               </LazyNativeSelect>
             </div>
           </div>
+          {submitError && (
+            <LazySubmissionRetryNotice id="project-submit-error" />
+          )}
           <div className="grid grid-cols-1 gap-2 pt-2 min-[280px]:grid-cols-2">
             <Button variant="outline" onClick={() => showStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
-            <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
+            <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} aria-describedby={submitError ? 'project-submit-error' : undefined} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
               {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>

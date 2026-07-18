@@ -5,7 +5,7 @@ import AppShell from '@/components/AppShell';
 import FormProgress from '@/components/FormProgress';
 import DesktopFormAside from '@/components/DesktopFormAside';
 import InlineFieldMessage from '@/components/InlineFieldMessage';
-import { LazyFileUploadDropzone, LazyNativeSelect, LazySuccessPanel } from '@/components/LazyFormControls';
+import { LazyFileUploadDropzone, LazyNativeSelect, LazySubmissionRetryNotice, LazySuccessPanel } from '@/components/LazyFormControls';
 import { useLang } from '@/lib/LangContext';
 import { CATEGORIES, CONSULTANT_CATEGORIES, CONSULTANT_GRADES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -14,13 +14,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { CheckCircle2, X, Loader2, FileText, Building2, ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
-import { fileSignature, MAX_FILE_SIZE_BYTES } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 import { focusFormField } from '@/lib/focusFormField';
-
-async function fileToDataURL(file) {
-  return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(file); });
-}
 
 const MAX_PROVIDER_FILES_PER_FIELD = 3;
 
@@ -54,6 +49,8 @@ function ContractorApplicationInner() {
   const [done, setDone] = useState(false);
   const [createdId, setCreatedId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [processingDocumentKey, setProcessingDocumentKey] = useState('');
+  const [submitError, setSubmitError] = useState(false);
   const [triedBasics, setTriedBasics] = useState(false);
   const [triedServices, setTriedServices] = useState(false);
   const [triedDocuments, setTriedDocuments] = useState(false);
@@ -116,40 +113,6 @@ function ContractorApplicationInner() {
     }));
   };
 
-  const onFiles = async (e, label) => {
-    markFormStarted();
-    const selected = Array.from(e.target.files || []);
-    const currentFiles = data.documents.filter(d => d.label === label);
-    const seenFiles = new Set(currentFiles.map(fileSignature));
-    let duplicateName = '';
-    const uniqueFiles = selected.filter(file => {
-      const signature = fileSignature(file);
-      if (seenFiles.has(signature)) {
-        duplicateName ||= file.name;
-        return false;
-      }
-      seenFiles.add(signature);
-      return true;
-    });
-    if (duplicateName) {
-      toast.warning(`${t('fileAlreadySelected')} ${duplicateName}`);
-    }
-    const currentCount = currentFiles.length;
-    const remainingSlots = Math.max(0, MAX_PROVIDER_FILES_PER_FIELD - currentCount);
-    if (uniqueFiles.length > remainingSlots) {
-      toast.warning(t('fileLimitExceeded').replace('{max}', MAX_PROVIDER_FILES_PER_FIELD));
-    }
-    const list = uniqueFiles.slice(0, remainingSlots);
-    const items = [];
-    for (const f of list) {
-      if (f.size > MAX_FILE_SIZE_BYTES) { toast.error(`${t('fileTooLarge')} ${f.name}`); continue; }
-      const dataUrl = await fileToDataURL(f);
-      items.push({ name: f.name, type: f.type, size: f.size, data: dataUrl, label });
-    }
-    setData(d => ({ ...d, documents: [...d.documents, ...items] }));
-    e.target.value = '';
-  };
-
   const hasCR = data.documents.filter(d => d.label === 'cr').length > 0;
   const phoneDigits = (data.whatsapp || '').replace(/^\+974\s*/, '').replace(/\D/g, '').length;
   const phoneValid = phoneDigits >= 8;
@@ -209,6 +172,7 @@ function ContractorApplicationInner() {
       }
       return;
     }
+    setSubmitError(false);
     setSubmitting(true);
     try {
       const res = await fetch('/api/contractors', {
@@ -221,7 +185,10 @@ function ContractorApplicationInner() {
       trackMeta('CompleteRegistration', { content_name: 'provider_application', provider_type: data.providerType });
       setCreatedId(json.id);
       setDone(true);
-    } catch (e) { toast.error(e.message); } finally { setSubmitting(false); }
+    } catch {
+      setSubmitError(true);
+      toast.error(t('actionFailed'));
+    } finally { setSubmitting(false); }
   };
 
   const documentFields = [
@@ -403,11 +370,21 @@ function ContractorApplicationInner() {
                   hint={fileLimitReached ? t('fileLimitReached') : t('uploadHint')}
                   error={showError}
                   hasFiles={filesForLabel.length > 0}
-                  disabled={fileLimitReached}
+                  busy={processingDocumentKey === it.key}
+                  disabled={Boolean(processingDocumentKey) || fileLimitReached}
+                  selectedFiles={filesForLabel}
+                  maxFiles={MAX_PROVIDER_FILES_PER_FIELD}
+                  onBusyChange={(isBusy) => setProcessingDocumentKey(isBusy ? it.key : '')}
+                  onFilesReady={(items) => {
+                    markFormStarted();
+                    setData(d => ({
+                      ...d,
+                      documents: [...d.documents, ...items.map(item => ({ ...item, label: it.key }))],
+                    }));
+                  }}
                   aria-required={it.required || undefined}
                   aria-describedby={showError ? errorId : undefined}
                   multiple
-                  onChange={(e) => onFiles(e, it.key)}
                   accept="image/*,application/pdf"
                 />
                 {showError && <InlineFieldMessage id={errorId}>{t('requireField')}</InlineFieldMessage>}
@@ -424,6 +401,7 @@ function ContractorApplicationInner() {
                           update('documents', data.documents.filter(x => x !== f));
                           focusFormField(`provider-document-${it.key}`);
                         }}
+                        disabled={Boolean(processingDocumentKey)}
                         className="shrink-0"
                         aria-label={`${t('removeFile')}: ${f.name}`}
                         title={t('removeFile')}
@@ -437,9 +415,12 @@ function ContractorApplicationInner() {
             );
           })}
 
+          {submitError && (
+            <LazySubmissionRetryNotice id="provider-submit-error" />
+          )}
           <div className="grid grid-cols-1 gap-2 pt-2 min-[320px]:grid-cols-2">
-            <Button variant="outline" onClick={() => showStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
-            <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
+            <Button variant="outline" onClick={() => showStep(2)} disabled={Boolean(processingDocumentKey)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
+            <Button variant="navy" onClick={submit} disabled={submitting || Boolean(processingDocumentKey)} aria-busy={submitting} aria-describedby={submitError ? 'provider-submit-error' : undefined} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
               {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submitProvider')}
             </Button>
           </div>
