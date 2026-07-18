@@ -76,7 +76,7 @@ export default function BidsPage() {
                     </div>
                   </div>
 
-                  <div className="mt-3 grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">
+                  <div className="mt-3 grid grid-cols-1 gap-2 min-[560px]:grid-cols-2">
                     <div className={`min-w-0 rounded-[14px] border p-3 ${isLowest ? 'border-[#00B59E]/35 bg-[#D0F2EE]/45 dark:bg-[#00B59E]/10' : 'border-border/70 bg-secondary/70'}`}>
                       <div className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Wallet className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('price')}</span></div>
                       <div className="mt-1 min-w-0 text-navy" dir="ltr">
