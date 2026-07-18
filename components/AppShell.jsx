@@ -577,8 +577,14 @@ function SiteFooter({ flush = false }) {
           </div>
         </div>
 
-        <div className="mt-11 border-t border-white/10 pt-6 text-center text-[12px] font-medium text-white/60">
-          &copy; {year} {t('appName')} &middot; {t('allRights')}
+        <div className="mt-11 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-t border-white/10 pt-6 text-center text-[12px] font-medium text-white/60">
+          <span>&copy; {year} {t('appName')} &middot; {t('allRights')}</span>
+          <Link
+            href="/privacy"
+            className="inline-flex min-h-11 items-center rounded-lg px-1.5 font-bold text-white/80 transition-colors hover:text-[#00B59E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#152B54]"
+          >
+            {t('privacyNotice')}
+          </Link>
         </div>
       </div>
     </footer>
