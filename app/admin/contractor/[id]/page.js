@@ -12,7 +12,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, ArrowRight, Building2, CalendarClock, ClipboardCheck, Loader2, FileText, ShieldCheck, Trash2, Copy, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Building2, CalendarClock, Check, ClipboardCheck, Loader2, FileText, ShieldCheck, Trash2, Copy, ExternalLink, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 const formatAdminTime = (value, lang = 'en') => {
@@ -223,23 +223,25 @@ export default function AdminContractorPage() {
             {documentChecklist.map((doc) => {
               const present = Boolean(documentChecksDraft[doc.key]);
               return (
-                <div key={doc.key} className="flex flex-col items-start gap-2 rounded-xl bg-secondary px-3 py-2 text-xs sm:flex-row sm:items-center sm:justify-between">
-                  <span className="font-medium text-navy">{doc.label}</span>
-                  <div className="grid w-full grid-cols-2 gap-2 sm:w-auto">
+                <div key={doc.key} className="flex flex-col items-start gap-2.5 rounded-xl bg-secondary px-3 py-2.5 text-xs sm:flex-row sm:items-center sm:justify-between">
+                  <span className="break-words text-[13px] font-semibold leading-snug text-navy">{doc.label}</span>
+                  <div className="grid w-full grid-cols-2 gap-2 sm:w-auto" role="group" aria-label={doc.label}>
                     <button
                       type="button"
                       onClick={() => setDocumentPresent(doc.key, true)}
-                      className={`min-h-11 rounded-full px-3 text-[11px] font-semibold transition sm:min-h-9 ${present ? 'text-[#152B54]' : 'bg-white text-muted-foreground hover:text-navy'}`}
-                      style={present ? { background: '#00B59E' } : {}}
+                      aria-pressed={present}
+                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/35 sm:min-h-9 ${present ? 'border-[#00B59E]/55 bg-[#00B59E] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#00B59E]/35 hover:text-navy'}`}
                     >
+                      <Check className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                       {t('present')}
                     </button>
                     <button
                       type="button"
                       onClick={() => setDocumentPresent(doc.key, false)}
-                      className={`min-h-11 rounded-full px-3 text-[11px] font-semibold transition sm:min-h-9 ${!present ? 'text-[#152B54]' : 'bg-white text-muted-foreground hover:text-navy'}`}
-                      style={!present ? { background: '#FFB638' } : {}}
+                      aria-pressed={!present}
+                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB638]/45 sm:min-h-9 ${!present ? 'border-[#FFB638]/65 bg-[#FFB638] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#FFB638]/45 hover:text-navy'}`}
                     >
+                      <X className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                       {t('missing')}
                     </button>
                   </div>
@@ -256,10 +258,12 @@ export default function AdminContractorPage() {
             <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documents')}</div>
             <div className="space-y-1.5">
               {c.documents.map((f, i) => (
-                <a key={i} href={f.data} download={f.name} className="flex min-h-11 items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-xs text-navy">
-                  <FileText className="h-3.5 w-3.5 shrink-0" />
-                  <span className="min-w-0 flex-1 truncate">{f.name}</span>
-                  <span className="max-w-[38%] shrink-0 truncate text-[12px] text-muted-foreground">{f.label}</span>
+                <a key={i} href={f.data} download={f.name} className="flex min-h-11 flex-col items-stretch gap-1 rounded-xl bg-secondary px-3 py-2 text-xs text-navy transition hover:bg-secondary/70 min-[390px]:flex-row min-[390px]:items-center min-[390px]:gap-2">
+                  <span className="flex min-w-0 items-center gap-2">
+                    <FileText className="h-3.5 w-3.5 shrink-0" />
+                    <span className="min-w-0 flex-1 truncate">{f.name}</span>
+                  </span>
+                  {f.label && <span className="break-words ps-[22px] text-[11px] leading-snug text-muted-foreground min-[390px]:max-w-[38%] min-[390px]:shrink-0 min-[390px]:truncate min-[390px]:ps-0">{f.label}</span>}
                 </a>
               ))}
             </div>
