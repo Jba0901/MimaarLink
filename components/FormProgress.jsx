@@ -20,12 +20,12 @@ export default function FormProgress({ step, total, label, title, desc }) {
           aria-hidden="true"
         >
           <span className="text-[15px] leading-none">{step}</span>
-          <span className="text-[10px] leading-none text-[#152B54]/65">/{total}</span>
+          <span className="text-[12px] leading-none text-[#152B54]/65">/{total}</span>
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
-            <span className="text-[11px] font-bold text-muted-foreground">{label}</span>
-            <span className="shrink-0 text-[11px] font-bold text-muted-foreground">
+            <span className="text-[12px] font-bold text-muted-foreground">{label}</span>
+            <span className="shrink-0 text-[12px] font-bold text-muted-foreground">
               {Math.round((step / total) * 100)}%
             </span>
           </div>

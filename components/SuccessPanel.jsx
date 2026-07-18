@@ -38,9 +38,9 @@ export default function SuccessPanel({
           <p className="mx-auto mt-2 max-w-md text-[13.5px] leading-relaxed text-muted-foreground sm:text-sm">{description}</p>
 
           <div className="mt-5 rounded-2xl bg-secondary/60 p-2.5 text-start sm:mt-6 sm:p-4">
-            <div className="mb-2 text-[11px] font-semibold leading-relaxed text-muted-foreground">{referenceLabel}</div>
+            <div className="mb-2 text-[12px] font-semibold leading-relaxed text-muted-foreground">{referenceLabel}</div>
             <div className="grid min-w-0 gap-2 min-[360px]:grid-cols-[minmax(0,1fr)_auto]">
-              <code className="min-w-0 flex-1 truncate rounded-xl bg-card px-3 py-2.5 text-[11px] text-navy" dir="ltr">
+              <code className="min-w-0 flex-1 truncate rounded-xl bg-card px-3 py-2.5 text-[12px] text-navy" dir="ltr">
                 {referencePath}
               </code>
               <Button

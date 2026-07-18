@@ -22,7 +22,7 @@ export default function StatusBadge({ status, className, children }) {
   return (
     <Badge
       variant={statusVariant(status)}
-      className={cn('max-w-full shrink-0 whitespace-normal text-start text-[11px] leading-4', className)}
+      className={cn('max-w-full shrink-0 whitespace-normal text-start text-[12px] leading-4', className)}
     >
       {children}
     </Badge>
