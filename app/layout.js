@@ -1,8 +1,23 @@
 import './globals.css';
 import { Suspense } from 'react';
+import { Cairo, Inter } from 'next/font/google';
 import { LangProvider } from '@/lib/LangContext';
 import { Toaster } from '@/components/ui/sonner';
 import MarketingAttribution from '@/components/MarketingAttribution';
+
+const cairo = Cairo({
+  subsets: ['arabic'],
+  weight: 'variable',
+  display: 'swap',
+  variable: '--font-cairo',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: 'variable',
+  display: 'swap',
+  variable: '--font-inter',
+});
 
 export const metadata = {
   title: 'MimaarLink - Contractor and consultant bids in Qatar',
@@ -11,11 +26,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
+    <html lang="ar" dir="rtl" className={`${cairo.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <script
           dangerouslySetInnerHTML={{

@@ -58,8 +58,8 @@
     text-rendering: geometricPrecision;
   }
   .dark body { color-scheme: dark; }
-  html[dir="rtl"] body { font-family: 'Cairo', 'Noto Kufi Arabic', system-ui, sans-serif; }
-  html[dir="ltr"] body { font-family: 'Inter', system-ui, sans-serif; }
+  html[dir="rtl"] body { font-family: var(--font-cairo), 'Noto Kufi Arabic', system-ui, sans-serif; }
+  html[dir="ltr"] body { font-family: var(--font-inter), system-ui, sans-serif; }
   /* letter-spacing breaks connected Arabic script — neutralize it in RTL */
   html[dir="rtl"] .tracking-wide,
   html[dir="rtl"] .tracking-tight,
