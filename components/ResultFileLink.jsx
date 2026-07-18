@@ -25,12 +25,12 @@ export default function ResultFileLink({
         <FileText className="h-4 w-4" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-[13px] font-semibold text-navy" dir="auto">{name}</span>
+        <span className="line-clamp-2 break-words text-[13px] font-semibold leading-snug text-navy" dir="auto">{name}</span>
         {secondaryLabel && <span className="mt-0.5 block truncate text-[12px] leading-snug text-muted-foreground">{secondaryLabel}</span>}
       </span>
       <span className="flex h-9 shrink-0 items-center justify-center gap-1 rounded-xl border border-border bg-card px-2 text-[12px] font-semibold text-navy transition-colors group-hover:border-[#00B59E]/30" aria-hidden="true">
         <ActionIcon className="h-3.5 w-3.5" />
-        {actionLabel && <span className="hidden min-[360px]:inline">{actionLabel}</span>}
+        {actionLabel && <span>{actionLabel}</span>}
       </span>
     </a>
   );

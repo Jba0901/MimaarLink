@@ -7,10 +7,11 @@ import { useLang } from '@/lib/LangContext';
 import { PROJECT_STATUSES } from '@/lib/i18n';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import PageState from '@/components/PageState';
 import StatusTimeline from '@/components/StatusTimeline';
 import StatusBadge from '@/components/StatusBadge';
-import { MapPin, Calendar, Wallet } from 'lucide-react';
+import { Calendar, ClipboardList, GitCompareArrows, MapPin, Paperclip, Wallet } from 'lucide-react';
 
 export default function ProjectPage() {
   const { id } = useParams();
@@ -31,9 +32,14 @@ export default function ProjectPage() {
   return (
     <AppShell wide>
       <div className="mx-auto max-w-5xl">
-        <div className="mb-4 flex min-w-0 flex-col items-start gap-2.5 sm:flex-row sm:items-center sm:justify-between">
-          <h1 className="display-title min-w-0 break-words text-[24px] sm:text-[28px]">{t('projectStatus')}</h1>
-          <StatusBadge status={data.status} className="self-start">{t(`status_${data.status}`)}</StatusBadge>
+        <div className="mb-4 flex min-w-0 items-start gap-3 rounded-[20px] border border-border bg-card p-4 shadow-soft sm:items-center sm:p-5">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+            <ClipboardList className="h-5 w-5" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <h1 className="display-title min-w-0 break-words text-[22px] sm:text-[28px]">{t('projectStatus')}</h1>
+            <StatusBadge status={data.status} className="mt-2 self-start">{t(`status_${data.status}`)}</StatusBadge>
+          </div>
         </div>
 
         <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
@@ -53,7 +59,13 @@ export default function ProjectPage() {
             {data.files && data.files.length > 0 && (
               <Card className="rounded-2xl shadow-soft">
                 <CardContent className="p-4 sm:p-5">
-                  <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('uploadedFiles')}</div>
+                  <div className="mb-2 flex min-w-0 items-center justify-between gap-2">
+                    <div className="flex min-w-0 items-center gap-1.5 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">
+                      <Paperclip className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                      <span className="min-w-0 break-words">{t('uploadedFiles')}</span>
+                    </div>
+                    <Badge variant="info" className="shrink-0 text-[12px]">{data.files.length}</Badge>
+                  </div>
                   <div className="space-y-1.5">
                     {data.files.map((f, i) => (
                       <ResultFileLink key={i} file={f} fallbackLabel={t('files')} actionLabel={t('download')} />
@@ -66,13 +78,6 @@ export default function ProjectPage() {
 
           {/* status column */}
           <div className="order-1 space-y-3 lg:order-2 lg:sticky lg:top-20">
-            <Card className="rounded-2xl shadow-soft">
-              <CardContent className="p-4 sm:p-5">
-                <div className="mb-3 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('statusTimeline')}</div>
-                <StatusTimeline statuses={PROJECT_STATUSES} currentIndex={idx} getLabel={(status) => t(`status_${status}`)} />
-              </CardContent>
-            </Card>
-
             <Card className="rounded-2xl border-[#00B59E]/25 bg-[#D0F2EE]/55 shadow-soft dark:bg-[#142A44]">
               <CardContent className="p-4 sm:p-5">
                 <div className="mb-1 text-xs font-semibold text-navy ltr:uppercase ltr:tracking-wide">{t('nextStep')}</div>
@@ -81,12 +86,20 @@ export default function ProjectPage() {
             </Card>
 
             {['bids_received', 'shortlisted', 'meeting_arranged'].includes(data.status) ? (
-              <Button variant="navy" size="lg" onClick={() => router.push(`/bids/${id}`)} className="h-auto min-h-12 w-full whitespace-normal py-2.5 text-center text-base leading-snug">
+              <Button variant="brand" size="lg" onClick={() => router.push(`/bids/${id}`)} className="h-auto min-h-12 w-full whitespace-normal py-2.5 text-center text-base leading-snug">
+                <GitCompareArrows className="h-4 w-4" aria-hidden="true" />
                 {t('viewBids')}
               </Button>
             ) : (
               <PageState kind="empty" compact title={t('noBidsYet')} />
             )}
+
+            <Card className="rounded-2xl shadow-soft">
+              <CardContent className="p-4 sm:p-5">
+                <div className="mb-3 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('statusTimeline')}</div>
+                <StatusTimeline statuses={PROJECT_STATUSES} currentIndex={idx} getLabel={(status) => t(`status_${status}`)} />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

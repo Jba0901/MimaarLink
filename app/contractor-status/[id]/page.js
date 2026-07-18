@@ -11,7 +11,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import PageState from '@/components/PageState';
 import StatusTimeline from '@/components/StatusTimeline';
 import StatusBadge from '@/components/StatusBadge';
-import { ClipboardCheck, FileText, Hammer, MapPin, Wallet } from 'lucide-react';
+import { ClipboardCheck, FileText, Hammer, House, MapPin, Paperclip, Wallet } from 'lucide-react';
 
 const consultantGradeLabel = (grade, t) => {
   if (grade === 'grade_a') return t('gradeA');
@@ -66,14 +66,20 @@ export default function ContractorStatusPage() {
   return (
     <AppShell wide>
       <div className="mx-auto max-w-5xl">
-        <div className="mb-4 flex min-w-0 flex-col items-start gap-2.5 sm:flex-row sm:justify-between">
-          <div className="min-w-0">
-            <h1 className="display-title break-words text-[24px] sm:text-[28px]">{t('providerStatus')}</h1>
-            <p className="mt-1 break-words text-[13px] font-semibold text-muted-foreground">{contractor.companyName}</p>
+        <div className="mb-4 flex min-w-0 items-start gap-3 rounded-[20px] border border-border bg-card p-4 shadow-soft sm:items-center sm:p-5">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+            <ServiceIcon className="h-5 w-5" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <h1 className="display-title break-words text-[22px] sm:text-[28px]">{t('providerStatus')}</h1>
+            <p className="mt-1 break-words text-[13px] font-semibold leading-snug text-muted-foreground">{contractor.companyName}</p>
+            <div className="mt-2 flex flex-wrap items-center gap-1.5">
+              <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">
+                {isConsultant ? t('providerTypeConsultant') : t('providerTypeContractor')}
+              </Badge>
+              <StatusBadge status={status}>{t(`cstatus_${status}`)}</StatusBadge>
+            </div>
           </div>
-          <StatusBadge status={status} className="self-start">
-            {t(`cstatus_${status}`)}
-          </StatusBadge>
         </div>
 
         <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
@@ -110,7 +116,13 @@ export default function ContractorStatusPage() {
             {uploadedDocuments.length > 0 && (
               <Card className="rounded-2xl shadow-soft">
                 <CardContent className="p-4 sm:p-5">
-                  <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('documents')}</div>
+                  <div className="mb-2 flex min-w-0 items-center justify-between gap-2">
+                    <div className="flex min-w-0 items-center gap-1.5 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">
+                      <Paperclip className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                      <span className="min-w-0 break-words">{t('documents')}</span>
+                    </div>
+                    <Badge variant="info" className="shrink-0 text-[12px]">{uploadedDocuments.length}</Badge>
+                  </div>
                   <div className="space-y-1.5">
                     {uploadedDocuments.map((file, i) => (
                       <ResultFileLink key={i} file={file} fallbackLabel={t('files')} actionLabel={t('download')} />
@@ -125,24 +137,17 @@ export default function ContractorStatusPage() {
           <div className="order-1 space-y-3 lg:order-2 lg:sticky lg:top-20">
             <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 sm:p-5">
-                <div className="mb-3 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('statusTimeline')}</div>
-                <StatusTimeline statuses={statusOrder} currentIndex={statusIndex} getLabel={(item) => t(`cstatus_${item}`)} />
-              </CardContent>
-            </Card>
-
-            <Card className="rounded-2xl shadow-soft">
-              <CardContent className="p-4 sm:p-5">
                 <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('documentChecklist')}</div>
                 <div className="space-y-1.5">
                   {documentChecklist.map((doc) => {
                     const present = Boolean(documentChecks[doc.key]);
                     return (
-                      <div key={doc.key} className="flex min-h-11 min-w-0 items-center justify-between gap-2 rounded-xl bg-secondary px-3 py-2 text-sm text-navy">
+                      <div key={doc.key} className="flex min-h-11 min-w-0 flex-col items-stretch gap-2 rounded-xl bg-secondary px-3 py-2.5 text-sm text-navy min-[360px]:flex-row min-[360px]:items-center min-[360px]:justify-between">
                         <div className="flex min-w-0 items-center gap-2">
                           <FileText className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                           <span className="min-w-0 break-words leading-snug">{doc.label}</span>
                         </div>
-                        <Badge variant={present ? 'success' : 'warning'} className="max-w-[45%] shrink-0 whitespace-normal text-center text-[12px] leading-4">
+                        <Badge variant={present ? 'success' : 'warning'} className="max-w-full self-start whitespace-normal text-start text-[12px] leading-4 min-[360px]:max-w-[45%] min-[360px]:shrink-0">
                           {present ? t('present') : t('missing')}
                         </Badge>
                       </div>
@@ -152,11 +157,20 @@ export default function ContractorStatusPage() {
               </CardContent>
             </Card>
 
-            <Button variant="navy" onClick={() => router.push('/')} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug">
-              {t('backToHome')}
-            </Button>
+            <Card className="rounded-2xl shadow-soft">
+              <CardContent className="p-4 sm:p-5">
+                <div className="mb-3 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('statusTimeline')}</div>
+                <StatusTimeline statuses={statusOrder} currentIndex={statusIndex} getLabel={(item) => t(`cstatus_${item}`)} />
+              </CardContent>
+            </Card>
+
           </div>
         </div>
+
+        <Button variant="outline" onClick={() => router.push('/')} className="mt-4 h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug lg:ms-auto lg:flex lg:max-w-sm">
+          <House className="h-4 w-4" aria-hidden="true" />
+          {t('backToHome')}
+        </Button>
       </div>
     </AppShell>
   );
