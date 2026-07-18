@@ -20,16 +20,16 @@ const Toaster = ({
 
   const baseClassNames = {
     toast: "group toast !rounded-2xl !border !border-border !bg-card !text-foreground !shadow-lift",
-    title: "!break-words !font-bold !text-navy",
+    title: "!break-words !font-bold !text-foreground",
     description: "!break-words !text-muted-foreground",
     content: "!min-w-0 !gap-1",
     success: "!border-[#00B59E]/45 !bg-[#D0F2EE] dark:!bg-[#142A44]",
     error: "!border-[#EF4444]/45 !bg-card",
     warning: "!border-[#FFB638]/55 !bg-[#FFB638]/10",
-    info: "!border-[#152B54]/30 !bg-card",
+    info: "!border-[#152B54]/30 !bg-card dark:!border-[#00B59E]/30",
     loading: "!border-[#00B59E]/35 !bg-card",
-    actionButton: "!h-11 !rounded-xl !bg-[#152B54] !px-4 !text-white",
-    cancelButton: "!h-11 !rounded-xl !border !border-border !bg-card !px-4 !text-navy",
+    actionButton: "!h-11 !rounded-xl !border !border-transparent !bg-[#152B54] !px-4 !text-white dark:!border-[#00B59E]/25 dark:!bg-[#142A44]",
+    cancelButton: "!h-11 !rounded-xl !border !border-border !bg-card !px-4 !text-foreground",
   }
 
   return (

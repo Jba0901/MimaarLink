@@ -200,7 +200,7 @@ function AdminInner() {
           {!loadingData && !loadError && projects.map(p => (
             <Card key={p.id} className="interactive-card hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/45">
               <CardContent className="p-3.5">
-                <button type="button" onClick={() => router.push(`/admin/project/${p.id}`)} className="w-full rounded-xl text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
+                <button type="button" onClick={() => router.push(`/admin/project/${p.id}`)} className="w-full rounded-xl text-start ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
@@ -240,7 +240,7 @@ function AdminInner() {
             const services = providerServices(c);
 
             return (
-              <Link key={c.id} href={`/admin/contractor/${c.id}`} className="block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
+              <Link key={c.id} href={`/admin/contractor/${c.id}`} className="block rounded-2xl ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
                 <Card className="interactive-card hover:border-[#00B59E]/45">
                   <CardContent className="p-3.5">
                     <div className="flex flex-col gap-2.5 min-[390px]:flex-row min-[390px]:items-start min-[390px]:justify-between">

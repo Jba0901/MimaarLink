@@ -32,10 +32,10 @@ export default function MarketingConsentSettings() {
       ? (arabic ? 'مرفوض' : 'Declined')
       : (arabic ? 'لم يتم الاختيار' : 'Not selected');
   const statusClasses = status === 'accepted'
-    ? 'bg-[#00B59E] text-[#152B54]'
+    ? 'border-[#00B59E]/40 bg-[#00B59E] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]'
     : status === 'rejected'
-      ? 'bg-muted text-muted-foreground'
-      : 'bg-[#FFB638] text-[#152B54]';
+      ? 'border-border bg-muted text-muted-foreground'
+      : 'border-[#FFB638]/50 bg-[#FFB638] text-[#152B54] dark:bg-[#FFB638]/15 dark:text-[#FFB638]';
 
   return (
     <div className="rounded-[20px] border border-border bg-white p-4 shadow-soft min-[390px]:rounded-[22px] min-[390px]:p-5 sm:p-6">
@@ -46,7 +46,7 @@ export default function MarketingConsentSettings() {
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <div className="text-[15px] font-extrabold text-navy">{arabic ? 'إعدادات القياس' : 'Measurement settings'}</div>
-            <span className={`inline-flex min-h-6 items-center rounded-full px-2.5 py-1 text-[12px] font-bold leading-none ${statusClasses}`}>{statusLabel}</span>
+            <span className={`inline-flex min-h-6 items-center rounded-full border px-2.5 py-1 text-[12px] font-bold leading-none ${statusClasses}`}>{statusLabel}</span>
           </div>
           <p className="mt-1 text-[12.5px] leading-relaxed text-muted-foreground">
             {arabic ? 'يمكنك تغيير اختيارك في أي وقت. لن يؤثر ذلك على استخدام الموقع أو النماذج.' : 'You can change your choice at any time. The website and forms will continue to work.'}
