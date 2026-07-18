@@ -82,7 +82,7 @@ export default function ContractorStatusPage() {
     <AppShell wide>
       <div className="mx-auto max-w-5xl">
         <div className="mb-4 flex min-w-0 items-start gap-3 rounded-[20px] border border-border bg-card p-4 shadow-soft sm:items-center sm:p-5">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#152B54] max-[263px]:hidden dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#152B54] max-[359px]:hidden dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
             <ServiceIcon className="h-5 w-5" />
           </span>
           <div className="min-w-0 flex-1">
@@ -168,12 +168,12 @@ export default function ContractorStatusPage() {
                   {documentChecklist.map((doc) => {
                     const present = Boolean(documentChecks[doc.key]);
                     return (
-                      <div key={doc.key} className="flex min-h-11 min-w-0 flex-col items-stretch gap-2 rounded-xl bg-secondary px-3 py-2.5 text-sm text-navy min-[360px]:flex-row min-[360px]:items-center min-[360px]:justify-between">
+                      <div key={doc.key} className="flex min-h-11 min-w-0 flex-col items-stretch gap-2 rounded-xl bg-secondary px-3 py-2.5 text-sm text-navy min-[320px]:flex-row min-[320px]:items-center min-[320px]:justify-between">
                         <div className="flex min-w-0 items-center gap-2">
                           <FileText className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                           <span className="min-w-0 break-words leading-snug">{doc.label}</span>
                         </div>
-                        <Badge variant={present ? 'success' : 'warning'} className="max-w-full self-start whitespace-normal text-start text-[12px] leading-4 min-[360px]:max-w-[45%] min-[360px]:shrink-0">
+                        <Badge variant={present ? 'success' : 'warning'} className="max-w-full self-start whitespace-normal text-start text-[12px] leading-4 min-[320px]:max-w-[45%] min-[320px]:shrink-0">
                           {present ? t('present') : t('missing')}
                         </Badge>
                       </div>
