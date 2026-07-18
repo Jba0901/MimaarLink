@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import NativeSelect from '@/components/NativeSelect';
 import { CheckCircle2, X, Loader2, FileText, Building2, ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
@@ -236,17 +236,17 @@ function ContractorApplicationInner() {
         <div className="space-y-3.5">
           {isConsultant && (
             <div>
-              <Label className="text-sm">{t('consultantGrade')}</Label>
-              <Select value={data.consultantGrade || 'unknown'} onValueChange={v => update('consultantGrade', v)}>
-                <SelectTrigger className="h-11 mt-1.5">
-                  <SelectValue placeholder={t('consultantGradePh')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {CONSULTANT_GRADES.map(g => (
-                    <SelectItem key={g} value={g}>{t(g === 'unknown' ? 'gradeUnknown' : g === 'grade_a' ? 'gradeA' : g === 'grade_b' ? 'gradeB' : 'gradeC')}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Label htmlFor="consultant-grade" className="text-sm">{t('consultantGrade')}</Label>
+              <NativeSelect
+                id="consultant-grade"
+                value={data.consultantGrade || 'unknown'}
+                onChange={e => update('consultantGrade', e.target.value)}
+                wrapperClassName="mt-1.5"
+              >
+                {CONSULTANT_GRADES.map(g => (
+                  <option key={g} value={g}>{t(g === 'unknown' ? 'gradeUnknown' : g === 'grade_a' ? 'gradeA' : g === 'grade_b' ? 'gradeB' : 'gradeC')}</option>
+                ))}
+              </NativeSelect>
             </div>
           )}
           <div>

@@ -27,7 +27,7 @@ The following was verified from source and a successful production build on 2026
 - There is no customer authentication, customer dashboard, live opportunity feed, notification center, service worker, web-app manifest, or install prompt yet.
 - The role-aware app-shell proposal is a decision brief only on `design/mobile-app-shell-review`; it has no runtime code and no production effect.
 - The palette-normalization proposal on `design/brand-palette-normalization-review` is a real global CSS change, but it is not merged.
-- The production build passes. Current first-load JavaScript is 139 kB on the homepage, 118-140 kB on most public journey pages, 172 kB on both `/post-project` and `/contractor`, and 87.1 kB shared by all routes.
+- The production build passes. Current first-load JavaScript is 139 kB on the homepage, 118-146 kB on public journey pages, 146 kB on both `/post-project` and `/contractor`, and 87.1 kB shared by all routes.
 
 A first rendered browser pass now covers 320 px Arabic and English, 390 px Arabic, light and dark themes, the public mobile navigation and drawer, role selection, owner entry, contractor/consultant entry, and a missing-project state. That pass fixed RTL step numbering, small-phone dock labels, and the narrow dark-theme control. The complete viewport, state, keyboard, network, and real-device matrix remains open.
 
@@ -164,7 +164,7 @@ Status: next routine work before production app integration.
 
 1. Complete rendered QA across the current public journeys using the required size, language, theme, and interaction matrix.
 2. Record and fix only evidence-backed overflow, hierarchy, spacing, focus, contrast, and touch issues.
-3. Reduce the `/post-project` and `/contractor` first-load bundles from 172 kB toward the 150 kB public-route target without weakening form feedback or uploads.
+3. Keep `/post-project` and `/contractor` at or below their current 146 kB first-load size, and prevent admin-only interaction systems from returning to public form bundles.
 4. Define visual states for interrupted forms, invalid saved links, offline entry, and slow uploads.
 5. Keep PWA installation and caching out of this phase.
 

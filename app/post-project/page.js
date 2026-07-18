@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import NativeSelect from '@/components/NativeSelect';
 import { CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
@@ -231,14 +231,16 @@ function PostProjectInner() {
               <Input value={data.role} onChange={e => update('role', e.target.value)} placeholder={t('rolePh')} className="h-11 mt-1.5" />
             </div>
             <div>
-              <Label className="text-sm">{t('preferredLanguage')}</Label>
-              <Select value={data.languagePreference} onValueChange={v => update('languagePreference', v)}>
-                <SelectTrigger className="h-11 mt-1.5"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="ar">العربية</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="project-preferred-language" className="text-sm">{t('preferredLanguage')}</Label>
+              <NativeSelect
+                id="project-preferred-language"
+                value={data.languagePreference}
+                onChange={e => update('languagePreference', e.target.value)}
+                wrapperClassName="mt-1.5"
+              >
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+              </NativeSelect>
             </div>
           </div>
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
