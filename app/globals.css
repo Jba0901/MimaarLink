@@ -203,9 +203,13 @@
   }
   @media (max-width: 640px) {
     .market-skyline-panel::before {
-      background-size: auto 100%;
-      background-position: 58% bottom;
-      opacity: 0.76;
+      background-image:
+        radial-gradient(420px 240px at 72% 18%, rgba(0,181,158,0.14), transparent 68%),
+        linear-gradient(140deg, rgba(7,17,29,0.38) 0%, rgba(21,43,84,0.08) 52%, rgba(7,17,29,0.48) 100%),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(7,17,29,0.36));
+      background-size: cover;
+      background-position: center;
+      opacity: 0.92;
     }
     .market-skyline-panel::after {
       opacity: 0.52;
