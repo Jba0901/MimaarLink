@@ -62,7 +62,7 @@ export default function ProjectPage() {
 
         <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
           {/* details column */}
-          <div className="order-2 space-y-3 lg:order-1">
+          <div className="order-2 min-w-0 space-y-3 lg:order-1">
             <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 space-y-2.5 sm:p-5">
                 <div className="text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('projectSummary')}</div>
@@ -95,7 +95,7 @@ export default function ProjectPage() {
           </div>
 
           {/* status column */}
-          <div className="order-1 space-y-3 lg:order-2 lg:sticky lg:top-20">
+          <div className="order-1 min-w-0 space-y-3 lg:order-2 lg:sticky lg:top-20">
             <Card className="rounded-2xl border-[#00B59E]/25 bg-[#D0F2EE]/55 shadow-soft dark:bg-[#142A44]">
               <CardContent className="p-4 sm:p-5">
                 <div className="mb-1 text-xs font-semibold text-navy ltr:uppercase ltr:tracking-wide">{t('nextStep')}</div>
