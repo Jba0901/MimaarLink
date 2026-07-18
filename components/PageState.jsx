@@ -44,14 +44,15 @@ export default function PageState({
   const visual = stateVisuals[kind] || stateVisuals.empty;
   const Icon = visual.icon;
   const Heading = compact ? 'h3' : 'h1';
+  const panelSurfaceClass = compact ? visual.panelClass : (visual.panelClass || 'border-border bg-card');
   const actionClassName = `btn ${actionVariant === 'primary' ? 'btn-primary' : 'btn-outline'} mt-5 h-auto min-h-11 w-full whitespace-normal px-5 py-2 text-center text-[14px] leading-snug focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D] sm:w-auto`;
   const content = (
     <div
       className={`page-state-panel w-full text-center ${
         compact
           ? 'rounded-2xl bg-secondary/55 px-4 py-6'
-          : 'rounded-[22px] border border-border bg-card p-5 shadow-soft sm:rounded-[24px] sm:p-8'
-      } ${visual.panelClass} ${className}`}
+          : 'rounded-[22px] border p-5 shadow-soft sm:rounded-[24px] sm:p-8'
+      } ${panelSurfaceClass} ${className}`}
       role={kind === 'loading' ? 'status' : kind === 'error' ? 'alert' : undefined}
       aria-live={kind === 'loading' ? 'polite' : kind === 'error' ? 'assertive' : undefined}
     >
