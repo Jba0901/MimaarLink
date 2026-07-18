@@ -38,29 +38,29 @@ export default function ProjectPage() {
 
         <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
           {/* details column */}
-          <div className="space-y-3">
-            <Card>
+          <div className="order-2 space-y-3 lg:order-1">
+            <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 space-y-2.5 sm:p-5">
                 <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('projectSummary')}</div>
                 <div className="text-sm font-semibold text-navy">{t(`cat_${data.category}`)}</div>
-                {data.location && <div className="flex items-start gap-2 text-sm text-navy"><MapPin className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" /><span>{data.location}</span></div>}
+                {data.location && <div className="flex items-start gap-2 text-sm text-navy"><MapPin className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" aria-hidden="true" /><span>{data.location}</span></div>}
                 <div className="text-sm text-muted-foreground leading-relaxed">{data.description}</div>
-                {data.timeline && <div className="flex items-center gap-2 text-sm text-navy"><Calendar className="w-4 h-4 text-muted-foreground" />{data.timeline}</div>}
-                {data.budgetRange && <div className="flex items-center gap-2 text-sm text-navy"><Wallet className="w-4 h-4 text-muted-foreground" />{data.budgetRange}</div>}
+                {data.timeline && <div className="flex items-center gap-2 text-sm text-navy"><Calendar className="w-4 h-4 text-muted-foreground" aria-hidden="true" />{data.timeline}</div>}
+                {data.budgetRange && <div className="flex items-center gap-2 text-sm text-navy"><Wallet className="w-4 h-4 text-muted-foreground" aria-hidden="true" />{data.budgetRange}</div>}
               </CardContent>
             </Card>
 
             {data.files && data.files.length > 0 && (
-              <Card>
+              <Card className="rounded-2xl shadow-soft">
                 <CardContent className="p-4 sm:p-5">
                   <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('uploadedFiles')}</div>
                   <div className="space-y-1.5">
                     {data.files.map((f, i) => (
                       <a key={i} href={f.data} download={f.name} className="flex min-h-11 items-center gap-2 text-sm text-navy bg-secondary rounded-xl px-3 py-2 hover:bg-secondary/70">
-                        <FileText className="w-4 h-4 shrink-0" />
-                        <span className="truncate flex-1">{f.name}</span>
+                        <FileText className="w-4 h-4 shrink-0" aria-hidden="true" />
+                        <span className="min-w-0 flex-1 truncate">{f.name}</span>
                         <Badge variant="secondary" className="shrink-0 gap-1 border border-border bg-card text-[11px] text-navy">
-                          <Download className="w-3 h-3" />
+                          <Download className="w-3 h-3" aria-hidden="true" />
                           {t('download')}
                         </Badge>
                       </a>
@@ -72,18 +72,18 @@ export default function ProjectPage() {
           </div>
 
           {/* status column */}
-          <div className="space-y-3 lg:sticky lg:top-20">
-            <Card>
+          <div className="order-1 space-y-3 lg:order-2 lg:sticky lg:top-20">
+            <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 sm:p-5">
                 <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-3">{t('statusTimeline')}</div>
                 <StatusTimeline statuses={PROJECT_STATUSES} currentIndex={idx} getLabel={(status) => t(`status_${status}`)} />
               </CardContent>
             </Card>
 
-            <Card className="bg-[#D0F2EE]/55 dark:bg-[#142A44]">
+            <Card className="rounded-2xl bg-[#D0F2EE]/55 shadow-soft dark:bg-[#142A44]">
               <CardContent className="p-4 sm:p-5">
                 <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-navy">{t('nextStep')}</div>
-                <div className="text-sm text-navy">{t(`msg_${data.status}`)}</div>
+                <div className="text-sm leading-relaxed text-navy">{t(`msg_${data.status}`)}</div>
               </CardContent>
             </Card>
 

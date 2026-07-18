@@ -38,11 +38,11 @@ export default function BidsPage() {
 
   return (
     <AppShell>
-      <div className="flex flex-col items-start gap-2 mb-3 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-xl font-bold text-navy">{t('bidComparison')}</h1>
-        <Button variant="ghost" size="sm" onClick={() => router.back()}>{t('back')}</Button>
+      <div className="mb-2 flex items-center justify-between gap-3">
+        <h1 className="display-title min-w-0 text-[24px] sm:text-[28px]">{t('bidComparison')}</h1>
+        <Button variant="ghost" size="sm" className="h-11 shrink-0 px-3 sm:h-9" onClick={() => router.back()}>{t('back')}</Button>
       </div>
-      <p className="text-xs text-muted-foreground mb-4">{t('onlyVerified')}</p>
+      <p className="mb-4 text-[13px] leading-relaxed text-muted-foreground">{t('onlyVerified')}</p>
 
       <div className="space-y-3">
         {sortedBids.length === 0 && <PageState kind="empty" compact title={t('noBidsYet')} />}
@@ -50,8 +50,8 @@ export default function BidsPage() {
           const c = d.contractors[b.contractorId] || {};
           const isLowest = b.price === lowest;
           return (
-            <Card key={b.id} className={`rounded-2xl border-2 shadow-soft ${isLowest ? '' : 'border-border'}`} style={isLowest ? { borderColor: '#00B59E' } : {}}>
-              <CardContent className="p-4">
+            <Card key={b.id} className={`rounded-[18px] border shadow-soft ${isLowest ? 'border-[#00B59E] ring-1 ring-[#00B59E]/15' : 'border-border'}`}>
+              <CardContent className="p-4 sm:p-5">
                 <div className="flex flex-col items-start gap-2 mb-2 sm:flex-row sm:justify-between">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-1.5">
@@ -59,34 +59,34 @@ export default function BidsPage() {
                       {c.providerType && (
                         <span className="rounded-full bg-secondary px-2 py-1 text-[11px] font-semibold text-navy">{providerTypeLabel(c, t)}</span>
                       )}
-                      {c.verificationStatus === 'verified' && <ShieldCheck className="w-4 h-4" style={{ color: '#00B59E' }} />}
+                      {c.verificationStatus === 'verified' && <ShieldCheck className="w-4 h-4" style={{ color: '#00B59E' }} aria-hidden="true" />}
                     </div>
-                    {c.serviceAreas && <div className="text-xs text-muted-foreground mt-0.5">{c.serviceAreas}</div>}
+                    {c.serviceAreas && <div className="mt-0.5 text-[13px] leading-relaxed text-muted-foreground">{c.serviceAreas}</div>}
                   </div>
                   {isLowest && <Badge variant="success" className="shrink-0 text-[11px]">{t('lowestBid')}</Badge>}
                 </div>
 
                 <div className="mt-3 grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">
-                  <div className="rounded-xl bg-secondary p-2.5">
-                    <div className="flex items-center gap-1 text-[11px] uppercase tracking-wide text-muted-foreground"><Wallet className="h-3 w-3" />{t('price')}</div>
+                  <div className="rounded-[14px] border border-border/70 bg-secondary/70 p-3">
+                    <div className="flex items-center gap-1 text-[11px] uppercase tracking-wide text-muted-foreground"><Wallet className="h-3 w-3" aria-hidden="true" />{t('price')}</div>
                     <div className="text-base font-bold text-navy mt-0.5">{b.price.toLocaleString()} <span className="text-xs font-normal text-muted-foreground">{t('currencyQar')}</span></div>
                   </div>
-                  <div className="rounded-xl bg-secondary p-2.5">
-                    <div className="flex items-center gap-1 text-[11px] uppercase tracking-wide text-muted-foreground"><Clock className="h-3 w-3" />{t('timeline')}</div>
+                  <div className="rounded-[14px] border border-border/70 bg-secondary/70 p-3">
+                    <div className="flex items-center gap-1 text-[11px] uppercase tracking-wide text-muted-foreground"><Clock className="h-3 w-3" aria-hidden="true" />{t('timeline')}</div>
                     <div className="text-sm font-semibold text-navy mt-0.5">{b.timeline}</div>
                   </div>
                 </div>
 
                 <div className="mt-3 space-y-1.5">
-                  {b.warranty && <div className="text-xs flex items-start gap-2"><FileCheck2 className="w-3.5 h-3.5 text-navy mt-0.5 shrink-0" /><span><span className="font-semibold">{t('warranty')}:</span> {b.warranty}</span></div>}
-                  {b.exclusions && <div className="text-xs flex items-start gap-2"><FileWarning className="w-3.5 h-3.5 text-navy mt-0.5 shrink-0" /><span><span className="font-semibold">{t('exclusions')}:</span> {b.exclusions}</span></div>}
-                  {b.notes && <div className="text-xs text-muted-foreground leading-relaxed">{b.notes}</div>}
+                  {b.warranty && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileCheck2 className="w-3.5 h-3.5 text-navy mt-0.5 shrink-0" aria-hidden="true" /><span><span className="font-semibold">{t('warranty')}:</span> {b.warranty}</span></div>}
+                  {b.exclusions && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileWarning className="w-3.5 h-3.5 text-navy mt-0.5 shrink-0" aria-hidden="true" /><span><span className="font-semibold">{t('exclusions')}:</span> {b.exclusions}</span></div>}
+                  {b.notes && <div className="text-[13px] leading-relaxed text-muted-foreground">{b.notes}</div>}
                 </div>
 
                 {b.attachments && b.attachments.length > 0 && (
                   <div className="mt-3 border-t border-border pt-3">
                     <div className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                      <Paperclip className="w-3 h-3" />
+                      <Paperclip className="w-3 h-3" aria-hidden="true" />
                       {t('bidFiles')}
                     </div>
                     <div className="space-y-1.5">
@@ -96,9 +96,9 @@ export default function BidsPage() {
                           href={f.data || f.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex min-h-11 items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-xs text-navy hover:bg-secondary/70"
+                          className="flex min-h-11 items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-[13px] text-navy hover:bg-secondary/70"
                         >
-                          <FileText className="w-3.5 h-3.5 shrink-0" />
+                          <FileText className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                           <span className="min-w-0 flex-1 truncate">{f.name || t('files')}</span>
                         </a>
                       ))}

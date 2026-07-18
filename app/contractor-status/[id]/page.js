@@ -77,13 +77,13 @@ export default function ContractorStatusPage() {
 
         <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
           {/* details column */}
-          <div className="space-y-3">
-            <Card>
+          <div className="order-2 space-y-3 lg:order-1">
+            <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 space-y-2.5 sm:p-5">
                 <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('providerSummary')}</div>
                 <div className="flex items-start gap-2 text-sm text-navy">
-                  <ServiceIcon className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" />
-                  <span>{serviceKeys.map((cat) => t(`cat_${cat}`)).join(', ')}</span>
+                  <ServiceIcon className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" aria-hidden="true" />
+                  <span className="min-w-0 break-words">{serviceKeys.map((cat) => t(`cat_${cat}`)).join(', ')}</span>
                 </div>
                 {isConsultant && (
                   <div className="text-sm text-muted-foreground leading-relaxed">{consultantGradeLabel(contractor.consultantGrade, t)}</div>
@@ -93,13 +93,13 @@ export default function ContractorStatusPage() {
                 )}
                 {contractor.serviceAreas && (
                   <div className="flex items-start gap-2 text-sm text-navy">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                     <span>{contractor.serviceAreas}</span>
                   </div>
                 )}
                 {contractor.projectSizeRange && (
                   <div className="flex items-start gap-2 text-sm text-navy">
-                    <Wallet className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                    <Wallet className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                     <span>{contractor.projectSizeRange}</span>
                   </div>
                 )}
@@ -107,7 +107,7 @@ export default function ContractorStatusPage() {
             </Card>
 
             {uploadedDocuments.length > 0 && (
-              <Card>
+              <Card className="rounded-2xl shadow-soft">
                 <CardContent className="p-4 sm:p-5">
                   <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documents')}</div>
                   <div className="space-y-1.5">
@@ -118,10 +118,10 @@ export default function ContractorStatusPage() {
                         download={file.name}
                         className="flex min-h-11 items-center gap-2 text-sm text-navy bg-secondary rounded-xl px-3 py-2 hover:bg-secondary/70"
                       >
-                        <FileText className="w-4 h-4 shrink-0" />
+                        <FileText className="w-4 h-4 shrink-0" aria-hidden="true" />
                         <span className="min-w-0 flex-1 truncate">{file.name || t('files')}</span>
                         <Badge variant="secondary" className="shrink-0 gap-1 border border-border bg-card text-[11px] text-navy">
-                          <Download className="w-3 h-3" />
+                          <Download className="w-3 h-3" aria-hidden="true" />
                           {t('download')}
                         </Badge>
                       </a>
@@ -133,15 +133,15 @@ export default function ContractorStatusPage() {
           </div>
 
           {/* status column */}
-          <div className="space-y-3 lg:sticky lg:top-20">
-            <Card>
+          <div className="order-1 space-y-3 lg:order-2 lg:sticky lg:top-20">
+            <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 sm:p-5">
                 <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-3">{t('statusTimeline')}</div>
                 <StatusTimeline statuses={statusOrder} currentIndex={statusIndex} getLabel={(item) => t(`cstatus_${item}`)} />
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 sm:p-5">
                 <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documentChecklist')}</div>
                 <div className="space-y-1.5">
@@ -150,7 +150,7 @@ export default function ContractorStatusPage() {
                     return (
                       <div key={doc.key} className="flex min-h-11 items-center justify-between gap-2 rounded-xl bg-secondary px-3 py-2 text-sm text-navy">
                         <div className="flex min-w-0 items-center gap-2">
-                          <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
+                          <FileText className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                           <span className="min-w-0">{doc.label}</span>
                         </div>
                         <Badge variant={present ? 'success' : 'warning'} className="shrink-0 text-[11px]">
