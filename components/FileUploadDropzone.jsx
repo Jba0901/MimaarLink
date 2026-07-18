@@ -13,8 +13,9 @@ export default function FileUploadDropzone({
 }) {
   return (
     <label
+      data-invalid={error || undefined}
       className={cn(
-        'interactive-card tap-highlight group flex min-h-20 min-w-0 cursor-pointer items-center gap-3 rounded-2xl border-2 border-dashed bg-card px-4 py-3 text-start shadow-soft focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-background',
+        'file-upload-dropzone interactive-card tap-highlight group flex min-h-20 min-w-0 cursor-pointer items-center gap-3 rounded-2xl border-2 border-dashed bg-card px-4 py-3 text-start shadow-soft focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-background',
         error
           ? 'border-[#EF4444] bg-[#EF4444]/[0.03] focus-within:ring-[#EF4444]/30 dark:bg-[#EF4444]/[0.06]'
           : hasFiles

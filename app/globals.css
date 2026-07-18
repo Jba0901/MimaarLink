@@ -653,6 +653,29 @@
   .active-glow { animation: none; }
 }
 
+@media (forced-colors: active) {
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 3px solid Highlight !important;
+    outline-offset: 3px !important;
+  }
+
+  .phone-field-shell:focus-within,
+  .file-upload-dropzone:focus-within {
+    outline: 3px solid Highlight !important;
+    outline-offset: 3px !important;
+  }
+
+  .phone-field-shell input:focus-visible {
+    outline: none !important;
+  }
+
+  [aria-invalid="true"],
+  [data-invalid="true"] {
+    border-width: 2px !important;
+    border-style: dashed !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *,
