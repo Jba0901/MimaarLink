@@ -343,7 +343,7 @@ function ContractorApplicationInner() {
                   {filesForLabel.map((f, i) => (
                     <div key={i} className="flex min-h-11 items-center gap-2 rounded-xl border border-border/70 bg-secondary ps-3 pe-1 text-xs text-foreground">
                       <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
-                      <span className="min-w-0 flex-1 truncate text-start">{f.name}</span>
+                      <span className="line-clamp-2 min-w-0 flex-1 break-words text-start leading-snug" dir="auto" title={f.name}>{f.name}</span>
                       <Button
                         type="button"
                         variant="destructiveGhost"

@@ -121,7 +121,7 @@ function PostProjectInner() {
               const selected = data.category === c;
               return (
                 <button key={c} type="button" onClick={() => { update('category', c); setStep(2); }} aria-pressed={selected}
-                  className={`interactive-card tap-highlight min-h-[62px] min-w-0 rounded-2xl border px-4 py-3 text-start shadow-soft ${selected ? 'border-[#00B59E]/55 bg-[#D0F2EE]/45 dark:bg-[#00B59E]/15' : 'border-border bg-white hover:border-[#00B59E]/35 hover:bg-secondary/40'}`}>
+                  className={`interactive-card tap-highlight min-h-[62px] min-w-0 rounded-2xl border px-4 py-3 text-start shadow-soft ${selected ? 'border-[#00B59E]/55 bg-[#D0F2EE]/45 dark:bg-[#00B59E]/15' : 'border-border bg-card hover:border-[#00B59E]/35 hover:bg-secondary/40'}`}>
                   <div className="flex items-center gap-3">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] dark:bg-[#00B59E]/15">
                       <Icon className="h-5 w-5 text-teal" />
@@ -184,7 +184,7 @@ function PostProjectInner() {
                 {data.files.map((f, i) => (
                   <div key={i} className="flex min-h-11 items-center gap-2 rounded-xl border border-border/70 bg-secondary ps-3 pe-1 text-xs text-foreground">
                     <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
-                    <span className="min-w-0 flex-1 truncate text-start">{f.name}</span>
+                    <span className="line-clamp-2 min-w-0 flex-1 break-words text-start leading-snug" dir="auto" title={f.name}>{f.name}</span>
                     <Button
                       type="button"
                       variant="destructiveGhost"

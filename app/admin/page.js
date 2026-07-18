@@ -207,7 +207,7 @@ function AdminInner() {
                         <span className="min-w-0 break-words text-sm font-semibold leading-snug text-navy">{t(`cat_${p.category}`)}</span>
                         <StatusBadge status={p.status}>{t(`status_${p.status}`)}</StatusBadge>
                       </div>
-                      <div className="text-xs text-muted-foreground mt-0.5 truncate">{p.location}</div>
+                      <div className="mt-0.5 line-clamp-2 break-words text-xs leading-relaxed text-muted-foreground" title={p.location}>{p.location}</div>
                       <div className="line-clamp-2 break-words text-xs leading-relaxed text-muted-foreground">{p.description}</div>
                       <div className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground">
                         <CalendarClock className="h-3.5 w-3.5 shrink-0" />
