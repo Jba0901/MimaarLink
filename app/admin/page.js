@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Building2, CalendarClock, ChevronLeft, ChevronRight, ClipboardCheck, Copy, ExternalLink, Lock, Loader2, ShieldCheck } from 'lucide-react';
+import { Building2, CalendarClock, ChevronLeft, ChevronRight, ClipboardCheck, Copy, ExternalLink, Lock, Loader2, LogOut, RefreshCw, ShieldCheck, TriangleAlert } from 'lucide-react';
 import { toast } from 'sonner';
 
 const formatAdminTime = (value, lang = 'en') => {
@@ -145,17 +145,24 @@ function AdminInner() {
     <AppShell hideNav hideFooter>
       <h1 className="display-title mb-4 text-[26px] sm:text-[30px]">{t('adminTitle')}</h1>
       {loadError && (
-        <Card className="mb-4 border-red-200 bg-red-50 dark:border-red-500/30 dark:bg-red-500/10">
+        <Card className="mb-4 border-[#EF4444]/35 bg-[#EF4444]/[0.06] dark:border-[#EF4444]/40 dark:bg-[#EF4444]/10">
           <CardContent className="p-4">
-            <div className="text-sm font-semibold text-red-700 dark:text-red-200">Admin data could not load</div>
-            <p className="mt-1 text-xs leading-relaxed text-red-700/80 dark:text-red-200/80">{loadError}</p>
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="flex items-start gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EF4444]/10 text-[#EF4444]" aria-hidden="true">
+                <TriangleAlert className="h-5 w-5" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="text-sm font-bold text-[#EF4444]">Admin data could not load</div>
+                <p className="mt-1 break-words text-xs leading-relaxed text-muted-foreground">{loadError}</p>
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-2">
               <Button
-                variant="outline"
                 size="sm"
                 onClick={() => window.location.reload()}
-                className="h-11 sm:h-9"
+                className="h-11 bg-[#152B54] text-white hover:bg-[#152B54]/90 dark:bg-[#00B59E] dark:text-[#07111D] dark:hover:bg-[#00B59E]/90 sm:h-9"
               >
+                <RefreshCw className="h-4 w-4" aria-hidden="true" />
                 Try again
               </Button>
               <Button
@@ -169,6 +176,7 @@ function AdminInner() {
                 }}
                 className="h-11 sm:h-9"
               >
+                <LogOut className="h-4 w-4" aria-hidden="true" />
                 Log out
               </Button>
             </div>

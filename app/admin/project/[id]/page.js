@@ -293,9 +293,9 @@ export default function AdminProjectPage() {
                 </div>
                 <div className="flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-2 min-[390px]:shrink-0 min-[390px]:justify-end min-[390px]:border-0 min-[390px]:pt-0">
                   <Badge variant="outline" className="min-w-0 max-w-full whitespace-normal text-start text-[11px]">{inv.responseStatus}</Badge>
-                  <button onClick={() => deleteInvite(inv.id)} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-red-600 transition hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-200 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
+                  <Button type="button" variant="destructiveOutline" size="icon" onClick={() => deleteInvite(inv.id)} className="shrink-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
                     <Trash2 className="w-3.5 h-3.5" />
-                  </button>
+                  </Button>
                 </div>
               </div>
             ))}
@@ -342,10 +342,10 @@ export default function AdminProjectPage() {
                         <span className="min-[390px]:sr-only">{t('uploadAgreement')}</span>
                         <input type="file" className="sr-only" accept="image/*,application/pdf" onChange={(e) => uploadBidFile(b.id, b.attachments, e)} />
                       </label>
-                      <button onClick={() => deleteBid(b.id)} className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-white px-3 text-[11px] font-semibold text-red-600 transition hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-200 min-[390px]:w-11 min-[390px]:px-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
+                      <Button type="button" variant="destructiveOutline" size="sm" onClick={() => deleteBid(b.id)} className="w-full text-[11px] min-[390px]:w-11 min-[390px]:px-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
                         <Trash2 className="w-3.5 h-3.5" />
                         <span className="min-[390px]:sr-only">{t('delete')}</span>
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -376,18 +376,18 @@ export default function AdminProjectPage() {
 
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline" className="w-full mt-4 h-11 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700">
+          <Button variant="destructiveOutline" className="mt-4 w-full">
             <Trash2 className="w-4 h-4 me-1.5" />{t('deleteProject')}
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent dir={dir}>
           <AlertDialogHeader>
-            <AlertDialogTitle>{t('deleteConfirmTitle')}</AlertDialogTitle>
+            <AlertDialogTitle className="text-[#EF4444]">{t('deleteConfirmTitle')}</AlertDialogTitle>
             <AlertDialogDescription>{t('deleteConfirmDesc')}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
-            <AlertDialogAction onClick={deleteProject} className="bg-red-600 hover:bg-red-700">{t('delete')}</AlertDialogAction>
+            <AlertDialogAction variant="destructive" onClick={deleteProject}>{t('delete')}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -400,7 +400,7 @@ export default function AdminProjectPage() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setPendingNav(null)}>{t('stay')}</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDiscard} className="bg-red-600 hover:bg-red-700">{t('discardLeave')}</AlertDialogAction>
+            <AlertDialogAction variant="destructive" onClick={confirmDiscard}>{t('discardLeave')}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

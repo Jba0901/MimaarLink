@@ -342,15 +342,17 @@ function ContractorApplicationInner() {
                     <div key={i} className="flex min-h-11 items-center gap-2 text-xs bg-secondary rounded-xl ps-3 pe-1">
                       <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
                       <span className="min-w-0 flex-1 truncate text-start">{f.name}</span>
-                      <button
+                      <Button
                         type="button"
+                        variant="destructiveGhost"
+                        size="icon"
                         onClick={() => update('documents', data.documents.filter(x => x !== f))}
-                        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-muted-foreground hover:bg-white/80 hover:text-red-600"
+                        className="shrink-0"
                         aria-label={`${t('removeFile')}: ${f.name}`}
                         title={t('removeFile')}
                       >
                         <X className="w-4 h-4" />
-                      </button>
+                      </Button>
                     </div>
                   ))}
                 </div>

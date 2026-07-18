@@ -277,18 +277,18 @@ export default function AdminContractorPage() {
 
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline" className="w-full mt-4 h-11 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700">
+          <Button variant="destructiveOutline" className="mt-4 w-full">
             <Trash2 className="w-4 h-4 me-1.5" />{t('deleteContractor')}
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent dir={dir}>
           <AlertDialogHeader>
-            <AlertDialogTitle>{t('deleteConfirmTitle')}</AlertDialogTitle>
+            <AlertDialogTitle className="text-[#EF4444]">{t('deleteConfirmTitle')}</AlertDialogTitle>
             <AlertDialogDescription>{t('deleteConfirmDesc')}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
-            <AlertDialogAction onClick={deleteContractor} className="bg-red-600 hover:bg-red-700">{t('delete')}</AlertDialogAction>
+            <AlertDialogAction variant="destructive" onClick={deleteContractor}>{t('delete')}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -301,7 +301,7 @@ export default function AdminContractorPage() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t('stay')}</AlertDialogCancel>
-            <AlertDialogAction onClick={() => router.push('/admin?tab=contractors')} className="bg-red-600 hover:bg-red-700">{t('discardLeave')}</AlertDialogAction>
+            <AlertDialogAction variant="destructive" onClick={() => router.push('/admin?tab=contractors')}>{t('discardLeave')}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
