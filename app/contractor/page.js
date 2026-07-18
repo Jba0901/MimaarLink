@@ -17,7 +17,7 @@ import { Label } from '@/components/ui/label';
 import NativeSelect from '@/components/NativeSelect';
 import { CheckCircle2, X, Loader2, FileText, Building2, ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
-import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
+import { MAX_FILE_SIZE_BYTES } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 import { focusFormField } from '@/lib/focusFormField';
 
@@ -109,7 +109,7 @@ function ContractorApplicationInner() {
     const list = Array.from(e.target.files || []).slice(0, 3);
     const items = [];
     for (const f of list) {
-      if (f.size > MAX_FILE_SIZE_BYTES) { toast.error(fileTooLargeMessage(f.name)); continue; }
+      if (f.size > MAX_FILE_SIZE_BYTES) { toast.error(`${t('fileTooLarge')} ${f.name}`); continue; }
       const dataUrl = await fileToDataURL(f);
       items.push({ name: f.name, type: f.type, size: f.size, data: dataUrl, label });
     }
@@ -217,10 +217,10 @@ function ContractorApplicationInner() {
 
   return (
     <AppShell hideFooter hideNav wide>
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
-        <div className="w-full lg:max-w-2xl">
-          <h1 className="display-title mb-1 break-words text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</h1>
-          <p className="mb-3 break-words text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-5 sm:text-[13.5px]">{isConsultant ? t('consultantSubtitle') : t('contractorSubtitle')}</p>
+      <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
+        <div className="provider-form-flow min-w-0 w-full lg:max-w-2xl">
+          <h1 className="provider-form-title display-title mb-1 break-words text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</h1>
+          <p className="provider-form-subtitle mb-3 break-words text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-5 sm:text-[13.5px]">{isConsultant ? t('consultantSubtitle') : t('contractorSubtitle')}</p>
           <FormProgress
             step={step}
             total={3}
@@ -343,7 +343,7 @@ function ContractorApplicationInner() {
               <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
             </div>
           </div>
-          <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
+          <div className="grid gap-2 pt-2 min-[320px]:grid-cols-2">
             <Button variant="outline" onClick={() => showStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={goNextFromServices} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
           </div>
@@ -399,7 +399,7 @@ function ContractorApplicationInner() {
             );
           })}
 
-          <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
+          <div className="grid gap-2 pt-2 min-[320px]:grid-cols-2">
             <Button variant="outline" onClick={() => showStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
               {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submitProvider')}
