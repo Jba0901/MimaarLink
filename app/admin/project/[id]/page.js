@@ -53,6 +53,20 @@ const inviteResponseVariant = (status) => {
   return 'outline';
 };
 
+const inviteResponseLabel = (status, lang) => {
+  const normalized = String(status || '').toLowerCase();
+  const labels = {
+    accepted: ['Accepted', 'مقبول'],
+    responded: ['Responded', 'تم الرد'],
+    submitted: ['Submitted', 'تم التقديم'],
+    declined: ['Declined', 'مرفوض'],
+    rejected: ['Rejected', 'مرفوض'],
+    pending: ['Pending', 'بانتظار الرد'],
+    sent: ['Sent', 'تم الإرسال'],
+  };
+  return labels[normalized]?.[lang === 'ar' ? 1 : 0] || status || '-';
+};
+
 export default function AdminProjectPage() {
   const { id } = useParams();
   const router = useRouter();
@@ -199,7 +213,7 @@ export default function AdminProjectPage() {
       <div className="mb-3 flex min-w-0 flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
           <h1 className="break-words text-xl font-bold text-navy">{t(`cat_${project.category}`)}</h1>
-          <div className="mt-0.5 break-words text-xs text-muted-foreground">{project.location}</div>
+          <div dir="auto" className="mt-0.5 break-words text-xs text-muted-foreground">{project.location}</div>
         </div>
         <StatusBadge status={project.status} className="self-start">{t(`status_${project.status}`)}</StatusBadge>
       </div>
@@ -211,14 +225,14 @@ export default function AdminProjectPage() {
             <CalendarClock className="h-3.5 w-3.5 shrink-0" />
             <span className="min-w-0 break-words">{t('applicationTime')}: {formatAdminTime(project.createdAt, lang)}</span>
           </div>
-          <div className="break-words text-sm leading-relaxed">{project.description}</div>
-          {project.timeline && <div className="break-words text-xs"><span className="font-semibold">{t('timeline')}:</span> {project.timeline}</div>}
-          {project.budgetRange && <div className="break-words text-xs"><span className="font-semibold">{t('budget')}:</span> {project.budgetRange}</div>}
+          <div dir="auto" className="break-words text-sm leading-relaxed">{project.description}</div>
+          {project.timeline && <div className="break-words text-xs"><span className="font-semibold">{t('timeline')}:</span><span dir="auto" className="mt-0.5 block">{project.timeline}</span></div>}
+          {project.budgetRange && <div className="break-words text-xs"><span className="font-semibold">{t('budget')}:</span><span dir="ltr" className="mt-0.5 block">{project.budgetRange}</span></div>}
           {requester && (
             <div className="mt-2 pt-2 border-t border-border text-xs space-y-0.5">
-              <div className="break-words"><span className="font-semibold">{requester.name}</span> · {requester.role}</div>
-              <div className="break-words text-muted-foreground">{requester.company}</div>
-              <div className="break-words text-muted-foreground">{requester.phone} · {requester.email}</div>
+              <div className="flex flex-wrap items-center gap-x-1 break-words"><span dir="auto" className="font-semibold">{requester.name}</span><span aria-hidden="true">·</span><span dir="auto">{requester.role}</span></div>
+              <div dir="auto" className="break-words text-muted-foreground">{requester.company}</div>
+              <div className="flex flex-wrap items-center gap-x-1 break-words text-muted-foreground"><span dir="ltr" className="inline-block whitespace-nowrap">{requester.phone}</span><span aria-hidden="true">·</span><span dir="ltr" className="break-all">{requester.email}</span></div>
             </div>
           )}
           <AdminAttribution value={project.marketingAttribution} lang={lang} />
@@ -238,7 +252,7 @@ export default function AdminProjectPage() {
       <Card className="mb-3">
         <CardContent className="p-4 space-y-2">
           <Label className="text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('changeStatus')}</Label>
-          <Select value={statusDraft || project.status} onValueChange={changeStatus}>
+          <Select dir={dir} value={statusDraft || project.status} onValueChange={changeStatus}>
             <SelectTrigger className="h-11"><SelectValue /></SelectTrigger>
             <SelectContent>{PROJECT_STATUSES.map(s => <SelectItem key={s} value={s}>{t(`status_${s}`)}</SelectItem>)}</SelectContent>
           </Select>
@@ -253,7 +267,7 @@ export default function AdminProjectPage() {
           <DialogTrigger asChild><Button variant="outline" className="h-auto min-h-11 whitespace-normal py-2 text-center"><Plus className="h-4 w-4" />{t('assignProvider')}</Button></DialogTrigger>
           <DialogContent dir={dir}>
             <DialogHeader><DialogTitle>{t('assignProvider')}</DialogTitle></DialogHeader>
-            <Select value={assignContractor} onValueChange={setAssignContractor}>
+            <Select dir={dir} value={assignContractor} onValueChange={setAssignContractor}>
               <SelectTrigger><SelectValue placeholder={t('selectProvider')} /></SelectTrigger>
               <SelectContent>{allContractors.map(c => <SelectItem key={c.id} value={c.id}>{providerOptionLabel(c, t)}</SelectItem>)}</SelectContent>
             </Select>
@@ -269,12 +283,12 @@ export default function AdminProjectPage() {
             <div className="space-y-2.5">
               <div>
                 <Label className="text-xs">{t('selectProvider')}</Label>
-                <Select value={bidForm.contractorId} onValueChange={v => setBidForm(f => ({...f, contractorId: v}))}>
+                <Select dir={dir} value={bidForm.contractorId} onValueChange={v => setBidForm(f => ({...f, contractorId: v}))}>
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>{allContractors.map(c => <SelectItem key={c.id} value={c.id}>{providerOptionLabel(c, t)}</SelectItem>)}</SelectContent>
                 </Select>
               </div>
-              <div><Label className="text-xs">{t('price')}</Label><Input type="number" value={bidForm.price} onChange={e => setBidForm(f => ({...f, price: e.target.value}))} /></div>
+              <div><Label className="text-xs">{t('price')}</Label><Input dir="ltr" type="number" value={bidForm.price} onChange={e => setBidForm(f => ({...f, price: e.target.value}))} /></div>
               <div><Label className="text-xs">{t('timelineWeeks')}</Label><Input value={bidForm.timeline} onChange={e => setBidForm(f => ({...f, timeline: e.target.value}))} /></div>
               <div><Label className="text-xs">{t('warranty')}</Label><Input value={bidForm.warranty} onChange={e => setBidForm(f => ({...f, warranty: e.target.value}))} /></div>
               <div><Label className="text-xs">{t('exclusions')}</Label><Input value={bidForm.exclusions} onChange={e => setBidForm(f => ({...f, exclusions: e.target.value}))} /></div>
@@ -300,7 +314,7 @@ export default function AdminProjectPage() {
                       <ProviderIcon className="h-5 w-5" />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <span className="block break-words font-semibold leading-snug text-navy">{provider?.companyName || inv.contractorId}</span>
+                      <span dir="auto" className="block break-words font-semibold leading-snug text-navy">{provider?.companyName || inv.contractorId}</span>
                       {provider && (
                         <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                           <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">{providerTypeLabel(provider, t)}</Badge>
@@ -315,7 +329,7 @@ export default function AdminProjectPage() {
                     </div>
                   </div>
                   <div className="mt-3 flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-3">
-                    <Badge variant={inviteResponseVariant(inv.responseStatus)} className="min-w-0 max-w-full whitespace-normal text-start text-[12px] capitalize">{inv.responseStatus || '-'}</Badge>
+                    <Badge variant={inviteResponseVariant(inv.responseStatus)} className="min-w-0 max-w-full whitespace-normal text-start text-[12px]">{inviteResponseLabel(inv.responseStatus, lang)}</Badge>
                     <Button type="button" variant="destructiveOutline" size="icon" onClick={() => deleteInvite(inv.id)} className="shrink-0 sm:h-8 sm:w-8 sm:rounded-lg" title={t('delete')} aria-label={t('delete')}>
                       <Trash2 className="w-3.5 h-3.5" />
                     </Button>
@@ -344,7 +358,7 @@ export default function AdminProjectPage() {
                         <ProviderIcon className="h-5 w-5" />
                       </span>
                       <div className="min-w-0 flex-1">
-                        <span className="block break-words text-sm font-semibold leading-snug text-navy">{provider?.companyName || b.contractorId || t('provider')}</span>
+                        <span dir="auto" className="block break-words text-sm font-semibold leading-snug text-navy">{provider?.companyName || b.contractorId || t('provider')}</span>
                         <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                           {provider && <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">{providerTypeLabel(provider, t)}</Badge>}
                           {provider?.verificationStatus === 'verified' && (
@@ -374,15 +388,15 @@ export default function AdminProjectPage() {
                       </div>
                       <div className="min-w-0 rounded-[14px] border border-border/70 bg-card p-3">
                         <div className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Clock className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('timeline')}</span></div>
-                        <div className="mt-1 break-words text-sm font-semibold leading-snug text-navy">{b.timeline || '-'}</div>
+                        <div dir="auto" className="mt-1 break-words text-sm font-semibold leading-snug text-navy">{b.timeline || '-'}</div>
                       </div>
                     </div>
 
                     {(b.warranty || b.exclusions || b.notes) && (
                       <div className="mt-3 space-y-1.5">
-                        {b.warranty && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileCheck2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('warranty')}:</span> {b.warranty}</span></div>}
-                        {b.exclusions && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileWarning className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FFB638]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('exclusions')}:</span> {b.exclusions}</span></div>}
-                        {b.notes && <div className="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-muted-foreground">{b.notes}</div>}
+                        {b.warranty && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileCheck2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('warranty')}:</span><span dir="auto" className="mt-0.5 block">{b.warranty}</span></span></div>}
+                        {b.exclusions && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileWarning className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FFB638]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('exclusions')}:</span><span dir="auto" className="mt-0.5 block">{b.exclusions}</span></span></div>}
+                        {b.notes && <div dir="auto" className="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-muted-foreground">{b.notes}</div>}
                       </div>
                     )}
 
@@ -426,8 +440,8 @@ export default function AdminProjectPage() {
           <div className="mt-3 space-y-1.5">
             {notes.map(n => (
               <div key={n.id} className="rounded-xl border border-border/70 bg-secondary/60 p-3 text-xs">
-                <div className="break-words text-[12px] text-muted-foreground">{new Date(n.createdAt).toLocaleString()}</div>
-                <div className="mt-0.5 whitespace-pre-wrap break-words text-[13px] leading-relaxed text-navy">{n.note}</div>
+                <div className="break-words text-[12px] text-muted-foreground">{formatAdminTime(n.createdAt, lang)}</div>
+                <div dir="auto" className="mt-0.5 whitespace-pre-wrap break-words text-[13px] leading-relaxed text-navy">{n.note}</div>
               </div>
             ))}
           </div>

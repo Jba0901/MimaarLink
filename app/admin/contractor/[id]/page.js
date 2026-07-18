@@ -151,7 +151,7 @@ export default function AdminContractorPage() {
 
       <div className="mb-3 flex min-w-0 flex-wrap items-start justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2">
-          <h1 className="min-w-0 break-words text-xl font-bold text-navy">{c.companyName}</h1>
+          <h1 dir="auto" className="min-w-0 break-words text-xl font-bold text-navy">{c.companyName}</h1>
           {c.verificationStatus === 'verified' && <ShieldCheck className="h-5 w-5 shrink-0 text-[#00B59E]" aria-hidden="true" />}
         </div>
         <StatusBadge status={c.verificationStatus} className="self-start">{t(`cstatus_${c.verificationStatus}`)}</StatusBadge>
@@ -168,12 +168,12 @@ export default function AdminContractorPage() {
             {providerTypeLabel(c, t)}
           </div>
           <dl className="grid gap-x-4 gap-y-3 pt-1 sm:grid-cols-2">
-            <div><dt className="text-[12px] text-muted-foreground">{t('crNumber')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.crNumber}</dd></div>
-            <div><dt className="text-[12px] text-muted-foreground">{t('contactPerson')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.contactPerson}</dd></div>
+            <div><dt className="text-[12px] text-muted-foreground">{t('crNumber')}</dt><dd className="mt-0.5 break-words font-semibold text-navy" dir="ltr">{c.crNumber}</dd></div>
+            <div><dt className="text-[12px] text-muted-foreground">{t('contactPerson')}</dt><dd dir="auto" className="mt-0.5 break-words font-semibold text-navy">{c.contactPerson}</dd></div>
             <div><dt className="text-[12px] text-muted-foreground">{t('whatsapp')}</dt><dd className="mt-0.5 font-semibold text-navy" dir="ltr">{c.whatsapp}</dd></div>
             {c.email && <div><dt className="text-[12px] text-muted-foreground">{t('email')}</dt><dd className="mt-0.5 break-all font-semibold text-navy" dir="ltr">{c.email}</dd></div>}
-            <div><dt className="text-[12px] text-muted-foreground">{t('serviceAreas')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.serviceAreas}</dd></div>
-            <div><dt className="text-[12px] text-muted-foreground">{t('projectSize')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{c.projectSizeRange}</dd></div>
+            <div><dt className="text-[12px] text-muted-foreground">{t('serviceAreas')}</dt><dd dir="auto" className="mt-0.5 break-words font-semibold text-navy">{c.serviceAreas}</dd></div>
+            <div><dt className="text-[12px] text-muted-foreground">{t('projectSize')}</dt><dd className="mt-0.5 break-words font-semibold text-navy" dir="ltr">{c.projectSizeRange}</dd></div>
             {isConsultant && <div><dt className="text-[12px] text-muted-foreground">{t('consultantGrade')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{consultantGradeLabel(c.consultantGrade, t)}</dd></div>}
           </dl>
           <div className="flex flex-wrap gap-1 pt-1">
@@ -184,7 +184,7 @@ export default function AdminContractorPage() {
           {serviceKeys.includes('other') && c.otherCategoryDesc && (
             <div className="pt-2 mt-1 border-t border-border">
               <div className="text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('otherCategoryLabel')}</div>
-              <div className="text-[12px] text-navy mt-0.5 whitespace-pre-wrap leading-relaxed">{c.otherCategoryDesc}</div>
+              <div dir="auto" className="text-[12px] text-navy mt-0.5 whitespace-pre-wrap leading-relaxed">{c.otherCategoryDesc}</div>
             </div>
           )}
           <AdminAttribution value={c.marketingAttribution} lang={lang} />
@@ -194,7 +194,7 @@ export default function AdminContractorPage() {
       <Card className="mb-3">
         <CardContent className="p-4">
           <Label className="text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('verificationStatus')}</Label>
-          <Select value={statusDraft || c.verificationStatus} onValueChange={setStatusDraft}>
+          <Select dir={dir} value={statusDraft || c.verificationStatus} onValueChange={setStatusDraft}>
             <SelectTrigger className="mt-2 h-11"><SelectValue /></SelectTrigger>
             <SelectContent>{CONTRACTOR_STATUSES.map(s => <SelectItem key={s} value={s}>{t(`cstatus_${s}`)}</SelectItem>)}</SelectContent>
           </Select>
