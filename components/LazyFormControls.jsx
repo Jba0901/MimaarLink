@@ -6,6 +6,7 @@ const SuccessPanel = lazy(() => import('@/components/SuccessPanel'));
 const FileUploadDropzone = lazy(() => import('@/components/FileUploadDropzone'));
 const NativeSelect = lazy(() => import('@/components/NativeSelect'));
 const SubmissionRetryNotice = lazy(() => import('@/components/SubmissionRetryNotice'));
+const NetworkStatusNotice = lazy(() => import('@/components/NetworkStatusNotice'));
 
 export function LazySuccessPanel(props) {
   return (
@@ -41,6 +42,14 @@ export function LazySubmissionRetryNotice(props) {
   return (
     <Suspense fallback={null}>
       <SubmissionRetryNotice {...props} />
+    </Suspense>
+  );
+}
+
+export function LazyNetworkStatusNotice(props) {
+  return (
+    <Suspense fallback={null}>
+      <NetworkStatusNotice {...props} />
     </Suspense>
   );
 }

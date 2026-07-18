@@ -5,7 +5,7 @@ import AppShell from '@/components/AppShell';
 import FormProgress from '@/components/FormProgress';
 import DesktopFormAside from '@/components/DesktopFormAside';
 import InlineFieldMessage from '@/components/InlineFieldMessage';
-import { LazyFileUploadDropzone, LazyNativeSelect, LazySubmissionRetryNotice, LazySuccessPanel } from '@/components/LazyFormControls';
+import { LazyFileUploadDropzone, LazyNativeSelect, LazyNetworkStatusNotice, LazySubmissionRetryNotice, LazySuccessPanel } from '@/components/LazyFormControls';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -123,6 +123,7 @@ function PostProjectInner() {
         <div className="project-form-flow min-w-0 w-full lg:max-w-2xl" data-form-step={step}>
           <h1 className="project-form-title display-title mb-1 break-words text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{t('postTitle')}</h1>
           <p className="project-form-subtitle mb-3 break-words text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-4 sm:text-[13.5px]">{t('subtitle')}</p>
+          <LazyNetworkStatusNotice />
           <FormProgress
             step={step}
             total={3}
