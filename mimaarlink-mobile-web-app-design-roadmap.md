@@ -4,8 +4,8 @@
 
 - Design owner: Jassim2, MimaarLink head designer/builder
 - Decision owner: Q
-- Updated: 2026-07-18
-- Live baseline: `main` at `bcb8f17`
+- Updated: 2026-07-19
+- Live baseline: `main` after the 2026-07-19 populated-record and onboarding-density checkpoints
 - Purpose: turn the polished responsive website into an implementation-ready, Arabic-first mobile web application without weakening the public acquisition website
 
 This roadmap separates what is already live, what is safe routine work, and what still requires Q's approval. It is a design and delivery plan; it does not claim that unbuilt product features already exist.
@@ -27,9 +27,9 @@ The following was verified from source and a successful production build on 2026
 - There is no customer authentication, customer dashboard, live opportunity feed, notification center, service worker, web-app manifest, or install prompt yet.
 - The role-aware app-shell proposal is a decision brief only on `design/mobile-app-shell-review`; it has no runtime code and no production effect.
 - The palette-normalization proposal on `design/brand-palette-normalization-review` is a real global CSS change, but it is not merged.
-- The production build passes. Current first-load JavaScript is 139 kB on the homepage, 118-146 kB on public journey pages, 146 kB on both `/post-project` and `/contractor`, and 87.1 kB shared by all routes.
+- The production build passes. The current build reports 145 kB on the homepage, 154 kB on `/post-project`, 153 kB on `/contractor`, 137 kB on project/provider status, 147 kB on bid comparison, and 87.1 kB shared by all routes. The two form routes are now slightly above the preferred 150 kB guardrail and need a focused public-bundle review before Phase 1.
 
-Rendered browser coverage now includes 320 and 390 px phones, 768 px tablet, the 1024 px desktop-navigation breakpoint, and 1280 px desktop; Arabic and English; light and dark themes; keyboard focus; and reduced motion. Checked surfaces include the public shell and drawer, role selection, owner and contractor/consultant entry, simple form selectors, and a missing-project state. The remaining gaps are real-data status and bid states, dense admin states, long-content stress, network interruption, browser zoom, and real-device verification.
+Rendered browser coverage now includes 240, 280, 320, 360, and 390 px phones, 768 px tablet, the 1024 px desktop-navigation breakpoint, and 1280 px desktop; Arabic and English; light and dark themes; short-height keyboard conditions; focus and validation; and reduced motion. Checked surfaces include the public shell and drawer, role selection, every owner and contractor/consultant onboarding step, populated project/provider status, populated bid comparison, long bilingual records, large prices, file rows, and missing/error states. The remaining gaps are dense admin states, interrupted-network behavior, 200% browser zoom, public-bundle reduction, and real-device verification.
 
 ## Non-Negotiable Design Rules
 
@@ -59,6 +59,24 @@ Rendered browser coverage now includes 320 and 390 px phones, 768 px tablet, the
 | Provider | Application status | `/contractor-status/[id]` | Functional saved-link flow | Resolve the next document or review step |
 | Shared | Privacy and measurement | `/privacy` | Live website surface | Review or change consent |
 | Operations | Admin | `/admin` and detail routes | Responsive internal workspace | Operate projects and providers |
+
+### Verified onboarding screen decomposition
+
+This is the implementation-level screen inventory for the current mobile journeys. It was rendered at 320×568 and 390×720, with additional 320×360 short-height checks, in Arabic/RTL and English/LTR across light and dark themes. Validation was exercised without sending any project or provider submission.
+
+| Audience | Screen | Current route/state | Primary action | Future app treatment |
+|---|---|---|---|---|
+| Shared | Choose journey | `/start-here` | Continue as owner, contractor, or consultant | Reuse as the truthful first-run role choice until customer identity exists |
+| Owner | Choose project type | `/post-project`, step 1 | Select the closest category | Reuse unchanged inside the owner task flow |
+| Owner | Scope and attachments | `/post-project`, step 2 | Describe the required work and continue | Reuse; keep optional location, timing, budget, and files subordinate to the required description |
+| Owner | Contact details | `/post-project`, step 3 | Submit the project | Reuse; show one contact heading through the progress card and keep validation focus visible above the keyboard |
+| Owner | Saved-link handoff | `/post-project`, completion | Save or open the project-status link | Reuse until an approved returning-customer identity replaces saved-link return |
+| Provider | Identity and provider type | `/contractor`, step 1 | Enter legal company and contact details | Reuse for contractors and consultants with the selected role made explicit |
+| Provider | Services and coverage | `/contractor`, step 2 | Choose actual services and continue | Reuse; consultant grade remains a consultant-only control |
+| Provider | Verification documents | `/contractor`, step 3 | Submit the provider application | Reuse; CR stays the only required document at this stage and validation must focus its upload control |
+| Provider | Saved-link handoff | `/contractor`, completion | Save or open the provider-status link | Reuse until the approved return model exists |
+
+The future role-aware app shell should wrap these task screens only after approval. It must not merge steps, invent accounts, or replace the current saved-link handoff before the Phase 2 identity decision.
 
 ### New app surfaces that do not exist yet
 
@@ -160,11 +178,11 @@ Status: source-complete for the current visual sweep; rendered QA remains open.
 
 ### Phase 0B — Pre-app hardening
 
-Status: next routine work before production app integration.
+Status: in progress. Populated public records and the complete onboarding screen inventory were rendered and hardened on 2026-07-19.
 
-1. Complete rendered QA across the current public journeys using the required size, language, theme, and interaction matrix.
+1. Complete the remaining rendered QA across dense admin states, interrupted-network behavior, 200% browser zoom, and real-device verification.
 2. Record and fix only evidence-backed overflow, hierarchy, spacing, focus, contrast, and touch issues.
-3. Keep `/post-project` and `/contractor` at or below their current 146 kB first-load size, and prevent admin-only interaction systems from returning to public form bundles.
+3. Bring `/post-project` and `/contractor` back below the preferred 150 kB first-load guardrail, and prevent admin-only interaction systems from returning to public form bundles.
 4. Define visual states for interrupted forms, invalid saved links, offline entry, and slow uploads.
 5. Keep PWA installation and caching out of this phase.
 

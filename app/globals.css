@@ -689,6 +689,19 @@
   }
 }
 
+@media (max-width: 639px) {
+  .project-contact-heading {
+    display: none;
+  }
+}
+
+@media (max-width: 639px) and (max-height: 640px) {
+  .project-form-flow:not([data-form-step="1"]) .project-form-subtitle,
+  .provider-form-flow:not([data-form-step="1"]) .provider-form-subtitle {
+    display: none;
+  }
+}
+
 @media (max-width: 1023px) and (max-height: 480px) {
   .start-here-ambient {
     justify-content: flex-start;
