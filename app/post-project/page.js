@@ -199,7 +199,7 @@ function PostProjectInner() {
             />
             {tried2 && !data.description && <InlineFieldMessage id="project-description-error">{t('requireField')}</InlineFieldMessage>}
           </div>
-          <div className="grid gap-3.5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <div>
               <Label className="text-sm">{t('timeline')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.timeline} onChange={e => update('timeline', e.target.value)} placeholder={t('timelinePh')} className="h-11 mt-1.5" />
@@ -242,7 +242,7 @@ function PostProjectInner() {
               </div>
             )}
           </div>
-          <div className="grid gap-2 pt-2 min-[280px]:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 pt-2 min-[280px]:grid-cols-2">
             <Button variant="outline" onClick={() => showStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={() => { setTried2(true); if (data.description) showStep(3); else focusFormField('project-description'); }} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
           </div>
@@ -252,21 +252,21 @@ function PostProjectInner() {
       {step === 3 && (
         <div className="space-y-3.5">
           <h2 className="project-contact-heading text-base font-semibold text-navy">{t('contactDetails')}</h2>
-          <div className="grid gap-3.5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <RequiredField id="project-name" label={t('name')} value={data.name} onChange={v => update('name', v)} tried={tried3} t={t} />
             <div>
               <Label className="text-sm">{t('company')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.company} onChange={e => update('company', e.target.value)} className="h-11 mt-1.5" />
             </div>
           </div>
-          <div className="grid gap-3.5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <RequiredField id="project-phone" label={t('phone')} value={data.phone} onChange={v => update('phone', v)} tried={tried3} t={t} placeholder="+974 ..." kind="phone" />
             <div>
               <Label className="text-sm">{t('email')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.email} onChange={e => update('email', e.target.value)} className="h-11 mt-1.5" type="email" />
             </div>
           </div>
-          <div className="grid gap-3.5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <div>
               <Label className="text-sm">{t('role')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.role} onChange={e => update('role', e.target.value)} placeholder={t('rolePh')} className="h-11 mt-1.5" />
@@ -284,7 +284,7 @@ function PostProjectInner() {
               </NativeSelect>
             </div>
           </div>
-          <div className="grid gap-2 pt-2 min-[280px]:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 pt-2 min-[280px]:grid-cols-2">
             <Button variant="outline" onClick={() => showStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
               {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submit')}

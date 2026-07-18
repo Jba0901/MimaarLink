@@ -233,7 +233,7 @@ function ContractorApplicationInner() {
         <div className="space-y-3.5">
           <div>
             <Label className="text-sm mb-2 block">{t('providerTypeLabel')}</Label>
-            <div className="grid gap-2 min-[420px]:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-2">
               <ProviderTypeButton
                 active={data.providerType === 'contractor'}
                 icon={Building2}
@@ -250,11 +250,11 @@ function ContractorApplicationInner() {
               />
             </div>
           </div>
-          <div className="grid gap-3.5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <RequiredField id="provider-company-name" label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedBasics} t={t} />
             <RequiredField id="provider-cr-number" label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedBasics} t={t} />
           </div>
-          <div className="grid gap-3.5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <RequiredField id="provider-contact-person" label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedBasics} t={t} />
             <RequiredField id="provider-whatsapp" label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
           </div>
@@ -333,7 +333,7 @@ function ContractorApplicationInner() {
               {triedServices && !otherDescValid && <InlineFieldMessage id="provider-other-category-error">{t('requireField')}</InlineFieldMessage>}
             </div>
           )}
-          <div className="grid gap-3.5 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <div>
               <Label className="text-sm">{t('serviceAreas')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
@@ -343,7 +343,7 @@ function ContractorApplicationInner() {
               <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
             </div>
           </div>
-          <div className="grid gap-2 pt-2 min-[320px]:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 pt-2 min-[320px]:grid-cols-2">
             <Button variant="outline" onClick={() => showStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={goNextFromServices} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
           </div>
@@ -399,7 +399,7 @@ function ContractorApplicationInner() {
             );
           })}
 
-          <div className="grid gap-2 pt-2 min-[320px]:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 pt-2 min-[320px]:grid-cols-2">
             <Button variant="outline" onClick={() => showStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
               {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submitProvider')}
