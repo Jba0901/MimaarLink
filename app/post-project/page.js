@@ -17,7 +17,7 @@ import { Label } from '@/components/ui/label';
 import NativeSelect from '@/components/NativeSelect';
 import { CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal, PencilLine } from 'lucide-react';
 import { toast } from 'sonner';
-import { MAX_FILE_SIZE_BYTES } from '@/lib/uploadLimits';
+import { fileSignature, MAX_FILE_SIZE_BYTES } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 import { focusFormField } from '@/lib/focusFormField';
 
@@ -29,6 +29,8 @@ const PROJECT_CATEGORY_ICONS = {
   consultancy: ClipboardCheck,
   other: MoreHorizontal,
 };
+
+const MAX_PROJECT_FILES = 5;
 
 async function fileToDataURL(file) {
   return new Promise((resolve, reject) => {
@@ -101,14 +103,33 @@ function PostProjectInner() {
 
   const onFiles = async (e) => {
     markFormStarted();
-    const list = Array.from(e.target.files || []).slice(0, 5);
+    const selected = Array.from(e.target.files || []);
+    const seenFiles = new Set(data.files.map(fileSignature));
+    let duplicateName = '';
+    const uniqueFiles = selected.filter(file => {
+      const signature = fileSignature(file);
+      if (seenFiles.has(signature)) {
+        duplicateName ||= file.name;
+        return false;
+      }
+      seenFiles.add(signature);
+      return true;
+    });
+    if (duplicateName) {
+      toast.warning(`${t('fileAlreadySelected')} ${duplicateName}`);
+    }
+    const remainingSlots = Math.max(0, MAX_PROJECT_FILES - data.files.length);
+    if (uniqueFiles.length > remainingSlots) {
+      toast.warning(t('fileLimitExceeded').replace('{max}', MAX_PROJECT_FILES));
+    }
+    const list = uniqueFiles.slice(0, remainingSlots);
     const items = [];
     for (const f of list) {
       if (f.size > MAX_FILE_SIZE_BYTES) { toast.error(`${t('fileTooLarge')} ${f.name}`); continue; }
       const dataUrl = await fileToDataURL(f);
       items.push({ name: f.name, type: f.type, size: f.size, data: dataUrl });
     }
-    setData(d => ({ ...d, files: [...d.files, ...items].slice(0, 5) }));
+    setData(d => ({ ...d, files: [...d.files, ...items].slice(0, MAX_PROJECT_FILES) }));
     e.target.value = '';
   };
 
@@ -214,9 +235,10 @@ function PostProjectInner() {
             <FileUploadDropzone
               id="project-files"
               className="mt-1.5"
-              label={t('uploadFiles')}
-              hint={t('uploadHint')}
+              label={data.files.length >= MAX_PROJECT_FILES ? `${data.files.length}/${MAX_PROJECT_FILES} ${t('files')}` : `${t('uploadFiles')} · ${data.files.length}/${MAX_PROJECT_FILES}`}
+              hint={data.files.length >= MAX_PROJECT_FILES ? t('fileLimitReached') : t('uploadHint')}
               hasFiles={data.files.length > 0}
+              disabled={data.files.length >= MAX_PROJECT_FILES}
               multiple
               onChange={onFiles}
               accept="image/*,application/pdf"

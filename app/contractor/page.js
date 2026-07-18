@@ -17,13 +17,15 @@ import { Label } from '@/components/ui/label';
 import NativeSelect from '@/components/NativeSelect';
 import { CheckCircle2, X, Loader2, FileText, Building2, ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
-import { MAX_FILE_SIZE_BYTES } from '@/lib/uploadLimits';
+import { fileSignature, MAX_FILE_SIZE_BYTES } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 import { focusFormField } from '@/lib/focusFormField';
 
 async function fileToDataURL(file) {
   return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(file); });
 }
+
+const MAX_PROVIDER_FILES_PER_FIELD = 3;
 
 export default function ContractorPage() {
   const { t } = useLang();
@@ -106,7 +108,28 @@ function ContractorApplicationInner() {
 
   const onFiles = async (e, label) => {
     markFormStarted();
-    const list = Array.from(e.target.files || []).slice(0, 3);
+    const selected = Array.from(e.target.files || []);
+    const currentFiles = data.documents.filter(d => d.label === label);
+    const seenFiles = new Set(currentFiles.map(fileSignature));
+    let duplicateName = '';
+    const uniqueFiles = selected.filter(file => {
+      const signature = fileSignature(file);
+      if (seenFiles.has(signature)) {
+        duplicateName ||= file.name;
+        return false;
+      }
+      seenFiles.add(signature);
+      return true;
+    });
+    if (duplicateName) {
+      toast.warning(`${t('fileAlreadySelected')} ${duplicateName}`);
+    }
+    const currentCount = currentFiles.length;
+    const remainingSlots = Math.max(0, MAX_PROVIDER_FILES_PER_FIELD - currentCount);
+    if (uniqueFiles.length > remainingSlots) {
+      toast.warning(t('fileLimitExceeded').replace('{max}', MAX_PROVIDER_FILES_PER_FIELD));
+    }
+    const list = uniqueFiles.slice(0, remainingSlots);
     const items = [];
     for (const f of list) {
       if (f.size > MAX_FILE_SIZE_BYTES) { toast.error(`${t('fileTooLarge')} ${f.name}`); continue; }
@@ -354,6 +377,7 @@ function ContractorApplicationInner() {
         <div className="space-y-3.5">
           {documentFields.map(it => {
             const filesForLabel = data.documents.filter(d => d.label === it.key);
+            const fileLimitReached = filesForLabel.length >= MAX_PROVIDER_FILES_PER_FIELD;
             const showError = it.required && triedDocuments && filesForLabel.length === 0;
             const errorId = `provider-document-${it.key}-error`;
             return (
@@ -365,10 +389,11 @@ function ContractorApplicationInner() {
                 <FileUploadDropzone
                   id={`provider-document-${it.key}`}
                   className="mt-1.5 min-h-[72px]"
-                  label={t('uploadFiles')}
-                  hint={t('uploadHint')}
+                  label={fileLimitReached ? `${filesForLabel.length}/${MAX_PROVIDER_FILES_PER_FIELD} ${t('files')}` : `${t('uploadFiles')} · ${filesForLabel.length}/${MAX_PROVIDER_FILES_PER_FIELD}`}
+                  hint={fileLimitReached ? t('fileLimitReached') : t('uploadHint')}
                   error={showError}
                   hasFiles={filesForLabel.length > 0}
+                  disabled={fileLimitReached}
                   aria-required={it.required || undefined}
                   aria-describedby={showError ? errorId : undefined}
                   multiple
