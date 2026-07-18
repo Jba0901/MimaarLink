@@ -16,6 +16,11 @@ export default function SuccessPanel({
   actionHref,
   actionLabel,
 }) {
+  React.useEffect(() => {
+    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+  }, []);
+
   const copyReference = async () => {
     const fullUrl = `${window.location.origin}${referencePath}`;
     await navigator.clipboard.writeText(fullUrl);
