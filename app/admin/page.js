@@ -130,11 +130,11 @@ function AdminInner() {
   if (!authed) return (
     <AppShell hideNav hideFooter>
       <Card className="mx-auto mt-8 max-w-md">
-        <CardContent className="p-6">
+        <CardContent className="p-4 min-[264px]:p-6">
           <div className="w-12 h-12 rounded-full mx-auto navy flex items-center justify-center mb-3">
             <Lock className="w-5 h-5 text-white" />
           </div>
-          <h1 className="text-xl font-bold text-navy text-center">{t('adminTitle')}</h1>
+          <h1 className="text-[19px] font-bold text-navy text-center min-[264px]:text-xl">{t('adminTitle')}</h1>
           <div className="mt-5 space-y-3">
             <div>
               <Label htmlFor="admin-password">{t('adminPassword')}</Label>
