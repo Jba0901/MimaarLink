@@ -5,7 +5,7 @@
 - Design owner: Jassim2, MimaarLink head designer/builder
 - Decision owner: Q
 - Updated: 2026-07-19
-- Live baseline: `main` after the 2026-07-19 dense-admin and public-form network-state checkpoints
+- Live baseline: `main` after the 2026-07-19 mobile homepage LCP checkpoint
 - Purpose: turn the polished responsive website into an implementation-ready, Arabic-first mobile web application without weakening the public acquisition website
 
 This roadmap separates what is already live, what is safe routine work, and what still requires Q's approval. It is a design and delivery plan; it does not claim that unbuilt product features already exist.
@@ -29,7 +29,21 @@ The following was verified from source and a successful production build on 2026
 - The palette-normalization proposal on `design/brand-palette-normalization-review` is a real global CSS change, but it is not merged.
 - The production build passes. The current build reports 145 kB on the homepage, 150 kB on both `/post-project` and `/contractor`, 137-138 kB on project/provider status, 147 kB on bid comparison, and 87.2 kB shared by all routes. Post-submit panels, later-step upload/select controls, and desktop-only form guidance are deferred without changing the approved mobile form hierarchy, bringing both public forms back to the preferred 150 kB build line.
 
-Rendered browser coverage now includes 240, 280, 320, 360, and 390 px phones, 768 px tablet, the 1024 px desktop-navigation breakpoint, and 1280 px desktop; Arabic and English; light and dark themes; short-height keyboard conditions; focus and validation; reduced motion; and 200% reflow-equivalent checks at a 640×360 CSS viewport. Checked surfaces include the public shell and drawer, role selection, every owner and contractor/consultant onboarding step, populated project/provider status, populated bid comparison, dense admin lists and details, long bilingual records, large prices, file rows, missing/error states, slow local file preparation, an actually interrupted submission request with entered data retained, and live offline/reconnected events on both public forms. The remaining gaps are real-device verification and production runtime performance measurement.
+Rendered browser coverage now includes 240, 280, 320, 360, and 390 px phones, 768 px tablet, the 1024 px desktop-navigation breakpoint, and 1280 px desktop; Arabic and English; light and dark themes; short-height keyboard conditions; focus and validation; reduced motion; and 200% reflow-equivalent checks at a 640×360 CSS viewport. Checked surfaces include the public shell and drawer, role selection, every owner and contractor/consultant onboarding step, populated project/provider status, populated bid comparison, dense admin lists and details, long bilingual records, large prices, file rows, missing/error states, slow local file preparation, an actually interrupted submission request with entered data retained, and live offline/reconnected events on both public forms. The remaining gaps are physical-device verification, the production post-fix audit, and real-user performance telemetry.
+
+### Production mobile lab checkpoint
+
+The first repeatable production mobile lab audit was recorded on 2026-07-19 against `https://mimaarlink.com`. These are Lighthouse lab measurements, not field Core Web Vitals:
+
+| Route | Performance | LCP | CLS | TBT | Transfer |
+|---|---:|---:|---:|---:|---:|
+| `/` | 83 | 4.19 s | 0 | 0 ms | 621 kB |
+| `/post-project` | 98 | 2.43 s | 0 | 0 ms | 340 kB |
+| `/contractor` | 98 | 2.44 s | 0 | 3 ms | 339 kB |
+
+The homepage LCP was the decorative Qatar skyline band at the bottom of the first mobile viewport. Its image request transferred about 262 kB. Commit `d1e5748` keeps the skyline artwork on larger screens but replaces it on phones with a no-request navy/teal atmospheric gradient. The change passed 320 and 390 px Arabic/light and English/dark rendering, the production build, and a local mobile network audit confirming zero skyline-image requests.
+
+The production alias has not deployed `d1e5748`: Vercel reported `build-rate-limit`, so the live post-fix audit remains pending. PageSpeed field data was also unavailable because the public endpoint returned HTTP 429, and no project-owned real-user telemetry was found. Therefore LCP, INP, and CLS acceptance is not yet proven from real users.
 
 ## Non-Negotiable Design Rules
 
@@ -179,13 +193,15 @@ Status: source-complete for the current visual sweep; rendered QA remains open.
 
 ### Phase 0B — Pre-app hardening
 
-Status: in progress. Populated public records, the complete onboarding screen inventory, the public-form bundle pass, 200% reflow checks, dense-admin stress QA, slow file-preparation presentation, interrupted-submission recovery, and explicit offline/reconnected form states were completed on 2026-07-19.
+Status: in progress. Populated public records, the complete onboarding screen inventory, the public-form bundle pass, 200% reflow checks, dense-admin stress QA, slow file-preparation presentation, interrupted-submission recovery, explicit offline/reconnected form states, and the first production mobile lab audit were completed on 2026-07-19.
 
-1. Complete the remaining real-device verification.
-2. Record and fix only evidence-backed overflow, hierarchy, spacing, focus, contrast, and touch issues.
-3. Keep `/post-project` and `/contractor` at or below the preferred 150 kB first-load build line, and prevent admin-only interaction systems from returning to public form bundles.
-4. Preserve the verified interrupted-submission, invalid-link, slow file-preparation, and offline/reconnected states without implying that unsent work was saved.
-5. Keep PWA installation and caching out of this phase.
+1. Complete the remaining real-device verification when a physical device bridge is available.
+2. Promote `d1e5748` after the Vercel build-rate limit clears, then rerun the same production mobile audit before claiming the homepage LCP improvement.
+3. Add or obtain project-owned real-user telemetry before claiming field LCP, INP, or CLS targets.
+4. Record and fix only evidence-backed overflow, hierarchy, spacing, focus, contrast, touch, and loading issues.
+5. Keep `/post-project` and `/contractor` at or below the preferred 150 kB first-load build line, and prevent admin-only interaction systems from returning to public form bundles.
+6. Preserve the verified interrupted-submission, invalid-link, slow file-preparation, and offline/reconnected states without implying that unsent work was saved.
+7. Keep PWA installation and caching out of this phase.
 
 ### Phase 1 — Role-aware shell prototype
 
