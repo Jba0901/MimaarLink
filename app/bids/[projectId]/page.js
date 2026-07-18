@@ -108,7 +108,7 @@ export default function BidsPage() {
 
                 <div className="mt-3 flex flex-col gap-2 min-[390px]:flex-row">
                   <Button variant="outline" size="sm" className="h-11 w-full flex-1" onClick={() => action('shortlist', b.contractorId)}>{t('shortlist')}</Button>
-                  <Button size="sm" className="h-11 w-full flex-1" style={{ background: '#152B54' }} onClick={() => action('meeting', b.contractorId)}>{t('requestMeeting')}</Button>
+                  <Button variant="navy" size="sm" className="h-11 w-full flex-1" onClick={() => action('meeting', b.contractorId)}>{t('requestMeeting')}</Button>
                 </div>
               </CardContent>
             </Card>

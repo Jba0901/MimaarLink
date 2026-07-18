@@ -88,7 +88,7 @@ export default function ProjectPage() {
             </Card>
 
             {['bids_received', 'shortlisted', 'meeting_arranged'].includes(data.status) ? (
-              <Button onClick={() => router.push(`/bids/${id}`)} className="w-full h-12 text-base" style={{ background: '#152B54' }}>
+              <Button variant="navy" size="lg" onClick={() => router.push(`/bids/${id}`)} className="w-full text-base">
                 {t('viewBids')}
               </Button>
             ) : (

@@ -226,7 +226,7 @@ function ContractorApplicationInner() {
             <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
           </div>
           <div className="pt-2">
-            <Button onClick={goNextFromBasics} className="form-primary-btn w-full h-11 cta-press">{t('next')}</Button>
+            <Button variant="navy" onClick={goNextFromBasics} className="w-full cta-press">{t('next')}</Button>
           </div>
         </div>
       )}
@@ -308,7 +308,7 @@ function ContractorApplicationInner() {
           </div>
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
             <Button variant="outline" onClick={() => setStep(1)} className="h-11 w-full cta-press">{t('back')}</Button>
-            <Button onClick={goNextFromServices} className="form-primary-btn h-11 w-full cta-press">{t('next')}</Button>
+            <Button variant="navy" onClick={goNextFromServices} className="w-full cta-press">{t('next')}</Button>
           </div>
         </div>
       )}
@@ -362,8 +362,8 @@ function ContractorApplicationInner() {
 
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
             <Button variant="outline" onClick={() => setStep(2)} className="h-11 w-full cta-press">{t('back')}</Button>
-            <Button onClick={submit} disabled={submitting} className="form-primary-btn h-11 w-full cta-press">
-              {submitting ? <><Loader2 className="w-4 h-4 animate-spin me-2" />{t('submitting')}</> : t('submit')}
+            <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="w-full cta-press">
+              {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>
         </div>

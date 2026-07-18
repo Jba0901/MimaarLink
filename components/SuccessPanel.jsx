@@ -58,9 +58,9 @@ export default function SuccessPanel({
             </div>
           </div>
 
-          <Link href={actionHref} className="btn btn-navy mt-4 w-full px-6 text-sm" style={{ minHeight: 48, background: '#152B54' }}>
-            {actionLabel}
-          </Link>
+          <Button asChild variant="navy" size="lg" className="mt-4 w-full text-sm">
+            <Link href={actionHref}>{actionLabel}</Link>
+          </Button>
         </div>
       </section>
     </div>

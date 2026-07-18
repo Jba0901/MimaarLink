@@ -5,12 +5,16 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-semibold transition-[color,background-color,border-color,box-shadow,opacity] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 disabled:pointer-events-none disabled:opacity-55 disabled:shadow-none disabled:saturate-50 aria-[busy=true]:cursor-wait [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
           "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+        brand:
+          "border border-transparent bg-[#00B59E] text-white shadow-sm shadow-[#00B59E]/20 hover:bg-[#00B59E]/90 focus-visible:ring-[#00B59E]/35",
+        navy:
+          "border border-transparent bg-[#152B54] text-white shadow-sm shadow-[#152B54]/20 hover:bg-[#152B54]/90 focus-visible:ring-[#00B59E]/35 dark:border-[#00B59E]/25 dark:hover:bg-[#142A44]",
         destructive:
           "bg-[#EF4444] text-white shadow-sm hover:bg-[#EF4444]/90 focus-visible:ring-[#EF4444]/35",
         destructiveOutline:

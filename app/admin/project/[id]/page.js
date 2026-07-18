@@ -250,12 +250,12 @@ export default function AdminProjectPage() {
               <SelectTrigger><SelectValue placeholder={t('selectProvider')} /></SelectTrigger>
               <SelectContent>{allContractors.map(c => <SelectItem key={c.id} value={c.id}>{providerOptionLabel(c, t)}</SelectItem>)}</SelectContent>
             </Select>
-            <DialogFooter><Button onClick={submitAssign}>{t('save')}</Button></DialogFooter>
+            <DialogFooter><Button variant="navy" onClick={submitAssign}>{t('save')}</Button></DialogFooter>
           </DialogContent>
         </Dialog>
         <Dialog open={openBid} onOpenChange={setOpenBid}>
           <DialogTrigger asChild>
-            <Button className="h-auto min-h-11 whitespace-normal py-2 text-center" style={{ background: '#00B59E' }}><Plus className="h-4 w-4" />{t('addBid')}</Button>
+            <Button variant="brand" className="h-auto min-h-11 whitespace-normal py-2 text-center"><Plus className="h-4 w-4" />{t('addBid')}</Button>
           </DialogTrigger>
           <DialogContent dir={dir}>
             <DialogHeader><DialogTitle>{t('addBidFor')}</DialogTitle></DialogHeader>
@@ -273,7 +273,7 @@ export default function AdminProjectPage() {
               <div><Label className="text-xs">{t('exclusions')}</Label><Input value={bidForm.exclusions} onChange={e => setBidForm(f => ({...f, exclusions: e.target.value}))} /></div>
               <div><Label className="text-xs">{t('notes')}</Label><Textarea value={bidForm.notes} onChange={e => setBidForm(f => ({...f, notes: e.target.value}))} /></div>
             </div>
-            <DialogFooter><Button onClick={submitBid} style={{ background: '#152B54' }}>{t('save')}</Button></DialogFooter>
+            <DialogFooter><Button variant="navy" onClick={submitBid}>{t('save')}</Button></DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
@@ -370,8 +370,8 @@ export default function AdminProjectPage() {
         </CardContent>
       </Card>
 
-      <Button onClick={saveAll} disabled={saving} className="w-full mt-4 h-12 text-base" style={{ background: '#152B54' }}>
-        {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : t('save')}
+      <Button variant="navy" size="lg" onClick={saveAll} disabled={saving} aria-busy={saving} className="mt-4 w-full text-base">
+        {saving ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('saving')}</> : t('save')}
       </Button>
 
       <AlertDialog>

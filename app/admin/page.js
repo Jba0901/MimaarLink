@@ -132,8 +132,8 @@ function AdminInner() {
               <Label>{t('adminPassword')}</Label>
               <Input type="password" value={pwd} onChange={e => setPwd(e.target.value)} onKeyDown={e => e.key === 'Enter' && login()} className="h-11 mt-1.5" />
             </div>
-            <Button onClick={login} disabled={busy} className="w-full h-11" style={{ background: '#152B54' }}>
-              {busy ? <Loader2 className="w-4 h-4 animate-spin" /> : t('login')}
+            <Button variant="navy" onClick={login} disabled={busy} aria-busy={busy} className="w-full">
+              {busy ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('loading')}</> : t('login')}
             </Button>
           </div>
         </CardContent>
@@ -158,9 +158,10 @@ function AdminInner() {
             </div>
             <div className="mt-4 grid grid-cols-2 gap-2">
               <Button
+                variant="navy"
                 size="sm"
                 onClick={() => window.location.reload()}
-                className="h-11 bg-[#152B54] text-white hover:bg-[#152B54]/90 dark:bg-[#00B59E] dark:text-[#07111D] dark:hover:bg-[#00B59E]/90 sm:h-9"
+                className="h-11 sm:h-9"
               >
                 <RefreshCw className="h-4 w-4" aria-hidden="true" />
                 Try again

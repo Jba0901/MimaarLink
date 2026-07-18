@@ -163,7 +163,7 @@ export default function ContractorStatusPage() {
               </CardContent>
             </Card>
 
-            <Button onClick={() => router.push('/')} className="w-full h-11" style={{ background: '#152B54' }}>
+            <Button variant="navy" onClick={() => router.push('/')} className="w-full">
               {t('backToHome')}
             </Button>
           </div>

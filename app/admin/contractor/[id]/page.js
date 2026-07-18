@@ -271,8 +271,8 @@ export default function AdminContractorPage() {
         </Card>
       )}
 
-      <Button onClick={saveAll} disabled={saving} className="w-full mt-4 h-12 text-base" style={{ background: '#152B54' }}>
-        {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : t('save')}
+      <Button variant="navy" size="lg" onClick={saveAll} disabled={saving} aria-busy={saving} className="mt-4 w-full text-base">
+        {saving ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('saving')}</> : t('save')}
       </Button>
 
       <AlertDialog>
