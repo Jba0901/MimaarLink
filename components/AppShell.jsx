@@ -364,15 +364,15 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
       >
         <div className="menu-drawer-content min-h-full">
           <div className="flex items-center justify-between gap-3">
-            <Link href="/" className="flex min-h-11 items-center gap-2.5 rounded-xl min-w-0 tap-highlight">
+            <Link href="/" aria-label={t('appName')} className="flex min-h-11 items-center gap-2.5 rounded-xl min-w-0 tap-highlight">
               <Logo className="h-9 w-9" />
-              <BrandText size={17} onDark={isDark} />
+              <span className="max-[263px]:hidden"><BrandText size={17} onDark={isDark} /></span>
             </Link>
             <button
               ref={closeButtonRef}
               type="button"
               onClick={onClose}
-              className="btn btn-outline h-11 w-11 px-0 rounded-full"
+              className="btn btn-outline h-11 w-11 shrink-0 px-0 rounded-full"
               aria-label={copy.closeMenu}
             >
               <X className="h-[18px] w-[18px]" />
@@ -422,7 +422,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
               <span className="hidden shrink-0 whitespace-nowrap text-[12px] font-extrabold text-teal min-[360px]:inline">{copy.themeHint}</span>
             </button>
 
-            <div className="mt-2.5 grid grid-cols-4 gap-2.5">
+            <div className="mt-2.5 grid grid-cols-2 gap-2 min-[264px]:grid-cols-4 min-[264px]:gap-2.5">
               <FooterIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} variant="surface" />
               <FooterIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external variant="surface" />
               <FooterIcon href="tel:+97466259219" label={t('contactPhone')} icon={Phone} variant="surface" />
