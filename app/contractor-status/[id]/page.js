@@ -142,7 +142,7 @@ export default function ContractorStatusPage() {
                           <FileText className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                           <span className="min-w-0 break-words leading-snug">{doc.label}</span>
                         </div>
-                        <Badge variant={present ? 'success' : 'warning'} className="shrink-0 text-[11px]">
+                        <Badge variant={present ? 'success' : 'warning'} className="shrink-0 text-[12px]">
                           {present ? t('present') : t('missing')}
                         </Badge>
                       </div>

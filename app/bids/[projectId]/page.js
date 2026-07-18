@@ -58,22 +58,22 @@ export default function BidsPage() {
                     <div className="flex flex-wrap items-center gap-1.5">
                       <span className="min-w-0 break-words font-semibold text-navy text-base">{c.companyName || t('provider')}</span>
                       {c.providerType && (
-                        <span className="rounded-full bg-secondary px-2 py-1 text-[11px] font-semibold text-navy">{providerTypeLabel(c, t)}</span>
+                        <span className="max-w-full break-words rounded-full bg-secondary px-2 py-1 text-[12px] font-semibold text-navy">{providerTypeLabel(c, t)}</span>
                       )}
                       {c.verificationStatus === 'verified' && <ShieldCheck className="w-4 h-4" style={{ color: '#00B59E' }} aria-hidden="true" />}
                     </div>
                     {c.serviceAreas && <div className="mt-0.5 break-words text-[13px] leading-relaxed text-muted-foreground">{c.serviceAreas}</div>}
                   </div>
-                  {isLowest && <Badge variant="success" className="shrink-0 text-[11px]">{t('lowestBid')}</Badge>}
+                  {isLowest && <Badge variant="success" className="shrink-0 text-[12px]">{t('lowestBid')}</Badge>}
                 </div>
 
                 <div className="mt-3 grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">
                   <div className="rounded-[14px] border border-border/70 bg-secondary/70 p-3">
-                    <div className="flex items-center gap-1 text-[11px] uppercase tracking-wide text-muted-foreground"><Wallet className="h-3 w-3" aria-hidden="true" />{t('price')}</div>
+                    <div className="flex items-center gap-1 text-[12px] uppercase tracking-wide text-muted-foreground"><Wallet className="h-3 w-3 shrink-0" aria-hidden="true" />{t('price')}</div>
                     <div className="text-base font-bold text-navy mt-0.5">{b.price.toLocaleString()} <span className="text-xs font-normal text-muted-foreground">{t('currencyQar')}</span></div>
                   </div>
                   <div className="rounded-[14px] border border-border/70 bg-secondary/70 p-3">
-                    <div className="flex items-center gap-1 text-[11px] uppercase tracking-wide text-muted-foreground"><Clock className="h-3 w-3" aria-hidden="true" />{t('timeline')}</div>
+                    <div className="flex items-center gap-1 text-[12px] uppercase tracking-wide text-muted-foreground"><Clock className="h-3 w-3 shrink-0" aria-hidden="true" />{t('timeline')}</div>
                     <div className="mt-0.5 break-words text-sm font-semibold text-navy">{b.timeline}</div>
                   </div>
                 </div>
@@ -86,8 +86,8 @@ export default function BidsPage() {
 
                 {b.attachments && b.attachments.length > 0 && (
                   <div className="mt-3 border-t border-border pt-3">
-                    <div className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                      <Paperclip className="w-3 h-3" aria-hidden="true" />
+                    <div className="mb-1.5 flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">
+                      <Paperclip className="h-3 w-3 shrink-0" aria-hidden="true" />
                       {t('bidFiles')}
                     </div>
                     <div className="space-y-1.5">

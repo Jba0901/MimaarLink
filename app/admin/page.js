@@ -243,15 +243,15 @@ function AdminInner() {
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-1.5">
                         <span className="break-words text-sm font-semibold leading-snug text-navy">{c.companyName}</span>
-                        <Badge variant="outline" className="gap-1 text-[11px]">
-                          <TypeIcon className="h-3 w-3" />
+                        <Badge variant="outline" className="max-w-full gap-1 whitespace-normal text-start text-[12px]">
+                          <TypeIcon className="h-3 w-3 shrink-0" />
                           {providerTypeLabel(c, t)}
                         </Badge>
                         {c.verificationStatus === 'verified' && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" />}
                       </div>
                       <div className="mt-0.5 break-words text-xs text-muted-foreground">{c.contactPerson} · {c.whatsapp}</div>
                       {isConsultant && (
-                        <div className="mt-0.5 break-words text-[11px] text-muted-foreground">{consultantGradeLabel(c.consultantGrade, t)}</div>
+                        <div className="mt-0.5 break-words text-[12px] text-muted-foreground">{consultantGradeLabel(c.consultantGrade, t)}</div>
                       )}
                       <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
                         <CalendarClock className="h-3.5 w-3.5 shrink-0" />
@@ -259,9 +259,9 @@ function AdminInner() {
                       </div>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {services.slice(0,3).map(cat => (
-                          <span key={cat} className="rounded-full bg-secondary px-2 py-1 text-[11px] font-medium text-navy">{t(`cat_${cat}`)}</span>
+                          <span key={cat} className="max-w-full break-words rounded-full bg-secondary px-2 py-1 text-[12px] font-medium text-navy">{t(`cat_${cat}`)}</span>
                         ))}
-                        {services.length > 3 && <span className="rounded-full border border-border bg-card px-2 py-1 text-[11px] font-semibold text-muted-foreground">+{services.length - 3}</span>}
+                        {services.length > 3 && <span className="rounded-full border border-border bg-card px-2 py-1 text-[12px] font-semibold text-muted-foreground">+{services.length - 3}</span>}
                       </div>
                     </div>
                     <div className="flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-2 min-[390px]:shrink-0 min-[390px]:justify-end min-[390px]:border-0 min-[390px]:pt-0">
