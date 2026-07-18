@@ -184,8 +184,8 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         <nav className="safe-pad-bottom fixed bottom-3 left-1/2 z-40 w-[min(94vw,360px)] -translate-x-1/2 lg:hidden" aria-label={copy.quickTitle}>
           <div className="grid grid-cols-3 gap-1 rounded-[22px] border border-border bg-white/95 p-1.5 shadow-lift backdrop-blur-xl dark:bg-[#0D1B2A]/95">
             <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
-            <NavBtn href="/post-project" icon={FilePlus} label={t('postProject')} matches={['/post-project', '/for-projects']} />
-            <NavBtn href="/contractor" icon={Hammer} label={t('joinContractor')} matches={['/contractor', '/consultant', '/for-contractors']} />
+            <NavBtn href="/post-project" icon={FilePlus} label={copy.projectNav} ariaLabel={t('postProject')} matches={['/post-project', '/for-projects']} />
+            <NavBtn href="/contractor" icon={Hammer} label={copy.providerNav} ariaLabel={t('joinContractor')} matches={['/contractor', '/consultant', '/for-contractors']} />
           </div>
         </nav>
       )}
@@ -218,6 +218,8 @@ function getShellCopy(lang) {
       social: 'قنوات التواصل',
       quickTitle: 'اختر المسار',
       quickSubtitle: 'ابدأ من الخيار الأقرب لك.',
+      projectNav: 'مشروع جديد',
+      providerNav: 'مقدم خدمة',
       moreLinks: 'روابط سريعة',
       allPaths: 'كل المسارات',
       appearance: 'المظهر',
@@ -247,6 +249,8 @@ function getShellCopy(lang) {
     social: 'Contact channels',
     quickTitle: 'Choose your path',
     quickSubtitle: 'Start with the closest option.',
+    projectNav: 'New project',
+    providerNav: 'Provider',
     moreLinks: 'Quick links',
     allPaths: 'All paths',
     appearance: 'Appearance',
@@ -367,7 +371,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
                   <span className="block text-[12px] text-muted-foreground">{theme === 'dark' ? copy.darkMode : copy.lightMode}</span>
                 </span>
               </span>
-              <span className="text-[12px] font-extrabold text-teal">{copy.themeHint}</span>
+              <span className="hidden shrink-0 whitespace-nowrap text-[12px] font-extrabold text-teal min-[360px]:inline">{copy.themeHint}</span>
             </button>
 
             <div className="mt-2.5 grid grid-cols-4 gap-2.5">
@@ -457,15 +461,15 @@ function HeaderLink({ href, label }) {
   );
 }
 
-function NavBtn({ href, icon: Icon, label, matches = [] }) {
+function NavBtn({ href, icon: Icon, label, ariaLabel = label, matches = [] }) {
   const pathname = usePathname();
   const active = matches.some((m) => pathname === m);
   return (
     <Link
       href={href}
-      aria-label={label}
+      aria-label={ariaLabel}
       aria-current={active ? 'page' : undefined}
-      title={label}
+      title={ariaLabel}
       className={
         'flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-2xl px-2 py-1.5 transition-all cta-press tap-highlight ' +
         (active
@@ -475,7 +479,7 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
       style={active ? { background: '#00B59E' } : undefined}
     >
       <Icon className="h-[19px] w-[19px] shrink-0" />
-      <span className="line-clamp-2 max-w-full text-center text-[10.5px] font-bold leading-[1.15] min-[360px]:text-[11px] min-[360px]:leading-tight">
+      <span className="line-clamp-2 max-w-full text-center text-[11px] font-bold leading-[1.2] min-[360px]:text-[11.5px] min-[360px]:leading-tight">
         {label}
       </span>
     </Link>

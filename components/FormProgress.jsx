@@ -15,7 +15,8 @@ export default function FormProgress({ step, total, label, title, desc }) {
     >
       <div className="flex items-start gap-3">
         <span
-          className="flex h-10 w-10 shrink-0 items-baseline justify-center gap-0.5 rounded-xl bg-[#D0F2EE] pt-2 font-extrabold text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]"
+          dir="ltr"
+          className="flex h-10 w-10 shrink-0 items-baseline justify-center gap-0.5 rounded-xl bg-[#D0F2EE] pt-2 font-extrabold tabular-nums text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]"
           aria-hidden="true"
         >
           <span className="text-[15px] leading-none">{step}</span>

@@ -27,9 +27,9 @@ The following was verified from source and a successful production build on 2026
 - There is no customer authentication, customer dashboard, live opportunity feed, notification center, service worker, web-app manifest, or install prompt yet.
 - The role-aware app-shell proposal is a decision brief only on `design/mobile-app-shell-review`; it has no runtime code and no production effect.
 - The palette-normalization proposal on `design/brand-palette-normalization-review` is a real global CSS change, but it is not merged.
-- The production build passes. Current first-load JavaScript is 139 kB on the homepage, 118-139 kB on most public journey pages, 172 kB on both `/post-project` and `/contractor`, and 87.1 kB shared by all routes.
+- The production build passes. Current first-load JavaScript is 139 kB on the homepage, 118-140 kB on most public journey pages, 172 kB on both `/post-project` and `/contractor`, and 87.1 kB shared by all routes.
 
-Rendered browser QA is still pending. Source inspection and a successful build are not substitutes for screenshot, touch, or real-device verification.
+A first rendered browser pass now covers 320 px Arabic and English, 390 px Arabic, light and dark themes, the public mobile navigation and drawer, role selection, owner entry, contractor/consultant entry, and a missing-project state. That pass fixed RTL step numbering, small-phone dock labels, and the narrow dark-theme control. The complete viewport, state, keyboard, network, and real-device matrix remains open.
 
 ## Non-Negotiable Design Rules
 
