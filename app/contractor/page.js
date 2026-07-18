@@ -7,6 +7,7 @@ import SuccessPanel from '@/components/SuccessPanel';
 import FormProgress from '@/components/FormProgress';
 import FormAside from '@/components/FormAside';
 import FileUploadDropzone from '@/components/FileUploadDropzone';
+import InlineFieldMessage from '@/components/InlineFieldMessage';
 import { useLang } from '@/lib/LangContext';
 import { CATEGORIES, CONSULTANT_CATEGORIES, CONSULTANT_GRADES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -248,10 +249,16 @@ function ContractorApplicationInner() {
             </div>
           )}
           <div>
-            <Label className="text-sm mb-2 block">
-              {serviceLabel} <span className="text-red-600">*</span>
+            <Label id="provider-services-label" className="text-sm mb-2 block">
+              {serviceLabel} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
             </Label>
-            <div className={`grid grid-cols-1 gap-2 min-[360px]:grid-cols-2 ${triedServices && data.categories.length === 0 ? 'rounded-xl p-1.5 ring-1 ring-red-300' : ''}`}>
+            <div
+              role="group"
+              aria-labelledby="provider-services-label"
+              aria-invalid={triedServices && data.categories.length === 0}
+              aria-describedby={triedServices && data.categories.length === 0 ? 'provider-services-error' : undefined}
+              className={`grid grid-cols-1 gap-2 min-[360px]:grid-cols-2 ${triedServices && data.categories.length === 0 ? 'rounded-xl p-1.5 ring-1 ring-red-300' : ''}`}
+            >
               {serviceOptions.map(c => (
                 <button key={c} type="button" onClick={() => toggleCat(c)} aria-pressed={data.categories.includes(c)}
                   className={`interactive-card tap-highlight min-h-12 rounded-xl border px-3 py-2 text-start text-[13px] font-semibold ${
@@ -266,24 +273,27 @@ function ContractorApplicationInner() {
                 </button>
               ))}
             </div>
-            {triedServices && data.categories.length === 0 && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
+            {triedServices && data.categories.length === 0 && <InlineFieldMessage id="provider-services-error">{t('requireField')}</InlineFieldMessage>}
           </div>
           {hasOther && (
             <div>
-              <Label className="text-sm">
-                {t('otherCategoryLabel')} <span className="text-red-600">*</span>
+              <Label htmlFor="provider-other-category" className="text-sm">
+                {t('otherCategoryLabel')} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
               </Label>
               <Textarea
+                id="provider-other-category"
                 value={data.otherCategoryDesc}
                 onChange={e => update('otherCategoryDesc', e.target.value)}
                 placeholder={t('otherCategoryPh')}
                 rows={3}
                 maxLength={300}
                 aria-invalid={triedServices && !otherDescValid}
+                aria-required="true"
+                aria-describedby={`provider-other-category-help${triedServices && !otherDescValid ? ' provider-other-category-error' : ''}`}
                 className="mt-1.5"
               />
-              <div className="mt-1 text-[12px] leading-relaxed text-muted-foreground">{t('otherCategoryHelp')}</div>
-              {triedServices && !otherDescValid && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
+              <div id="provider-other-category-help" className="mt-1.5 break-words text-[12px] leading-5 text-muted-foreground">{t('otherCategoryHelp')}</div>
+              {triedServices && !otherDescValid && <InlineFieldMessage id="provider-other-category-error">{t('requireField')}</InlineFieldMessage>}
             </div>
           )}
           <div className="grid gap-3.5 sm:grid-cols-2">
@@ -308,22 +318,25 @@ function ContractorApplicationInner() {
           {documentFields.map(it => {
             const filesForLabel = data.documents.filter(d => d.label === it.key);
             const showError = it.required && triedDocuments && filesForLabel.length === 0;
+            const errorId = `provider-document-${it.key}-error`;
             return (
               <div key={it.key}>
                 <Label className="text-sm">
-                  {it.label}{it.required && <span className="text-red-600 ms-1">*</span>}
-                  {!it.required && <span className="text-muted-foreground ms-1">({t('optional')})</span>}
+                  {it.label}{it.required && <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>}
+                  {!it.required && <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>}
                 </Label>
                 <FileUploadDropzone
                   className="mt-1.5 min-h-[72px]"
                   label={t('uploadFiles')}
                   hint={t('uploadHint')}
                   error={showError}
+                  aria-required={it.required || undefined}
+                  aria-describedby={showError ? errorId : undefined}
                   multiple
                   onChange={(e) => onFiles(e, it.key)}
                   accept="image/*,application/pdf"
                 />
-                {showError && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
+                {showError && <InlineFieldMessage id={errorId}>{t('requireField')}</InlineFieldMessage>}
                 <div className="mt-1 space-y-1">
                   {filesForLabel.map((f, i) => (
                     <div key={i} className="flex min-h-11 items-center gap-2 text-xs bg-secondary rounded-xl ps-3 pe-1">
@@ -368,6 +381,8 @@ function ContractorApplicationInner() {
 }
 
 function RequiredField({ label, value, onChange, tried, t, placeholder, inputMode, type, kind }) {
+  const fieldId = React.useId();
+  const errorId = `${fieldId}-error`;
   const isPhone = kind === 'phone';
   const PREFIX = '+974';
 
@@ -385,22 +400,25 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
     const errMsg = tooShort ? t('invalidPhone') : t('requireField');
     return (
       <div>
-        <Label className="text-sm">
-          {label} <span className="text-red-600">*</span>
+        <Label htmlFor={fieldId} className="text-sm">
+          {label} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
         </Label>
         <div dir="ltr" className={`mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-red-400 focus-within:ring-2 focus-within:ring-red-400/25' : 'border-input hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/60 focus-within:ring-2 focus-within:ring-[#00B59E]/25'}`}>
           <div className="px-3 flex items-center bg-secondary text-navy text-sm font-semibold select-none border-e border-input shrink-0">
             {PREFIX}
           </div>
           <input
+            id={fieldId}
             value={localPart}
             onChange={e => handleLocalChange(e.target.value)}
             inputMode="tel"
             aria-invalid={showError}
+            aria-required="true"
+            aria-describedby={showError ? errorId : undefined}
             className="min-w-0 flex-1 bg-transparent px-3 text-base outline-none md:text-sm [@media(pointer:coarse)]:!text-base"
           />
         </div>
-        {showError && <div className="mt-1 text-[12px] text-red-600">{errMsg}</div>}
+        {showError && <InlineFieldMessage id={errorId}>{errMsg}</InlineFieldMessage>}
       </div>
     );
   }
@@ -408,19 +426,22 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
   const showError = tried && !value;
   return (
     <div>
-      <Label className="text-sm">
-        {label} <span className="text-red-600">*</span>
+      <Label htmlFor={fieldId} className="text-sm">
+        {label} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
       </Label>
       <Input
+        id={fieldId}
         value={value}
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
         inputMode={inputMode}
         type={type}
         aria-invalid={showError}
+        aria-required="true"
+        aria-describedby={showError ? errorId : undefined}
         className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
       />
-      {showError && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
+      {showError && <InlineFieldMessage id={errorId}>{t('requireField')}</InlineFieldMessage>}
     </div>
   );
 }

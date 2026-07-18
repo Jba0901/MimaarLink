@@ -7,6 +7,7 @@ import SuccessPanel from '@/components/SuccessPanel';
 import FormProgress from '@/components/FormProgress';
 import FormAside from '@/components/FormAside';
 import FileUploadDropzone from '@/components/FileUploadDropzone';
+import InlineFieldMessage from '@/components/InlineFieldMessage';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
@@ -142,15 +143,18 @@ function PostProjectInner() {
             <Input value={data.location} onChange={e => update('location', e.target.value)} placeholder={t('locationPh')} className="h-11 mt-1.5" />
           </div>
           <div>
-            <Label className="text-sm">{t('description')} <span className="text-red-600">*</span></Label>
+            <Label htmlFor="project-description" className="text-sm">{t('description')} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span></Label>
             <Textarea
+              id="project-description"
               value={data.description}
               onChange={e => update('description', e.target.value)}
               placeholder={t('descriptionPh')}
               aria-invalid={tried2 && !data.description}
+              aria-required="true"
+              aria-describedby={tried2 && !data.description ? 'project-description-error' : undefined}
               className={`mt-1.5 min-h-[110px] ${tried2 && !data.description ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
             />
-            {tried2 && !data.description && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
+            {tried2 && !data.description && <InlineFieldMessage id="project-description-error">{t('requireField')}</InlineFieldMessage>}
           </div>
           <div className="grid gap-3.5 sm:grid-cols-2">
             <div>
@@ -267,6 +271,8 @@ function PostProjectInner() {
 }
 
 function RequiredField({ label, value, onChange, tried, t, placeholder, inputMode, type, kind }) {
+  const fieldId = React.useId();
+  const errorId = `${fieldId}-error`;
   const isPhone = kind === 'phone';
   const PREFIX = '+974';
 
@@ -283,22 +289,25 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
     const errMsg = tooShort ? t('invalidPhone') : t('requireField');
     return (
       <div>
-        <Label className="text-sm">
-          {label} <span className="text-red-600">*</span>
+        <Label htmlFor={fieldId} className="text-sm">
+          {label} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
         </Label>
         <div dir="ltr" className={`mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-red-400 focus-within:ring-2 focus-within:ring-red-400/25' : 'border-input hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/60 focus-within:ring-2 focus-within:ring-[#00B59E]/25'}`}>
           <div className="px-3 flex items-center bg-secondary text-navy text-sm font-semibold select-none border-e border-input shrink-0">
             {PREFIX}
           </div>
           <input
+            id={fieldId}
             value={localPart}
             onChange={e => handleLocalChange(e.target.value)}
             inputMode="tel"
             aria-invalid={showError}
+            aria-required="true"
+            aria-describedby={showError ? errorId : undefined}
             className="min-w-0 flex-1 bg-transparent px-3 text-base outline-none md:text-sm [@media(pointer:coarse)]:!text-base"
           />
         </div>
-        {showError && <div className="mt-1 text-[12px] text-red-600">{errMsg}</div>}
+        {showError && <InlineFieldMessage id={errorId}>{errMsg}</InlineFieldMessage>}
       </div>
     );
   }
@@ -306,19 +315,22 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
   const showError = tried && !value;
   return (
     <div>
-      <Label className="text-sm">
-        {label} <span className="text-red-600">*</span>
+      <Label htmlFor={fieldId} className="text-sm">
+        {label} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
       </Label>
       <Input
+        id={fieldId}
         value={value}
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
         inputMode={inputMode}
         type={type}
         aria-invalid={showError}
+        aria-required="true"
+        aria-describedby={showError ? errorId : undefined}
         className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
       />
-      {showError && <div className="mt-1 text-[12px] text-red-600">{t('requireField')}</div>}
+      {showError && <InlineFieldMessage id={errorId}>{t('requireField')}</InlineFieldMessage>}
     </div>
   );
 }
