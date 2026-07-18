@@ -870,6 +870,59 @@
   }
 }
 
+@media (max-width: 263px) and (max-height: 360px) {
+  .page-state-layout:not(.page-state-full) {
+    min-height: 0 !important;
+    align-items: flex-start;
+    padding-top: 0.25rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .page-state-layout:not(.page-state-full) .page-state-panel {
+    padding: 0.625rem 1rem !important;
+  }
+
+  .page-state-layout:not(.page-state-full) .page-state-panel > span:first-child {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.875rem;
+  }
+
+  .page-state-layout:not(.page-state-full) .page-state-panel h1 {
+    margin-top: 0.5rem;
+  }
+
+  .page-state-layout:not(.page-state-full) .page-state-panel p {
+    margin-top: 0.25rem;
+    line-height: 1.4;
+  }
+
+  .page-state-layout:not(.page-state-full) .page-state-panel :is(a, button).btn {
+    margin-top: 0.5rem;
+  }
+
+  .page-state-compact {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem !important;
+    text-align: start;
+  }
+
+  .page-state-compact > span:first-child {
+    margin: 0;
+  }
+
+  .page-state-compact h3 {
+    margin-top: 0;
+  }
+
+  .page-state-compact :is(p, a, button) {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 1023px) and (max-height: 480px) and (orientation: landscape) {
   .mobile-bottom-nav {
     display: none;

@@ -41,9 +41,9 @@ export default function ProjectPage() {
 
   useEffect(() => { load(); }, [id]);
 
-  if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
-  if (loadError) return <AppShell><PageState kind="error" title={t('statusLoadErrorTitle')} description={t('statusLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={load} actionVariant="primary" /></AppShell>;
-  if (!data || data.error) return <AppShell><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
+  if (loading) return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (loadError) return <AppShell hideNav hideFooter><PageState kind="error" title={t('statusLoadErrorTitle')} description={t('statusLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={load} actionVariant="primary" /></AppShell>;
+  if (!data || data.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
 
   const idx = PROJECT_STATUSES.indexOf(data.status);
 

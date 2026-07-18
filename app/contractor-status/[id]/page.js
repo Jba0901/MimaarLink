@@ -53,15 +53,15 @@ export default function ContractorStatusPage() {
   useEffect(() => { load(); }, [id]);
 
   if (loading) {
-    return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
+    return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
   }
 
   if (loadError) {
-    return <AppShell><PageState kind="error" title={t('statusLoadErrorTitle')} description={t('statusLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={load} actionVariant="primary" /></AppShell>;
+    return <AppShell hideNav hideFooter><PageState kind="error" title={t('statusLoadErrorTitle')} description={t('statusLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={load} actionVariant="primary" /></AppShell>;
   }
 
   if (!contractor || contractor.error) {
-    return <AppShell><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
+    return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
   }
 
   const status = contractor.verificationStatus || 'applied';

@@ -53,9 +53,9 @@ export default function BidsPage() {
     load({ showErrorState: true });
   };
 
-  if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
-  if (loadError) return <AppShell><PageState kind="error" title={t('bidLoadErrorTitle')} description={t('bidLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={retryLoad} actionVariant="primary" /></AppShell>;
-  if (!d || d.error) return <AppShell><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
+  if (loading) return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (loadError) return <AppShell hideNav hideFooter><PageState kind="error" title={t('bidLoadErrorTitle')} description={t('bidLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={retryLoad} actionVariant="primary" /></AppShell>;
+  if (!d || d.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
 
   const action = async (act, contractorId) => {
     if (pendingAction) return;
@@ -78,7 +78,7 @@ export default function BidsPage() {
   const lowest = sortedBids[0]?.price;
 
   return (
-    <AppShell>
+    <AppShell hideNav={sortedBids.length === 0} hideFooter={sortedBids.length === 0}>
       <div className="mx-auto max-w-3xl">
         <div className="mb-2 flex min-w-0 items-center justify-between gap-3">
           <h1 className="display-title min-w-0 break-words text-[24px] sm:text-[28px]">{t('bidComparison')}</h1>
