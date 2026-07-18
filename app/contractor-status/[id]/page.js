@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AppShell from '@/components/AppShell';
+import ResultFileLink from '@/components/ResultFileLink';
 import { CONTRACTOR_STATUSES } from '@/lib/i18n';
 import { useLang } from '@/lib/LangContext';
 import { Badge } from '@/components/ui/badge';
@@ -10,7 +11,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import PageState from '@/components/PageState';
 import StatusTimeline from '@/components/StatusTimeline';
 import StatusBadge from '@/components/StatusBadge';
-import { ClipboardCheck, Download, FileText, Hammer, MapPin, Wallet } from 'lucide-react';
+import { ClipboardCheck, FileText, Hammer, MapPin, Wallet } from 'lucide-react';
 
 const consultantGradeLabel = (grade, t) => {
   if (grade === 'grade_a') return t('gradeA');
@@ -65,12 +66,12 @@ export default function ContractorStatusPage() {
   return (
     <AppShell wide>
       <div className="mx-auto max-w-5xl">
-        <div className="flex flex-col items-start gap-2.5 mb-4 sm:flex-row sm:justify-between">
-          <div>
-            <h1 className="display-title text-[24px] sm:text-[28px]">{t('providerStatus')}</h1>
-            <p className="text-xs text-muted-foreground mt-1">{contractor.companyName}</p>
+        <div className="mb-4 flex min-w-0 flex-col items-start gap-2.5 sm:flex-row sm:justify-between">
+          <div className="min-w-0">
+            <h1 className="display-title break-words text-[24px] sm:text-[28px]">{t('providerStatus')}</h1>
+            <p className="mt-1 break-words text-[13px] font-semibold text-muted-foreground">{contractor.companyName}</p>
           </div>
-          <StatusBadge status={status}>
+          <StatusBadge status={status} className="self-start">
             {t(`cstatus_${status}`)}
           </StatusBadge>
         </div>
@@ -86,21 +87,21 @@ export default function ContractorStatusPage() {
                   <span className="min-w-0 break-words">{serviceKeys.map((cat) => t(`cat_${cat}`)).join(', ')}</span>
                 </div>
                 {isConsultant && (
-                  <div className="text-sm text-muted-foreground leading-relaxed">{consultantGradeLabel(contractor.consultantGrade, t)}</div>
+                  <div className="break-words text-sm leading-relaxed text-muted-foreground">{consultantGradeLabel(contractor.consultantGrade, t)}</div>
                 )}
                 {contractor.otherCategoryDesc && (
-                  <div className="text-sm text-muted-foreground leading-relaxed">{contractor.otherCategoryDesc}</div>
+                  <div className="break-words text-sm leading-relaxed text-muted-foreground">{contractor.otherCategoryDesc}</div>
                 )}
                 {contractor.serviceAreas && (
                   <div className="flex items-start gap-2 text-sm text-navy">
                     <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-                    <span>{contractor.serviceAreas}</span>
+                    <span className="min-w-0 break-words">{contractor.serviceAreas}</span>
                   </div>
                 )}
                 {contractor.projectSizeRange && (
                   <div className="flex items-start gap-2 text-sm text-navy">
                     <Wallet className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-                    <span>{contractor.projectSizeRange}</span>
+                    <span className="min-w-0 break-words">{contractor.projectSizeRange}</span>
                   </div>
                 )}
               </CardContent>
@@ -112,19 +113,7 @@ export default function ContractorStatusPage() {
                   <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documents')}</div>
                   <div className="space-y-1.5">
                     {uploadedDocuments.map((file, i) => (
-                      <a
-                        key={i}
-                        href={file.data || file.url}
-                        download={file.name}
-                        className="flex min-h-11 items-center gap-2 text-sm text-navy bg-secondary rounded-xl px-3 py-2 hover:bg-secondary/70"
-                      >
-                        <FileText className="w-4 h-4 shrink-0" aria-hidden="true" />
-                        <span className="min-w-0 flex-1 truncate">{file.name || t('files')}</span>
-                        <Badge variant="secondary" className="shrink-0 gap-1 border border-border bg-card text-[11px] text-navy">
-                          <Download className="w-3 h-3" aria-hidden="true" />
-                          {t('download')}
-                        </Badge>
-                      </a>
+                      <ResultFileLink key={i} file={file} fallbackLabel={t('files')} actionLabel={t('download')} />
                     ))}
                   </div>
                 </CardContent>
@@ -151,7 +140,7 @@ export default function ContractorStatusPage() {
                       <div key={doc.key} className="flex min-h-11 items-center justify-between gap-2 rounded-xl bg-secondary px-3 py-2 text-sm text-navy">
                         <div className="flex min-w-0 items-center gap-2">
                           <FileText className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-                          <span className="min-w-0">{doc.label}</span>
+                          <span className="min-w-0 break-words leading-snug">{doc.label}</span>
                         </div>
                         <Badge variant={present ? 'success' : 'warning'} className="shrink-0 text-[11px]">
                           {present ? t('present') : t('missing')}

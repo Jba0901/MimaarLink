@@ -46,7 +46,7 @@ export default function StatusTimeline({ statuses, currentIndex, getLabel }) {
                     : 'text-muted-foreground'
               }`}
             >
-              <span className={upcoming ? 'opacity-80' : undefined}>{getLabel(status)}</span>
+              <span className={`block break-words ${upcoming ? 'opacity-80' : ''}`}>{getLabel(status)}</span>
             </div>
           </li>
         );
