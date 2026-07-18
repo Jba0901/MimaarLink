@@ -19,6 +19,7 @@ import { CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat,
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
+import { focusFormField } from '@/lib/focusFormField';
 
 const PROJECT_CATEGORY_ICONS = {
   fitout: Layers,
@@ -81,7 +82,10 @@ function PostProjectInner() {
   const submit = async () => {
     setTried3(true);
     const phoneDigits = (data.phone || '').replace(/\D/g, '').length;
-    if (!data.name || !data.phone || phoneDigits < 8) return;
+    if (!data.name || !data.phone || phoneDigits < 8) {
+      focusFormField(!data.name ? 'project-name' : 'project-phone');
+      return;
+    }
     setSubmitting(true);
     try {
       const res = await fetch('/api/projects', {
@@ -203,7 +207,7 @@ function PostProjectInner() {
           </div>
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
             <Button variant="outline" onClick={() => setStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
-            <Button variant="navy" onClick={() => { setTried2(true); if (data.description) setStep(3); }} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
+            <Button variant="navy" onClick={() => { setTried2(true); if (data.description) setStep(3); else focusFormField('project-description'); }} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
           </div>
         </div>
       )}
@@ -212,14 +216,14 @@ function PostProjectInner() {
         <div className="space-y-3.5">
           <h2 className="text-base font-semibold text-navy">{t('contactDetails')}</h2>
           <div className="grid gap-3.5 sm:grid-cols-2">
-            <RequiredField label={t('name')} value={data.name} onChange={v => update('name', v)} tried={tried3} t={t} />
+            <RequiredField id="project-name" label={t('name')} value={data.name} onChange={v => update('name', v)} tried={tried3} t={t} />
             <div>
               <Label className="text-sm">{t('company')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.company} onChange={e => update('company', e.target.value)} className="h-11 mt-1.5" />
             </div>
           </div>
           <div className="grid gap-3.5 sm:grid-cols-2">
-            <RequiredField label={t('phone')} value={data.phone} onChange={v => update('phone', v)} tried={tried3} t={t} placeholder="+974 ..." kind="phone" />
+            <RequiredField id="project-phone" label={t('phone')} value={data.phone} onChange={v => update('phone', v)} tried={tried3} t={t} placeholder="+974 ..." kind="phone" />
             <div>
               <Label className="text-sm">{t('email')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.email} onChange={e => update('email', e.target.value)} className="h-11 mt-1.5" type="email" />
@@ -277,8 +281,9 @@ function PostProjectInner() {
   );
 }
 
-function RequiredField({ label, value, onChange, tried, t, placeholder, inputMode, type, kind }) {
-  const fieldId = React.useId();
+function RequiredField({ id, label, value, onChange, tried, t, placeholder, inputMode, type, kind }) {
+  const generatedId = React.useId();
+  const fieldId = id || generatedId;
   const errorId = `${fieldId}-error`;
   const isPhone = kind === 'phone';
   const PREFIX = '+974';

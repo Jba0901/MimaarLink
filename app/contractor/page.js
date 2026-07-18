@@ -19,6 +19,7 @@ import { CheckCircle2, X, Loader2, FileText, Building2, ClipboardCheck } from 'l
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
+import { focusFormField } from '@/lib/focusFormField';
 
 async function fileToDataURL(file) {
   return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(file); });
@@ -121,23 +122,53 @@ function ContractorApplicationInner() {
   const documentsValid = hasCR;
   const formValid = basicsValid && servicesValid && documentsValid;
   const showServicesError = triedServices && data.categories.length === 0;
+  const firstInvalidBasicsField = !data.companyName
+    ? 'provider-company-name'
+    : !data.crNumber
+      ? 'provider-cr-number'
+      : !data.contactPerson
+        ? 'provider-contact-person'
+        : 'provider-whatsapp';
 
   const goNextFromBasics = () => {
     setTriedBasics(true);
-    if (basicsValid) setStep(2);
+    if (basicsValid) {
+      setStep(2);
+      return;
+    }
+
+    focusFormField(firstInvalidBasicsField);
   };
 
   const goNextFromServices = () => {
     setTriedServices(true);
-    if (servicesValid) setStep(3);
+    if (servicesValid) {
+      setStep(3);
+      return;
+    }
+
+    focusFormField(data.categories.length === 0 ? 'provider-first-service' : 'provider-other-category');
   };
 
   const submit = async () => {
     setTriedDocuments(true);
     if (!formValid) {
-      if (!basicsValid) { setTriedBasics(true); setStep(1); return; }
-      if (!servicesValid) { setTriedServices(true); setStep(2); return; }
-      if (!hasCR) toast.error(t('uploadCR') + ' — ' + t('requireField'));
+      if (!basicsValid) {
+        setTriedBasics(true);
+        setStep(1);
+        focusFormField(firstInvalidBasicsField);
+        return;
+      }
+      if (!servicesValid) {
+        setTriedServices(true);
+        setStep(2);
+        focusFormField(data.categories.length === 0 ? 'provider-first-service' : 'provider-other-category');
+        return;
+      }
+      if (!hasCR) {
+        toast.error(t('uploadCR') + ' — ' + t('requireField'));
+        focusFormField('provider-document-cr');
+      }
       return;
     }
     setSubmitting(true);
@@ -215,12 +246,12 @@ function ContractorApplicationInner() {
             </div>
           </div>
           <div className="grid gap-3.5 sm:grid-cols-2">
-            <RequiredField label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedBasics} t={t} />
-            <RequiredField label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedBasics} t={t} />
+            <RequiredField id="provider-company-name" label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedBasics} t={t} />
+            <RequiredField id="provider-cr-number" label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedBasics} t={t} />
           </div>
           <div className="grid gap-3.5 sm:grid-cols-2">
-            <RequiredField label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedBasics} t={t} />
-            <RequiredField label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
+            <RequiredField id="provider-contact-person" label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedBasics} t={t} />
+            <RequiredField id="provider-whatsapp" label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
           </div>
           <div>
             <Label className="text-sm">{t('email')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
@@ -260,8 +291,8 @@ function ContractorApplicationInner() {
               aria-describedby={showServicesError ? 'provider-services-error' : undefined}
               className={`grid grid-cols-1 gap-2 rounded-2xl border p-1.5 transition-[border-color,background-color] min-[360px]:grid-cols-2 ${showServicesError ? 'border-[#EF4444]/45 bg-[#EF4444]/[0.04] dark:bg-[#EF4444]/[0.07]' : 'border-transparent bg-transparent'}`}
             >
-              {serviceOptions.map(c => (
-                <button key={c} type="button" onClick={() => toggleCat(c)} aria-pressed={data.categories.includes(c)}
+              {serviceOptions.map((c, index) => (
+                <button key={c} id={index === 0 ? 'provider-first-service' : undefined} type="button" onClick={() => toggleCat(c)} aria-pressed={data.categories.includes(c)}
                   className={`interactive-card tap-highlight min-h-12 min-w-0 rounded-xl border px-3 py-2 text-start text-[13px] font-semibold ${
                     data.categories.includes(c)
                       ? 'border-[#00B59E]/50 bg-[#D0F2EE]/55 text-navy shadow-soft dark:border-[#00B59E]/45 dark:bg-[#00B59E]/15'
@@ -327,6 +358,7 @@ function ContractorApplicationInner() {
                   {!it.required && <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>}
                 </Label>
                 <FileUploadDropzone
+                  id={`provider-document-${it.key}`}
                   className="mt-1.5 min-h-[72px]"
                   label={t('uploadFiles')}
                   hint={t('uploadHint')}
@@ -384,8 +416,9 @@ function ContractorApplicationInner() {
   );
 }
 
-function RequiredField({ label, value, onChange, tried, t, placeholder, inputMode, type, kind }) {
-  const fieldId = React.useId();
+function RequiredField({ id, label, value, onChange, tried, t, placeholder, inputMode, type, kind }) {
+  const generatedId = React.useId();
+  const fieldId = id || generatedId;
   const errorId = `${fieldId}-error`;
   const isPhone = kind === 'phone';
   const PREFIX = '+974';
