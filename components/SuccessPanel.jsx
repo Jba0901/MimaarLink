@@ -40,7 +40,7 @@ export default function SuccessPanel({
 
           <div className="mt-5 rounded-2xl border border-border/70 bg-secondary/45 p-2.5 text-start sm:mt-6 sm:p-4">
             <div className="mb-2 break-words text-[12px] font-semibold leading-relaxed text-muted-foreground">{referenceLabel}</div>
-            <div className="grid min-w-0 gap-2 min-[360px]:grid-cols-[minmax(0,1fr)_auto]">
+            <div className="grid min-w-0 gap-2 min-[480px]:grid-cols-[minmax(0,1fr)_auto]">
               <code className="flex min-h-11 min-w-0 items-center break-all rounded-xl border border-border/70 bg-card px-3 py-2 text-start text-[12px] leading-5 text-navy shadow-sm" dir="ltr" title={referencePath}>
                 {referencePath}
               </code>
@@ -48,7 +48,7 @@ export default function SuccessPanel({
                 type="button"
                 size="sm"
                 variant="outline"
-                className="h-auto min-h-11 w-full whitespace-normal px-3 py-2 text-center leading-snug min-[360px]:w-auto"
+                className="h-auto min-h-11 w-full whitespace-normal px-3 py-2 text-center leading-snug min-[480px]:w-auto"
                 aria-label={copyLabel}
                 title={copyLabel}
                 onClick={copyReference}
