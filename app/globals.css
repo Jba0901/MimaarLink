@@ -472,9 +472,10 @@
   .path-card-action {
     background: var(--path-accent-soft);
     border: 1px solid color-mix(in srgb, var(--path-accent) 34%, transparent);
-    color: var(--path-accent);
+    color: #152B54;
     transition: background-color 180ms ease, border-color 180ms ease, transform 160ms ease;
   }
+  .dark .path-card-action { color: var(--path-accent); }
   .path-card[data-tone="amber"] .path-card-compact-action,
   .dark .path-card[data-tone="navy"] .path-card-compact-action {
     color: #152B54;
@@ -689,6 +690,48 @@
 }
 
 @media (max-width: 1023px) and (max-height: 480px) {
+  .start-here-ambient {
+    justify-content: flex-start;
+    padding-top: 0.5rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .start-here-intro {
+    margin-bottom: 0.75rem !important;
+  }
+
+  .start-here-intro .eyebrow {
+    margin-bottom: 0.25rem !important;
+  }
+
+  .start-here-intro h1 {
+    font-size: 1.5rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .start-here-intro p {
+    margin-top: 0.25rem !important;
+    font-size: 0.75rem !important;
+    line-height: 1.125rem !important;
+  }
+
+  .start-here-grid {
+    gap: 0.5rem !important;
+  }
+
+  .start-here-grid .path-card {
+    padding-top: 0.625rem !important;
+    padding-bottom: 0.625rem !important;
+  }
+
+  .start-here-grid .path-card-action {
+    margin-top: 0.375rem !important;
+  }
+
+  .start-here-help {
+    margin-top: 0.75rem !important;
+  }
+
   .project-form-title,
   .provider-form-title {
     margin-bottom: 0.125rem !important;
