@@ -52,13 +52,18 @@ function PostProjectInner() {
     name: '', company: '', phone: '+974 ', email: '', role: '', languagePreference: 'en',
   });
 
+  const showStep = React.useCallback((nextStep) => {
+    setStep(nextStep);
+    window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+  }, []);
+
   useEffect(() => {
     const cat = sp.get('category');
     if (cat && PROJECT_CATEGORIES.includes(cat)) {
       setData(d => ({ ...d, category: cat }));
-      setStep(2);
+      showStep(2);
     }
-  }, [sp]);
+  }, [sp, showStep]);
 
   const markFormStarted = () => trackMetaOnce('project_form_start', 'FormStart', { form_type: 'project' }, { custom: true });
   const update = (k, v) => {
@@ -124,7 +129,7 @@ function PostProjectInner() {
               const Icon = PROJECT_CATEGORY_ICONS[c] || MoreHorizontal;
               const selected = data.category === c;
               return (
-                <button key={c} type="button" onClick={() => { update('category', c); setStep(2); }} aria-pressed={selected}
+                <button key={c} type="button" onClick={() => { update('category', c); showStep(2); }} aria-pressed={selected}
                   className={`interactive-card tap-highlight min-h-[62px] min-w-0 rounded-2xl border px-4 py-3 text-start shadow-soft ${selected ? 'border-[#00B59E]/55 bg-[#D0F2EE]/45 dark:bg-[#00B59E]/15' : 'border-border bg-card hover:border-[#00B59E]/35 hover:bg-secondary/40'}`}>
                   <div className="flex items-center gap-3">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] dark:bg-[#00B59E]/15">
@@ -206,8 +211,8 @@ function PostProjectInner() {
             )}
           </div>
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
-            <Button variant="outline" onClick={() => setStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
-            <Button variant="navy" onClick={() => { setTried2(true); if (data.description) setStep(3); else focusFormField('project-description'); }} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
+            <Button variant="outline" onClick={() => showStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
+            <Button variant="navy" onClick={() => { setTried2(true); if (data.description) showStep(3); else focusFormField('project-description'); }} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
           </div>
         </div>
       )}
@@ -248,7 +253,7 @@ function PostProjectInner() {
             </div>
           </div>
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
-            <Button variant="outline" onClick={() => setStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
+            <Button variant="outline" onClick={() => showStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
               {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submit')}
             </Button>

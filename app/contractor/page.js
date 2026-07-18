@@ -52,6 +52,11 @@ function ContractorApplicationInner() {
     otherCategoryDesc: '', serviceAreas: '', projectSizeRange: '', documents: [],
   });
 
+  const showStep = React.useCallback((nextStep) => {
+    setStep(nextStep);
+    window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+  }, []);
+
   useEffect(() => {
     setData(d => ({
       ...d,
@@ -133,7 +138,7 @@ function ContractorApplicationInner() {
   const goNextFromBasics = () => {
     setTriedBasics(true);
     if (basicsValid) {
-      setStep(2);
+      showStep(2);
       return;
     }
 
@@ -143,7 +148,7 @@ function ContractorApplicationInner() {
   const goNextFromServices = () => {
     setTriedServices(true);
     if (servicesValid) {
-      setStep(3);
+      showStep(3);
       return;
     }
 
@@ -339,7 +344,7 @@ function ContractorApplicationInner() {
             </div>
           </div>
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
-            <Button variant="outline" onClick={() => setStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
+            <Button variant="outline" onClick={() => showStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={goNextFromServices} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
           </div>
         </div>
@@ -395,7 +400,7 @@ function ContractorApplicationInner() {
           })}
 
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
-            <Button variant="outline" onClick={() => setStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
+            <Button variant="outline" onClick={() => showStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
             <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
               {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submitProvider')}
             </Button>
