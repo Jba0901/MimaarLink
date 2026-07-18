@@ -138,7 +138,7 @@ function PostProjectInner() {
     <AppShell hideFooter hideNav wide>
       {step < 4 ? (
       <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
-        <div className="project-form-flow min-w-0 w-full lg:max-w-2xl">
+        <div className="project-form-flow min-w-0 w-full lg:max-w-2xl" data-form-step={step}>
           <h1 className="project-form-title display-title mb-1 break-words text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{t('postTitle')}</h1>
           <p className="project-form-subtitle mb-3 break-words text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-4 sm:text-[13.5px]">{t('subtitle')}</p>
           <FormProgress
