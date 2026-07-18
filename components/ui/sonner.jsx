@@ -19,12 +19,12 @@ const Toaster = ({
   }, [])
 
   const baseClassNames = {
-    toast: "group toast !rounded-2xl !border !border-border !bg-card !text-foreground !shadow-lift",
+    toast: "group toast !rounded-2xl !border border-border !bg-card !text-foreground !shadow-lift",
     title: "!break-words !font-bold !text-foreground",
     description: "!break-words !text-muted-foreground",
     content: "!min-w-0 !gap-1",
     success: "!border-[#00B59E]/45 !bg-[#D0F2EE] dark:!bg-[#142A44]",
-    error: "!border-[#EF4444]/45 !bg-card",
+    error: "!border-[#EF4444]/45 !bg-[#FEF2F2] dark:!bg-[#2A1720]",
     warning: "!border-[#FFB638]/55 !bg-[#FFB638]/10",
     info: "!border-[#152B54]/30 !bg-card dark:!border-[#00B59E]/30",
     loading: "!border-[#00B59E]/35 !bg-card",
