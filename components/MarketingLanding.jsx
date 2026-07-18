@@ -27,6 +27,7 @@ export default function MarketingLanding({
   const isAmber = tone === 'amber';
   const accentColor = isAmber ? '#FFB638' : '#00B59E';
   const accentSoft = isAmber ? 'rgba(255,182,56,0.14)' : 'rgba(0,181,158,0.10)';
+  const ctaClass = isAmber ? 'btn-amber' : 'btn-primary';
   const Arrow = () =>
     isRTL
       ? <ArrowRight className="h-4 w-4 shrink-0 rotate-180" aria-hidden="true" />
@@ -52,13 +53,13 @@ export default function MarketingLanding({
             )}
             <h1 className="landing-hero-title motion-fade-up motion-delay-1 display-title mx-auto max-w-[23rem] text-[30px] sm:max-w-2xl sm:text-[42px] lg:text-[46px]">
               {words.join(' ')}{' '}
-              <span className="text-teal">{accentWords.join(' ')}</span>
+              <span style={{ color: accentColor }}>{accentWords.join(' ')}</span>
             </h1>
             <p className="motion-fade-up motion-delay-2 mx-auto mt-3.5 max-w-lg text-[14.5px] leading-7 text-muted-foreground sm:mt-4 sm:text-[15px] sm:leading-relaxed">
               {subtitle}
             </p>
             <div className="motion-fade-up motion-delay-3 mt-6 sm:mt-7">
-              <Link href={ctaHref} className="btn btn-primary soft-shine w-full px-9 text-[15px] sm:w-auto" style={{ minHeight: 52 }}>
+              <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={{ minHeight: 52 }}>
                 {ctaLabel} <Arrow />
               </Link>
               {ctaSubtext && <p className="mt-3 text-[12.5px] text-muted-foreground/80">{ctaSubtext}</p>}
@@ -72,7 +73,7 @@ export default function MarketingLanding({
         <div className="grid gap-2.5 sm:grid-cols-3 sm:gap-3.5">
           {benefits.map((b, i) => (
             <Reveal key={i} delay={i * 110} className="h-full">
-              <div className="interactive-card flex h-full items-start gap-3 rounded-[20px] border border-border bg-white p-3.5 shadow-soft min-[390px]:gap-3.5 min-[390px]:p-4 sm:block sm:rounded-3xl sm:p-6" style={{ borderInlineStartWidth: 3, borderInlineStartColor: accentColor }}>
+              <div className="interactive-card flex h-full items-start gap-3 rounded-[20px] border border-border bg-card p-3.5 shadow-soft min-[390px]:gap-3.5 min-[390px]:p-4 sm:block sm:rounded-3xl sm:p-6" style={{ borderInlineStartWidth: 3, borderInlineStartColor: accentColor }}>
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl sm:mb-4 sm:h-12 sm:w-12" style={{ background: accentSoft }}>
                   <b.icon
                     className={`h-[22px] w-[22px] ${isAmber ? 'text-[#152B54] dark:text-[#FFB638]' : 'text-[#00B59E]'}`}
@@ -122,7 +123,7 @@ export default function MarketingLanding({
               <Reveal key={i} delay={i * 110}>
                 <div className={`relative flex gap-3 px-0.5 text-start sm:block sm:px-3 sm:text-center ${i < steps.length - 1 ? 'pb-5 sm:pb-0' : ''}`}>
                   {i < steps.length - 1 && <span className="absolute bottom-0 start-[22px] top-11 w-px bg-border sm:hidden" aria-hidden="true" />}
-                  <div className="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border bg-white shadow-card sm:mx-auto sm:h-14 sm:w-14">
+                  <div className="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border bg-card shadow-card sm:mx-auto sm:h-14 sm:w-14">
                     <span className="text-[16px] font-extrabold text-navy sm:text-[18px]">{i + 1}</span>
                   </div>
                   <div className="min-w-0 flex-1 pt-0.5 sm:pt-0">
@@ -151,7 +152,7 @@ export default function MarketingLanding({
             <div className="relative mx-auto max-w-xl">
               <h3 className="text-[22px] font-extrabold leading-snug sm:text-[30px] sm:leading-tight">{finalTitle}</h3>
               <p className="mb-5 mt-2.5 text-[13.5px] leading-6 text-white/75 sm:mb-7 sm:text-[14px]">{finalSub}</p>
-              <Link href={ctaHref} className="btn btn-primary soft-shine w-full px-9 text-[15px] sm:w-auto" style={{ minHeight: 52 }}>
+              <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={{ minHeight: 52 }}>
                 {ctaLabel} <Arrow />
               </Link>
             </div>

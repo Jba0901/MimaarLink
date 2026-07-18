@@ -28,6 +28,7 @@ export default function StartHerePage() {
               icon={Building2}
               title={t('startProjectTitle')}
               desc={t('startProjectDesc')}
+              cta={t('startProjectCta')}
               tone="teal"
               pathType="project"
             />
@@ -36,6 +37,7 @@ export default function StartHerePage() {
               icon={Hammer}
               title={t('startContractorTitle')}
               desc={t('startContractorDesc')}
+              cta={t('startContractorCta')}
               tone="amber"
               pathType="contractor"
             />
@@ -44,6 +46,7 @@ export default function StartHerePage() {
               icon={ClipboardCheck}
               title={t('startConsultantTitle')}
               desc={t('startConsultantDesc')}
+              cta={t('startConsultantCta')}
               tone="navy"
               pathType="consultant"
             />
@@ -60,7 +63,7 @@ export default function StartHerePage() {
               style={{ minHeight: 44 }}
             >
               <WhatsAppIcon className="h-[15px] w-[15px]" style={{ color: '#00B59E' }} />
-              {t('contactWhatsapp')}
+              {t('startWhatsapp')}
             </a>
           </div>
         </div>
