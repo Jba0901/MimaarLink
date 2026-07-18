@@ -34,6 +34,7 @@ export default function PageState({
   title,
   description,
   actionHref,
+  actionOnClick,
   actionLabel,
   actionVariant = 'outline',
   compact = false,
@@ -43,6 +44,7 @@ export default function PageState({
   const visual = stateVisuals[kind] || stateVisuals.empty;
   const Icon = visual.icon;
   const Heading = compact ? 'h3' : 'h1';
+  const actionClassName = `btn ${actionVariant === 'primary' ? 'btn-primary' : 'btn-outline'} mt-5 h-auto min-h-11 w-full whitespace-normal px-5 py-2 text-center text-[14px] leading-snug focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D] sm:w-auto`;
   const content = (
     <div
       className={`page-state-panel w-full text-center ${
@@ -63,13 +65,11 @@ export default function PageState({
       </span>
       <Heading className={`${compact ? 'mt-3 text-sm' : 'mt-4 text-[20px]'} min-w-0 break-words font-bold leading-snug text-navy`}>{title}</Heading>
       {description && <p className="mx-auto mt-2 max-w-sm break-words text-[14px] leading-6 text-muted-foreground">{description}</p>}
-      {actionHref && actionLabel && (
-        <Link
-          href={actionHref}
-          className={`btn ${actionVariant === 'primary' ? 'btn-primary' : 'btn-outline'} mt-5 h-auto min-h-11 w-full whitespace-normal px-5 py-2 text-center text-[14px] leading-snug focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D] sm:w-auto`}
-        >
-          {actionLabel}
-        </Link>
+      {actionLabel && actionOnClick && (
+        <button type="button" onClick={actionOnClick} className={actionClassName}>{actionLabel}</button>
+      )}
+      {actionLabel && !actionOnClick && actionHref && (
+        <Link href={actionHref} className={actionClassName}>{actionLabel}</Link>
       )}
     </div>
   );

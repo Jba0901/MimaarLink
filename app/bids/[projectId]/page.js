@@ -21,12 +21,40 @@ export default function BidsPage() {
   const { t } = useLang();
   const [d, setD] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [pendingAction, setPendingAction] = useState(null);
 
-  const load = () => fetch(`/api/projects/${projectId}/bids`).then(r => r.json()).then(j => { setD(j); setLoading(false); });
-  useEffect(() => { load(); }, [projectId]);
+  const load = async ({ showErrorState = false } = {}) => {
+    try {
+      const response = await fetch(`/api/projects/${projectId}/bids`);
+      if (response.status === 404) {
+        setD({ error: true });
+        setLoadError(false);
+        return false;
+      }
+      if (!response.ok) throw new Error('Bid comparison failed to load');
+      const json = await response.json();
+      setD(json);
+      setLoadError(false);
+      return true;
+    } catch {
+      if (showErrorState) setLoadError(true);
+      return false;
+    } finally {
+      if (showErrorState) setLoading(false);
+    }
+  };
+
+  useEffect(() => { load({ showErrorState: true }); }, [projectId]);
+
+  const retryLoad = () => {
+    setLoadError(false);
+    setLoading(true);
+    load({ showErrorState: true });
+  };
 
   if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (loadError) return <AppShell><PageState kind="error" title={t('bidLoadErrorTitle')} description={t('bidLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={retryLoad} actionVariant="primary" /></AppShell>;
   if (!d || d.error) return <AppShell><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
 
   const action = async (act, contractorId) => {
