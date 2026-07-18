@@ -289,12 +289,13 @@ function ContractorApplicationInner() {
             <Label id="provider-services-label" className="text-sm mb-2 block">
               {serviceLabel} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
             </Label>
+            {showServicesError && <InlineFieldMessage id="provider-services-error" className="mb-2 mt-0">{t('requireField')}</InlineFieldMessage>}
             <div
               role="group"
               aria-labelledby="provider-services-label"
               aria-invalid={showServicesError}
               aria-describedby={showServicesError ? 'provider-services-error' : undefined}
-              className={`grid grid-cols-1 gap-2 rounded-2xl border p-1.5 transition-[border-color,background-color] min-[360px]:grid-cols-2 ${showServicesError ? 'border-[#EF4444]/45 bg-[#EF4444]/[0.04] dark:bg-[#EF4444]/[0.07]' : 'border-transparent bg-transparent'}`}
+              className={`grid grid-cols-1 gap-2 rounded-2xl border p-1.5 transition-[border-color,background-color] min-[320px]:grid-cols-2 ${showServicesError ? 'border-[#EF4444]/45 bg-[#EF4444]/[0.04] dark:bg-[#EF4444]/[0.07]' : 'border-transparent bg-transparent'}`}
             >
               {serviceOptions.map((c, index) => (
                 <button key={c} id={index === 0 ? 'provider-first-service' : undefined} type="button" onClick={() => toggleCat(c)} aria-pressed={data.categories.includes(c)}
@@ -310,7 +311,6 @@ function ContractorApplicationInner() {
                 </button>
               ))}
             </div>
-            {showServicesError && <InlineFieldMessage id="provider-services-error">{t('requireField')}</InlineFieldMessage>}
           </div>
           {hasOther && (
             <div>
