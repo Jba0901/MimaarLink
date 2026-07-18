@@ -63,7 +63,7 @@ function BrandText({ size = 17, onDark = false }) {
   );
 }
 
-export default function AppShell({ children, hideNav = false, hideFooter = false, wide = false, bleed = false }) {
+export default function AppShell({ children, hideNav = false, hideFooter = false, flushFooter = false, wide = false, bleed = false }) {
   const { t, lang, setLang } = useLang();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -181,7 +181,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         ) : (
           <div className={`${container} mx-auto px-4 sm:px-6 lg:px-8 py-4`}>{children}</div>
         )}
-        {!hideFooter && <SiteFooter />}
+        {!hideFooter && <SiteFooter flush={flushFooter} />}
       </main>
 
       {!hideNav && (
@@ -486,11 +486,11 @@ function NavBtn({ href, icon: Icon, label, matches = [] }) {
   );
 }
 
-function SiteFooter() {
+function SiteFooter({ flush = false }) {
   const { t } = useLang();
   const year = new Date().getFullYear();
   return (
-    <footer className="mt-16 premium-panel text-white">
+    <footer className={`${flush ? 'mt-0 border-t border-white/10' : 'mt-16'} premium-panel text-white`}>
       <div className="container-x py-12 lg:py-14">
         <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
           <div className="max-w-sm">
@@ -526,7 +526,7 @@ function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-11 border-t border-white/10 pt-6 text-center text-[11.5px] font-medium text-white/60">
+        <div className="mt-11 border-t border-white/10 pt-6 text-center text-[12px] font-medium text-white/60">
           &copy; {year} {t('appName')} &middot; {t('allRights')}
         </div>
       </div>

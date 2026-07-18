@@ -30,7 +30,7 @@ export default function HomePage() {
   const lastWord = words.length > 1 ? words.pop() : null;
 
   return (
-    <AppShell wide bleed>
+    <AppShell wide bleed flushFooter>
       {/* ============ HERO ============ */}
       <section className="v2-ambient">
         <div className="container-x relative z-10 pt-10 pb-14 lg:pt-20 lg:pb-24">
@@ -117,27 +117,30 @@ export default function HomePage() {
       </section>
 
       {/* ============ CATEGORIES ============ */}
-      <section className="py-12 lg:py-16">
+      <section className="py-10 sm:py-12 lg:py-16">
         <div className="container-x">
           <Reveal>
-            <div className="flex items-end justify-between mb-8 gap-3">
+            <div className="mb-6 flex items-center justify-between gap-3 sm:mb-8">
               <h2 className="display-title text-[26px] sm:text-[34px]">{t('serviceCategories')}</h2>
               <Link href="/post-project" className="inline-flex min-h-11 shrink-0 items-center gap-1 text-[13px] font-bold text-navy underline decoration-[#00B59E] decoration-2 underline-offset-4 tap-highlight">
                 {t('seeAll')} <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </Reveal>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 gap-2.5 min-[390px]:gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {PROJECT_CATEGORIES.map((c, i) => {
               const Icon = CAT_ICONS[c] || MoreHorizontal;
               return (
-                <Reveal key={c} delay={Math.min(i * 60, 360)}>
-                  <Link href={`/post-project?category=${c}`} className="block tap-highlight">
-                    <div className="interactive-card h-full min-h-[124px] rounded-2xl bg-white border border-border shadow-soft p-5 flex flex-col items-center justify-center gap-3.5 hover:border-[#00B59E]/45">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: 'rgba(0,181,158,0.10)' }}>
-                        <Icon className="w-6 h-6" style={{ color: '#00B59E' }} />
+                <Reveal key={c} delay={Math.min(i * 60, 360)} className="h-full">
+                  <Link
+                    href={`/post-project?category=${c}`}
+                    className="group block h-full rounded-[20px] tap-highlight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D]"
+                  >
+                    <div className="interactive-card flex h-full min-h-[116px] flex-col items-center justify-center gap-3 rounded-[20px] border border-border bg-white p-3.5 shadow-soft group-hover:border-[#00B59E]/45 min-[390px]:min-h-[124px] min-[390px]:gap-3.5 min-[390px]:p-4 sm:p-5">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl min-[390px]:h-12 min-[390px]:w-12" style={{ background: 'rgba(0,181,158,0.10)' }}>
+                        <Icon className="h-[22px] w-[22px] min-[390px]:h-6 min-[390px]:w-6" style={{ color: '#00B59E' }} aria-hidden="true" />
                       </div>
-                      <span className="text-[12.5px] font-bold text-navy text-center leading-tight">{t(`cat_${c}`)}</span>
+                      <span className="text-center text-[12.5px] font-bold leading-5 text-navy">{t(`cat_${c}`)}</span>
                     </div>
                   </Link>
                 </Reveal>
@@ -213,11 +216,11 @@ export default function HomePage() {
 
       {/* ============ FINAL CTA (teal band) ============ */}
       <section className="launch-cta-band">
-        <div className="container-x py-16 lg:py-24 text-center text-white">
+        <div className="container-x py-12 text-center text-white sm:py-16 lg:py-24">
           <Reveal>
-            <h2 className="text-[28px] sm:text-[40px] font-extrabold leading-tight max-w-2xl mx-auto">{t('projL_finalTitle')}</h2>
-            <p className="mt-4 text-[15px] sm:text-[16px] text-white/85 max-w-xl mx-auto">{t('projL_finalSub')}</p>
-            <div className="mt-9 flex flex-col sm:flex-row justify-center gap-3">
+            <h2 className="mx-auto max-w-2xl text-[26px] font-extrabold leading-snug sm:text-[40px] sm:leading-tight">{t('projL_finalTitle')}</h2>
+            <p className="mx-auto mt-3 max-w-xl text-[14px] leading-6 text-white/85 sm:mt-4 sm:text-[16px]">{t('projL_finalSub')}</p>
+            <div className="mt-7 flex flex-col justify-center gap-3 sm:mt-9 sm:flex-row">
               <Link href="/post-project" className="btn px-8 text-[15px]" style={{ minHeight: 54, background: '#fff', color: '#152B54' }}>
                 {t('postProject')} <Arrow />
               </Link>
@@ -241,31 +244,33 @@ function MarketBand({ t }) {
   ];
   return (
     <section className="premium-panel market-skyline-panel text-white">
-      <div className="container-x relative z-10 py-14 lg:py-20">
-        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-center">
+      <div className="container-x relative z-10 py-10 sm:py-14 lg:py-20">
+        <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <Reveal>
             <div className="max-w-xl">
               <div className="mb-4 inline-flex items-center gap-1.5 text-[12.5px] font-bold" style={{ color: '#00B59E' }}>
                 <Landmark className="h-3.5 w-3.5 shrink-0" />
                 {t('contactLocationValue')}
               </div>
-              <h2 className="text-[26px] sm:text-[36px] font-extrabold leading-tight">{t('marketTitle')}</h2>
-              <p className="mt-4 text-[14px] leading-relaxed text-white/75 sm:text-[15px]">{t('marketSubtitle')}</p>
-              <p className="mt-5 text-[11.5px] text-white/60">{t('marketSource')}</p>
+              <h2 className="text-[26px] font-extrabold leading-snug sm:text-[36px] sm:leading-tight">{t('marketTitle')}</h2>
+              <p className="mt-3 text-[13.5px] leading-6 text-white/75 sm:mt-4 sm:text-[15px] sm:leading-relaxed">{t('marketSubtitle')}</p>
+              <p className="mt-4 text-[12px] leading-5 text-white/60">{t('marketSource')}</p>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-3">
             {stats.map((s, i) => (
               <Reveal key={i} delay={i * 130} className="h-full">
-                <div className="stat-card card-sheen h-full rounded-2xl p-5">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10">
+                <div className="stat-card card-sheen flex h-full items-center gap-3 rounded-[18px] p-3.5 min-[390px]:gap-3.5 min-[390px]:p-4 sm:block sm:rounded-2xl sm:p-5">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/10">
                     <s.icon className="h-[19px] w-[19px]" style={{ color: '#00B59E' }} />
                   </span>
-                  {s.animate
-                    ? <CountUp value={s.value} className="mt-4 block text-[30px] sm:text-[32px] font-black leading-none text-white" />
-                    : <span className="mt-4 block text-[30px] sm:text-[32px] font-black leading-none text-white"><bdi dir="ltr">{s.value}</bdi></span>}
-                  <p className="mt-2.5 text-[12px] leading-relaxed text-white/70">{s.label}</p>
+                  <div className="min-w-0 flex-1">
+                    {s.animate
+                      ? <CountUp value={s.value} className="block text-[27px] font-black leading-none text-white sm:mt-4 sm:text-[32px]" />
+                      : <span className="block text-[27px] font-black leading-none text-white sm:mt-4 sm:text-[32px]"><bdi dir="ltr">{s.value}</bdi></span>}
+                    <p className="mt-1.5 text-[12px] leading-5 text-white/70 sm:mt-2.5 sm:leading-relaxed">{s.label}</p>
+                  </div>
                 </div>
               </Reveal>
             ))}
