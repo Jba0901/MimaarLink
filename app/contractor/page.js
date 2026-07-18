@@ -257,7 +257,7 @@ function ContractorApplicationInner() {
               aria-labelledby="provider-services-label"
               aria-invalid={triedServices && data.categories.length === 0}
               aria-describedby={triedServices && data.categories.length === 0 ? 'provider-services-error' : undefined}
-              className={`grid grid-cols-1 gap-2 min-[360px]:grid-cols-2 ${triedServices && data.categories.length === 0 ? 'rounded-xl p-1.5 ring-1 ring-red-300' : ''}`}
+              className={`grid grid-cols-1 gap-2 min-[360px]:grid-cols-2 ${triedServices && data.categories.length === 0 ? 'rounded-xl p-1.5 ring-1 ring-[#EF4444]/45' : ''}`}
             >
               {serviceOptions.map(c => (
                 <button key={c} type="button" onClick={() => toggleCat(c)} aria-pressed={data.categories.includes(c)}
@@ -403,7 +403,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
         <Label htmlFor={fieldId} className="text-sm">
           {label} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
         </Label>
-        <div dir="ltr" className={`mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-red-400 focus-within:ring-2 focus-within:ring-red-400/25' : 'border-input hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/60 focus-within:ring-2 focus-within:ring-[#00B59E]/25'}`}>
+        <div dir="ltr" className={`mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-[#EF4444] focus-within:ring-2 focus-within:ring-[#EF4444]/25' : 'border-input hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/60 focus-within:ring-2 focus-within:ring-[#00B59E]/25'}`}>
           <div className="px-3 flex items-center bg-secondary text-navy text-sm font-semibold select-none border-e border-input shrink-0">
             {PREFIX}
           </div>
@@ -439,7 +439,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
         aria-invalid={showError}
         aria-required="true"
         aria-describedby={showError ? errorId : undefined}
-        className={`h-11 mt-1.5 ${showError ? 'border-red-400 focus-visible:ring-red-400' : ''}`}
+        className="mt-1.5 h-11"
       />
       {showError && <InlineFieldMessage id={errorId}>{t('requireField')}</InlineFieldMessage>}
     </div>
