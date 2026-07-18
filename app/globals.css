@@ -815,6 +815,30 @@
   }
 }
 
+@media (max-width: 263px) {
+  .landing-benefit-card {
+    display: grid !important;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    align-items: start;
+    column-gap: 0.75rem !important;
+    row-gap: 0.5rem !important;
+  }
+
+  .landing-benefit-copy {
+    display: contents;
+  }
+
+  .landing-benefit-copy h3 {
+    grid-column: 2;
+    align-self: center;
+  }
+
+  .landing-benefit-copy p {
+    grid-column: 1 / -1;
+    margin-top: 0 !important;
+  }
+}
+
 @media (max-width: 1023px) and (max-height: 480px) and (orientation: landscape) {
   .mobile-bottom-nav {
     display: none;

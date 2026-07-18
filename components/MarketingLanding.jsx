@@ -74,14 +74,14 @@ export default function MarketingLanding({
         <div className="grid gap-2.5 sm:grid-cols-3 sm:gap-3.5">
           {benefits.map((b, i) => (
             <Reveal key={i} delay={i * 110} className="h-full">
-              <div className="interactive-card flex h-full items-start gap-3 rounded-[20px] border border-border bg-card p-3.5 shadow-soft min-[390px]:gap-3.5 min-[390px]:p-4 sm:block sm:rounded-3xl sm:p-6" style={{ borderInlineStartWidth: 3, borderInlineStartColor: accentColor }}>
+              <div className="landing-benefit-card interactive-card flex h-full items-start gap-3 rounded-[20px] border border-border bg-card p-3.5 shadow-soft min-[390px]:gap-3.5 min-[390px]:p-4 sm:block sm:rounded-3xl sm:p-6" style={{ borderInlineStartWidth: 3, borderInlineStartColor: accentColor }}>
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl sm:mb-4 sm:h-12 sm:w-12" style={{ background: accentSoft }}>
                   <b.icon
                     className={`h-[22px] w-[22px] ${isAmber ? 'text-[#152B54] dark:text-[#FFB638]' : 'text-[#00B59E]'}`}
                     aria-hidden="true"
                   />
                 </div>
-                <div className="min-w-0 flex-1">
+                <div className="landing-benefit-copy min-w-0 flex-1">
                   <h3 className="text-[15.5px] font-bold leading-snug text-navy sm:text-[16px]">{b.title}</h3>
                   <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground sm:mt-1.5">{b.desc}</p>
                 </div>
