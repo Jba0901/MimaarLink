@@ -295,7 +295,7 @@ function RequiredField({ label, value, onChange, tried, t, placeholder, inputMod
             onChange={e => handleLocalChange(e.target.value)}
             inputMode="tel"
             aria-invalid={showError}
-            className="min-w-0 flex-1 bg-transparent px-3 text-base outline-none md:text-sm"
+            className="min-w-0 flex-1 bg-transparent px-3 text-base outline-none md:text-sm [@media(pointer:coarse)]:!text-base"
           />
         </div>
         {showError && <div className="mt-1 text-[12px] text-red-600">{errMsg}</div>}
