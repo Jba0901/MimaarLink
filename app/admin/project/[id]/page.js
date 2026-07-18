@@ -74,6 +74,7 @@ export default function AdminProjectPage() {
   const [d, setD] = useState(null);
   const [allContractors, setAllContractors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [openBid, setOpenBid] = useState(false);
   const [openAssign, setOpenAssign] = useState(false);
   const [note, setNote] = useState('');
@@ -88,15 +89,39 @@ export default function AdminProjectPage() {
     if (typeof window !== 'undefined' && localStorage.getItem('mlAdmin') !== '1') router.push('/admin');
   }, [router]);
 
-  const load = async () => {
-    const [a, b] = await Promise.all([
-      fetch(`/api/projects/${id}/full`).then(r => r.json()),
-      fetch('/api/contractors').then(r => r.json()),
-    ]);
-    setD(a); setAllContractors(b); setLoading(false);
-    if (a?.project?.status) setStatusDraft(a.project.status);
+  const load = async ({ showLoading = false, showErrorState = false } = {}) => {
+    if (showLoading) setLoading(true);
+    if (showErrorState) setLoadError(false);
+    try {
+      const [projectResponse, contractorsResponse] = await Promise.all([
+        fetch(`/api/projects/${id}/full`),
+        fetch('/api/contractors'),
+      ]);
+      if (projectResponse.status === 404) {
+        setD({ error: true });
+        setLoadError(false);
+        return false;
+      }
+      if (!projectResponse.ok || !contractorsResponse.ok) throw new Error('Admin project failed to load');
+      const [projectData, contractorsData] = await Promise.all([
+        projectResponse.json(),
+        contractorsResponse.json(),
+      ]);
+      setD(projectData);
+      setAllContractors(contractorsData);
+      setLoadError(false);
+      if (projectData?.project?.status) setStatusDraft(projectData.project.status);
+      return true;
+    } catch {
+      if (showErrorState) setLoadError(true);
+      return false;
+    } finally {
+      if (showLoading) setLoading(false);
+    }
   };
-  useEffect(() => { load(); }, [id]);
+  useEffect(() => { load({ showLoading: true, showErrorState: true }); }, [id]);
+
+  const retryLoad = () => load({ showLoading: true, showErrorState: true });
 
   // Warn before closing/refreshing tab when there are unsaved changes
   useEffect(() => {
@@ -108,6 +133,7 @@ export default function AdminProjectPage() {
   }, [statusDraft, note, d]);
 
   if (loading) return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (loadError) return <AppShell hideNav hideFooter><PageState kind="error" title={t('adminRecordLoadErrorTitle')} description={t('adminRecordLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={retryLoad} actionVariant="primary" /></AppShell>;
   if (!d || d.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/admin" actionLabel={t('backToList')} actionVariant="primary" /></AppShell>;
 
   const { project, requester, bids, invites, notes, contractors } = d;

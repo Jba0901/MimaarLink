@@ -48,6 +48,7 @@ export default function AdminContractorPage() {
   const { t, dir, lang } = useLang();
   const [c, setC] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [statusDraft, setStatusDraft] = useState('');
   const [documentChecksDraft, setDocumentChecksDraft] = useState({});
   const [saving, setSaving] = useState(false);
@@ -57,12 +58,33 @@ export default function AdminContractorPage() {
     if (typeof window !== 'undefined' && localStorage.getItem('mlAdmin') !== '1') router.push('/admin');
   }, [router]);
 
-  const load = () => fetch(`/api/contractors/${id}`).then(r => r.json()).then(j => {
-    setC(j); setLoading(false);
-    if (j?.verificationStatus) setStatusDraft(j.verificationStatus);
-    if (j?.documentChecks) setDocumentChecksDraft(normalizeDocumentChecks(j.documentChecks));
-  });
-  useEffect(() => { load(); }, [id]);
+  const load = async ({ showLoading = false, showErrorState = false } = {}) => {
+    if (showLoading) setLoading(true);
+    if (showErrorState) setLoadError(false);
+    try {
+      const response = await fetch(`/api/contractors/${id}`);
+      if (response.status === 404) {
+        setC({ error: true });
+        setLoadError(false);
+        return false;
+      }
+      if (!response.ok) throw new Error('Admin provider failed to load');
+      const json = await response.json();
+      setC(json);
+      setLoadError(false);
+      if (json?.verificationStatus) setStatusDraft(json.verificationStatus);
+      if (json?.documentChecks) setDocumentChecksDraft(normalizeDocumentChecks(json.documentChecks));
+      return true;
+    } catch {
+      if (showErrorState) setLoadError(true);
+      return false;
+    } finally {
+      if (showLoading) setLoading(false);
+    }
+  };
+  useEffect(() => { load({ showLoading: true, showErrorState: true }); }, [id]);
+
+  const retryLoad = () => load({ showLoading: true, showErrorState: true });
 
   // Warn before closing tab when there are unsaved changes
   useEffect(() => {
@@ -74,6 +96,7 @@ export default function AdminContractorPage() {
   }, [statusDraft, documentChecksDraft, c]);
 
   if (loading) return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (loadError) return <AppShell hideNav hideFooter><PageState kind="error" title={t('adminRecordLoadErrorTitle')} description={t('adminRecordLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={retryLoad} actionVariant="primary" /></AppShell>;
   if (!c || c.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/admin?tab=contractors" actionLabel={t('backToList')} actionVariant="primary" /></AppShell>;
 
   const saveAll = async () => {
