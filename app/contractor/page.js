@@ -454,7 +454,7 @@ function ProviderTypeButton({ active, icon: Icon, title, desc, onClick }) {
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`provider-type-card interactive-card tap-highlight min-w-0 rounded-2xl border p-3.5 text-start transition ${active ? 'is-active shadow-soft' : ''}`}
+      className={`provider-type-card interactive-card tap-highlight min-w-0 rounded-2xl border p-3.5 text-start ${active ? 'is-active shadow-soft' : ''}`}
     >
       <span className="flex items-start gap-3">
         <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/20 dark:text-[#00B59E]' : 'bg-muted text-muted-foreground'}`}>

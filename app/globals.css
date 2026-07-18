@@ -601,10 +601,10 @@
 
 @media (hover: none) {
   .interactive-card:hover,
-  .interactive-card:active,
   .stat-card:hover,
-  .btn:hover,
-  .btn:active { transform: none; }
+  .btn:hover { transform: none; }
+  .interactive-card:active { transform: translateY(-1px) scale(0.99); }
+  .btn:active { transform: translateY(1px) scale(0.985); }
   .card-sheen::before,
   .soft-shine::after,
   .pulse-dot::after { display: none; }

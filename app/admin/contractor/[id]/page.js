@@ -225,7 +225,7 @@ export default function AdminContractorPage() {
                       type="button"
                       onClick={() => setDocumentPresent(doc.key, true)}
                       aria-pressed={present}
-                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[12px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/35 sm:min-h-9 ${present ? 'border-[#00B59E]/55 bg-[#00B59E] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#00B59E]/35 hover:text-navy'}`}
+                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[12px] font-semibold transition-[color,background-color,border-color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/35 sm:min-h-9 ${present ? 'border-[#00B59E]/55 bg-[#00B59E] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#00B59E]/35 hover:text-navy'}`}
                     >
                       <Check className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                       {t('present')}
@@ -234,7 +234,7 @@ export default function AdminContractorPage() {
                       type="button"
                       onClick={() => setDocumentPresent(doc.key, false)}
                       aria-pressed={!present}
-                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[12px] font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB638]/45 sm:min-h-9 ${!present ? 'border-[#FFB638]/65 bg-[#FFB638] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#FFB638]/45 hover:text-navy'}`}
+                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[12px] font-semibold transition-[color,background-color,border-color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB638]/45 sm:min-h-9 ${!present ? 'border-[#FFB638]/65 bg-[#FFB638] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#FFB638]/45 hover:text-navy'}`}
                     >
                       <X className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                       {t('missing')}

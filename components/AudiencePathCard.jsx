@@ -87,7 +87,7 @@ export default function AudiencePathCard({
             <p className="mt-1 text-[12.5px] leading-5 text-muted-foreground sm:mt-1.5 sm:leading-relaxed">{desc}</p>
           </div>
           <span
-            className="path-card-compact-action flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-soft transition group-hover:scale-105 sm:absolute sm:top-5"
+            className="path-card-compact-action flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-soft transition-transform duration-200 group-hover:scale-105 sm:absolute sm:top-5"
             style={{ background: 'var(--path-accent)', insetInlineEnd: '1.25rem' }}
             aria-hidden="true"
           >

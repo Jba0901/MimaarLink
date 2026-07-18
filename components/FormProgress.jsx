@@ -40,7 +40,7 @@ export default function FormProgress({ step, total, label, title, desc }) {
           return (
             <div
               key={n}
-              className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${done ? 'progress-live' : ''}`}
+              className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${done ? 'progress-live' : ''}`}
               aria-hidden="true"
               style={done
                 ? { background: '#00B59E' }
