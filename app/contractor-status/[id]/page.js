@@ -99,16 +99,27 @@ export default function ContractorStatusPage() {
 
         <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
           {/* details column */}
-          <div className="order-2 space-y-3 lg:order-1">
+          <div className="order-2 min-w-0 space-y-3 lg:order-1">
             <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 space-y-2.5 sm:p-5">
                 <div className="text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('providerSummary')}</div>
                 <div className="flex items-start gap-2 text-sm text-navy">
                   <ServiceIcon className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" aria-hidden="true" />
-                  <span className="min-w-0 break-words">{serviceKeys.map((cat) => t(`cat_${cat}`)).join(', ')}</span>
+                  <div className="flex min-w-0 flex-1 flex-wrap gap-1.5">
+                    {serviceKeys.map((cat) => (
+                      <Badge key={cat} variant="secondary" className="max-w-full whitespace-normal text-start text-[12px] leading-4">
+                        {t(`cat_${cat}`)}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
                 {isConsultant && (
-                  <div className="break-words text-sm leading-relaxed text-muted-foreground">{consultantGradeLabel(contractor.consultantGrade, t)}</div>
+                  <div className="flex min-w-0 flex-col items-start gap-1.5 rounded-xl bg-secondary/60 px-3 py-2.5 min-[360px]:flex-row min-[360px]:items-center min-[360px]:justify-between">
+                    <span className="break-words text-[12px] font-semibold leading-4 text-muted-foreground">{t('consultantGrade')}</span>
+                    <Badge variant="info" className="max-w-full whitespace-normal text-start text-[12px] leading-4 min-[360px]:shrink-0">
+                      {consultantGradeLabel(contractor.consultantGrade, t)}
+                    </Badge>
+                  </div>
                 )}
                 {contractor.otherCategoryDesc && (
                   <div dir="auto" className="break-words text-sm leading-relaxed text-muted-foreground">{contractor.otherCategoryDesc}</div>
@@ -149,7 +160,7 @@ export default function ContractorStatusPage() {
           </div>
 
           {/* status column */}
-          <div className="order-1 space-y-3 lg:order-2 lg:sticky lg:top-20">
+          <div className="order-1 min-w-0 space-y-3 lg:order-2 lg:sticky lg:top-20">
             <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 sm:p-5">
                 <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('documentChecklist')}</div>

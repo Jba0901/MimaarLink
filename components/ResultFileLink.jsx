@@ -30,7 +30,7 @@ export default function ResultFileLink({
       </span>
       <span className="flex h-9 shrink-0 items-center justify-center gap-1 rounded-xl border border-border bg-card px-2 text-[12px] font-semibold text-navy transition-colors group-hover:border-[#00B59E]/30" aria-hidden="true">
         <ActionIcon className="h-3.5 w-3.5" />
-        {actionLabel && <span>{actionLabel}</span>}
+        {actionLabel && <span className="hidden min-[360px]:inline">{actionLabel}</span>}
       </span>
     </a>
   );
