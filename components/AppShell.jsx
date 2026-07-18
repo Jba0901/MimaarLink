@@ -31,12 +31,8 @@ function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9' }) {
       <img
         src="/logo.png?v=official-20260618"
         alt=""
-        className="brand-mark-light"
-      />
-      <img
-        src="/logo-dark-transparent.png?v=official-20260618"
-        alt=""
-        className="brand-mark-dark"
+        width="860"
+        height="830"
       />
     </span>
   );
