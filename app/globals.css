@@ -669,6 +669,25 @@
   --y: translateY(-0.5rem) scale(0.98) !important;
 }
 
+@media (max-height: 360px) {
+  .alert-dialog-panel {
+    gap: 0.5rem !important;
+    padding: 0.75rem 1rem !important;
+  }
+
+  .alert-dialog-header {
+    gap: 0.25rem !important;
+  }
+
+  .alert-dialog-description {
+    line-height: 1.25rem !important;
+  }
+
+  .alert-dialog-footer {
+    gap: 0.375rem !important;
+  }
+}
+
 @media (max-width: 1023px) and (max-height: 480px) and (orientation: landscape) {
   .mobile-bottom-nav {
     display: none;
