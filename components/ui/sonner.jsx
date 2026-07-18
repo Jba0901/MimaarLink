@@ -20,9 +20,9 @@ const Toaster = ({
 
   const baseClassNames = {
     toast: "group toast !rounded-2xl !border !border-border !bg-card !text-foreground !shadow-lift",
-    title: "!font-bold !text-navy",
-    description: "!text-muted-foreground",
-    content: "!gap-1",
+    title: "!break-words !font-bold !text-navy",
+    description: "!break-words !text-muted-foreground",
+    content: "!min-w-0 !gap-1",
     success: "!border-[#00B59E]/45 !bg-[#D0F2EE] dark:!bg-[#142A44]",
     error: "!border-[#EF4444]/45 !bg-card",
     warning: "!border-[#FFB638]/55 !bg-[#FFB638]/10",
@@ -42,7 +42,11 @@ const Toaster = ({
       duration={3500}
       gap={8}
       offset={{ top: 76 }}
-      mobileOffset={{ top: 72, left: 12, right: 12 }}
+      mobileOffset={{
+        top: "calc(72px + env(safe-area-inset-top))",
+        left: "max(12px, env(safe-area-inset-left))",
+        right: "max(12px, env(safe-area-inset-right))",
+      }}
       dir="auto"
       className="toaster group"
       icons={{
