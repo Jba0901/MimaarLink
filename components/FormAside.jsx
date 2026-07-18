@@ -23,7 +23,7 @@ export default function FormAside({ steps = [], note }) {
                   <span className="absolute top-7 h-[calc(100%-12px)] w-px bg-border" style={{ insetInlineStart: '11px' }} />
                 )}
                 <span
-                  className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-[#152B54] shadow-soft"
+                  className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[12px] font-bold text-[#152B54] shadow-soft"
                   style={{ background: '#00B59E' }}
                 >
                   {i + 1}

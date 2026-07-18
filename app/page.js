@@ -100,7 +100,7 @@ export default function HomePage() {
                     {i < 2 && <span className="absolute bottom-0 start-7 top-14 w-px bg-border sm:hidden" aria-hidden="true" />}
                     <div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-border bg-white shadow-card sm:mx-auto sm:h-16 sm:w-16">
                       <s.icon className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: '#00B59E' }} />
-                      <span className="absolute -top-2 w-6 h-6 rounded-full navy text-white text-[11px] font-bold flex items-center justify-center shadow-soft" style={{ insetInlineEnd: '-8px' }}>
+                      <span className="absolute -top-2 flex h-6 w-6 items-center justify-center rounded-full text-[12px] font-bold text-white shadow-soft navy" style={{ insetInlineEnd: '-8px' }}>
                         {i + 1}
                       </span>
                     </div>
@@ -312,7 +312,7 @@ function MatchPreview({ t }) {
     <div className="float-soft rounded-[24px] bg-white border border-border shadow-lift p-6">
       <div className="flex items-center justify-between gap-3 mb-5">
         <div className="min-w-0">
-          <div className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground/75">{t('projectStatus')}</div>
+          <div className="text-[12px] font-bold uppercase tracking-wide text-muted-foreground/75">{t('projectStatus')}</div>
           <div className="truncate text-[15px] font-bold text-navy mt-0.5">{t('status_contractors_invited')}</div>
         </div>
         <span className="pulse-dot flex h-10 w-10 shrink-0 items-center justify-center rounded-full" style={{ background: 'rgba(0,181,158,0.12)' }}>
@@ -343,7 +343,7 @@ function ProviderRow({ icon: Icon, title, sub, tone }) {
       </span>
       <div className="min-w-0 flex-1">
         <div className="text-[13.5px] font-bold text-navy leading-tight truncate">{title}</div>
-        <div className="mt-0.5 inline-flex items-center gap-1 text-[11.5px] font-semibold text-muted-foreground">
+        <div className="mt-0.5 inline-flex items-center gap-1 text-[12px] font-semibold text-muted-foreground">
           <CheckCircle2 className="h-3 w-3 shrink-0" style={{ color: '#00B59E' }} />
           {sub}
         </div>

@@ -368,10 +368,10 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
                 </span>
                 <span className="min-w-0">
                   <span className="block text-[12px] font-extrabold text-navy">{copy.appearance}</span>
-                  <span className="block text-[11px] text-muted-foreground">{theme === 'dark' ? copy.darkMode : copy.lightMode}</span>
+                  <span className="block text-[12px] text-muted-foreground">{theme === 'dark' ? copy.darkMode : copy.lightMode}</span>
                 </span>
               </span>
-              <span className="text-[11.5px] font-extrabold text-teal">{copy.themeHint}</span>
+              <span className="text-[12px] font-extrabold text-teal">{copy.themeHint}</span>
             </button>
 
             <div className="mt-2.5 grid grid-cols-4 gap-2.5">
@@ -433,7 +433,7 @@ function SecondaryDrawerLink({ item, active }) {
     <Link
       href={item.href}
       aria-current={active ? 'page' : undefined}
-      className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[11.5px] font-extrabold leading-tight transition-all tap-highlight ${
+      className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[12px] font-extrabold leading-tight transition-all tap-highlight ${
         active
           ? 'border-[#00B59E]/35 bg-[#D0F2EE]/55 text-navy dark:bg-[#00B59E]/15'
           : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#00B59E]/35 dark:bg-[#0D1B2A]/70'
