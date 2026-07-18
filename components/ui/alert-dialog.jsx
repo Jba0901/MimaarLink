@@ -52,7 +52,7 @@ const AlertDialogFooter = ({
   ...props
 }) => (
   <div
-    className={cn("flex flex-col-reverse gap-2 [&>*]:w-full sm:flex-row sm:justify-end sm:[&>*]:w-auto", className)}
+    className={cn("flex min-w-0 flex-col-reverse gap-2 [&>*]:h-auto [&>*]:min-h-11 [&>*]:min-w-0 [&>*]:w-full [&>*]:whitespace-normal [&>*]:py-2 [&>*]:text-center [&>*]:leading-snug sm:flex-row sm:justify-end sm:[&>*]:w-auto", className)}
     {...props} />
 )
 AlertDialogFooter.displayName = "AlertDialogFooter"
@@ -65,7 +65,7 @@ AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName
 const AlertDialogDescription = React.forwardRef(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("break-words text-sm leading-6 text-muted-foreground", className)}
     {...props} />
 ))
 AlertDialogDescription.displayName =

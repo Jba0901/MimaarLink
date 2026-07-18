@@ -62,7 +62,7 @@ export default function PageState({
       {actionHref && actionLabel && (
         <Link
           href={actionHref}
-          className={`btn ${actionVariant === 'primary' ? 'btn-primary' : 'btn-outline'} mt-5 min-h-11 w-full px-5 text-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D] sm:w-auto`}
+          className={`btn ${actionVariant === 'primary' ? 'btn-primary' : 'btn-outline'} mt-5 h-auto min-h-11 w-full whitespace-normal px-5 py-2 text-center text-[14px] leading-snug focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D] sm:w-auto`}
         >
           {actionLabel}
         </Link>

@@ -77,10 +77,10 @@ export default function MarketingAttribution() {
           <ShieldCheck className="h-[18px] w-[18px] sm:h-5 sm:w-5" />
         </span>
         <div className="min-w-0 flex-1">
-          <div id="marketing-consent-title" className="text-[13.5px] font-extrabold leading-snug text-navy sm:text-[14px]">
+          <div id="marketing-consent-title" className="break-words text-[13.5px] font-extrabold leading-snug text-navy sm:text-[14px]">
             {arabic ? 'خيارات القياس والإعلانات' : 'Measurement and advertising choices'}
           </div>
-          <p id="marketing-consent-description" className="mt-1 text-[12px] leading-relaxed text-muted-foreground sm:text-[12.5px]">
+          <p id="marketing-consent-description" className="mt-1 break-words text-[12px] leading-relaxed text-muted-foreground sm:text-[12.5px]">
             {arabic
               ? 'بموافقتك، نحفظ مصدر الزيارة ونستخدم أدوات Meta لقياس أداء الإعلانات. يمكنك الرفض وسيبقى الموقع والنماذج يعملان.'
               : 'With your consent, we save the visit source and use Meta tools to measure advertising. You can decline and the website and forms will still work.'}
@@ -92,10 +92,10 @@ export default function MarketingAttribution() {
         </div>
       </div>
       <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:gap-2.5">
-        <button type="button" onClick={reject} className="btn btn-outline min-h-11 px-3 text-[13px]">
+        <button type="button" onClick={reject} className="btn btn-outline h-auto min-h-11 whitespace-normal px-3 py-2 text-center text-[13px] leading-snug">
           {arabic ? 'رفض' : 'Decline'}
         </button>
-        <button type="button" onClick={accept} className="btn btn-primary min-h-11 px-3 text-[13px]">
+        <button type="button" onClick={accept} className="btn btn-primary h-auto min-h-11 whitespace-normal px-3 py-2 text-center text-[13px] leading-snug">
           {arabic ? 'موافقة' : 'Accept'}
         </button>
       </div>

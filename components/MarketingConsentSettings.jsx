@@ -54,10 +54,10 @@ export default function MarketingConsentSettings() {
         </div>
       </div>
       <div className="mt-4 grid gap-2.5 border-t border-border pt-4 min-[420px]:grid-cols-2">
-        <button type="button" onClick={withdraw} className="btn btn-outline min-h-11 w-full px-4 text-[13px]">
+        <button type="button" onClick={withdraw} className="btn btn-outline h-auto min-h-11 w-full whitespace-normal px-4 py-2 text-center text-[13px] leading-snug">
           {arabic ? 'رفض أو سحب الموافقة' : 'Decline or withdraw'}
         </button>
-        <button type="button" onClick={accept} className="btn btn-primary min-h-11 w-full px-4 text-[13px]">
+        <button type="button" onClick={accept} className="btn btn-primary h-auto min-h-11 w-full whitespace-normal px-4 py-2 text-center text-[13px] leading-snug">
           {arabic ? 'موافقة' : 'Accept'}
         </button>
       </div>
