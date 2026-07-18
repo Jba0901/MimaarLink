@@ -4,6 +4,7 @@ export default function ResultFileLink({
   file,
   fallbackLabel,
   actionLabel,
+  secondaryLabel,
   newTab = false,
 }) {
   const href = file?.data || file?.url;
@@ -23,8 +24,9 @@ export default function ResultFileLink({
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
         <FileText className="h-4 w-4" />
       </span>
-      <span className="min-w-0 flex-1 truncate text-[13px] font-semibold text-navy" dir="auto">
-        {name}
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[13px] font-semibold text-navy" dir="auto">{name}</span>
+        {secondaryLabel && <span className="mt-0.5 block truncate text-[11px] leading-snug text-muted-foreground">{secondaryLabel}</span>}
       </span>
       <span className="flex h-9 shrink-0 items-center justify-center gap-1 rounded-xl border border-border bg-card px-2 text-[11px] font-semibold text-navy transition-colors group-hover:border-[#00B59E]/30" aria-hidden="true">
         <ActionIcon className="h-3.5 w-3.5" />

@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AppShell from '@/components/AppShell';
+import AdminPublicLinkActions from '@/components/AdminPublicLinkActions';
 import AdminAttribution from '@/components/AdminAttribution';
+import ResultFileLink from '@/components/ResultFileLink';
 import StatusBadge from '@/components/StatusBadge';
 import PageState from '@/components/PageState';
 import { useLang } from '@/lib/LangContext';
@@ -12,7 +14,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, ArrowRight, Building2, CalendarClock, Check, ClipboardCheck, Loader2, FileText, ShieldCheck, Trash2, Copy, ExternalLink, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Building2, CalendarClock, Check, ClipboardCheck, Loader2, ShieldCheck, Trash2, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 const formatAdminTime = (value, lang = 'en') => {
@@ -147,19 +149,19 @@ export default function AdminContractorPage() {
     <AppShell hideNav hideFooter>
       <Button variant="ghost" onClick={tryNavigate} className="-ms-3 mb-2 min-h-11 px-3 text-navy"><Back className="h-4 w-4" />{t('backToList')}</Button>
 
-      <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
+      <div className="mb-3 flex min-w-0 flex-wrap items-start justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2">
           <h1 className="min-w-0 break-words text-xl font-bold text-navy">{c.companyName}</h1>
-          {c.verificationStatus === 'verified' && <ShieldCheck className="h-5 w-5 shrink-0" style={{ color: '#00B59E' }} />}
+          {c.verificationStatus === 'verified' && <ShieldCheck className="h-5 w-5 shrink-0 text-[#00B59E]" aria-hidden="true" />}
         </div>
-        <StatusBadge status={c.verificationStatus}>{t(`cstatus_${c.verificationStatus}`)}</StatusBadge>
+        <StatusBadge status={c.verificationStatus} className="self-start">{t(`cstatus_${c.verificationStatus}`)}</StatusBadge>
       </div>
 
       <Card className="mb-3">
         <CardContent className="p-4 space-y-1.5 text-sm">
           <div className="mb-2 flex items-center gap-1 text-xs text-muted-foreground">
             <CalendarClock className="h-3.5 w-3.5 shrink-0" />
-            <span>{t('applicationTime')}: {formatAdminTime(c.createdAt, lang)}</span>
+            <span className="min-w-0 break-words">{t('applicationTime')}: {formatAdminTime(c.createdAt, lang)}</span>
           </div>
           <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-border bg-secondary px-2.5 py-1 text-[11px] font-semibold text-navy">
             <TypeIcon className="h-3.5 w-3.5" />
@@ -199,22 +201,15 @@ export default function AdminContractorPage() {
         </CardContent>
       </Card>
 
-      <Card className="mb-3">
-        <CardContent className="p-4">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('providerStatusLink')}</div>
-          <div className="mt-2 grid grid-cols-2 gap-2 sm:flex sm:items-center sm:gap-1.5">
-            <code className="col-span-2 min-w-0 truncate text-[11px] text-navy sm:flex-1">/contractor-status/{id}</code>
-            <Button variant="outline" size="sm" className="h-11 w-full px-3 text-[11px] sm:h-9 sm:w-auto sm:px-2" onClick={copyContractorLink}>
-              <Copy className="w-3.5 h-3.5" />
-              <span className="ms-1">{t('copyLink')}</span>
-            </Button>
-            <Button variant="outline" size="sm" className="h-11 w-full px-3 text-[11px] sm:h-9 sm:w-auto sm:px-2" onClick={() => window.open(`/contractor-status/${id}`, '_blank', 'noopener,noreferrer')}>
-              <ExternalLink className="w-3.5 h-3.5" />
-              <span className="ms-1">{t('openLink')}</span>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <AdminPublicLinkActions
+        className="mb-3"
+        label={t('providerStatusLink')}
+        path={`/contractor-status/${id}`}
+        copyLabel={t('copyLink')}
+        openLabel={t('openLink')}
+        onCopy={copyContractorLink}
+        onOpen={() => window.open(`/contractor-status/${id}`, '_blank', 'noopener,noreferrer')}
+      />
 
       <Card className="mb-3">
         <CardContent className="p-4">
@@ -258,13 +253,7 @@ export default function AdminContractorPage() {
             <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documents')}</div>
             <div className="space-y-1.5">
               {c.documents.map((f, i) => (
-                <a key={i} href={f.data} download={f.name} className="flex min-h-11 flex-col items-stretch gap-1 rounded-xl bg-secondary px-3 py-2 text-xs text-navy transition hover:bg-secondary/70 min-[390px]:flex-row min-[390px]:items-center min-[390px]:gap-2">
-                  <span className="flex min-w-0 items-center gap-2">
-                    <FileText className="h-3.5 w-3.5 shrink-0" />
-                    <span className="min-w-0 flex-1 truncate">{f.name}</span>
-                  </span>
-                  {f.label && <span className="break-words ps-[22px] text-[11px] leading-snug text-muted-foreground min-[390px]:max-w-[38%] min-[390px]:shrink-0 min-[390px]:truncate min-[390px]:ps-0">{f.label}</span>}
-                </a>
+                <ResultFileLink key={i} file={f} fallbackLabel={t('files')} secondaryLabel={f.label} actionLabel={t('download')} />
               ))}
             </div>
           </CardContent>

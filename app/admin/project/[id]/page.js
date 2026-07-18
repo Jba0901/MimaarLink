@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import AdminAttribution from '@/components/AdminAttribution';
+import ResultFileLink from '@/components/ResultFileLink';
 import StatusBadge from '@/components/StatusBadge';
 import PageState from '@/components/PageState';
 import { useLang } from '@/lib/LangContext';
@@ -187,12 +188,12 @@ export default function AdminProjectPage() {
   return (
     <AppShell hideNav hideFooter>
       <Button variant="ghost" onClick={() => tryNavigate('/admin')} className="-ms-3 mb-2 min-h-11 px-3 text-navy"><Back className="h-4 w-4" />{t('backToList')}</Button>
-      <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
+      <div className="mb-3 flex min-w-0 flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
-          <h1 className="text-xl font-bold text-navy">{t(`cat_${project.category}`)}</h1>
-          <div className="mt-0.5 text-xs text-muted-foreground">{project.location}</div>
+          <h1 className="break-words text-xl font-bold text-navy">{t(`cat_${project.category}`)}</h1>
+          <div className="mt-0.5 break-words text-xs text-muted-foreground">{project.location}</div>
         </div>
-        <StatusBadge status={project.status}>{t(`status_${project.status}`)}</StatusBadge>
+        <StatusBadge status={project.status} className="self-start">{t(`status_${project.status}`)}</StatusBadge>
       </div>
 
       <Card className="mb-3">
@@ -200,15 +201,15 @@ export default function AdminProjectPage() {
           <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('projectDetailsTitle')}</div>
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
             <CalendarClock className="h-3.5 w-3.5 shrink-0" />
-            <span>{t('applicationTime')}: {formatAdminTime(project.createdAt, lang)}</span>
+            <span className="min-w-0 break-words">{t('applicationTime')}: {formatAdminTime(project.createdAt, lang)}</span>
           </div>
-          <div className="text-sm leading-relaxed">{project.description}</div>
-          {project.timeline && <div className="text-xs"><span className="font-semibold">{t('timeline')}:</span> {project.timeline}</div>}
-          {project.budgetRange && <div className="text-xs"><span className="font-semibold">{t('budget')}:</span> {project.budgetRange}</div>}
+          <div className="break-words text-sm leading-relaxed">{project.description}</div>
+          {project.timeline && <div className="break-words text-xs"><span className="font-semibold">{t('timeline')}:</span> {project.timeline}</div>}
+          {project.budgetRange && <div className="break-words text-xs"><span className="font-semibold">{t('budget')}:</span> {project.budgetRange}</div>}
           {requester && (
             <div className="mt-2 pt-2 border-t border-border text-xs space-y-0.5">
-              <div><span className="font-semibold">{requester.name}</span> · {requester.role}</div>
-              <div className="text-muted-foreground">{requester.company}</div>
+              <div className="break-words"><span className="font-semibold">{requester.name}</span> · {requester.role}</div>
+              <div className="break-words text-muted-foreground">{requester.company}</div>
               <div className="break-words text-muted-foreground">{requester.phone} · {requester.email}</div>
             </div>
           )}
@@ -218,9 +219,7 @@ export default function AdminProjectPage() {
               <div className="text-xs font-semibold mb-1.5">{t('uploadedFiles')}</div>
               <div className="space-y-1">
                 {project.files.map((f, i) => (
-                  <a key={i} href={f.data} download={f.name} className="flex min-h-11 items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-xs text-navy">
-                    <FileText className="h-3.5 w-3.5 shrink-0" /><span className="min-w-0 flex-1 truncate">{f.name}</span>
-                  </a>
+                  <ResultFileLink key={i} file={f} fallbackLabel={t('files')} actionLabel={t('download')} />
                 ))}
               </div>
             </div>

@@ -3,6 +3,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
+import AdminPublicLinkActions from '@/components/AdminPublicLinkActions';
 import PageState from '@/components/PageState';
 import StatusBadge from '@/components/StatusBadge';
 import { useLang } from '@/lib/LangContext';
@@ -12,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Building2, CalendarClock, ChevronLeft, ChevronRight, ClipboardCheck, Copy, ExternalLink, Lock, Loader2, LogOut, RefreshCw, ShieldCheck, TriangleAlert } from 'lucide-react';
+import { Building2, CalendarClock, ChevronLeft, ChevronRight, ClipboardCheck, Lock, Loader2, LogOut, RefreshCw, ShieldCheck, TriangleAlert } from 'lucide-react';
 import { toast } from 'sonner';
 
 const formatAdminTime = (value, lang = 'en') => {
@@ -199,33 +200,29 @@ function AdminInner() {
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-semibold text-navy text-sm">{t(`cat_${p.category}`)}</span>
+                        <span className="min-w-0 break-words text-sm font-semibold leading-snug text-navy">{t(`cat_${p.category}`)}</span>
                         <StatusBadge status={p.status}>{t(`status_${p.status}`)}</StatusBadge>
                       </div>
                       <div className="text-xs text-muted-foreground mt-0.5 truncate">{p.location}</div>
-                      <div className="text-xs text-muted-foreground truncate">{p.description}</div>
+                      <div className="line-clamp-2 break-words text-xs leading-relaxed text-muted-foreground">{p.description}</div>
                       <div className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground">
                         <CalendarClock className="h-3.5 w-3.5 shrink-0" />
-                        <span>{t('applicationTime')}: {formatAdminTime(p.createdAt, lang)}</span>
+                        <span className="min-w-0 break-words">{t('applicationTime')}: {formatAdminTime(p.createdAt, lang)}</span>
                       </div>
                     </div>
                     <Next className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
                   </div>
                 </button>
-                <div className="mt-3 rounded-xl bg-secondary p-2.5">
-                  <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">{t('requesterLink')}</div>
-                  <div className="mt-1 grid grid-cols-2 gap-2 sm:flex sm:items-center sm:gap-1.5">
-                    <code className="col-span-2 min-w-0 truncate text-[11px] text-navy sm:flex-1">/project/{p.id}</code>
-                    <Button variant="outline" size="sm" className="h-11 w-full px-3 text-[11px] sm:h-9 sm:w-auto sm:px-2" onClick={() => copyProjectLink(p.id)}>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span className="ms-1">{t('copyLink')}</span>
-                    </Button>
-                    <Button variant="outline" size="sm" className="h-11 w-full px-3 text-[11px] sm:h-9 sm:w-auto sm:px-2" onClick={() => window.open(`/project/${p.id}`, '_blank', 'noopener,noreferrer')}>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      <span className="ms-1">{t('openLink')}</span>
-                    </Button>
-                  </div>
-                </div>
+                <AdminPublicLinkActions
+                  inset
+                  className="mt-3"
+                  label={t('requesterLink')}
+                  path={`/project/${p.id}`}
+                  copyLabel={t('copyLink')}
+                  openLabel={t('openLink')}
+                  onCopy={() => copyProjectLink(p.id)}
+                  onOpen={() => window.open(`/project/${p.id}`, '_blank', 'noopener,noreferrer')}
+                />
               </CardContent>
             </Card>
           ))}
@@ -250,20 +247,21 @@ function AdminInner() {
                           <TypeIcon className="h-3 w-3" />
                           {providerTypeLabel(c, t)}
                         </Badge>
-                        {c.verificationStatus === 'verified' && <ShieldCheck className="w-3.5 h-3.5" style={{ color: '#00B59E' }} />}
+                        {c.verificationStatus === 'verified' && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" />}
                       </div>
                       <div className="mt-0.5 break-words text-xs text-muted-foreground">{c.contactPerson} · {c.whatsapp}</div>
                       {isConsultant && (
-                        <div className="text-[11px] text-muted-foreground mt-0.5">{consultantGradeLabel(c.consultantGrade, t)}</div>
+                        <div className="mt-0.5 break-words text-[11px] text-muted-foreground">{consultantGradeLabel(c.consultantGrade, t)}</div>
                       )}
                       <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
                         <CalendarClock className="h-3.5 w-3.5 shrink-0" />
-                        <span>{t('applicationTime')}: {formatAdminTime(c.createdAt, lang)}</span>
+                        <span className="min-w-0 break-words">{t('applicationTime')}: {formatAdminTime(c.createdAt, lang)}</span>
                       </div>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {services.slice(0,3).map(cat => (
                           <span key={cat} className="rounded-full bg-secondary px-2 py-1 text-[11px] font-medium text-navy">{t(`cat_${cat}`)}</span>
                         ))}
+                        {services.length > 3 && <span className="rounded-full border border-border bg-card px-2 py-1 text-[11px] font-semibold text-muted-foreground">+{services.length - 3}</span>}
                       </div>
                     </div>
                     <div className="flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-2 min-[390px]:shrink-0 min-[390px]:justify-end min-[390px]:border-0 min-[390px]:pt-0">
