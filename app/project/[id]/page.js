@@ -41,7 +41,7 @@ export default function ProjectPage() {
           <div className="order-2 space-y-3 lg:order-1">
             <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 space-y-2.5 sm:p-5">
-                <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('projectSummary')}</div>
+                <div className="text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('projectSummary')}</div>
                 <div className="break-words text-base font-bold text-navy">{t(`cat_${data.category}`)}</div>
                 {data.location && <div className="flex items-start gap-2 text-sm text-navy"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span className="min-w-0 break-words">{data.location}</span></div>}
                 <div className="break-words text-sm leading-relaxed text-muted-foreground">{data.description}</div>
@@ -53,7 +53,7 @@ export default function ProjectPage() {
             {data.files && data.files.length > 0 && (
               <Card className="rounded-2xl shadow-soft">
                 <CardContent className="p-4 sm:p-5">
-                  <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('uploadedFiles')}</div>
+                  <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('uploadedFiles')}</div>
                   <div className="space-y-1.5">
                     {data.files.map((f, i) => (
                       <ResultFileLink key={i} file={f} fallbackLabel={t('files')} actionLabel={t('download')} />
@@ -68,20 +68,20 @@ export default function ProjectPage() {
           <div className="order-1 space-y-3 lg:order-2 lg:sticky lg:top-20">
             <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 sm:p-5">
-                <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-3">{t('statusTimeline')}</div>
+                <div className="mb-3 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('statusTimeline')}</div>
                 <StatusTimeline statuses={PROJECT_STATUSES} currentIndex={idx} getLabel={(status) => t(`status_${status}`)} />
               </CardContent>
             </Card>
 
             <Card className="rounded-2xl border-[#00B59E]/25 bg-[#D0F2EE]/55 shadow-soft dark:bg-[#142A44]">
               <CardContent className="p-4 sm:p-5">
-                <div className="mb-1 text-xs font-semibold uppercase tracking-wide text-navy">{t('nextStep')}</div>
+                <div className="mb-1 text-xs font-semibold text-navy ltr:uppercase ltr:tracking-wide">{t('nextStep')}</div>
                 <div className="break-words text-sm leading-relaxed text-navy">{t(`msg_${data.status}`)}</div>
               </CardContent>
             </Card>
 
             {['bids_received', 'shortlisted', 'meeting_arranged'].includes(data.status) ? (
-              <Button variant="navy" size="lg" onClick={() => router.push(`/bids/${id}`)} className="w-full text-base">
+              <Button variant="navy" size="lg" onClick={() => router.push(`/bids/${id}`)} className="h-auto min-h-12 w-full whitespace-normal py-2.5 text-center text-base leading-snug">
                 {t('viewBids')}
               </Button>
             ) : (

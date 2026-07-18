@@ -39,11 +39,11 @@ export default function BidsPage() {
 
   return (
     <AppShell>
-      <div className="mb-2 flex items-center justify-between gap-3">
+      <div className="mb-2 flex min-w-0 items-center justify-between gap-3">
         <h1 className="display-title min-w-0 break-words text-[24px] sm:text-[28px]">{t('bidComparison')}</h1>
-        <Button variant="ghost" size="sm" className="h-11 shrink-0 px-3 sm:h-9" onClick={() => router.back()}>{t('back')}</Button>
+        <Button variant="ghost" size="sm" className="h-auto min-h-11 shrink-0 whitespace-normal px-3 py-2 text-center leading-snug sm:min-h-9" onClick={() => router.back()}>{t('back')}</Button>
       </div>
-      <p className="mb-4 text-[13px] leading-relaxed text-muted-foreground">{t('onlyVerified')}</p>
+      <p className="mb-4 break-words text-[13px] leading-relaxed text-muted-foreground">{t('onlyVerified')}</p>
 
       <div className="space-y-3">
         {sortedBids.length === 0 && <PageState kind="empty" compact title={t('noBidsYet')} />}
@@ -54,7 +54,7 @@ export default function BidsPage() {
             <Card key={b.id} className={`rounded-[18px] border shadow-soft ${isLowest ? 'border-[#00B59E] bg-[#D0F2EE]/10 ring-1 ring-[#00B59E]/15 dark:bg-[#00B59E]/[0.04]' : 'border-border'}`}>
               <CardContent className="p-4 sm:p-5">
                 <div className="flex flex-col items-start gap-2 mb-2 sm:flex-row sm:justify-between">
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-1.5">
                       <span className="min-w-0 break-words font-semibold text-navy text-base">{c.companyName || t('provider')}</span>
                       {c.providerType && (
@@ -64,16 +64,16 @@ export default function BidsPage() {
                     </div>
                     {c.serviceAreas && <div className="mt-0.5 break-words text-[13px] leading-relaxed text-muted-foreground">{c.serviceAreas}</div>}
                   </div>
-                  {isLowest && <Badge variant="success" className="shrink-0 text-[12px]">{t('lowestBid')}</Badge>}
+                  {isLowest && <Badge variant="success" className="max-w-full shrink-0 break-words whitespace-normal text-start text-[12px] leading-4">{t('lowestBid')}</Badge>}
                 </div>
 
                 <div className="mt-3 grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">
-                  <div className="rounded-[14px] border border-border/70 bg-secondary/70 p-3">
-                    <div className="flex items-center gap-1 text-[12px] uppercase tracking-wide text-muted-foreground"><Wallet className="h-3 w-3 shrink-0" aria-hidden="true" />{t('price')}</div>
-                    <div className="text-base font-bold text-navy mt-0.5">{b.price.toLocaleString()} <span className="text-xs font-normal text-muted-foreground">{t('currencyQar')}</span></div>
+                  <div className="min-w-0 rounded-[14px] border border-border/70 bg-secondary/70 p-3">
+                    <div className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Wallet className="h-3 w-3 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('price')}</span></div>
+                    <div className="mt-0.5 min-w-0 break-words text-base font-bold text-navy">{b.price.toLocaleString()} <span className="text-xs font-normal text-muted-foreground">{t('currencyQar')}</span></div>
                   </div>
-                  <div className="rounded-[14px] border border-border/70 bg-secondary/70 p-3">
-                    <div className="flex items-center gap-1 text-[12px] uppercase tracking-wide text-muted-foreground"><Clock className="h-3 w-3 shrink-0" aria-hidden="true" />{t('timeline')}</div>
+                  <div className="min-w-0 rounded-[14px] border border-border/70 bg-secondary/70 p-3">
+                    <div className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Clock className="h-3 w-3 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('timeline')}</span></div>
                     <div className="mt-0.5 break-words text-sm font-semibold text-navy">{b.timeline}</div>
                   </div>
                 </div>
@@ -86,7 +86,7 @@ export default function BidsPage() {
 
                 {b.attachments && b.attachments.length > 0 && (
                   <div className="mt-3 border-t border-border pt-3">
-                    <div className="mb-1.5 flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    <div className="mb-1.5 flex items-center gap-1.5 text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">
                       <Paperclip className="h-3 w-3 shrink-0" aria-hidden="true" />
                       {t('bidFiles')}
                     </div>
@@ -99,8 +99,8 @@ export default function BidsPage() {
                 )}
 
                 <div className="mt-3 flex flex-col gap-2 min-[390px]:flex-row">
-                  <Button variant="outline" size="sm" className="h-11 w-full flex-1" onClick={() => action('shortlist', b.contractorId)}>{t('shortlist')}</Button>
-                  <Button variant="navy" size="sm" className="h-11 w-full flex-1" onClick={() => action('meeting', b.contractorId)}>{t('requestMeeting')}</Button>
+                  <Button variant="outline" size="sm" className="h-auto min-h-11 w-full flex-1 whitespace-normal py-2 text-center leading-snug" onClick={() => action('shortlist', b.contractorId)}>{t('shortlist')}</Button>
+                  <Button variant="navy" size="sm" className="h-auto min-h-11 w-full flex-1 whitespace-normal py-2 text-center leading-snug" onClick={() => action('meeting', b.contractorId)}>{t('requestMeeting')}</Button>
                 </div>
               </CardContent>
             </Card>

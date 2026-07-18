@@ -81,7 +81,7 @@ export default function ContractorStatusPage() {
           <div className="order-2 space-y-3 lg:order-1">
             <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 space-y-2.5 sm:p-5">
-                <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold">{t('providerSummary')}</div>
+                <div className="text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('providerSummary')}</div>
                 <div className="flex items-start gap-2 text-sm text-navy">
                   <ServiceIcon className="w-4 h-4 mt-0.5 text-muted-foreground shrink-0" aria-hidden="true" />
                   <span className="min-w-0 break-words">{serviceKeys.map((cat) => t(`cat_${cat}`)).join(', ')}</span>
@@ -110,7 +110,7 @@ export default function ContractorStatusPage() {
             {uploadedDocuments.length > 0 && (
               <Card className="rounded-2xl shadow-soft">
                 <CardContent className="p-4 sm:p-5">
-                  <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documents')}</div>
+                  <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('documents')}</div>
                   <div className="space-y-1.5">
                     {uploadedDocuments.map((file, i) => (
                       <ResultFileLink key={i} file={file} fallbackLabel={t('files')} actionLabel={t('download')} />
@@ -125,24 +125,24 @@ export default function ContractorStatusPage() {
           <div className="order-1 space-y-3 lg:order-2 lg:sticky lg:top-20">
             <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 sm:p-5">
-                <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-3">{t('statusTimeline')}</div>
+                <div className="mb-3 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('statusTimeline')}</div>
                 <StatusTimeline statuses={statusOrder} currentIndex={statusIndex} getLabel={(item) => t(`cstatus_${item}`)} />
               </CardContent>
             </Card>
 
             <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 sm:p-5">
-                <div className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">{t('documentChecklist')}</div>
+                <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('documentChecklist')}</div>
                 <div className="space-y-1.5">
                   {documentChecklist.map((doc) => {
                     const present = Boolean(documentChecks[doc.key]);
                     return (
-                      <div key={doc.key} className="flex min-h-11 items-center justify-between gap-2 rounded-xl bg-secondary px-3 py-2 text-sm text-navy">
+                      <div key={doc.key} className="flex min-h-11 min-w-0 items-center justify-between gap-2 rounded-xl bg-secondary px-3 py-2 text-sm text-navy">
                         <div className="flex min-w-0 items-center gap-2">
                           <FileText className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                           <span className="min-w-0 break-words leading-snug">{doc.label}</span>
                         </div>
-                        <Badge variant={present ? 'success' : 'warning'} className="shrink-0 text-[12px]">
+                        <Badge variant={present ? 'success' : 'warning'} className="max-w-[45%] shrink-0 whitespace-normal text-center text-[12px] leading-4">
                           {present ? t('present') : t('missing')}
                         </Badge>
                       </div>
@@ -152,7 +152,7 @@ export default function ContractorStatusPage() {
               </CardContent>
             </Card>
 
-            <Button variant="navy" onClick={() => router.push('/')} className="w-full">
+            <Button variant="navy" onClick={() => router.push('/')} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug">
               {t('backToHome')}
             </Button>
           </div>
