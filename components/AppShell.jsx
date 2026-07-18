@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLang } from '@/lib/LangContext';
@@ -25,14 +26,17 @@ import {
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 
-function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9' }) {
+function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9', priority = false }) {
   return (
     <span className={`brand-mark ${className} shrink-0`} aria-hidden="true">
-      <img
-        src="/logo.png?v=official-20260618"
+      <Image
+        src="/logo.png"
         alt=""
-        width="860"
-        height="830"
+        width={860}
+        height={830}
+        sizes="(min-width: 640px) 40px, 32px"
+        quality={100}
+        priority={priority}
       />
     </span>
   );
@@ -138,7 +142,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       >
         <div className="container-x relative h-16 sm:h-[68px] flex items-center justify-between gap-2">
           <Link href="/" className="flex min-h-11 items-center gap-2 rounded-xl sm:gap-2.5 min-w-0 shrink tap-highlight">
-            <Logo className="h-8 w-8 sm:h-10 sm:w-10" />
+            <Logo className="h-8 w-8 sm:h-10 sm:w-10" priority />
             <BrandText size={17} onDark={isDark} />
           </Link>
 
