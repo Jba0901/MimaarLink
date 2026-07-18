@@ -28,6 +28,7 @@ export default function MarketingLanding({
   const accentColor = isAmber ? '#FFB638' : '#00B59E';
   const accentSoft = isAmber ? 'rgba(255,182,56,0.14)' : 'rgba(0,181,158,0.10)';
   const ctaClass = isAmber ? 'btn-amber' : 'btn-primary';
+  const ctaStyle = { minHeight: 52, color: isAmber ? '#4A2D00' : '#152B54' };
   const Arrow = () =>
     isRTL
       ? <ArrowRight className="h-4 w-4 shrink-0 rotate-180" aria-hidden="true" />
@@ -59,7 +60,7 @@ export default function MarketingLanding({
               {subtitle}
             </p>
             <div className="motion-fade-up motion-delay-3 mt-6 sm:mt-7">
-              <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={{ minHeight: 52 }}>
+              <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
                 {ctaLabel} <Arrow />
               </Link>
               {ctaSubtext && <p className="mt-3 text-[12.5px] text-muted-foreground/80">{ctaSubtext}</p>}
@@ -152,7 +153,7 @@ export default function MarketingLanding({
             <div className="relative mx-auto max-w-xl">
               <h3 className="text-[22px] font-extrabold leading-snug sm:text-[30px] sm:leading-tight">{finalTitle}</h3>
               <p className="mb-5 mt-2.5 text-[13.5px] leading-6 text-white/75 sm:mb-7 sm:text-[14px]">{finalSub}</p>
-              <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={{ minHeight: 52 }}>
+              <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
                 {ctaLabel} <Arrow />
               </Link>
             </div>
