@@ -65,7 +65,7 @@ export default function MarketingAttribution() {
       role="region"
       aria-labelledby="marketing-consent-title"
       aria-describedby="marketing-consent-description"
-      className={`fixed inset-x-2.5 z-[100] mx-auto max-w-xl overflow-y-auto overscroll-contain rounded-[20px] border border-[#00B59E]/25 bg-card p-3.5 shadow-lift sm:inset-x-3 sm:rounded-[22px] sm:p-5 ${
+      className={`marketing-consent-panel fixed inset-x-2.5 z-[100] mx-auto max-w-xl overflow-y-auto overscroll-contain rounded-[20px] border border-[#00B59E]/25 bg-card p-3.5 shadow-lift sm:inset-x-3 sm:rounded-[22px] sm:p-5 ${
         sitsAboveMobileNav
           ? 'bottom-[calc(5.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_6.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))] lg:bottom-4 lg:max-h-[calc(100dvh_-_2rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'
           : 'bottom-[calc(0.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_1.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'

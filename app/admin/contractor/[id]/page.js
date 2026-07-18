@@ -74,7 +74,7 @@ export default function AdminContractorPage() {
   }, [statusDraft, documentChecksDraft, c]);
 
   if (loading) return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
-  if (!c || c.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} actionHref="/admin?tab=contractors" actionLabel={t('backToList')} /></AppShell>;
+  if (!c || c.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/admin?tab=contractors" actionLabel={t('backToList')} actionVariant="primary" /></AppShell>;
 
   const saveAll = async () => {
     if (!isDirty()) { toast.message(t('saved')); router.push('/admin?tab=contractors'); return; }

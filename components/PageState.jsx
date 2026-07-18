@@ -45,7 +45,7 @@ export default function PageState({
   const Heading = compact ? 'h3' : 'h1';
   const content = (
     <div
-      className={`w-full text-center ${
+      className={`page-state-panel w-full text-center ${
         compact
           ? 'rounded-2xl bg-secondary/55 px-4 py-6'
           : 'rounded-[22px] border border-border bg-card p-5 shadow-soft sm:rounded-[24px] sm:p-8'
@@ -77,7 +77,7 @@ export default function PageState({
   if (compact) return content;
 
   return (
-    <div className={`mx-auto flex w-full max-w-md items-center justify-center pb-[max(2rem,env(safe-area-inset-bottom))] pt-6 sm:pt-8 ${fullHeight ? 'min-h-[100dvh]' : 'min-h-[46dvh]'}`}>
+    <div className={`page-state-layout ${fullHeight ? 'page-state-full min-h-[100dvh]' : 'min-h-[46dvh]'} mx-auto flex w-full max-w-md items-center justify-center pb-[max(2rem,env(safe-area-inset-bottom))] pt-6 sm:pt-8`}>
       {content}
     </div>
   );

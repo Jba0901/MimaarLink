@@ -25,7 +25,7 @@ export default function ProjectPage() {
   }, [id]);
 
   if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
-  if (!data || data.error) return <AppShell><PageState kind="missing" title={t('notFound')} actionHref="/" actionLabel={t('backToHome')} /></AppShell>;
+  if (!data || data.error) return <AppShell><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
 
   const idx = PROJECT_STATUSES.indexOf(data.status);
 

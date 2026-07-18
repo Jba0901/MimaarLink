@@ -193,7 +193,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         closeButtonRef={menuCloseButtonRef}
       />
 
-      <main className={`flex-1 w-full ${hideNav ? 'pb-10' : 'pb-32 lg:pb-12'}`}>
+      <main className={`mobile-nav-main flex-1 w-full ${hideNav ? 'pb-10' : 'pb-32 lg:pb-12'}`}>
         {bleed ? (
           children
         ) : (
@@ -203,7 +203,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       </main>
 
       {!hideNav && (
-        <nav className="safe-pad-bottom fixed bottom-3 left-1/2 z-40 w-[min(94vw,360px)] -translate-x-1/2 lg:hidden" aria-label={copy.quickTitle}>
+        <nav className="mobile-bottom-nav safe-pad-bottom fixed bottom-3 left-1/2 z-40 w-[min(94vw,360px)] -translate-x-1/2 lg:hidden" aria-label={copy.quickTitle}>
           <div className="grid grid-cols-3 gap-1 rounded-[22px] border border-border bg-white/95 p-1.5 shadow-lift backdrop-blur-xl dark:bg-[#0D1B2A]/95">
             <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
             <NavBtn href="/post-project" icon={FilePlus} label={copy.projectNav} ariaLabel={t('postProject')} matches={['/post-project', '/for-projects']} />

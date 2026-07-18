@@ -108,7 +108,7 @@ export default function AdminProjectPage() {
   }, [statusDraft, note, d]);
 
   if (loading) return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
-  if (!d || d.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} actionHref="/admin" actionLabel={t('backToList')} /></AppShell>;
+  if (!d || d.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/admin" actionLabel={t('backToList')} actionVariant="primary" /></AppShell>;
 
   const { project, requester, bids, invites, notes, contractors } = d;
   const cmap = Object.fromEntries(contractors.map(c => [c.id, c]));

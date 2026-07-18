@@ -46,7 +46,7 @@ export default function ContractorStatusPage() {
   }
 
   if (!contractor || contractor.error) {
-    return <AppShell><PageState kind="missing" title={t('notFound')} actionHref="/" actionLabel={t('backToHome')} /></AppShell>;
+    return <AppShell><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
   }
 
   const status = contractor.verificationStatus || 'applied';

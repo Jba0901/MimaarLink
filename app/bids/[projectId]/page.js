@@ -26,7 +26,7 @@ export default function BidsPage() {
   useEffect(() => { load(); }, [projectId]);
 
   if (loading) return <AppShell><PageState kind="loading" title={t('loading')} /></AppShell>;
-  if (!d || d.error) return <AppShell><PageState kind="missing" title={t('notFound')} actionHref="/" actionLabel={t('backToHome')} /></AppShell>;
+  if (!d || d.error) return <AppShell><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
 
   const action = async (act, contractorId) => {
     await fetch('/api/projects/shortlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId, contractorId, action: act }) });
