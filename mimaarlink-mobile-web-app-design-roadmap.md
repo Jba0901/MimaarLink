@@ -29,7 +29,7 @@ The following was verified from source and a successful production build on 2026
 - The palette-normalization proposal on `design/brand-palette-normalization-review` is a real global CSS change, but it is not merged.
 - The production build passes. Current first-load JavaScript is 139 kB on the homepage, 118-146 kB on public journey pages, 146 kB on both `/post-project` and `/contractor`, and 87.1 kB shared by all routes.
 
-A first rendered browser pass now covers 320 px Arabic and English, 390 px Arabic, light and dark themes, the public mobile navigation and drawer, role selection, owner entry, contractor/consultant entry, and a missing-project state. That pass fixed RTL step numbering, small-phone dock labels, and the narrow dark-theme control. The complete viewport, state, keyboard, network, and real-device matrix remains open.
+Rendered browser coverage now includes 320 and 390 px phones, 768 px tablet, the 1024 px desktop-navigation breakpoint, and 1280 px desktop; Arabic and English; light and dark themes; keyboard focus; and reduced motion. Checked surfaces include the public shell and drawer, role selection, owner and contractor/consultant entry, simple form selectors, and a missing-project state. The remaining gaps are real-data status and bid states, dense admin states, long-content stress, network interruption, browser zoom, and real-device verification.
 
 ## Non-Negotiable Design Rules
 

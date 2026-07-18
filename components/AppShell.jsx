@@ -130,9 +130,9 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
           <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
             <HeaderLink href="/" label={t('home')} />
             <HeaderLink href="/start-here" label={t('startEyebrow')} />
-            <HeaderLink href="/post-project" label={t('postProject')} />
+            <HeaderLink href="/post-project" label={copy.projectNav} ariaLabel={t('postProject')} />
             <HeaderLink href="/contractor" label={t('providerTypeContractor')} />
-            <HeaderLink href="/contractor?type=consultant" label={t('providerTypeConsultant')} />
+            <HeaderLink href="/contractor?type=consultant" label={copy.consultantNav} ariaLabel={t('providerTypeConsultant')} />
           </nav>
 
           <div className="flex items-center gap-2 shrink-0">
@@ -220,6 +220,7 @@ function getShellCopy(lang) {
       quickSubtitle: 'ابدأ من الخيار الأقرب لك.',
       projectNav: 'مشروع جديد',
       providerNav: 'مقدم خدمة',
+      consultantNav: 'مكتب استشاري',
       moreLinks: 'روابط سريعة',
       allPaths: 'كل المسارات',
       appearance: 'المظهر',
@@ -251,6 +252,7 @@ function getShellCopy(lang) {
     quickSubtitle: 'Start with the closest option.',
     projectNav: 'New project',
     providerNav: 'Provider',
+    consultantNav: 'Consultant',
     moreLinks: 'Quick links',
     allPaths: 'All paths',
     appearance: 'Appearance',
@@ -445,14 +447,16 @@ function SecondaryDrawerLink({ item, active }) {
   );
 }
 
-function HeaderLink({ href, label }) {
+function HeaderLink({ href, label, ariaLabel = label }) {
   const pathname = usePathname();
   const active = pathname === href.split('?')[0] && !href.includes('?');
   return (
     <Link
       href={href}
+      aria-label={ariaLabel}
       aria-current={active ? 'page' : undefined}
-      className={`inline-flex min-h-11 items-center rounded-full px-3.5 py-2 text-[13px] font-semibold transition-colors tap-highlight ${
+      title={ariaLabel}
+      className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3.5 py-2 text-[13px] font-semibold transition-colors tap-highlight ${
         active ? 'text-navy bg-muted' : 'text-muted-foreground hover:text-navy hover:bg-muted/70'
       }`}
     >
