@@ -82,7 +82,7 @@ export default function ContractorStatusPage() {
     <AppShell wide>
       <div className="mx-auto max-w-5xl">
         <div className="mb-4 flex min-w-0 items-start gap-3 rounded-[20px] border border-border bg-card p-4 shadow-soft sm:items-center sm:p-5">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#152B54] max-[263px]:hidden dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
             <ServiceIcon className="h-5 w-5" />
           </span>
           <div className="min-w-0 flex-1">
