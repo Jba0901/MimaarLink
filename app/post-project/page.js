@@ -212,6 +212,7 @@ function PostProjectInner() {
           <div>
             <Label className="text-sm">{t('uploadFilesLabel')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
             <FileUploadDropzone
+              id="project-files"
               className="mt-1.5"
               label={t('uploadFiles')}
               hint={t('uploadHint')}
@@ -230,7 +231,10 @@ function PostProjectInner() {
                       type="button"
                       variant="destructiveGhost"
                       size="icon"
-                      onClick={() => update('files', data.files.filter((_, j) => j !== i))}
+                      onClick={() => {
+                        update('files', data.files.filter((_, j) => j !== i));
+                        focusFormField('project-files');
+                      }}
                       className="shrink-0"
                       aria-label={`${t('removeFile')}: ${f.name}`}
                       title={t('removeFile')}

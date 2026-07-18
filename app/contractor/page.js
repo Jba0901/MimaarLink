@@ -385,7 +385,10 @@ function ContractorApplicationInner() {
                         type="button"
                         variant="destructiveGhost"
                         size="icon"
-                        onClick={() => update('documents', data.documents.filter(x => x !== f))}
+                        onClick={() => {
+                          update('documents', data.documents.filter(x => x !== f));
+                          focusFormField(`provider-document-${it.key}`);
+                        }}
                         className="shrink-0"
                         aria-label={`${t('removeFile')}: ${f.name}`}
                         title={t('removeFile')}
