@@ -182,8 +182,8 @@ function ContractorApplicationInner() {
     <AppShell hideFooter hideNav wide>
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
         <div className="w-full lg:max-w-2xl">
-          <h1 className="display-title mb-1 text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</h1>
-          <p className="mb-3 text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-5 sm:text-[13.5px]">{isConsultant ? t('consultantSubtitle') : t('contractorSubtitle')}</p>
+          <h1 className="display-title mb-1 break-words text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</h1>
+          <p className="mb-3 break-words text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-5 sm:text-[13.5px]">{isConsultant ? t('consultantSubtitle') : t('contractorSubtitle')}</p>
           <FormProgress
             step={step}
             total={3}
@@ -226,7 +226,7 @@ function ContractorApplicationInner() {
             <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
           </div>
           <div className="pt-2">
-            <Button variant="navy" onClick={goNextFromBasics} className="w-full cta-press">{t('next')}</Button>
+            <Button variant="navy" onClick={goNextFromBasics} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
           </div>
         </div>
       )}
@@ -261,13 +261,13 @@ function ContractorApplicationInner() {
             >
               {serviceOptions.map(c => (
                 <button key={c} type="button" onClick={() => toggleCat(c)} aria-pressed={data.categories.includes(c)}
-                  className={`interactive-card tap-highlight min-h-12 rounded-xl border px-3 py-2 text-start text-[13px] font-semibold ${
+                  className={`interactive-card tap-highlight min-h-12 min-w-0 rounded-xl border px-3 py-2 text-start text-[13px] font-semibold ${
                     data.categories.includes(c)
                       ? 'border-[#00B59E]/50 bg-[#D0F2EE]/55 text-navy shadow-soft dark:border-[#00B59E]/45 dark:bg-[#00B59E]/15'
                       : 'border-border bg-card text-navy hover:border-[#00B59E]/35 dark:bg-[#0D1B2A]/75'
                   }`}>
                   <span className="flex items-center justify-between gap-2">
-                    <span>{t(`cat_${c}`)}</span>
+                    <span className="min-w-0 flex-1 break-words leading-snug">{t(`cat_${c}`)}</span>
                     {data.categories.includes(c) && <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-teal" />}
                   </span>
                 </button>
@@ -307,8 +307,8 @@ function ContractorApplicationInner() {
             </div>
           </div>
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
-            <Button variant="outline" onClick={() => setStep(1)} className="h-11 w-full cta-press">{t('back')}</Button>
-            <Button variant="navy" onClick={goNextFromServices} className="w-full cta-press">{t('next')}</Button>
+            <Button variant="outline" onClick={() => setStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
+            <Button variant="navy" onClick={goNextFromServices} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
           </div>
         </div>
       )}
@@ -361,8 +361,8 @@ function ContractorApplicationInner() {
           })}
 
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
-            <Button variant="outline" onClick={() => setStep(2)} className="h-11 w-full cta-press">{t('back')}</Button>
-            <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="w-full cta-press">
+            <Button variant="outline" onClick={() => setStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
+            <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
               {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>
@@ -454,7 +454,7 @@ function ProviderTypeButton({ active, icon: Icon, title, desc, onClick }) {
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`provider-type-card interactive-card tap-highlight rounded-2xl border p-3.5 text-start transition ${active ? 'is-active shadow-soft' : ''}`}
+      className={`provider-type-card interactive-card tap-highlight min-w-0 rounded-2xl border p-3.5 text-start transition ${active ? 'is-active shadow-soft' : ''}`}
     >
       <span className="flex items-start gap-3">
         <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/20 dark:text-[#00B59E]' : 'bg-muted text-muted-foreground'}`}>
@@ -462,10 +462,10 @@ function ProviderTypeButton({ active, icon: Icon, title, desc, onClick }) {
         </span>
         <span className="min-w-0 flex-1">
           <span className="flex items-start justify-between gap-2">
-            <span className="block text-[13.5px] font-bold leading-tight">{title}</span>
+            <span className="block min-w-0 flex-1 break-words text-[13.5px] font-bold leading-tight">{title}</span>
             {active && <CheckCircle2 className="h-4 w-4 shrink-0 text-teal" />}
           </span>
-          <span className="mt-1 block text-[12px] leading-relaxed text-muted-foreground">{desc}</span>
+          <span className="mt-1 block break-words text-[12px] leading-relaxed text-muted-foreground">{desc}</span>
         </span>
       </span>
     </button>

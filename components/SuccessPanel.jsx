@@ -34,11 +34,11 @@ export default function SuccessPanel({
             <CheckCircle2 className="h-7 w-7 text-[#00B59E] sm:h-8 sm:w-8" />
           </span>
 
-          <h1 className="mt-3 text-[20px] font-extrabold leading-tight text-navy sm:mt-4 sm:text-[24px]">{title}</h1>
-          <p className="mx-auto mt-2 max-w-md text-[13.5px] leading-relaxed text-muted-foreground sm:text-sm">{description}</p>
+          <h1 className="mt-3 break-words text-[20px] font-extrabold leading-tight text-navy sm:mt-4 sm:text-[24px]">{title}</h1>
+          <p className="mx-auto mt-2 max-w-md break-words text-[13.5px] leading-relaxed text-muted-foreground sm:text-sm">{description}</p>
 
           <div className="mt-5 rounded-2xl bg-secondary/60 p-2.5 text-start sm:mt-6 sm:p-4">
-            <div className="mb-2 text-[12px] font-semibold leading-relaxed text-muted-foreground">{referenceLabel}</div>
+            <div className="mb-2 break-words text-[12px] font-semibold leading-relaxed text-muted-foreground">{referenceLabel}</div>
             <div className="grid min-w-0 gap-2 min-[360px]:grid-cols-[minmax(0,1fr)_auto]">
               <code className="min-w-0 flex-1 truncate rounded-xl bg-card px-3 py-2.5 text-[12px] text-navy" dir="ltr">
                 {referencePath}
@@ -47,7 +47,7 @@ export default function SuccessPanel({
                 type="button"
                 size="sm"
                 variant="outline"
-                className="h-11 w-full px-3 min-[360px]:w-auto"
+                className="h-auto min-h-11 w-full whitespace-normal px-3 py-2 text-center leading-snug min-[360px]:w-auto"
                 aria-label={copyLabel}
                 title={copyLabel}
                 onClick={copyReference}
@@ -58,7 +58,7 @@ export default function SuccessPanel({
             </div>
           </div>
 
-          <Button asChild variant="navy" size="lg" className="mt-4 w-full text-sm">
+          <Button asChild variant="navy" size="lg" className="mt-4 h-auto min-h-12 w-full whitespace-normal py-2.5 text-center text-sm leading-snug">
             <Link href={actionHref}>{actionLabel}</Link>
           </Button>
         </div>

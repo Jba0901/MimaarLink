@@ -102,8 +102,8 @@ function PostProjectInner() {
       {step < 4 ? (
       <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
         <div className="w-full lg:max-w-2xl">
-          <h1 className="display-title mb-1 text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{t('postTitle')}</h1>
-          <p className="mb-3 text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-4 sm:text-[13.5px]">{t('subtitle')}</p>
+          <h1 className="display-title mb-1 break-words text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{t('postTitle')}</h1>
+          <p className="mb-3 break-words text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-4 sm:text-[13.5px]">{t('subtitle')}</p>
           <FormProgress
             step={step}
             total={3}
@@ -120,12 +120,12 @@ function PostProjectInner() {
               const Icon = PROJECT_CATEGORY_ICONS[c] || MoreHorizontal;
               return (
                 <button key={c} type="button" onClick={() => { update('category', c); setStep(2); }}
-                  className={`interactive-card tap-highlight min-h-[62px] text-start rounded-2xl border px-4 py-3 shadow-soft ${data.category === c ? 'border-navy bg-secondary' : 'border-border bg-white hover:border-navy/35 hover:bg-secondary/40'}`}>
+                  className={`interactive-card tap-highlight min-h-[62px] min-w-0 rounded-2xl border px-4 py-3 text-start shadow-soft ${data.category === c ? 'border-navy bg-secondary' : 'border-border bg-white hover:border-navy/35 hover:bg-secondary/40'}`}>
                   <div className="flex items-center gap-3">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl light-teal">
                       <Icon className="h-5 w-5 text-teal" />
                     </span>
-                    <span className="text-[15px] font-bold text-navy leading-tight">{t(`cat_${c}`)}</span>
+                    <span className="min-w-0 flex-1 break-words text-[15px] font-bold leading-tight text-navy">{t(`cat_${c}`)}</span>
                   </div>
                 </button>
               );
@@ -199,8 +199,8 @@ function PostProjectInner() {
             )}
           </div>
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
-            <Button variant="outline" onClick={() => setStep(1)} className="h-11 w-full cta-press">{t('back')}</Button>
-            <Button variant="navy" onClick={() => { setTried2(true); if (data.description) setStep(3); }} className="w-full cta-press">{t('next')}</Button>
+            <Button variant="outline" onClick={() => setStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
+            <Button variant="navy" onClick={() => { setTried2(true); if (data.description) setStep(3); }} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
           </div>
         </div>
       )}
@@ -239,8 +239,8 @@ function PostProjectInner() {
             </div>
           </div>
           <div className="grid gap-2 pt-2 min-[360px]:grid-cols-2">
-            <Button variant="outline" onClick={() => setStep(2)} className="h-11 w-full cta-press">{t('back')}</Button>
-            <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="w-full cta-press">
+            <Button variant="outline" onClick={() => setStep(2)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
+            <Button variant="navy" onClick={submit} disabled={submitting} aria-busy={submitting} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
               {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submit')}
             </Button>
           </div>

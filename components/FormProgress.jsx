@@ -24,15 +24,15 @@ export default function FormProgress({ step, total, label, title, desc }) {
         </span>
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
-            <span className="text-[12px] font-bold text-muted-foreground">{label}</span>
+            <span className="min-w-0 break-words text-[12px] font-bold text-muted-foreground">{label}</span>
             <span className="shrink-0 text-[12px] font-bold text-muted-foreground">
               {Math.round((step / total) * 100)}%
             </span>
           </div>
-          <h2 className="display-title mt-0.5 text-[17px] leading-tight sm:text-[19px]">{title}</h2>
+          <h2 className="display-title mt-0.5 break-words text-[17px] leading-tight sm:text-[19px]">{title}</h2>
         </div>
       </div>
-      {desc && <p className="mt-2.5 text-[12.5px] leading-relaxed text-muted-foreground sm:mt-3">{desc}</p>}
+      {desc && <p className="mt-2.5 break-words text-[12.5px] leading-relaxed text-muted-foreground sm:mt-3">{desc}</p>}
       <div className="mt-3 flex items-center gap-1.5">
         {Array.from({ length: total }, (_, i) => {
           const n = i + 1;
