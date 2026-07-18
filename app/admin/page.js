@@ -230,13 +230,13 @@ function AdminInner() {
             const services = providerServices(c);
 
             return (
-            <Link key={c.id} href={`/admin/contractor/${c.id}`} className="block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
-              <Card className="interactive-card hover:border-[#00B59E]/45">
-                <CardContent className="p-3.5">
-                  <div className="flex items-start justify-between gap-2">
+              <Link key={c.id} href={`/admin/contractor/${c.id}`} className="block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
+                <Card className="interactive-card hover:border-[#00B59E]/45">
+                  <CardContent className="p-3.5">
+                    <div className="flex flex-col gap-2.5 min-[390px]:flex-row min-[390px]:items-start min-[390px]:justify-between">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="font-semibold text-navy text-sm">{c.companyName}</span>
+                        <span className="break-words text-sm font-semibold leading-snug text-navy">{c.companyName}</span>
                         <Badge variant="outline" className="gap-1 text-[11px]">
                           <TypeIcon className="h-3 w-3" />
                           {providerTypeLabel(c, t)}
@@ -257,11 +257,14 @@ function AdminInner() {
                         ))}
                       </div>
                     </div>
-                    <StatusBadge status={c.verificationStatus}>{t(`cstatus_${c.verificationStatus}`)}</StatusBadge>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+                    <div className="flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-2 min-[390px]:shrink-0 min-[390px]:justify-end min-[390px]:border-0 min-[390px]:pt-0">
+                      <StatusBadge status={c.verificationStatus}>{t(`cstatus_${c.verificationStatus}`)}</StatusBadge>
+                      <Next className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+                    </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             );
           })}
         </TabsContent>
