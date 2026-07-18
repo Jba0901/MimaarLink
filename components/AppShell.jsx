@@ -189,6 +189,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         t={t}
         theme={theme}
         isDark={isDark}
+        rtl={lang === 'ar'}
         onThemeToggle={toggleTheme}
         closeButtonRef={menuCloseButtonRef}
       />
@@ -298,7 +299,7 @@ function ThemeToggle({ theme, onToggle, copy }) {
   );
 }
 
-function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle, closeButtonRef }) {
+function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle, closeButtonRef }) {
   const pathname = usePathname();
   const [currentSearch, setCurrentSearch] = useState('');
   const drawerRef = useRef(null);
@@ -357,8 +358,8 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle, clos
         role="dialog"
         aria-modal="true"
         aria-label={copy.menu}
-        className={`absolute top-0 bottom-0 right-0 w-[min(88vw,390px)] overflow-y-auto bg-card text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.24)] border-s border-border transition-transform duration-300 ease-out ${
-          open ? 'translate-x-0' : 'translate-x-full'
+        className={`absolute bottom-0 top-0 ${rtl ? 'left-0' : 'right-0'} w-[min(88vw,390px)] overflow-y-auto border-s border-border bg-card text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.24)] transition-transform duration-300 ease-out ${
+          open ? 'translate-x-0' : rtl ? '-translate-x-full' : 'translate-x-full'
         }`}
       >
         <div className="menu-drawer-content min-h-full">
@@ -435,6 +436,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle, clos
 }
 
 function ActionTile({ item, active }) {
+  const { dir } = useLang();
   const Icon = item.icon;
   const accents = {
     teal: {
@@ -469,7 +471,7 @@ function ActionTile({ item, active }) {
         <span className="block text-[16px] font-extrabold text-navy leading-snug">{item.label}</span>
         <span className="mt-0.5 block text-[12px] font-semibold text-muted-foreground">{item.helper}</span>
       </span>
-      <ArrowUpRight className="h-[18px] w-[18px] shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+      <ArrowUpRight className={`h-[18px] w-[18px] shrink-0 text-muted-foreground transition-transform ${dir === 'rtl' ? '-scale-x-100 group-hover:-translate-x-0.5' : 'group-hover:translate-x-0.5'}`} />
     </Link>
   );
 }
