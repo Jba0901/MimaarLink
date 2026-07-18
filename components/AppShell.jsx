@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLang } from '@/lib/LangContext';
@@ -66,6 +66,9 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState('light');
   const [themeReady, setThemeReady] = useState(false);
+  const menuButtonRef = useRef(null);
+  const menuCloseButtonRef = useRef(null);
+  const menuWasOpenRef = useRef(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -104,6 +107,19 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       document.body.style.overflow = '';
       window.removeEventListener('keydown', onKeyDown);
     };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (menuOpen) {
+      menuWasOpenRef.current = true;
+      const focusFrame = window.requestAnimationFrame(() => menuCloseButtonRef.current?.focus());
+      return () => window.cancelAnimationFrame(focusFrame);
+    }
+
+    if (menuWasOpenRef.current) {
+      menuWasOpenRef.current = false;
+      menuButtonRef.current?.focus();
+    }
   }, [menuOpen]);
 
   const container = wide ? 'max-w-7xl' : 'max-w-3xl';
@@ -149,6 +165,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
               <span className="hidden min-[360px]:inline">{t('language')}</span>
             </button>
             <button
+              ref={menuButtonRef}
               onClick={() => setMenuOpen(true)}
               className="btn btn-outline h-11 w-11 px-0"
               aria-label={copy.openMenu}
@@ -169,6 +186,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         theme={theme}
         isDark={isDark}
         onThemeToggle={toggleTheme}
+        closeButtonRef={menuCloseButtonRef}
       />
 
       <main className={`flex-1 w-full ${hideNav ? 'pb-10' : 'pb-32 lg:pb-12'}`}>
@@ -276,9 +294,10 @@ function ThemeToggle({ theme, onToggle, copy }) {
   );
 }
 
-function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
+function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle, closeButtonRef }) {
   const pathname = usePathname();
   const [currentSearch, setCurrentSearch] = useState('');
+  const drawerRef = useRef(null);
   useEffect(() => {
     if (typeof window !== 'undefined') setCurrentSearch(window.location.search);
   }, [pathname]);
@@ -294,21 +313,42 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
     { href: '/for-contractors', label: t('startContractorEyebrow'), icon: CheckCircle2 },
   ];
   const isActive = (href) => href.includes('?') ? `${pathname}${currentSearch}` === href : pathname === href;
+  const keepFocusInDrawer = (event) => {
+    if (!open || event.key !== 'Tab') return;
+    const focusable = Array.from(drawerRef.current?.querySelectorAll(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    ) || []).filter((element) => !element.hasAttribute('hidden'));
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
 
   return (
     <div
-      className={`fixed inset-0 z-50 overflow-hidden transition ${open ? 'pointer-events-auto' : 'pointer-events-none'}`}
+      className={`fixed inset-0 z-[110] overflow-hidden transition ${open ? 'pointer-events-auto' : 'pointer-events-none'}`}
       aria-hidden={!open}
+      {...(!open ? { inert: '' } : {})}
+      onKeyDown={keepFocusInDrawer}
     >
       <button
         type="button"
         className={`absolute inset-0 bg-[#07111D]/35 backdrop-blur-[5px] transition-opacity duration-300 dark:bg-black/60 ${
           open ? 'opacity-100' : 'opacity-0'
         }`}
-        aria-label={copy.closeMenu}
+        aria-hidden="true"
+        tabIndex={-1}
         onClick={onClose}
       />
       <aside
+        ref={drawerRef}
         id="site-menu-drawer"
         role="dialog"
         aria-modal="true"
@@ -324,6 +364,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, onThemeToggle }) {
               <BrandText size={17} onDark={isDark} />
             </Link>
             <button
+              ref={closeButtonRef}
               type="button"
               onClick={onClose}
               className="btn btn-outline h-11 w-11 px-0 rounded-full"
