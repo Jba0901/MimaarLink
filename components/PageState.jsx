@@ -51,7 +51,7 @@ export default function PageState({
       className={`page-state-panel w-full text-center ${
         compact
           ? 'rounded-2xl bg-secondary/55 px-4 py-6'
-          : 'rounded-[22px] border p-5 shadow-soft sm:rounded-[24px] sm:p-8'
+          : 'rounded-[22px] border p-4 shadow-soft min-[264px]:p-5 sm:rounded-[24px] sm:p-8'
       } ${panelSurfaceClass} ${className}`}
       role={kind === 'loading' ? 'status' : kind === 'error' ? 'alert' : undefined}
       aria-live={kind === 'loading' ? 'polite' : kind === 'error' ? 'assertive' : undefined}
@@ -64,7 +64,7 @@ export default function PageState({
       >
         <Icon className={`${compact ? 'h-5 w-5' : 'h-6 w-6'} ${visual.iconClass}`} />
       </span>
-      <Heading className={`${compact ? 'mt-3 text-sm' : 'mt-4 text-[20px]'} min-w-0 break-words font-bold leading-snug text-navy`}>{title}</Heading>
+      <Heading className={`${compact ? 'mt-3 text-sm' : 'mt-4 text-[19px] min-[264px]:text-[20px]'} min-w-0 break-words font-bold leading-snug text-navy`}>{title}</Heading>
       {description && <p className="mx-auto mt-2 max-w-sm break-words text-[14px] leading-6 text-muted-foreground">{description}</p>}
       {actionLabel && actionOnClick && (
         <button type="button" onClick={actionOnClick} className={actionClassName}>{actionLabel}</button>
