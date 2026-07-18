@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import NativeSelect from '@/components/NativeSelect';
-import { CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal } from 'lucide-react';
+import { CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal, PencilLine } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
@@ -37,6 +37,34 @@ async function fileToDataURL(file) {
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
+}
+
+function SelectedCategorySummary({ category, t, onChange }) {
+  const Icon = PROJECT_CATEGORY_ICONS[category] || MoreHorizontal;
+
+  return (
+    <section
+      aria-label={t('selectedCategory')}
+      className="mb-4 flex min-w-0 items-center gap-3 rounded-2xl border border-[#00B59E]/25 bg-[#D0F2EE]/35 p-3 shadow-soft dark:bg-[#00B59E]/10"
+    >
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] dark:bg-[#00B59E]/15">
+        <Icon className="h-5 w-5 text-teal" aria-hidden="true" />
+      </span>
+      <span className="min-w-0 flex-1 text-start">
+        <span className="block text-[11px] font-bold leading-4 text-muted-foreground">{t('selectedCategory')}</span>
+        <span className="mt-0.5 block break-words text-[14px] font-bold leading-5 text-navy">{t(`cat_${category}`)}</span>
+      </span>
+      <button
+        type="button"
+        onClick={onChange}
+        aria-label={t('changeCategory')}
+        className="tap-highlight inline-flex h-11 w-11 shrink-0 items-center justify-center gap-1.5 rounded-xl px-0 text-[13px] font-bold text-navy transition-colors hover:bg-card/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 min-[360px]:w-auto min-[360px]:px-3 dark:focus-visible:ring-offset-[#07111D]"
+      >
+        <PencilLine className="h-4 w-4" aria-hidden="true" />
+        <span className="hidden min-[360px]:inline">{t('changeCategory')}</span>
+      </button>
+    </section>
+  );
 }
 
 function PostProjectInner() {
@@ -120,6 +148,10 @@ function PostProjectInner() {
             title={step === 1 ? t('projectStep1Title') : step === 2 ? t('projectStep2Title') : t('projectStep3Title')}
             desc={step === 1 ? t('projectStep1Desc') : step === 2 ? t('projectStep2Desc') : t('projectStep3Desc')}
           />
+
+          {step > 1 && data.category && (
+            <SelectedCategorySummary category={data.category} t={t} onChange={() => showStep(1)} />
+          )}
 
       {step === 1 && (
         <div>
