@@ -120,6 +120,7 @@ function ContractorApplicationInner() {
   const servicesValid = data.categories.length > 0 && otherDescValid;
   const documentsValid = hasCR;
   const formValid = basicsValid && servicesValid && documentsValid;
+  const showServicesError = triedServices && data.categories.length === 0;
 
   const goNextFromBasics = () => {
     setTriedBasics(true);
@@ -222,7 +223,7 @@ function ContractorApplicationInner() {
             <RequiredField label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
           </div>
           <div>
-            <Label className="text-sm">{t('email')}</Label>
+            <Label className="text-sm">{t('email')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
             <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
           </div>
           <div className="pt-2">
@@ -255,9 +256,9 @@ function ContractorApplicationInner() {
             <div
               role="group"
               aria-labelledby="provider-services-label"
-              aria-invalid={triedServices && data.categories.length === 0}
-              aria-describedby={triedServices && data.categories.length === 0 ? 'provider-services-error' : undefined}
-              className={`grid grid-cols-1 gap-2 min-[360px]:grid-cols-2 ${triedServices && data.categories.length === 0 ? 'rounded-xl p-1.5 ring-1 ring-[#EF4444]/45' : ''}`}
+              aria-invalid={showServicesError}
+              aria-describedby={showServicesError ? 'provider-services-error' : undefined}
+              className={`grid grid-cols-1 gap-2 rounded-2xl border p-1.5 transition-[border-color,background-color] min-[360px]:grid-cols-2 ${showServicesError ? 'border-[#EF4444]/45 bg-[#EF4444]/[0.04] dark:bg-[#EF4444]/[0.07]' : 'border-transparent bg-transparent'}`}
             >
               {serviceOptions.map(c => (
                 <button key={c} type="button" onClick={() => toggleCat(c)} aria-pressed={data.categories.includes(c)}
@@ -273,7 +274,7 @@ function ContractorApplicationInner() {
                 </button>
               ))}
             </div>
-            {triedServices && data.categories.length === 0 && <InlineFieldMessage id="provider-services-error">{t('requireField')}</InlineFieldMessage>}
+            {showServicesError && <InlineFieldMessage id="provider-services-error">{t('requireField')}</InlineFieldMessage>}
           </div>
           {hasOther && (
             <div>
@@ -298,11 +299,11 @@ function ContractorApplicationInner() {
           )}
           <div className="grid gap-3.5 sm:grid-cols-2">
             <div>
-              <Label className="text-sm">{t('serviceAreas')}</Label>
+              <Label className="text-sm">{t('serviceAreas')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
             </div>
             <div>
-              <Label className="text-sm">{t('projectSize')}</Label>
+              <Label className="text-sm">{t('projectSize')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
             </div>
           </div>
@@ -330,6 +331,7 @@ function ContractorApplicationInner() {
                   label={t('uploadFiles')}
                   hint={t('uploadHint')}
                   error={showError}
+                  hasFiles={filesForLabel.length > 0}
                   aria-required={it.required || undefined}
                   aria-describedby={showError ? errorId : undefined}
                   multiple
@@ -339,7 +341,7 @@ function ContractorApplicationInner() {
                 {showError && <InlineFieldMessage id={errorId}>{t('requireField')}</InlineFieldMessage>}
                 <div className="mt-1 space-y-1">
                   {filesForLabel.map((f, i) => (
-                    <div key={i} className="flex min-h-11 items-center gap-2 text-xs bg-secondary rounded-xl ps-3 pe-1">
+                    <div key={i} className="flex min-h-11 items-center gap-2 rounded-xl border border-border/70 bg-secondary ps-3 pe-1 text-xs text-foreground">
                       <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
                       <span className="min-w-0 flex-1 truncate text-start">{f.name}</span>
                       <Button

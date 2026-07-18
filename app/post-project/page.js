@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal } from 'lucide-react';
+import { CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
@@ -118,14 +118,16 @@ function PostProjectInner() {
           <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
             {PROJECT_CATEGORIES.map(c => {
               const Icon = PROJECT_CATEGORY_ICONS[c] || MoreHorizontal;
+              const selected = data.category === c;
               return (
-                <button key={c} type="button" onClick={() => { update('category', c); setStep(2); }}
-                  className={`interactive-card tap-highlight min-h-[62px] min-w-0 rounded-2xl border px-4 py-3 text-start shadow-soft ${data.category === c ? 'border-navy bg-secondary' : 'border-border bg-white hover:border-navy/35 hover:bg-secondary/40'}`}>
+                <button key={c} type="button" onClick={() => { update('category', c); setStep(2); }} aria-pressed={selected}
+                  className={`interactive-card tap-highlight min-h-[62px] min-w-0 rounded-2xl border px-4 py-3 text-start shadow-soft ${selected ? 'border-[#00B59E]/55 bg-[#D0F2EE]/45 dark:bg-[#00B59E]/15' : 'border-border bg-white hover:border-[#00B59E]/35 hover:bg-secondary/40'}`}>
                   <div className="flex items-center gap-3">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl light-teal">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] dark:bg-[#00B59E]/15">
                       <Icon className="h-5 w-5 text-teal" />
                     </span>
                     <span className="min-w-0 flex-1 break-words text-[15px] font-bold leading-tight text-navy">{t(`cat_${c}`)}</span>
+                    {selected && <CheckCircle2 className="h-4 w-4 shrink-0 text-teal" aria-hidden="true" />}
                   </div>
                 </button>
               );
@@ -158,20 +160,21 @@ function PostProjectInner() {
           </div>
           <div className="grid gap-3.5 sm:grid-cols-2">
             <div>
-              <Label className="text-sm">{t('timeline')}</Label>
+              <Label className="text-sm">{t('timeline')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.timeline} onChange={e => update('timeline', e.target.value)} placeholder={t('timelinePh')} className="h-11 mt-1.5" />
             </div>
             <div>
-              <Label className="text-sm">{t('budget')}</Label>
+              <Label className="text-sm">{t('budget')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.budgetRange} onChange={e => update('budgetRange', e.target.value)} placeholder={t('budgetPh')} className="h-11 mt-1.5" />
             </div>
           </div>
           <div>
-            <Label className="text-sm">{t('uploadFilesLabel')}</Label>
+            <Label className="text-sm">{t('uploadFilesLabel')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
             <FileUploadDropzone
               className="mt-1.5"
               label={t('uploadFiles')}
               hint={t('uploadHint')}
+              hasFiles={data.files.length > 0}
               multiple
               onChange={onFiles}
               accept="image/*,application/pdf"
@@ -179,7 +182,7 @@ function PostProjectInner() {
             {data.files.length > 0 && (
               <div className="mt-2 space-y-1.5">
                 {data.files.map((f, i) => (
-                  <div key={i} className="flex min-h-11 items-center gap-2 text-xs bg-secondary rounded-xl ps-3 pe-1">
+                  <div key={i} className="flex min-h-11 items-center gap-2 rounded-xl border border-border/70 bg-secondary ps-3 pe-1 text-xs text-foreground">
                     <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
                     <span className="min-w-0 flex-1 truncate text-start">{f.name}</span>
                     <Button
@@ -211,20 +214,20 @@ function PostProjectInner() {
           <div className="grid gap-3.5 sm:grid-cols-2">
             <RequiredField label={t('name')} value={data.name} onChange={v => update('name', v)} tried={tried3} t={t} />
             <div>
-              <Label className="text-sm">{t('company')}</Label>
+              <Label className="text-sm">{t('company')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.company} onChange={e => update('company', e.target.value)} className="h-11 mt-1.5" />
             </div>
           </div>
           <div className="grid gap-3.5 sm:grid-cols-2">
             <RequiredField label={t('phone')} value={data.phone} onChange={v => update('phone', v)} tried={tried3} t={t} placeholder="+974 ..." kind="phone" />
             <div>
-              <Label className="text-sm">{t('email')}</Label>
+              <Label className="text-sm">{t('email')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.email} onChange={e => update('email', e.target.value)} className="h-11 mt-1.5" type="email" />
             </div>
           </div>
           <div className="grid gap-3.5 sm:grid-cols-2">
             <div>
-              <Label className="text-sm">{t('role')}</Label>
+              <Label className="text-sm">{t('role')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input value={data.role} onChange={e => update('role', e.target.value)} placeholder={t('rolePh')} className="h-11 mt-1.5" />
             </div>
             <div>
