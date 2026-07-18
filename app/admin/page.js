@@ -185,7 +185,7 @@ function AdminInner() {
           </CardContent>
         </Card>
       )}
-      <Tabs value={tab} onValueChange={setTab}>
+      <Tabs value={tab} onValueChange={setTab} dir={dir}>
         <TabsList className="mb-4 grid min-w-0 w-full grid-cols-2">
           <TabsTrigger value="projects" className="h-auto min-w-0 whitespace-normal px-2 py-2 leading-tight">
             {t('projects')} ({loadingData ? '…' : projects.length})
@@ -207,8 +207,8 @@ function AdminInner() {
                         <span className="min-w-0 break-words text-sm font-semibold leading-snug text-navy">{t(`cat_${p.category}`)}</span>
                         <StatusBadge status={p.status}>{t(`status_${p.status}`)}</StatusBadge>
                       </div>
-                      <div className="mt-0.5 line-clamp-2 break-words text-xs leading-relaxed text-muted-foreground" title={p.location}>{p.location}</div>
-                      <div className="line-clamp-2 break-words text-xs leading-relaxed text-muted-foreground">{p.description}</div>
+                      <div dir="auto" className="mt-0.5 line-clamp-2 break-words text-xs leading-relaxed text-muted-foreground" title={p.location}>{p.location}</div>
+                      <div dir="auto" className="line-clamp-2 break-words text-xs leading-relaxed text-muted-foreground">{p.description}</div>
                       <div className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground">
                         <CalendarClock className="h-3.5 w-3.5 shrink-0" />
                         <span className="min-w-0 break-words">{t('applicationTime')}: {formatAdminTime(p.createdAt, lang)}</span>
@@ -243,17 +243,21 @@ function AdminInner() {
               <Link key={c.id} href={`/admin/contractor/${c.id}`} className="block rounded-2xl ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
                 <Card className="interactive-card hover:border-[#00B59E]/45">
                   <CardContent className="p-3.5">
-                    <div className="flex flex-col gap-2.5 min-[390px]:flex-row min-[390px]:items-start min-[390px]:justify-between">
+                    <div className="flex flex-col gap-2.5 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="break-words text-sm font-semibold leading-snug text-navy">{c.companyName}</span>
+                        <span dir="auto" className="break-words text-sm font-semibold leading-snug text-navy">{c.companyName}</span>
                         <Badge variant="outline" className="max-w-full gap-1 whitespace-normal text-start text-[12px]">
                           <TypeIcon className="h-3 w-3 shrink-0" />
                           {providerTypeLabel(c, t)}
                         </Badge>
                         {c.verificationStatus === 'verified' && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" />}
                       </div>
-                      <div className="mt-0.5 break-words text-xs text-muted-foreground">{c.contactPerson} · {c.whatsapp}</div>
+                      <div className="mt-0.5 flex flex-wrap items-center gap-x-1 break-words text-xs text-muted-foreground">
+                        <span dir="auto">{c.contactPerson}</span>
+                        <span aria-hidden="true">·</span>
+                        <span dir="ltr" className="inline-block whitespace-nowrap">{c.whatsapp}</span>
+                      </div>
                       {isConsultant && (
                         <div className="mt-0.5 break-words text-[12px] text-muted-foreground">{consultantGradeLabel(c.consultantGrade, t)}</div>
                       )}
@@ -268,7 +272,7 @@ function AdminInner() {
                         {services.length > 3 && <span className="rounded-full border border-border bg-card px-2 py-1 text-[12px] font-semibold text-muted-foreground">+{services.length - 3}</span>}
                       </div>
                     </div>
-                    <div className="flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-2 min-[390px]:shrink-0 min-[390px]:justify-end min-[390px]:border-0 min-[390px]:pt-0">
+                    <div className="flex min-w-0 items-center justify-between gap-2 border-t border-border/70 pt-2 sm:shrink-0 sm:justify-end sm:border-0 sm:pt-0">
                       <StatusBadge status={c.verificationStatus}>{t(`cstatus_${c.verificationStatus}`)}</StatusBadge>
                       <Next className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                     </div>
