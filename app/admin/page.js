@@ -186,9 +186,13 @@ function AdminInner() {
         </Card>
       )}
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="grid w-full grid-cols-2 mb-4">
-          <TabsTrigger value="projects">{t('projects')} ({loadingData ? '…' : projects.length})</TabsTrigger>
-          <TabsTrigger value="contractors">{t('contractors')} ({loadingData ? '…' : contractors.length})</TabsTrigger>
+        <TabsList className="mb-4 grid min-w-0 w-full grid-cols-2">
+          <TabsTrigger value="projects" className="h-auto min-w-0 whitespace-normal px-2 py-2 leading-tight">
+            {t('projects')} ({loadingData ? '…' : projects.length})
+          </TabsTrigger>
+          <TabsTrigger value="contractors" className="h-auto min-w-0 whitespace-normal px-2 py-2 leading-tight">
+            {t('contractors')} ({loadingData ? '…' : contractors.length})
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="projects" className="space-y-2">
           {loadingData && <PageState kind="loading" compact title={t('loading')} />}

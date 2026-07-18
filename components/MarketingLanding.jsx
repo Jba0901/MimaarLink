@@ -52,7 +52,7 @@ export default function MarketingLanding({
             )}
             <h1 className="landing-hero-title motion-fade-up motion-delay-1 display-title mx-auto max-w-[23rem] text-[30px] sm:max-w-2xl sm:text-[42px] lg:text-[46px]">
               {words.join(' ')}{' '}
-              <span className="inline-block whitespace-nowrap text-teal">{accentWords.join(' ')}</span>
+              <span className="text-teal">{accentWords.join(' ')}</span>
             </h1>
             <p className="motion-fade-up motion-delay-2 mx-auto mt-3.5 max-w-lg text-[14.5px] leading-7 text-muted-foreground sm:mt-4 sm:text-[15px] sm:leading-relaxed">
               {subtitle}
@@ -100,7 +100,7 @@ export default function MarketingLanding({
               {popularTypes.map((p, i) => (
                 <span
                   key={i}
-                  className="flex min-h-11 items-center justify-center rounded-xl border border-border bg-secondary/70 px-2.5 py-2 text-center text-[12.5px] font-semibold leading-5 text-navy min-[390px]:rounded-2xl min-[390px]:px-3 sm:min-h-0 sm:rounded-full sm:px-4 sm:text-[13px]"
+                  className="flex min-h-11 min-w-0 items-center justify-center break-words rounded-xl border border-border bg-secondary/70 px-2.5 py-2 text-center text-[12.5px] font-semibold leading-5 text-navy min-[390px]:rounded-2xl min-[390px]:px-3 sm:min-h-0 sm:rounded-full sm:px-4 sm:text-[13px]"
                 >
                   {p}
                 </span>
