@@ -2,19 +2,16 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
-import PageState from '@/components/PageState';
-import SuccessPanel from '@/components/SuccessPanel';
 import FormProgress from '@/components/FormProgress';
-import FormAside from '@/components/FormAside';
-import FileUploadDropzone from '@/components/FileUploadDropzone';
+import DesktopFormAside from '@/components/DesktopFormAside';
 import InlineFieldMessage from '@/components/InlineFieldMessage';
+import { LazyFileUploadDropzone, LazyNativeSelect, LazySuccessPanel } from '@/components/LazyFormControls';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import NativeSelect from '@/components/NativeSelect';
 import { CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal, PencilLine } from 'lucide-react';
 import { toast } from 'sonner';
 import { fileSignature, MAX_FILE_SIZE_BYTES } from '@/lib/uploadLimits';
@@ -232,7 +229,7 @@ function PostProjectInner() {
           </div>
           <div>
             <Label className="text-sm">{t('uploadFilesLabel')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-            <FileUploadDropzone
+            <LazyFileUploadDropzone
               id="project-files"
               className="mt-1.5"
               label={data.files.length >= MAX_PROJECT_FILES ? `${data.files.length}/${MAX_PROJECT_FILES} ${t('files')}` : `${t('uploadFiles')} · ${data.files.length}/${MAX_PROJECT_FILES}`}
@@ -299,7 +296,7 @@ function PostProjectInner() {
             </div>
             <div>
               <Label htmlFor="project-preferred-language" className="text-sm">{t('preferredLanguage')}</Label>
-              <NativeSelect
+              <LazyNativeSelect
                 id="project-preferred-language"
                 value={data.languagePreference}
                 onChange={e => update('languagePreference', e.target.value)}
@@ -307,7 +304,7 @@ function PostProjectInner() {
               >
                 <option value="en">English</option>
                 <option value="ar">العربية</option>
-              </NativeSelect>
+              </LazyNativeSelect>
             </div>
           </div>
           <div className="grid grid-cols-1 gap-2 pt-2 min-[280px]:grid-cols-2">
@@ -319,7 +316,7 @@ function PostProjectInner() {
         </div>
       )}
         </div>
-        <FormAside
+        <DesktopFormAside
           steps={[
             { title: t('projL_s1'), desc: t('projL_s1d') },
             { title: t('projL_s2'), desc: t('projL_s2d') },
@@ -329,7 +326,7 @@ function PostProjectInner() {
         />
       </div>
       ) : (
-        <SuccessPanel
+        <LazySuccessPanel
           title={t('confirmation')}
           description={t('confirmationDesc')}
           referenceLabel={t('saveLink')}
@@ -412,5 +409,22 @@ function RequiredField({ id, label, value, onChange, tried, t, placeholder, inpu
 
 export default function PostProjectPage() {
   const { t } = useLang();
-  return <Suspense fallback={<AppShell hideFooter hideNav wide><PageState kind="loading" title={t('loading')} /></AppShell>}><PostProjectInner /></Suspense>;
+  return (
+    <Suspense fallback={<FormLoadingState title={t('loading')} />}>
+      <PostProjectInner />
+    </Suspense>
+  );
+}
+
+function FormLoadingState({ title }) {
+  return (
+    <AppShell hideFooter hideNav wide>
+      <div className="mx-auto flex min-h-[50dvh] w-full max-w-md items-center justify-center">
+        <div role="status" className="flex items-center gap-3 rounded-2xl border border-border bg-card px-5 py-4 text-sm font-bold text-navy shadow-soft">
+          <Loader2 className="h-5 w-5 animate-spin text-[#00B59E]" aria-hidden="true" />
+          <span>{title}</span>
+        </div>
+      </div>
+    </AppShell>
+  );
 }

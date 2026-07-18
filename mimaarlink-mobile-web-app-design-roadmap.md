@@ -27,9 +27,9 @@ The following was verified from source and a successful production build on 2026
 - There is no customer authentication, customer dashboard, live opportunity feed, notification center, service worker, web-app manifest, or install prompt yet.
 - The role-aware app-shell proposal is a decision brief only on `design/mobile-app-shell-review`; it has no runtime code and no production effect.
 - The palette-normalization proposal on `design/brand-palette-normalization-review` is a real global CSS change, but it is not merged.
-- The production build passes. The current build reports 145 kB on the homepage, 154 kB on `/post-project`, 153 kB on `/contractor`, 137 kB on project/provider status, 147 kB on bid comparison, and 87.1 kB shared by all routes. The two form routes are now slightly above the preferred 150 kB guardrail and need a focused public-bundle review before Phase 1.
+- The production build passes. The current build reports 145 kB on the homepage, 150 kB on both `/post-project` and `/contractor`, 137-138 kB on project/provider status, 147 kB on bid comparison, and 87.2 kB shared by all routes. Post-submit panels, later-step upload/select controls, and desktop-only form guidance are deferred without changing the approved mobile form hierarchy, bringing both public forms back to the preferred 150 kB build line.
 
-Rendered browser coverage now includes 240, 280, 320, 360, and 390 px phones, 768 px tablet, the 1024 px desktop-navigation breakpoint, and 1280 px desktop; Arabic and English; light and dark themes; short-height keyboard conditions; focus and validation; and reduced motion. Checked surfaces include the public shell and drawer, role selection, every owner and contractor/consultant onboarding step, populated project/provider status, populated bid comparison, long bilingual records, large prices, file rows, and missing/error states. The remaining gaps are dense admin states, interrupted-network behavior, 200% browser zoom, public-bundle reduction, and real-device verification.
+Rendered browser coverage now includes 240, 280, 320, 360, and 390 px phones, 768 px tablet, the 1024 px desktop-navigation breakpoint, and 1280 px desktop; Arabic and English; light and dark themes; short-height keyboard conditions; focus and validation; reduced motion; and 200% reflow-equivalent checks at a 640×360 CSS viewport. Checked surfaces include the public shell and drawer, role selection, every owner and contractor/consultant onboarding step, populated project/provider status, populated bid comparison, long bilingual records, large prices, file rows, and missing/error states. The remaining gaps are dense admin states, interrupted-network behavior, real-device verification, and production runtime performance measurement.
 
 ## Non-Negotiable Design Rules
 
@@ -178,11 +178,11 @@ Status: source-complete for the current visual sweep; rendered QA remains open.
 
 ### Phase 0B — Pre-app hardening
 
-Status: in progress. Populated public records and the complete onboarding screen inventory were rendered and hardened on 2026-07-19.
+Status: in progress. Populated public records, the complete onboarding screen inventory, the public-form bundle pass, and 200% reflow checks were completed on 2026-07-19.
 
-1. Complete the remaining rendered QA across dense admin states, interrupted-network behavior, 200% browser zoom, and real-device verification.
+1. Complete the remaining rendered QA across dense admin states, interrupted-network behavior, and real-device verification.
 2. Record and fix only evidence-backed overflow, hierarchy, spacing, focus, contrast, and touch issues.
-3. Bring `/post-project` and `/contractor` back below the preferred 150 kB first-load guardrail, and prevent admin-only interaction systems from returning to public form bundles.
+3. Keep `/post-project` and `/contractor` at or below the preferred 150 kB first-load build line, and prevent admin-only interaction systems from returning to public form bundles.
 4. Define visual states for interrupted forms, invalid saved links, offline entry, and slow uploads.
 5. Keep PWA installation and caching out of this phase.
 

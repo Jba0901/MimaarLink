@@ -2,19 +2,16 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
-import PageState from '@/components/PageState';
-import SuccessPanel from '@/components/SuccessPanel';
 import FormProgress from '@/components/FormProgress';
-import FormAside from '@/components/FormAside';
-import FileUploadDropzone from '@/components/FileUploadDropzone';
+import DesktopFormAside from '@/components/DesktopFormAside';
 import InlineFieldMessage from '@/components/InlineFieldMessage';
+import { LazyFileUploadDropzone, LazyNativeSelect, LazySuccessPanel } from '@/components/LazyFormControls';
 import { useLang } from '@/lib/LangContext';
 import { CATEGORIES, CONSULTANT_CATEGORIES, CONSULTANT_GRADES } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import NativeSelect from '@/components/NativeSelect';
 import { CheckCircle2, X, Loader2, FileText, Building2, ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { fileSignature, MAX_FILE_SIZE_BYTES } from '@/lib/uploadLimits';
@@ -30,9 +27,22 @@ const MAX_PROVIDER_FILES_PER_FIELD = 3;
 export default function ContractorPage() {
   const { t } = useLang();
   return (
-    <Suspense fallback={<AppShell hideFooter hideNav wide><PageState kind="loading" title={t('loading')} /></AppShell>}>
+    <Suspense fallback={<FormLoadingState title={t('loading')} />}>
       <ContractorApplicationInner />
     </Suspense>
+  );
+}
+
+function FormLoadingState({ title }) {
+  return (
+    <AppShell hideFooter hideNav wide>
+      <div className="mx-auto flex min-h-[50dvh] w-full max-w-md items-center justify-center">
+        <div role="status" className="flex items-center gap-3 rounded-2xl border border-border bg-card px-5 py-4 text-sm font-bold text-navy shadow-soft">
+          <Loader2 className="h-5 w-5 animate-spin text-[#00B59E]" aria-hidden="true" />
+          <span>{title}</span>
+        </div>
+      </div>
+    </AppShell>
   );
 }
 
@@ -224,7 +234,7 @@ function ContractorApplicationInner() {
   if (done) return (
     <AppShell hideFooter hideNav wide>
       {createdId && (
-        <SuccessPanel
+        <LazySuccessPanel
           title={t('contractorDone')}
           description={isConsultant ? t('consultantDoneDesc') : t('contractorDoneDesc')}
           referenceLabel={t('saveProviderLink')}
@@ -296,7 +306,7 @@ function ContractorApplicationInner() {
           {isConsultant && (
             <div>
               <Label htmlFor="consultant-grade" className="text-sm">{t('consultantGrade')}</Label>
-              <NativeSelect
+              <LazyNativeSelect
                 id="consultant-grade"
                 value={data.consultantGrade || 'unknown'}
                 onChange={e => update('consultantGrade', e.target.value)}
@@ -305,7 +315,7 @@ function ContractorApplicationInner() {
                 {CONSULTANT_GRADES.map(g => (
                   <option key={g} value={g}>{t(g === 'unknown' ? 'gradeUnknown' : g === 'grade_a' ? 'gradeA' : g === 'grade_b' ? 'gradeB' : 'gradeC')}</option>
                 ))}
-              </NativeSelect>
+              </LazyNativeSelect>
             </div>
           )}
           <div>
@@ -386,7 +396,7 @@ function ContractorApplicationInner() {
                   {it.label}{it.required && <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>}
                   {!it.required && <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>}
                 </Label>
-                <FileUploadDropzone
+                <LazyFileUploadDropzone
                   id={`provider-document-${it.key}`}
                   className="mt-1.5 min-h-[72px]"
                   label={fileLimitReached ? `${filesForLabel.length}/${MAX_PROVIDER_FILES_PER_FIELD} ${t('files')}` : `${t('uploadFiles')} · ${filesForLabel.length}/${MAX_PROVIDER_FILES_PER_FIELD}`}
@@ -436,7 +446,7 @@ function ContractorApplicationInner() {
         </div>
       )}
         </div>
-        <FormAside
+        <DesktopFormAside
           steps={[
             { title: t('contL_s1'), desc: t('contL_s1d') },
             { title: t('contL_s2'), desc: t('contL_s2d') },
