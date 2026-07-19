@@ -167,7 +167,6 @@ function ContractorApplicationInner() {
         return;
       }
       if (!hasCR) {
-        toast.error(t('uploadCR') + ' — ' + t('requireField'));
         focusFormField('provider-document-cr');
       }
       return;
