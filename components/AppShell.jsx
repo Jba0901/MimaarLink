@@ -345,7 +345,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
     >
       <button
         type="button"
-        className={`absolute inset-0 bg-[#07111D]/35 backdrop-blur-[5px] transition-opacity duration-300 dark:bg-black/60 ${
+        className={`absolute inset-0 bg-[#07111D]/45 backdrop-blur-[5px] transition-opacity duration-300 dark:bg-black/60 ${
           open ? 'opacity-100' : 'opacity-0'
         }`}
         aria-hidden="true"
