@@ -40,7 +40,7 @@ export default function MarketingLanding({
 
   return (
     <AppShell hideNav wide>
-      <div className="v2-ambient -mx-4 sm:-mx-6 px-4 sm:px-6">
+      <div className="landing-ambient v2-ambient -mx-4 px-4 sm:-mx-6 sm:px-6">
         {/* ============ HERO ============ */}
         <section className="landing-hero relative z-10 pb-8 pt-3 text-center sm:pb-10 sm:pt-6 lg:pb-12 lg:pt-14">
           <div className="mx-auto max-w-2xl">

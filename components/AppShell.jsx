@@ -141,7 +141,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         }`}
       >
         <div className="container-x relative h-16 sm:h-[68px] flex items-center justify-between gap-2">
-          <Link href="/" aria-label={t('appName')} className="flex min-h-11 items-center gap-2 rounded-xl sm:gap-2.5 min-w-0 shrink tap-highlight">
+          <Link href="/" aria-label={t('appName')} className="flex min-h-11 min-w-11 items-center gap-2 rounded-xl sm:gap-2.5 shrink tap-highlight">
             <Logo className="h-8 w-8 sm:h-10 sm:w-10" priority />
             <span className="max-[263px]:hidden"><BrandText size={17} onDark={isDark} /></span>
           </Link>
@@ -358,13 +358,13 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
         role="dialog"
         aria-modal="true"
         aria-label={copy.menu}
-        className={`absolute bottom-0 top-0 ${rtl ? 'left-0' : 'right-0'} w-[min(88vw,390px)] overflow-y-auto border-s border-border bg-card text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.24)] transition-transform duration-300 ease-out ${
+        className={`absolute bottom-0 top-0 ${rtl ? 'left-0' : 'right-0'} w-[min(88vw,390px)] overflow-x-hidden overflow-y-auto border-s border-border bg-card text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.24)] transition-transform duration-300 ease-out ${
           open ? 'translate-x-0' : rtl ? '-translate-x-full' : 'translate-x-full'
         }`}
       >
         <div className="menu-drawer-content min-h-full">
           <div className="flex items-center justify-between gap-3">
-            <Link href="/" aria-label={t('appName')} className="flex min-h-11 items-center gap-2.5 rounded-xl min-w-0 tap-highlight">
+            <Link href="/" aria-label={t('appName')} className="flex min-h-11 min-w-11 items-center gap-2.5 rounded-xl tap-highlight">
               <Logo className="h-9 w-9" />
               <span className="max-[263px]:hidden"><BrandText size={17} onDark={isDark} /></span>
             </Link>
@@ -397,7 +397,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
 
           <div className="mt-6">
             <p className="mb-2.5 text-[12px] font-extrabold text-muted-foreground">{copy.moreLinks}</p>
-            <div className="grid grid-cols-2 gap-2.5">
+            <div className="grid grid-cols-2 gap-2.5 max-[263px]:grid-cols-1">
               {secondaryItems.map((item) => (
                 <SecondaryDrawerLink key={item.href} item={item} active={isActive(item.href)} />
               ))}
@@ -458,20 +458,20 @@ function ActionTile({ item, active }) {
       href={item.href}
       data-tone={item.accent}
       aria-current={active ? 'page' : undefined}
-      className={`group path-card flex items-center gap-3 rounded-[1.25rem] border px-3.5 py-3 transition-all tap-highlight ${
+      className={`group path-card flex items-center gap-3 rounded-[1.25rem] border px-3.5 py-3 transition-all tap-highlight max-[263px]:gap-2 max-[263px]:px-2.5 ${
         active
           ? `${accent.active} shadow-soft`
           : 'hover:-translate-y-0.5 hover:border-[#00B59E]/35 hover:shadow-card'
       }`}
     >
-      <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${accent.icon}`}>
+      <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl max-[263px]:h-10 max-[263px]:w-10 ${accent.icon}`}>
         <Icon className="h-5 w-5" />
       </span>
       <span className="min-w-0 flex-1">
         <span className="block text-[16px] font-extrabold text-navy leading-snug">{item.label}</span>
         <span className="mt-0.5 block text-[12px] font-semibold text-muted-foreground">{item.helper}</span>
       </span>
-      <ArrowUpRight className={`h-[18px] w-[18px] shrink-0 text-muted-foreground transition-transform ${dir === 'rtl' ? '-scale-x-100 group-hover:-translate-x-0.5' : 'group-hover:translate-x-0.5'}`} />
+      <ArrowUpRight className={`h-[18px] w-[18px] shrink-0 text-muted-foreground transition-transform max-[263px]:hidden ${dir === 'rtl' ? '-scale-x-100 group-hover:-translate-x-0.5' : 'group-hover:translate-x-0.5'}`} />
     </Link>
   );
 }
@@ -559,10 +559,10 @@ function SiteFooter({ flush = false, reserveMobileNav = false }) {
           <div>
             <h4 className="mb-2 text-[12px] font-bold uppercase tracking-wide text-white/60">{t('startEyebrow')}</h4>
             <ul className="text-[13px] font-semibold text-white/75">
-              <li><Link href="/post-project" className="inline-flex min-h-11 items-center transition-colors hover:text-white">{t('postProject')}</Link></li>
-              <li><Link href="/contractor" className="inline-flex min-h-11 items-center transition-colors hover:text-white">{t('providerTypeContractor')}</Link></li>
-              <li><Link href="/contractor?type=consultant" className="inline-flex min-h-11 items-center transition-colors hover:text-white">{t('providerTypeConsultant')}</Link></li>
-              <li><Link href="/start-here" className="inline-flex min-h-11 items-center transition-colors hover:text-white">{t('startTitle')}</Link></li>
+              <li><Link href="/post-project" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-white">{t('postProject')}</Link></li>
+              <li><Link href="/contractor" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-white">{t('providerTypeContractor')}</Link></li>
+              <li><Link href="/contractor?type=consultant" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-white">{t('providerTypeConsultant')}</Link></li>
+              <li><Link href="/start-here" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-white">{t('startTitle')}</Link></li>
             </ul>
           </div>
 

@@ -278,6 +278,11 @@
   .menu-drawer-content {
     padding: max(1.25rem, env(safe-area-inset-top)) max(1.25rem, env(safe-area-inset-right)) max(1.25rem, env(safe-area-inset-bottom)) 1.25rem;
   }
+  @media (max-width: 263px) {
+    .menu-drawer-content {
+      padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+    }
+  }
   @media (min-width: 640px) {
     .container-x {
       padding-left: max(1.5rem, env(safe-area-inset-left));
@@ -859,12 +864,32 @@
   }
 
   .landing-hero-action {
-    margin-top: 0.5rem !important;
+    margin-top: 0.25rem !important;
   }
 
   .landing-hero-subtext {
     margin-top: 0.375rem !important;
     font-size: 0.6875rem !important;
+    line-height: 1rem !important;
+  }
+}
+
+@media (max-width: 263px) and (max-height: 480px) {
+  .landing-ambient {
+    margin-top: -1rem;
+  }
+
+  .landing-hero-eyebrow {
+    margin-bottom: 0.25rem !important;
+  }
+
+  .landing-hero-title {
+    font-size: 1.25rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .landing-hero-subtitle {
+    font-size: 0.71875rem !important;
     line-height: 1rem !important;
   }
 }
