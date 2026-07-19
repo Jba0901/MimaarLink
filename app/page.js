@@ -34,11 +34,11 @@ export default function HomePage() {
       {/* ============ HERO ============ */}
       <section className="v2-ambient">
         <div className="container-x relative z-10 pb-10 pt-6 sm:pb-14 sm:pt-10 lg:pb-24 lg:pt-20">
-          <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <div className="motion-fade-up mb-4 inline-flex items-center gap-1.5 rounded-full border border-[#00B59E]/25 bg-[#00B59E]/8 px-3 py-1.5 text-[12px] font-bold leading-snug text-navy sm:mb-6 sm:px-3.5 sm:text-[12.5px]">
+          <div className="grid min-w-0 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="min-w-0">
+              <div className="motion-fade-up mb-4 inline-flex max-w-full min-w-0 items-center gap-1.5 rounded-full border border-[#00B59E]/25 bg-[#00B59E]/8 px-3 py-1.5 text-[12px] font-bold leading-snug text-navy sm:mb-6 sm:px-3.5 sm:text-[12.5px]">
                 <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
-                {t('heroBadge')}
+                <span className="min-w-0 break-words">{t('heroBadge')}</span>
               </div>
 
               <h1 className="motion-fade-up motion-delay-1 display-title break-words text-[31px] min-[390px]:text-[34px] sm:text-[48px] lg:text-[58px]">
