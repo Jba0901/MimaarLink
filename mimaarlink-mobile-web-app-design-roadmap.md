@@ -55,7 +55,15 @@ Compared with the first production run, the deployed fix reduced homepage LCP by
 
 The remaining 2.59-second LCP was the market-section subtitle already inside the first phone viewport. Its Lighthouse breakdown attributed about 1.92 seconds to element render delay: the shared scroll-reveal pattern kept this text transparent until client-side intersection observation ran. Commit `75afbcf` removes that reveal only from the phone-sized market band, leaving tablet and desktop motion unchanged. It passed Arabic/light and English/dark rendering at 320 and 390 px and a production build.
 
-Vercel has not yet promoted `75afbcf` because its deployment hit the project build-rate limit; the production site therefore still serves the first optimization stylesheet and the live audit of the second refinement remains pending. PageSpeed field data was also unavailable because the public endpoint returned HTTP 429, and no project-owned real-user telemetry was found. Therefore LCP, INP, and CLS acceptance is not yet proven from real users.
+Vercel promoted `75afbcf` through the later `291a82a` checkpoint, changing the live production stylesheet to `c71a82944cfd2e5d.css` plus `fb79fdaa6ffd9208.css`. Three production mobile runs after that promotion produced this median:
+
+| Route | Performance | FCP | LCP | Speed Index | CLS | TBT | Transfer |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `/` | 95 | 1.50 s | 2.66 s | 3.10 s | 0.004 | 7 ms | 359 kB |
+
+The trace-observed median paint improved from 2.11 seconds to 1.73 seconds, about 18%, and its median reveal delay fell from 1.98 seconds to 1.57 seconds. The throttling-model headline LCP remained above the 2.5-second target and varied from 2.59 to 2.70 seconds, so the target is still open. Making the counters visible sooner also exposed a very small layout shift from their mobile count-up animation. Commit `a922144` keeps those counters static on phones while preserving their final values and desktop animation; its production build passed, but its Vercel deployment is rate-limited and its live verification remains pending.
+
+PageSpeed field data was also unavailable because the public endpoint returned HTTP 429, and no project-owned real-user telemetry was found. Therefore LCP, INP, and CLS acceptance is not yet proven from real users.
 
 ## Non-Negotiable Design Rules
 
@@ -208,7 +216,7 @@ Status: source-complete for the current visual sweep; rendered QA remains open.
 Status: in progress. Populated public records, the complete onboarding screen inventory, the public-form bundle pass, 200% reflow checks, dense-admin stress QA, slow file-preparation presentation, interrupted-submission recovery, explicit offline/reconnected form states, and the first production mobile lab audit were completed on 2026-07-19.
 
 1. Complete the remaining real-device verification when a physical device bridge is available.
-2. Promote `75afbcf` after the Vercel build-rate limit clears, then run three production mobile audits and report the median before claiming that the homepage is below the 2.5-second LCP target.
+2. Promote `a922144` after the Vercel build-rate limit clears, then verify in three production mobile audits that the phone counter shift is removed. Keep the 2.5-second headline LCP target open until a three-run median proves it.
 3. Add or obtain project-owned real-user telemetry before claiming field LCP, INP, or CLS targets.
 4. Record and fix only evidence-backed overflow, hierarchy, spacing, focus, contrast, touch, and loading issues.
 5. Keep `/post-project` and `/contractor` at or below the preferred 150 kB first-load build line, and prevent admin-only interaction systems from returning to public form bundles.
