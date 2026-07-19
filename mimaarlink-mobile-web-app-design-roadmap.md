@@ -29,7 +29,7 @@ The following was verified from source and a successful production build on 2026
 - The palette-normalization proposal on `design/brand-palette-normalization-review` is a real global CSS change, but it is not merged.
 - The production build passes. The current build reports 145 kB on the homepage, 150 kB on both `/post-project` and `/contractor`, 137-138 kB on project/provider status, 147 kB on bid comparison, and 87.2 kB shared by all routes. Post-submit panels, later-step upload/select controls, and desktop-only form guidance are deferred without changing the approved mobile form hierarchy, bringing both public forms back to the preferred 150 kB build line.
 
-Rendered browser coverage now includes 240, 280, 320, 360, and 390 px phones, 768 px tablet, the 1024 px desktop-navigation breakpoint, and 1280 px desktop; Arabic and English; light and dark themes; short-height keyboard conditions; focus and validation; reduced motion; and 200% reflow-equivalent checks at a 640×360 CSS viewport. Checked surfaces include the public shell and drawer, role selection, every owner and contractor/consultant onboarding step, populated project/provider status, populated bid comparison, dense admin lists and details, long bilingual records, large prices, file rows, missing/error states, slow local file preparation, an actually interrupted submission request with entered data retained, and live offline/reconnected events on both public forms. The remaining gaps are physical-device verification, the production audit of the latest mobile LCP refinement, and real-user performance telemetry.
+Rendered browser coverage now includes 240, 280, 320, 360, 390, and 430 px phones, 768 px tablet, the 1024 px desktop-navigation breakpoint, and 1280 px desktop; Arabic and English; light and dark themes; short-height keyboard conditions; focus and validation; reduced motion; and 200% reflow-equivalent checks at a 640×360 CSS viewport. Checked surfaces include the public shell and drawer, role selection, every owner and contractor/consultant onboarding step, populated project/provider status, populated bid comparison, dense admin lists and details, long bilingual records, large prices, file rows, mobile footer endings with and without the bottom navigation, missing/error states, slow local file preparation, an actually interrupted submission request with entered data retained, and live offline/reconnected events on both public forms. The remaining gaps are physical-device verification and real-user performance telemetry.
 
 ### Production mobile lab checkpoint
 
@@ -61,7 +61,17 @@ Vercel promoted `75afbcf` through the later `291a82a` checkpoint, changing the l
 |---|---:|---:|---:|---:|---:|---:|---:|
 | `/` | 95 | 1.50 s | 2.66 s | 3.10 s | 0.004 | 7 ms | 359 kB |
 
-The trace-observed median paint improved from 2.11 seconds to 1.73 seconds, about 18%, and its median reveal delay fell from 1.98 seconds to 1.57 seconds. The throttling-model headline LCP remained above the 2.5-second target and varied from 2.59 to 2.70 seconds, so the target is still open. Making the counters visible sooner also exposed a very small layout shift from their mobile count-up animation. Commit `a922144` keeps those counters static on phones while preserving their final values and desktop animation; its production build passed, but its Vercel deployment is rate-limited and its live verification remains pending.
+The trace-observed median paint improved from 2.11 seconds to 1.73 seconds, about 18%, and its median reveal delay fell from 1.98 seconds to 1.57 seconds. The throttling-model headline LCP remained above the 2.5-second target and varied from 2.59 to 2.70 seconds, so the target stayed open. Making the counters visible sooner also exposed a very small layout shift from their mobile count-up animation. Commit `a922144` keeps those counters static on phones while preserving their final values and desktop animation.
+
+Vercel promoted `a922144` through the later `fe8e033` footer-continuity checkpoint. Production changed to `d3400c48e23dafdc.css` plus `fb79fdaa6ffd9208.css`. Three production mobile runs after that promotion produced this median:
+
+| Route | Performance | FCP | LCP | Trace-observed LCP | Speed Index | CLS | TBT | Transfer |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `/` | 96 | 1.23 s | 2.58 s | 1.50 s | 2.83 s | 0.00027 | 0 ms | 359 kB |
+
+Commit `fe8e033` also moves the mobile-navigation reserve inside the footer surface when a footer is present. This removes the trailing white strip below the navy footer while keeping the same protected scroll space above the fixed navigation. It passed Arabic/light and English/dark rendering at 360×800 and 430×932, the 1024 px desktop-navigation breakpoint, footer pages with and without mobile navigation, and the production build.
+
+The animated-counter shift is gone. The remaining negligible layout shift came from the market source line, not a counter, and remained far below the 0.1 acceptance limit. The headline LCP median remains about 84 ms above the 2.5-second target, so that target is still open even though the trace-observed median is 1.50 seconds.
 
 PageSpeed field data was also unavailable because the public endpoint returned HTTP 429, and no project-owned real-user telemetry was found. Therefore LCP, INP, and CLS acceptance is not yet proven from real users.
 
@@ -216,7 +226,7 @@ Status: source-complete for the current visual sweep; rendered QA remains open.
 Status: in progress. Populated public records, the complete onboarding screen inventory, the public-form bundle pass, 200% reflow checks, dense-admin stress QA, slow file-preparation presentation, interrupted-submission recovery, explicit offline/reconnected form states, and the first production mobile lab audit were completed on 2026-07-19.
 
 1. Complete the remaining real-device verification when a physical device bridge is available.
-2. Promote `a922144` after the Vercel build-rate limit clears, then verify in three production mobile audits that the phone counter shift is removed. Keep the 2.5-second headline LCP target open until a three-run median proves it.
+2. Keep the 2.5-second headline LCP target open until a three-run production median proves it; any next refinement must address the remaining initial text-paint or critical-request path rather than reintroducing image weight or delayed reveals.
 3. Add or obtain project-owned real-user telemetry before claiming field LCP, INP, or CLS targets.
 4. Record and fix only evidence-backed overflow, hierarchy, spacing, focus, contrast, touch, and loading issues.
 5. Keep `/post-project` and `/contractor` at or below the preferred 150 kB first-load build line, and prevent admin-only interaction systems from returning to public form bundles.
