@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from 'react';
  * the real value shows even if IntersectionObserver / rAF misbehave — a stat
  * can never get stuck at 0. The count-up is a pure enhancement. RTL-safe.
  */
-export default function CountUp({ value, duration = 1400, className = '' }) {
+export default function CountUp({ value, duration = 1400, className = '', staticBelow = 0 }) {
   const ref = useRef(null);
   const [display, setDisplay] = useState(value);
 
@@ -30,8 +30,11 @@ export default function CountUp({ value, duration = 1400, className = '' }) {
     const reduced = typeof window !== 'undefined'
       && window.matchMedia
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const staticViewport = staticBelow > 0
+      && window.matchMedia
+      && window.matchMedia(`(max-width: ${staticBelow - 1}px)`).matches;
 
-    if (reduced || typeof IntersectionObserver === 'undefined') {
+    if (reduced || staticViewport || typeof IntersectionObserver === 'undefined') {
       setDisplay(format(target));
       return;
     }
@@ -73,7 +76,7 @@ export default function CountUp({ value, duration = 1400, className = '' }) {
       clearTimeout(safety);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [value]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [value, staticBelow]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <span ref={ref} className={className}>

@@ -267,7 +267,7 @@ function MarketBand({ t }) {
                   </span>
                   <div className="min-w-0 flex-1">
                     {s.animate
-                      ? <CountUp value={s.value} className="block text-[27px] font-black leading-none text-white sm:mt-4 sm:text-[32px]" />
+                      ? <CountUp value={s.value} staticBelow={641} className="block text-[27px] font-black leading-none text-white sm:mt-4 sm:text-[32px]" />
                       : <span className="block text-[27px] font-black leading-none text-white sm:mt-4 sm:text-[32px]"><bdi dir="ltr">{s.value}</bdi></span>}
                     <p className="mt-1.5 text-[12px] leading-5 text-white/70 sm:mt-2.5 sm:leading-relaxed">{s.label}</p>
                   </div>
