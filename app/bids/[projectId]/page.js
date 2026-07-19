@@ -124,8 +124,8 @@ export default function BidsPage() {
                       <div className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Wallet className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('price')}</span></div>
                       <div className="mt-1 min-w-0 text-navy" dir="ltr">
                         <span className="inline-flex min-w-0 max-w-full items-baseline gap-1">
-                          <span className="min-w-0 break-all text-[22px] font-extrabold leading-none tabular-nums sm:text-[24px]">{b.price.toLocaleString()}</span>
-                          <span className="shrink-0 text-xs font-semibold text-muted-foreground">{t('currencyQar')}</span>
+                          <span className="min-w-0 break-all text-[22px] font-extrabold leading-none tabular-nums max-[263px]:text-[18px] sm:text-[24px]">{b.price.toLocaleString()}</span>
+                          <span className="shrink-0 text-xs font-semibold text-muted-foreground max-[319px]:hidden">{t('currencyQar')}</span>
                         </span>
                       </div>
                     </div>
