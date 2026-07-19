@@ -902,6 +902,11 @@
     padding-bottom: 2.5rem !important;
   }
 
+  .marketing-consent-panel {
+    bottom: calc(0.75rem + env(safe-area-inset-bottom)) !important;
+    max-height: calc(100dvh - 1.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
+  }
+
   .page-state-layout:not(.page-state-full) {
     min-height: 0 !important;
     align-items: flex-start;
