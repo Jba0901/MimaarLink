@@ -33,6 +33,8 @@ Rendered browser coverage now includes 240, 280, 320, 360, 390, and 430 px phone
 
 The compact-width coverage now also includes the homepage hero, fixed three-tab navigation, and footer ending at 240×568 in Arabic/RTL and English/LTR across light and dark themes.
 
+The same 240×568 compact pass now covers role selection, all three owner-form steps, all three provider-form steps, privacy settings, and provider document validation in both language directions and themes. The form controls retain 44 px targets with no horizontal overflow. A 240×320 keyboard-height pass also confirmed that owner contact inputs remain visible when focused. Commit `5622b22` removes the duplicate floating toast from missing-CR validation because it overlapped the required upload card at that height; the existing focused inline error remains visible, translated, and announced in Arabic/light and English/dark.
+
 ### Production mobile lab checkpoint
 
 The first repeatable production mobile lab audit was recorded on 2026-07-19 against `https://mimaarlink.com`. These are Lighthouse lab measurements, not field Core Web Vitals.
