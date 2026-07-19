@@ -79,7 +79,15 @@ Vercel promoted `ebfccb5` through `b101fdc`, changing production to `a3d5eadd805
 
 Commit `c809a66` removes a separate 240×568 homepage overflow caused by the hero badge and action group imposing their minimum-content width on the one-column grid. The hero column can now shrink to the available inline space and the badge wraps within it. Arabic/RTL and English/LTR passed at 240×568 in light and dark themes with no horizontal overflow; the three-tab navigation remained readable, the privacy/footer ending cleared the fixed navigation, and the standard 390×844 Arabic/light layout remained unchanged. The production build passed with the same 145 kB homepage and 150 kB public-form first-load sizes. The direct deployment attempt was rate-limited, but Vercel then promoted the later `a0a9ed` documentation checkpoint containing the fix. A cache-bypassed production response returned HTTP 200 and contained both the bounded hero grid and badge classes, so the visual correction is live.
 
-The animated-counter shift is gone. The remaining negligible layout shift came from the market source line, not a counter, and remained far below the 0.1 acceptance limit. The headline LCP median remains about 84 ms above the 2.5-second target, so that target is still open even though the trace-observed median is 1.50 seconds.
+The animated-counter shift is gone. The remaining negligible layout shift came from the market source line, not a counter, and remained far below the 0.1 acceptance limit. At that checkpoint, the headline LCP median was about 84 ms above the 2.5-second target even though the trace-observed median was 1.50 seconds.
+
+A fresh three-run production audit after the compact-hero promotion produced the first passing headline median without another source change:
+
+| Route | Performance | FCP | LCP | Trace-observed LCP | Speed Index | CLS | TBT | Transfer |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `/` | 97 | 1.24 s | 2.476 s | 1.321 s | 2.39 s | 0.00027 | 0 ms | 358.5 kB |
+
+All three runs scored 97, the individual headline LCP results were 2.542, 2.441, and 2.476 seconds, and none requested the removed mobile skyline image. The three-run median is 24 ms below the 2.5-second lab target, so the agreed mobile lab LCP checkpoint now passes. The margin is narrow and remains a lab result; future visual work must preserve it and project-owned field telemetry is still required before claiming real-user Core Web Vitals acceptance.
 
 PageSpeed field data was also unavailable because the public endpoint returned HTTP 429, and no project-owned real-user telemetry was found. Therefore LCP, INP, and CLS acceptance is not yet proven from real users.
 
@@ -234,7 +242,7 @@ Status: source-complete for the current visual sweep; rendered QA remains open.
 Status: in progress. Populated public records, the complete onboarding screen inventory, the public-form bundle pass, 200% reflow checks, dense-admin stress QA, slow file-preparation presentation, interrupted-submission recovery, explicit offline/reconnected form states, and the first production mobile lab audit were completed on 2026-07-19.
 
 1. Complete the remaining real-device verification when a physical device bridge is available.
-2. Keep the 2.5-second headline LCP target open until a three-run production median proves it; any next refinement must address the remaining initial text-paint or critical-request path rather than reintroducing image weight or delayed reveals.
+2. Preserve the passing 2.476-second three-run production median and re-test after any first-viewport, font, motion, or critical-request change; do not reintroduce mobile skyline image weight or delayed market text.
 3. Add or obtain project-owned real-user telemetry before claiming field LCP, INP, or CLS targets.
 4. Record and fix only evidence-backed overflow, hierarchy, spacing, focus, contrast, touch, and loading issues.
 5. Keep `/post-project` and `/contractor` at or below the preferred 150 kB first-load build line, and prevent admin-only interaction systems from returning to public form bundles.
