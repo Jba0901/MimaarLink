@@ -39,6 +39,8 @@ Populated saved-link coverage now also reaches 240×568 for project status, prov
 
 The role-specific acquisition landings at `/for-projects` and `/for-contractors` now have explicit compact coverage at 240×320, 240×568, 320×360, and 320×568 in both language directions and themes. Commit `eb8e5f9` removes the 240 px menu drawer's internal horizontal scrollbar, gives its quick actions enough width to keep bilingual labels readable, stacks secondary links at that width, and preserves 44 px interactive targets. The same checkpoint gives the ultra-short landing hero a deliberate 240-class type treatment so the owner and provider primary actions are fully visible without weakening the standard 240×568 hierarchy. Both acquisition routes remain 125 kB first-load in the production build.
 
+Route-edge coverage now includes the standalone global 404 and the direct `/consultant` shortcut. Arabic/light and English/dark 404 states retain their complete message and 44 px return action at 240×320, 240×568, and 320×320. Commit `11ac122` removes an unnecessary compact-height scrollbar by tightening only the full-screen state's outer safe-area padding below 264 px and 361 px high; the standard-height treatment remains unchanged. The consultant shortcut resolves directly to `/contractor?type=consultant`, selects the consultant-office type, and remains horizontally contained at 240×568.
+
 ### Production mobile lab checkpoint
 
 The first repeatable production mobile lab audit was recorded on 2026-07-19 against `https://mimaarlink.com`. These are Lighthouse lab measurements, not field Core Web Vitals.
