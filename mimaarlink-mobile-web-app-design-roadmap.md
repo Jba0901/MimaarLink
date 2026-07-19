@@ -29,11 +29,13 @@ The following was verified from source and a successful production build on 2026
 - The palette-normalization proposal on `design/brand-palette-normalization-review` is a real global CSS change, but it is not merged.
 - The production build passes. The current build reports 145 kB on the homepage, 150 kB on both `/post-project` and `/contractor`, 137-138 kB on project/provider status, 147 kB on bid comparison, and 87.2 kB shared by all routes. Post-submit panels, later-step upload/select controls, and desktop-only form guidance are deferred without changing the approved mobile form hierarchy, bringing both public forms back to the preferred 150 kB build line.
 
-Rendered browser coverage now includes 240, 280, 320, 360, and 390 px phones, 768 px tablet, the 1024 px desktop-navigation breakpoint, and 1280 px desktop; Arabic and English; light and dark themes; short-height keyboard conditions; focus and validation; reduced motion; and 200% reflow-equivalent checks at a 640×360 CSS viewport. Checked surfaces include the public shell and drawer, role selection, every owner and contractor/consultant onboarding step, populated project/provider status, populated bid comparison, dense admin lists and details, long bilingual records, large prices, file rows, missing/error states, slow local file preparation, an actually interrupted submission request with entered data retained, and live offline/reconnected events on both public forms. The remaining gaps are physical-device verification, the production post-fix audit, and real-user performance telemetry.
+Rendered browser coverage now includes 240, 280, 320, 360, and 390 px phones, 768 px tablet, the 1024 px desktop-navigation breakpoint, and 1280 px desktop; Arabic and English; light and dark themes; short-height keyboard conditions; focus and validation; reduced motion; and 200% reflow-equivalent checks at a 640×360 CSS viewport. Checked surfaces include the public shell and drawer, role selection, every owner and contractor/consultant onboarding step, populated project/provider status, populated bid comparison, dense admin lists and details, long bilingual records, large prices, file rows, missing/error states, slow local file preparation, an actually interrupted submission request with entered data retained, and live offline/reconnected events on both public forms. The remaining gaps are physical-device verification, the production audit of the latest mobile LCP refinement, and real-user performance telemetry.
 
 ### Production mobile lab checkpoint
 
-The first repeatable production mobile lab audit was recorded on 2026-07-19 against `https://mimaarlink.com`. These are Lighthouse lab measurements, not field Core Web Vitals:
+The first repeatable production mobile lab audit was recorded on 2026-07-19 against `https://mimaarlink.com`. These are Lighthouse lab measurements, not field Core Web Vitals.
+
+Before the mobile homepage optimization:
 
 | Route | Performance | LCP | CLS | TBT | Transfer |
 |---|---:|---:|---:|---:|---:|
@@ -43,7 +45,17 @@ The first repeatable production mobile lab audit was recorded on 2026-07-19 agai
 
 The homepage LCP was the decorative Qatar skyline band at the bottom of the first mobile viewport. Its image request transferred about 262 kB. Commit `d1e5748` keeps the skyline artwork on larger screens but replaces it on phones with a no-request navy/teal atmospheric gradient. The change passed 320 and 390 px Arabic/light and English/dark rendering, the production build, and a local mobile network audit confirming zero skyline-image requests.
 
-The production alias has not deployed `d1e5748`: Vercel reported `build-rate-limit`, so the live post-fix audit remains pending. PageSpeed field data was also unavailable because the public endpoint returned HTTP 429, and no project-owned real-user telemetry was found. Therefore LCP, INP, and CLS acceptance is not yet proven from real users.
+Vercel subsequently promoted `d1e5748` and the `968c9ff` performance checkpoint. The live production stylesheet changed to `276b2f0e4b660f9c.css` plus `fb79fdaa6ffd9208.css`. Three fresh production mobile runs all made zero skyline-image requests; their median result was:
+
+| Route | Performance | FCP | LCP | Speed Index | CLS | TBT | Transfer |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `/` | 97 | 1.24 s | 2.59 s | 2.70 s | 0 | 0 ms | 359 kB |
+
+Compared with the first production run, the deployed fix reduced homepage LCP by 1.60 seconds, about 38%, and transferred about 262 kB less, about 42%, while preserving zero layout shift and blocking time.
+
+The remaining 2.59-second LCP was the market-section subtitle already inside the first phone viewport. Its Lighthouse breakdown attributed about 1.92 seconds to element render delay: the shared scroll-reveal pattern kept this text transparent until client-side intersection observation ran. Commit `75afbcf` removes that reveal only from the phone-sized market band, leaving tablet and desktop motion unchanged. It passed Arabic/light and English/dark rendering at 320 and 390 px and a production build.
+
+Vercel has not yet promoted `75afbcf` because its deployment hit the project build-rate limit; the production site therefore still serves the first optimization stylesheet and the live audit of the second refinement remains pending. PageSpeed field data was also unavailable because the public endpoint returned HTTP 429, and no project-owned real-user telemetry was found. Therefore LCP, INP, and CLS acceptance is not yet proven from real users.
 
 ## Non-Negotiable Design Rules
 
@@ -196,7 +208,7 @@ Status: source-complete for the current visual sweep; rendered QA remains open.
 Status: in progress. Populated public records, the complete onboarding screen inventory, the public-form bundle pass, 200% reflow checks, dense-admin stress QA, slow file-preparation presentation, interrupted-submission recovery, explicit offline/reconnected form states, and the first production mobile lab audit were completed on 2026-07-19.
 
 1. Complete the remaining real-device verification when a physical device bridge is available.
-2. Promote `d1e5748` after the Vercel build-rate limit clears, then rerun the same production mobile audit before claiming the homepage LCP improvement.
+2. Promote `75afbcf` after the Vercel build-rate limit clears, then run three production mobile audits and report the median before claiming that the homepage is below the 2.5-second LCP target.
 3. Add or obtain project-owned real-user telemetry before claiming field LCP, INP, or CLS targets.
 4. Record and fix only evidence-backed overflow, hierarchy, spacing, focus, contrast, touch, and loading issues.
 5. Keep `/post-project` and `/contractor` at or below the preferred 150 kB first-load build line, and prevent admin-only interaction systems from returning to public form bundles.
