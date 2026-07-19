@@ -932,6 +932,11 @@
     max-height: calc(100dvh - 1.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
   }
 
+  .page-state-full {
+    padding-top: max(0.625rem, env(safe-area-inset-top)) !important;
+    padding-bottom: max(0.625rem, env(safe-area-inset-bottom)) !important;
+  }
+
   .page-state-layout:not(.page-state-full) {
     min-height: 0 !important;
     align-items: flex-start;
