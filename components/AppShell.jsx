@@ -194,13 +194,13 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         closeButtonRef={menuCloseButtonRef}
       />
 
-      <main className={`mobile-nav-main flex-1 w-full ${hideNav ? 'pb-10' : 'pb-32 lg:pb-12'}`}>
+      <main className={`mobile-nav-main flex-1 w-full ${hideFooter ? (hideNav ? 'pb-10' : 'pb-32 lg:pb-12') : 'pb-0'}`}>
         {bleed ? (
           children
         ) : (
           <div className={`${container} app-content-x mx-auto py-4`}>{children}</div>
         )}
-        {!hideFooter && <SiteFooter flush={flushFooter} />}
+        {!hideFooter && <SiteFooter flush={flushFooter} reserveMobileNav={!hideNav} />}
       </main>
 
       {!hideNav && (
@@ -537,12 +537,12 @@ function NavBtn({ href, icon: Icon, label, ariaLabel = label, matches = [] }) {
   );
 }
 
-function SiteFooter({ flush = false }) {
+function SiteFooter({ flush = false, reserveMobileNav = false }) {
   const { t } = useLang();
   const year = new Date().getFullYear();
   return (
     <footer className={`${flush ? 'mt-0 border-t border-white/10' : 'mt-16'} premium-panel text-white`}>
-      <div className="container-x py-12 lg:py-14">
+      <div className={`container-x pt-12 lg:py-14 ${reserveMobileNav ? 'pb-32' : 'pb-12'}`}>
         <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
           <div className="max-w-sm">
             <div className="flex items-center gap-2.5 mb-3">
