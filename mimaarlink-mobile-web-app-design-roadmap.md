@@ -35,6 +35,8 @@ The compact-width coverage now also includes the homepage hero, fixed three-tab 
 
 The same 240×568 compact pass now covers role selection, all three owner-form steps, all three provider-form steps, privacy settings, and provider document validation in both language directions and themes. The form controls retain 44 px targets with no horizontal overflow. A 240×320 keyboard-height pass also confirmed that owner contact inputs remain visible when focused. Commit `5622b22` removes the duplicate floating toast from missing-CR validation because it overlapped the required upload card at that height; the existing focused inline error remains visible, translated, and announced in Arabic/light and English/dark.
 
+Populated saved-link coverage now also reaches 240×568 for project status, provider status, and bid comparison using disposable local response fixtures with long bilingual names, locations, timelines, filenames, document checklists, mixed statuses, multiple bids, and very large prices. Project/provider headers, next actions, timelines, file links, stacked bid actions, fixed navigation, and 44 px targets remained contained in Arabic/light and English/dark. Commit `0963589` gives bid prices a deliberate ultra-compact treatment: the already currency-labelled price card hides its duplicate inline QAR unit below 320 px, and only the 240-class number size reduces to 18 px. This keeps 987,654,321 and 1,234,567,890 uninterrupted at 240 and 280 px while preserving the original 22 px number plus visible QAR at 320 px and above.
+
 ### Production mobile lab checkpoint
 
 The first repeatable production mobile lab audit was recorded on 2026-07-19 against `https://mimaarlink.com`. These are Lighthouse lab measurements, not field Core Web Vitals.
