@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import crypto from 'crypto';
 import pg from 'pg';
 import { v4 as uuidv4 } from 'uuid';
+import { createAdminSessionValue, isAdminAuthConfigured, safeCredentialEqual } from '@/lib/adminAuth.mjs';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
 
 export const runtime = 'nodejs';
@@ -13,8 +13,9 @@ const POSTGRES_URL = process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 const STORAGE_BUCKET = process.env.SUPABASE_STORAGE_BUCKET || 'mimaarlink-files';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
-const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || ADMIN_PASSWORD;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+const ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET;
+const ADMIN_AUTH_CONFIGURED = isAdminAuthConfigured(ADMIN_PASSWORD, ADMIN_SESSION_SECRET);
 const SCHEMA_LOCK_KEY = [1296904524, 20260624];
 
 let pool = null;
@@ -29,11 +30,13 @@ function err(message, status = 400) {
 }
 
 function adminSessionValue() {
-  return crypto.createHash('sha256').update(`mimaarlink-admin:${ADMIN_SESSION_SECRET}`).digest('hex');
+  if (!ADMIN_AUTH_CONFIGURED) return null;
+  return createAdminSessionValue(ADMIN_SESSION_SECRET);
 }
 
 function isAdminRequest(request) {
-  return request.cookies.get('ml_admin_session')?.value === adminSessionValue();
+  if (!ADMIN_AUTH_CONFIGURED) return false;
+  return safeCredentialEqual(request.cookies.get('ml_admin_session')?.value || '', adminSessionValue());
 }
 
 function requireAdmin(request) {
@@ -694,7 +697,10 @@ export async function POST(request, { params }) {
     const now = new Date().toISOString();
 
     if (path === 'admin/login') {
-      if (body.password === ADMIN_PASSWORD) {
+      if (!ADMIN_AUTH_CONFIGURED) {
+        return err('Admin login unavailable', 503);
+      }
+      if (safeCredentialEqual(body.password || '', ADMIN_PASSWORD)) {
         const response = ok({ ok: true });
         response.cookies.set('ml_admin_session', adminSessionValue(), {
           httpOnly: true,
