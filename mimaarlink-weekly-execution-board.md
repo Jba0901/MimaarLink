@@ -1,12 +1,12 @@
 # MimaarLink Weekly Execution Board
 
-Week of: `2026-07-11` (Week 1 closeout through `2026-07-18`)
+Week of: `2026-07-20`
 
 ## Chief Operator Decision
 
 Main focus this week:
 
-- Monitor the eight-message AP-001 Wave A, obtain one genuine qualified project, and learn which recipient pain produces action before releasing any later wave.
+- Monitor the eight AP-013 email follow-ups and two AP-012 WhatsApp qualification replies for a genuine qualified project; do not add another follow-up until response evidence is reviewed.
 
 Do not focus on:
 
@@ -20,8 +20,10 @@ Evidence required before more spend/build:
 
 | Metric | Target | Actual | Notes |
 |---|---:|---:|---|
-| Owner/referral messages sent | 30 | 8 | Wave A sent on 2026-07-13 with Q approval; 12 staged messages and all follow-ups remain held. |
-| Interested owner/referral replies | 3 | UNKNOWN | Last observed count was 0 on 2026-07-15. Gmail failed to load on 2026-07-18, so current reply and bounce state remains unknown. |
+| Owner/referral first touches sent | 30 | 8 | Original Wave A was sent on 2026-07-13; 12 staged first touches remain held. |
+| Wave A email follow-ups sent | 8 | 8 | Exact AP-013 reply-thread follow-ups sent once on 2026-07-20 from 13:18 through 13:21 after a no-reply/no-bounce checkpoint. |
+| WhatsApp qualification replies sent | 2 | 2 | Exact AP-012 replies sent once at 13:14 and 13:15 after unchanged-thread verification. |
+| Interested owner/referral replies | 3 | 0 BEFORE CURRENT SENDS | No reply was observed immediately before AP-013; post-send response is now pending. |
 | Provider conversations | 30 | 0 |  |
 | Contractor applications | 15 | UNKNOWN CURRENT | Last authenticated `/admin` checkpoint on 2026-07-15 was 3: 2 trusted and 1 active - CR checked. The 2026-07-18 visit redirected to the public homepage. |
 | Usable/qualified providers | 8 | 0 | 3 admin-listed contractors and 20 public reserve providers exist, but none has been qualified for availability, project fit, or fee willingness in this sprint. |
@@ -63,7 +65,7 @@ Targets this week:
 
 Scripts ready:
 
-- Yes: 20 individually tailored messages are in AP-001. Eight were sent as Wave A; the remaining 12 and all follow-ups are held.
+- Yes: 20 individually tailored first touches are in AP-001. Eight were sent as Wave A; all eight approved AP-013 follow-ups are now sent; the remaining 12 first touches stay held.
 
 Risk:
 
@@ -73,7 +75,7 @@ Risk:
 
 Recommendation:
 
-- Monitor Wave A delivery, bounce, and reply evidence before considering another release. Keep paid ads at QAR 0 until the manual workflow, revenue, attribution, Pixel, and response-time gates pass.
+- Monitor the eight email follow-ups and two WhatsApp replies before considering another release. Keep paid ads at QAR 0 until the manual workflow, revenue, attribution, Pixel, and response-time gates pass.
 
 Campaign/test:
 
@@ -97,7 +99,7 @@ Recommendation:
 Workflow issue:
 
 - The 2026-07-15 authenticated live admin recheck remains 0 projects, 3 contractor applications, and 0 consultant applications. Two contractors are trusted and one is active with its CR checked. The latest application is dated 2026-06-07 15:40. Attribution and follow-up remain UNKNOWN because those fields are not shown in the admin list.
-- The 2026-07-18 Profile 1 sweep verified `MimaarLink / +974 6625 9219` and zero unread WhatsApp chats. Gmail failed at its loading page before identity/content verification. `/admin` redirected to the public homepage, so current applications remain unknown rather than copied from the last checkpoint.
+- On 2026-07-20, Profile 1 `J` verified both `MimaarLink / +974 6625 9219` and `MimaarLink (mimaarlink@gmail.com)`. Two WhatsApp replies and eight Gmail follow-ups were sent within their approved packet scopes. Current `/admin` values remain unknown because authenticated access is held until AP-017 completes.
 
 Handling-time risk:
 
@@ -122,7 +124,7 @@ Evidence required:
 Risk:
 
 - Q clarified that free owner posting, review, matching, and comparison are operational. The provider-side invoice and collection route still requires verification before the first payment request; public provider identity is not verification.
-- The current admin credential is embedded in tracked server source and client-facing copy. Treat it as exposed; remove the literal, rotate it, and store the replacement only in Vercel environment variables before relying on admin security.
+- The tracked fallback and stale client copy were removed in local commit `52e5d64`; focused tests and the production build pass. Do not push or deploy until Q creates two distinct production secrets directly and the release gate is rechecked.
 
 Safer wording/process:
 
@@ -135,17 +137,18 @@ Needs professional review:
 
 ## This Week's Actions
 
-1. Monitor the eight sent Wave A messages from `mimaarlink@gmail.com`; treat Gmail Sent as transmission evidence only.
-2. Keep Waves B-D and all follow-ups held until delivery, bounce, and reply evidence is reconciled.
-3. After 2026-07-15 21:28, prepare a separate evidence-based follow-up packet for non-bounced non-repliers; do not auto-send it.
-4. Qualify the first real owner project against budget, timing, scope, location, and decision authority.
-5. Before the first paid handoff, qualify 5-8 relevant providers and pass the separate invoice/collection gate.
+1. Monitor the eight AP-013 Gmail threads and two AP-012 WhatsApp threads; treat sent/delivered UI states as transmission evidence only.
+2. Keep the remaining 12 first touches and any second follow-up held until current response evidence is reconciled.
+3. Q signs into the correct MimaarLink Instagram account before AP-016 resumes; publish nothing from an unverified account.
+4. Q creates two distinct production admin secrets directly before commit `52e5d64` is pushed or deployed.
+5. Qualify the first real owner project and 5-8 relevant providers, then pass the separate invoice/collection gate before paid handoff.
 
 ## Follow-Up List
 
 | Person/company | Type | Last contact | Next action | Owner | Status |
 |---|---|---|---|---|---|
-| AP-001 M001-M020 | Segmented pain-first batch | 8 emails sent 2026-07-13 | Review replies/bounces after 2026-07-15 21:28 | Jassim | Wave A sent; 12 messages and all follow-ups held |
+| AP-001 / AP-013 | Segmented pain-first Wave A | 8 first touches on 2026-07-13; 8 follow-ups on 2026-07-20 | Monitor substantive replies; no automatic second follow-up | Jassim | Waiting for response |
+| AP-012 | Two dormant greeting-only WhatsApp leads | 2 qualification replies on 2026-07-20 | Monitor substantive replies | Jassim | Waiting for response |
 
 ## Decisions Log
 
@@ -157,6 +160,8 @@ Needs professional review:
 | `2026-07-13` | Pain-first role segmentation replaces one-template partnership outreach. | Property managers, brokers/advisors, FM providers, and platforms do not share the same problem or CTA. | After Wave A results. |
 | `2026-07-13` | First paid Meta experiment is capped at QAR 500 and remains gated. | Direct demand evidence and technical attribution must precede paid scale. | After the manual revenue and launch gates pass. |
 | `2026-07-13` | Release only the eight-message AP-001 Wave A after live sender, mapping, Arabic-first, and rendering QA. | A staged release preserves measurable evidence and limits unnecessary exposure. | After the 48-hour reply/bounce checkpoint. |
+| `2026-07-20` | Send AP-012 and AP-013 after action-time identity and suppression checks. | Q approved the exact packets; live threads were unchanged and no Gmail reply or bounce was observed. | After substantive response evidence. |
+| `2026-07-20` | Keep AP-016 unpublished and AP-017 undeployed at their identity/secret gates. | Instagram was logged out; production secrets must be created directly by Q before security deployment. | After Q completes the required direct account actions. |
 
 ## Kill / Scale Review
 
