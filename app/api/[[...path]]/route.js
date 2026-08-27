@@ -9,7 +9,11 @@ export const dynamic = 'force-dynamic';
 
 const { Pool } = pg;
 
-const POSTGRES_URL = process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL || process.env.POSTGRES_URL_NON_POOLING;
+const POSTGRES_URLS = [...new Set([
+  process.env.POSTGRES_URL,
+  process.env.POSTGRES_PRISMA_URL,
+  process.env.POSTGRES_URL_NON_POOLING,
+].filter(Boolean))];
 const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 const STORAGE_BUCKET = process.env.SUPABASE_STORAGE_BUCKET || 'mimaarlink-files';
@@ -19,6 +23,7 @@ const ADMIN_AUTH_CONFIGURED = isAdminAuthConfigured(ADMIN_PASSWORD, ADMIN_SESSIO
 const SCHEMA_LOCK_KEY = [1296904524, 20260624];
 
 let pool = null;
+let poolReady = null;
 let schemaReady = null;
 
 function ok(data, status = 200) {
@@ -53,17 +58,18 @@ async function readJson(request) {
 }
 
 async function getPool() {
-  if (!POSTGRES_URL) {
-    throw new Error('POSTGRES_URL is not configured. Finish the Supabase/Vercel integration before using admin data and submissions.');
+  if (POSTGRES_URLS.length === 0) {
+    throw new Error('Database configuration is missing.');
   }
 
-  if (!pool) {
-    pool = new Pool({
-      connectionString: postgresConnectionString(),
-      max: 3,
-      ssl: { rejectUnauthorized: false },
+  if (!poolReady) {
+    poolReady = connectDatabase().catch((error) => {
+      poolReady = null;
+      throw error;
     });
   }
+
+  pool = await poolReady;
 
   if (!schemaReady) {
     schemaReady = ensureSchema(pool).catch((e) => {
@@ -75,12 +81,39 @@ async function getPool() {
   return pool;
 }
 
-function postgresConnectionString() {
-  const url = new URL(POSTGRES_URL);
+async function connectDatabase() {
+  for (const connectionUrl of POSTGRES_URLS) {
+    const candidate = new Pool({
+      connectionString: postgresConnectionString(connectionUrl),
+      max: 3,
+      ssl: { rejectUnauthorized: false },
+    });
+
+    try {
+      const client = await candidate.connect();
+      client.release();
+      return candidate;
+    } catch (error) {
+      await candidate.end().catch(() => {});
+      console.warn('Database connection candidate failed:', error.code || error.name || 'unknown');
+    }
+  }
+
+  throw new Error('Database connection unavailable.');
+}
+
+function postgresConnectionString(connectionUrl) {
+  const url = new URL(connectionUrl);
   // Supabase/Vercel connection strings include sslmode=require. node-postgres
   // treats that as its own SSL config and can ignore rejectUnauthorized:false.
   url.searchParams.delete('sslmode');
   return url.toString();
+}
+
+function serverError(method, error) {
+  console.error(`${method} error`, error);
+  const databaseUnavailable = error?.message === 'Database configuration is missing.' || error?.message === 'Database connection unavailable.';
+  return err(databaseUnavailable ? 'Service temporarily unavailable. Please try again shortly.' : 'Server error', databaseUnavailable ? 503 : 500);
 }
 
 async function ensureSchema(db) {
@@ -684,8 +717,7 @@ export async function GET(request, { params }) {
 
     return err('Not found', 404);
   } catch (e) {
-    console.error('GET error', e);
-    return err(e.message || 'Server error', 500);
+    return serverError('GET', e);
   }
 }
 
@@ -940,8 +972,7 @@ export async function POST(request, { params }) {
 
     return err('Not found', 404);
   } catch (e) {
-    console.error('POST error', e);
-    return err(e.message || 'Server error', 500);
+    return serverError('POST', e);
   }
 }
 
@@ -1019,8 +1050,7 @@ export async function PATCH(request, { params }) {
 
     return err('Not found', 404);
   } catch (e) {
-    console.error('PATCH error', e);
-    return err(e.message || 'Server error', 500);
+    return serverError('PATCH', e);
   }
 }
 
@@ -1058,7 +1088,6 @@ export async function DELETE(request, { params }) {
 
     return err('Not found', 404);
   } catch (e) {
-    console.error('DELETE error', e);
-    return err(e.message || 'Server error', 500);
+    return serverError('DELETE', e);
   }
 }
