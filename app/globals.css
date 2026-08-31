@@ -1078,6 +1078,16 @@
   }
 }
 
+/* Conversion-critical mobile paths should never begin behind an opacity animation. */
+@media (max-width: 639px) {
+  .start-here-intro,
+  .start-here-grid {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *,

@@ -22,15 +22,18 @@ export default function MarketingAttribution() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [consent, setConsent] = useState('pending');
+  const [consentReady, setConsentReady] = useState(false);
   const lastTrackedUrl = useRef('');
   const search = searchParams.toString();
   const isPrivate = PRIVATE_PREFIXES.some((prefix) => pathname.startsWith(prefix));
   const hasDedicatedSettings = pathname === '/privacy';
   const shouldPrompt = !isPrivate && !hasDedicatedSettings && (metaPixelConfigured() || hasTrackedMarketingParams(search));
   const sitsAboveMobileNav = pathname === '/';
+  const sitsBelowFormHeader = pathname === '/post-project' || pathname === '/contractor' || pathname === '/consultant';
 
   useEffect(() => {
     setConsent(getMarketingConsent());
+    setConsentReady(true);
   }, []);
 
   useEffect(() => {
@@ -47,7 +50,7 @@ export default function MarketingAttribution() {
     }
   }, [consent, isPrivate, pathname, search]);
 
-  if (!shouldPrompt || consent !== 'pending') return null;
+  if (!consentReady || !shouldPrompt || consent !== 'pending') return null;
 
   const arabic = lang === 'ar';
   const accept = () => {
@@ -65,39 +68,43 @@ export default function MarketingAttribution() {
       role="region"
       aria-labelledby="marketing-consent-title"
       aria-describedby="marketing-consent-description"
-      className={`marketing-consent-panel fixed inset-x-2.5 z-[100] mx-auto max-w-xl overflow-y-auto overscroll-contain rounded-[20px] border border-[#00B59E]/25 bg-card p-3.5 shadow-lift sm:inset-x-3 sm:rounded-[22px] sm:p-5 ${
-        sitsAboveMobileNav
-          ? 'bottom-[calc(5.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_6.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))] lg:bottom-4 lg:max-h-[calc(100dvh_-_2rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'
-          : 'bottom-[calc(0.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_1.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'
+      className={`marketing-consent-panel fixed inset-x-2.5 z-[100] mx-auto max-w-xl overflow-y-auto overscroll-contain rounded-[18px] border border-[#00B59E]/25 bg-card p-2.5 shadow-lift sm:inset-x-3 sm:rounded-[22px] sm:p-5 ${
+        sitsBelowFormHeader
+          ? 'top-[calc(4.5rem+env(safe-area-inset-top))] max-h-[calc(100dvh_-_5.25rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))] sm:bottom-4 sm:top-auto sm:max-h-[calc(100dvh_-_2rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'
+          : sitsAboveMobileNav
+            ? 'bottom-[calc(5.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_6.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))] lg:bottom-4 lg:max-h-[calc(100dvh_-_2rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'
+            : 'bottom-[calc(0.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_1.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'
       }`}
       dir={arabic ? 'rtl' : 'ltr'}
     >
-      <div className="flex items-start gap-2.5 sm:gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E] sm:h-11 sm:w-11 sm:rounded-2xl" aria-hidden="true">
-          <ShieldCheck className="h-[18px] w-[18px] sm:h-5 sm:w-5" />
-        </span>
-        <div className="min-w-0 flex-1">
-          <div id="marketing-consent-title" className="break-words text-[13.5px] font-extrabold leading-snug text-navy sm:text-[14px]">
-            {arabic ? 'خيارات القياس والإعلانات' : 'Measurement and advertising choices'}
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 sm:block">
+        <div className="flex min-w-0 items-start gap-2.5 sm:gap-3">
+          <span className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E] sm:flex sm:h-11 sm:w-11 sm:rounded-2xl" aria-hidden="true">
+            <ShieldCheck className="h-[18px] w-[18px] sm:h-5 sm:w-5" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <div id="marketing-consent-title" className="break-words text-[12.5px] font-extrabold leading-snug text-navy sm:text-[14px]">
+              {arabic ? 'قياس الإعلانات' : 'Advertising measurement'}
+            </div>
+            <p id="marketing-consent-description" className="mt-0.5 break-words text-[11.5px] leading-4 text-muted-foreground sm:mt-1 sm:text-[12.5px] sm:leading-relaxed">
+              {arabic
+                ? 'نستخدم أدوات Meta لقياس الإعلان فقط بموافقتك.'
+                : 'We use Meta tools to measure advertising only with your consent.'}
+              {' '}
+              <Link href="/privacy" className="font-bold text-teal underline decoration-2 underline-offset-2">
+                {arabic ? 'التفاصيل' : 'Details'}
+              </Link>
+            </p>
           </div>
-          <p id="marketing-consent-description" className="mt-1 break-words text-[12px] leading-relaxed text-muted-foreground sm:text-[12.5px]">
-            {arabic
-              ? 'بموافقتك، نحفظ مصدر الزيارة ونستخدم أدوات Meta لقياس أداء الإعلانات. يمكنك الرفض وسيبقى الموقع والنماذج يعملان.'
-              : 'With your consent, we save the visit source and use Meta tools to measure advertising. You can decline and the website and forms will still work.'}
-            {' '}
-            <Link href="/privacy" className="font-bold text-teal underline decoration-2 underline-offset-2">
-              {arabic ? 'التفاصيل' : 'Details'}
-            </Link>
-          </p>
         </div>
-      </div>
-      <div className="sticky bottom-0 z-10 mt-3 grid grid-cols-2 gap-2 bg-card/95 pt-2 backdrop-blur-sm sm:mt-4 sm:gap-2.5">
-        <button type="button" onClick={reject} className="btn btn-outline h-auto min-h-11 whitespace-normal px-3 py-2 text-center text-[13px] leading-snug">
-          {arabic ? 'رفض' : 'Decline'}
-        </button>
-        <button type="button" onClick={accept} className="btn btn-primary h-auto min-h-11 whitespace-normal px-3 py-2 text-center text-[13px] leading-snug">
-          {arabic ? 'موافقة' : 'Accept'}
-        </button>
+        <div className="z-10 flex gap-1.5 bg-card/95 backdrop-blur-sm sm:mt-4 sm:grid sm:grid-cols-2 sm:gap-2.5 sm:pt-2">
+          <button type="button" onClick={reject} className="btn btn-outline h-11 min-h-11 whitespace-normal px-2.5 py-2 text-center text-[12px] leading-snug sm:h-auto sm:px-3 sm:text-[13px]">
+            {arabic ? 'رفض' : 'Decline'}
+          </button>
+          <button type="button" onClick={accept} className="btn btn-primary h-11 min-h-11 whitespace-normal px-2.5 py-2 text-center text-[12px] leading-snug sm:h-auto sm:px-3 sm:text-[13px]">
+            {arabic ? 'موافقة' : 'Accept'}
+          </button>
+        </div>
       </div>
     </div>
   );
