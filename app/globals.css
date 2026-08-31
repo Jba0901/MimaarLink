@@ -70,6 +70,8 @@
   * { @apply border-border; }
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
+    scroll-padding-bottom: calc(6.5rem + env(safe-area-inset-bottom));
     overflow-x: clip;
   }
   body {
