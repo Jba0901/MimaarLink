@@ -28,7 +28,7 @@ export default function MarketingLanding({
   const accentColor = isAmber ? '#FFB638' : '#00B59E';
   const accentSoft = isAmber ? 'rgba(255,182,56,0.14)' : 'rgba(0,181,158,0.10)';
   const ctaClass = isAmber ? 'btn-amber' : 'btn-primary';
-  const ctaStyle = { minHeight: 52, color: isAmber ? '#4A2D00' : '#152B54' };
+  const ctaStyle = { minHeight: 52, color: isAmber ? '#152B54' : '#0D1B2A' };
   const Arrow = () =>
     isRTL
       ? <ArrowRight className="h-4 w-4 shrink-0 rotate-180" aria-hidden="true" />

@@ -12,7 +12,7 @@ const buttonVariants = cva(
         default:
           "bg-primary text-primary-foreground shadow hover:bg-primary/90",
         brand:
-          "border border-transparent bg-[#00B59E] text-white shadow-sm shadow-[#00B59E]/20 hover:bg-[#00B59E]/90 focus-visible:ring-[#00B59E]/35",
+          "border border-transparent bg-[#00B59E] text-[#0D1B2A] shadow-sm shadow-[#00B59E]/20 hover:bg-[#00B59E]/90 focus-visible:ring-[#00B59E]/35",
         navy:
           "border border-transparent bg-[#152B54] text-white shadow-sm shadow-[#152B54]/20 hover:bg-[#152B54]/90 focus-visible:ring-[#00B59E]/35 dark:border-[#00B59E]/25 dark:hover:bg-[#142A44]",
         destructive:
