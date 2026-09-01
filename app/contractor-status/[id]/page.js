@@ -11,7 +11,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import PageState from '@/components/PageState';
 import StatusTimeline from '@/components/StatusTimeline';
 import StatusBadge from '@/components/StatusBadge';
-import { ClipboardCheck, FileText, Hammer, House, MapPin, Paperclip, Wallet } from 'lucide-react';
+import { ClipboardCheck, Hammer, House, MapPin, Paperclip, Wallet } from 'lucide-react';
 
 const consultantGradeLabel = (grade, t) => {
   if (grade === 'grade_a') return t('gradeA');
@@ -67,12 +67,6 @@ export default function ContractorStatusPage() {
   const status = contractor.verificationStatus || 'applied';
   const statusOrder = CONTRACTOR_STATUSES.filter((s) => s !== 'suspended');
   const statusIndex = status === 'suspended' ? -1 : statusOrder.indexOf(status);
-  const documentChecklist = [
-    { key: 'cr', label: t('uploadCR') },
-    { key: 'trade', label: t('uploadTrade') },
-    { key: 'establishment', label: t('uploadEstablishment') },
-  ];
-  const documentChecks = contractor.documentChecks || {};
   const uploadedDocuments = contractor.documents || [];
   const isConsultant = contractor.providerType === 'consultant';
   const ServiceIcon = isConsultant ? ClipboardCheck : Hammer;
@@ -161,28 +155,6 @@ export default function ContractorStatusPage() {
 
           {/* status column */}
           <div className="order-1 min-w-0 space-y-3 lg:order-2 lg:sticky lg:top-20">
-            <Card className="rounded-2xl shadow-soft">
-              <CardContent className="p-4 sm:p-5">
-                <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('documentChecklist')}</div>
-                <div className="space-y-1.5">
-                  {documentChecklist.map((doc) => {
-                    const present = Boolean(documentChecks[doc.key]);
-                    return (
-                      <div key={doc.key} className="flex min-h-11 min-w-0 flex-col items-stretch gap-2 rounded-xl bg-secondary px-3 py-2.5 text-sm text-navy min-[320px]:flex-row min-[320px]:items-center min-[320px]:justify-between">
-                        <div className="flex min-w-0 items-center gap-2">
-                          <FileText className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-                          <span className="min-w-0 break-words leading-snug">{doc.label}</span>
-                        </div>
-                        <Badge variant={present ? 'success' : 'warning'} className="max-w-full self-start whitespace-normal text-start text-[12px] leading-4 min-[320px]:max-w-[45%] min-[320px]:shrink-0">
-                          {present ? t('present') : t('missing')}
-                        </Badge>
-                      </div>
-                    );
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-
             <Card className="rounded-2xl shadow-soft">
               <CardContent className="p-4 sm:p-5">
                 <div className="mb-3 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('statusTimeline')}</div>

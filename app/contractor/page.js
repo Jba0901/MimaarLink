@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 import { focusFormField } from '@/lib/focusFormField';
 
-const MAX_PROVIDER_FILES_PER_FIELD = 3;
+const MAX_PROVIDER_PROFILE_FILES = 1;
 
 export default function ContractorPage() {
   const { t } = useLang();
@@ -53,7 +53,6 @@ function ContractorApplicationInner() {
   const [submitError, setSubmitError] = useState(false);
   const [triedBasics, setTriedBasics] = useState(false);
   const [triedServices, setTriedServices] = useState(false);
-  const [triedDocuments, setTriedDocuments] = useState(false);
   const [data, setData] = useState({
     providerType: requestedType,
     companyName: '', crNumber: '', contactPerson: '', whatsapp: '+974 ', email: '',
@@ -113,15 +112,13 @@ function ContractorApplicationInner() {
     }));
   };
 
-  const hasCR = data.documents.filter(d => d.label === 'cr').length > 0;
   const phoneDigits = (data.whatsapp || '').replace(/^\+974\s*/, '').replace(/\D/g, '').length;
   const phoneValid = phoneDigits >= 8;
   const hasOther = data.categories.includes('other');
   const otherDescValid = !hasOther || (data.otherCategoryDesc || '').trim().length >= 3;
   const basicsValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && phoneValid;
   const servicesValid = data.categories.length > 0 && otherDescValid;
-  const documentsValid = hasCR;
-  const formValid = basicsValid && servicesValid && documentsValid;
+  const formValid = basicsValid && servicesValid;
   const showServicesError = triedServices && data.categories.length === 0;
   const firstInvalidBasicsField = !data.companyName
     ? 'provider-company-name'
@@ -152,7 +149,6 @@ function ContractorApplicationInner() {
   };
 
   const submit = async () => {
-    setTriedDocuments(true);
     if (!formValid) {
       if (!basicsValid) {
         setTriedBasics(true);
@@ -165,9 +161,6 @@ function ContractorApplicationInner() {
         setStep(2);
         focusFormField(data.categories.length === 0 ? 'provider-first-service' : 'provider-other-category');
         return;
-      }
-      if (!hasCR) {
-        focusFormField('provider-document-cr');
       }
       return;
     }
@@ -190,12 +183,8 @@ function ContractorApplicationInner() {
     } finally { setSubmitting(false); }
   };
 
-  const documentFields = [
-    { key: 'cr', label: t('uploadCR'), required: true },
-    { key: 'trade', label: t('uploadTrade'), required: false },
-    { key: 'establishment', label: t('uploadEstablishment'), required: false },
-    { key: 'profile', label: t('uploadCompanyProfile'), required: false },
-  ];
+  const profileFiles = data.documents.filter(d => d.label === 'profile');
+  const profileFileLimitReached = profileFiles.length >= MAX_PROVIDER_PROFILE_FILES;
 
   if (done) return (
     <AppShell hideFooter hideNav wide>
@@ -352,68 +341,55 @@ function ContractorApplicationInner() {
 
       {step === 3 && (
         <div className="space-y-3.5">
-          {documentFields.map(it => {
-            const filesForLabel = data.documents.filter(d => d.label === it.key);
-            const fileLimitReached = filesForLabel.length >= MAX_PROVIDER_FILES_PER_FIELD;
-            const showError = it.required && triedDocuments && filesForLabel.length === 0;
-            const errorId = `provider-document-${it.key}-error`;
-            return (
-              <div key={it.key}>
-                <Label className="text-sm">
-                  {it.label}{it.required && <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>}
-                  {!it.required && <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>}
-                </Label>
-                <LazyFileUploadDropzone
-                  id={`provider-document-${it.key}`}
-                  className="mt-1.5 min-h-[72px]"
-                  label={fileLimitReached ? `${filesForLabel.length}/${MAX_PROVIDER_FILES_PER_FIELD} ${t('files')}` : `${t('uploadFiles')} · ${filesForLabel.length}/${MAX_PROVIDER_FILES_PER_FIELD}`}
-                  hint={fileLimitReached ? t('fileLimitReached') : t('uploadHint')}
-                  error={showError}
-                  hasFiles={filesForLabel.length > 0}
-                  busy={processingDocumentKey === it.key}
-                  disabled={Boolean(processingDocumentKey) || fileLimitReached}
-                  selectedFiles={filesForLabel}
-                  maxFiles={MAX_PROVIDER_FILES_PER_FIELD}
-                  onBusyChange={(isBusy) => setProcessingDocumentKey(isBusy ? it.key : '')}
-                  onFilesReady={(items) => {
-                    markFormStarted();
-                    setData(d => ({
-                      ...d,
-                      documents: [...d.documents, ...items.map(item => ({ ...item, label: it.key }))],
-                    }));
-                  }}
-                  aria-required={it.required || undefined}
-                  aria-describedby={showError ? errorId : undefined}
-                  multiple
-                  accept="image/*,application/pdf"
-                />
-                {showError && <InlineFieldMessage id={errorId}>{t('requireField')}</InlineFieldMessage>}
-                <div className="mt-1 space-y-1">
-                  {filesForLabel.map((f, i) => (
-                    <div key={i} className="flex min-h-11 items-center gap-2 rounded-xl border border-border/70 bg-secondary ps-3 pe-1 text-xs text-foreground">
-                      <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
-                      <span className="line-clamp-2 min-w-0 flex-1 break-words text-start leading-snug" dir="auto" title={f.name}>{f.name}</span>
-                      <Button
-                        type="button"
-                        variant="destructiveGhost"
-                        size="icon"
-                        onClick={() => {
-                          update('documents', data.documents.filter(x => x !== f));
-                          focusFormField(`provider-document-${it.key}`);
-                        }}
-                        disabled={Boolean(processingDocumentKey)}
-                        className="shrink-0"
-                        aria-label={`${t('removeFile')}: ${f.name}`}
-                        title={t('removeFile')}
-                      >
-                        <X className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  ))}
+          <div>
+            <Label htmlFor="provider-document-profile" className="text-sm">
+              {t('uploadCompanyProfile')}
+              <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>
+            </Label>
+            <LazyFileUploadDropzone
+              id="provider-document-profile"
+              className="mt-1.5 min-h-[72px]"
+              label={profileFileLimitReached ? `1/1 ${t('files')}` : `${t('uploadCompanyProfile')} · 0/1`}
+              hint={profileFileLimitReached ? t('fileLimitReached') : t('uploadHint')}
+              hasFiles={profileFiles.length > 0}
+              busy={processingDocumentKey === 'profile'}
+              disabled={Boolean(processingDocumentKey) || profileFileLimitReached}
+              selectedFiles={profileFiles}
+              maxFiles={MAX_PROVIDER_PROFILE_FILES}
+              onBusyChange={(isBusy) => setProcessingDocumentKey(isBusy ? 'profile' : '')}
+              onFilesReady={(items) => {
+                markFormStarted();
+                setData(d => ({
+                  ...d,
+                  documents: items.slice(0, MAX_PROVIDER_PROFILE_FILES).map(item => ({ ...item, label: 'profile' })),
+                }));
+              }}
+              accept="image/*,application/pdf"
+            />
+            <div className="mt-1 space-y-1">
+              {profileFiles.map((f, i) => (
+                <div key={i} className="flex min-h-11 items-center gap-2 rounded-xl border border-border/70 bg-secondary ps-3 pe-1 text-xs text-foreground">
+                  <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  <span className="line-clamp-2 min-w-0 flex-1 break-words text-start leading-snug" dir="auto" title={f.name}>{f.name}</span>
+                  <Button
+                    type="button"
+                    variant="destructiveGhost"
+                    size="icon"
+                    onClick={() => {
+                      update('documents', []);
+                      focusFormField('provider-document-profile');
+                    }}
+                    disabled={Boolean(processingDocumentKey)}
+                    className="shrink-0"
+                    aria-label={`${t('removeFile')}: ${f.name}`}
+                    title={t('removeFile')}
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
                 </div>
-              </div>
-            );
-          })}
+              ))}
+            </div>
+          </div>
 
           {submitError && (
             <LazySubmissionRetryNotice id="provider-submit-error" />

@@ -14,7 +14,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
-import { ArrowLeft, ArrowRight, Building2, CalendarClock, Check, ClipboardCheck, Loader2, ShieldCheck, Trash2, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Building2, CalendarClock, ClipboardCheck, Loader2, ShieldCheck, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 const formatAdminTime = (value, lang = 'en') => {
@@ -50,7 +50,6 @@ export default function AdminContractorPage() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [statusDraft, setStatusDraft] = useState('');
-  const [documentChecksDraft, setDocumentChecksDraft] = useState({});
   const [saving, setSaving] = useState(false);
   const [confirmLeave, setConfirmLeave] = useState(false);
 
@@ -73,7 +72,6 @@ export default function AdminContractorPage() {
       setC(json);
       setLoadError(false);
       if (json?.verificationStatus) setStatusDraft(json.verificationStatus);
-      if (json?.documentChecks) setDocumentChecksDraft(normalizeDocumentChecks(json.documentChecks));
       return true;
     } catch {
       if (showErrorState) setLoadError(true);
@@ -93,7 +91,7 @@ export default function AdminContractorPage() {
     const handler = (e) => { e.preventDefault(); e.returnValue = ''; };
     window.addEventListener('beforeunload', handler);
     return () => window.removeEventListener('beforeunload', handler);
-  }, [statusDraft, documentChecksDraft, c]);
+  }, [statusDraft, c]);
 
   if (loading) return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
   if (loadError) return <AppShell hideNav hideFooter><PageState kind="error" title={t('adminRecordLoadErrorTitle')} description={t('adminRecordLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={retryLoad} actionVariant="primary" /></AppShell>;
@@ -108,7 +106,6 @@ export default function AdminContractorPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           verificationStatus: statusDraft || c.verificationStatus,
-          documentChecks: normalizeDocumentChecks(documentChecksDraft),
         }),
       });
       toast.success(t('saved'));
@@ -142,31 +139,10 @@ export default function AdminContractorPage() {
   const isConsultant = c.providerType === 'consultant';
   const TypeIcon = isConsultant ? ClipboardCheck : Building2;
   const serviceKeys = providerServices(c);
-  const documentChecklist = [
-    { key: 'cr', label: t('uploadCR'), required: true },
-    { key: 'trade', label: t('uploadTrade'), required: false },
-    { key: 'establishment', label: t('uploadEstablishment'), required: false },
-  ];
-
-  function normalizeDocumentChecks(checks = {}) {
-    return {
-      cr: Boolean(checks.cr),
-      trade: Boolean(checks.trade),
-      establishment: Boolean(checks.establishment),
-    };
-  }
-
   function isDirty() {
     if (!c) return false;
-    const statusChanged = Boolean(statusDraft && statusDraft !== c.verificationStatus);
-    const currentChecks = JSON.stringify(normalizeDocumentChecks(c.documentChecks));
-    const draftChecks = JSON.stringify(normalizeDocumentChecks(documentChecksDraft));
-    return statusChanged || currentChecks !== draftChecks;
+    return Boolean(statusDraft && statusDraft !== c.verificationStatus);
   }
-
-  const setDocumentPresent = (key, present) => {
-    setDocumentChecksDraft((checks) => ({ ...normalizeDocumentChecks(checks), [key]: present }));
-  };
 
   return (
     <AppShell hideNav hideFooter>
@@ -233,42 +209,6 @@ export default function AdminContractorPage() {
         onCopy={copyContractorLink}
         onOpen={() => window.open(`/contractor-status/${id}`, '_blank', 'noopener,noreferrer')}
       />
-
-      <Card className="mb-3">
-        <CardContent className="p-4">
-          <div className="mb-2 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('documentChecklist')}</div>
-          <div className="space-y-1.5">
-            {documentChecklist.map((doc) => {
-              const present = Boolean(documentChecksDraft[doc.key]);
-              return (
-                <div key={doc.key} className="flex flex-col items-start gap-2.5 rounded-xl bg-secondary px-3 py-2.5 text-xs sm:flex-row sm:items-center sm:justify-between">
-                  <span className="break-words text-[13px] font-semibold leading-snug text-navy">{doc.label}</span>
-                  <div className="grid w-full grid-cols-2 gap-2 sm:w-auto" role="group" aria-label={doc.label}>
-                    <button
-                      type="button"
-                      onClick={() => setDocumentPresent(doc.key, true)}
-                      aria-pressed={present}
-                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[12px] font-semibold transition-[color,background-color,border-color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/35 sm:min-h-9 ${present ? 'border-[#00B59E]/55 bg-[#00B59E] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#00B59E]/35 hover:text-navy'}`}
-                    >
-                      <Check className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                      {t('present')}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setDocumentPresent(doc.key, false)}
-                      aria-pressed={!present}
-                      className={`flex min-h-11 items-center justify-center gap-1.5 rounded-xl border px-3 text-[12px] font-semibold transition-[color,background-color,border-color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB638]/45 sm:min-h-9 ${!present ? 'border-[#FFB638]/65 bg-[#FFB638] text-[#152B54] shadow-soft' : 'border-border bg-card text-muted-foreground hover:border-[#FFB638]/45 hover:text-navy'}`}
-                    >
-                      <X className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                      {t('missing')}
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
 
       {c.documents && c.documents.length > 0 && (
         <Card>

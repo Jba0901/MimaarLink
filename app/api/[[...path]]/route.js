@@ -824,7 +824,8 @@ export async function POST(request, { params }) {
 
     if (path === 'contractors') {
       const contractorId = uuidv4();
-      const documents = await uploadFiles(body.documents, `contractors/${contractorId}`);
+      const companyProfile = storedArray(body.documents).find((file) => file?.label === 'profile');
+      const documents = await uploadFiles(companyProfile ? [companyProfile] : [], `contractors/${contractorId}`);
       const documentChecks = defaultDocumentChecks(documents);
       const contractor = {
         id: contractorId,
