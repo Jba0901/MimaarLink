@@ -22,6 +22,11 @@ const inter = Inter({
 export const metadata = {
   title: 'MimaarLink - Contractor and consultant bids in Qatar',
   description: 'Post your project and get matched with suitable Qatar contractors or consultant offices based on scope, activity, and location.',
+  icons: {
+    icon: [{ url: '/logo.png?v=1', type: 'image/png' }],
+    shortcut: [{ url: '/logo.png?v=1', type: 'image/png' }],
+    apple: [{ url: '/logo.png?v=1', type: 'image/png' }],
+  },
 };
 
 export default function RootLayout({ children }) {
