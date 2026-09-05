@@ -92,7 +92,7 @@ function PostProjectInner() {
 
   const submit = async () => {
     setTried3(true);
-    const phoneDigits = (data.phone || '').replace(/\D/g, '').length;
+    const phoneDigits = (data.phone || '').replace(/^\+974\s*/, '').replace(/\D/g, '').length;
     if (!data.name || !data.phone || phoneDigits < 8) {
       focusFormField(!data.name ? 'project-name' : 'project-phone');
       return;
@@ -163,10 +163,10 @@ function PostProjectInner() {
       {step === 2 && (
         <div className="space-y-3.5">
           <div>
-            <Label className="text-sm">
+            <Label htmlFor="project-location" className="text-sm">
               {t('location')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>
             </Label>
-            <Input value={data.location} onChange={e => update('location', e.target.value)} placeholder={t('locationPh')} className="h-11 mt-1.5" />
+            <Input id="project-location" value={data.location} onChange={e => update('location', e.target.value)} placeholder={t('locationPh')} className="h-11 mt-1.5" />
           </div>
           <div>
             <Label htmlFor="project-description" className="text-sm">{t('description')} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span></Label>
@@ -184,16 +184,16 @@ function PostProjectInner() {
           </div>
           <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <div>
-              <Label className="text-sm">{t('timeline')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-              <Input value={data.timeline} onChange={e => update('timeline', e.target.value)} placeholder={t('timelinePh')} className="h-11 mt-1.5" />
+              <Label htmlFor="project-timeline" className="text-sm">{t('timeline')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
+              <Input id="project-timeline" value={data.timeline} onChange={e => update('timeline', e.target.value)} placeholder={t('timelinePh')} className="h-11 mt-1.5" />
             </div>
             <div>
-              <Label className="text-sm">{t('budget')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-              <Input value={data.budgetRange} onChange={e => update('budgetRange', e.target.value)} placeholder={t('budgetPh')} className="h-11 mt-1.5" />
+              <Label htmlFor="project-budget" className="text-sm">{t('budget')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
+              <Input id="project-budget" value={data.budgetRange} onChange={e => update('budgetRange', e.target.value)} placeholder={t('budgetPh')} className="h-11 mt-1.5" />
             </div>
           </div>
           <div>
-            <Label className="text-sm">{t('uploadFilesLabel')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
+            <Label htmlFor="project-files" className="text-sm">{t('uploadFilesLabel')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
             <LazyFileUploadDropzone
               id="project-files"
               className="mt-1.5"
@@ -251,21 +251,21 @@ function PostProjectInner() {
           <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <RequiredField id="project-name" label={t('name')} value={data.name} onChange={v => update('name', v)} tried={tried3} t={t} />
             <div>
-              <Label className="text-sm">{t('company')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-              <Input value={data.company} onChange={e => update('company', e.target.value)} className="h-11 mt-1.5" />
+              <Label htmlFor="project-company" className="text-sm">{t('company')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
+              <Input id="project-company" autoComplete="organization" value={data.company} onChange={e => update('company', e.target.value)} className="h-11 mt-1.5" />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <RequiredField id="project-phone" label={t('phone')} value={data.phone} onChange={v => update('phone', v)} tried={tried3} t={t} placeholder="+974 ..." kind="phone" />
             <div>
-              <Label className="text-sm">{t('email')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-              <Input value={data.email} onChange={e => update('email', e.target.value)} className="h-11 mt-1.5" type="email" />
+              <Label htmlFor="project-email" className="text-sm">{t('email')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
+              <Input id="project-email" autoComplete="email" dir="ltr" value={data.email} onChange={e => update('email', e.target.value)} className="h-11 mt-1.5" type="email" />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <div>
-              <Label className="text-sm">{t('role')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-              <Input value={data.role} onChange={e => update('role', e.target.value)} placeholder={t('rolePh')} className="h-11 mt-1.5" />
+              <Label htmlFor="project-role" className="text-sm">{t('role')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
+              <Input id="project-role" autoComplete="organization-title" value={data.role} onChange={e => update('role', e.target.value)} placeholder={t('rolePh')} className="h-11 mt-1.5" />
             </div>
             <div>
               <Label htmlFor="project-preferred-language" className="text-sm">{t('preferredLanguage')}</Label>
@@ -330,7 +330,7 @@ function RequiredField({ id, label, value, onChange, tried, t, placeholder, inpu
       const cleaned = raw.replace(/[^\d\s-]/g, '');
       onChange(PREFIX + ' ' + cleaned);
     };
-    const digitCount = (value || '').replace(/\D/g, '').length;
+    const digitCount = localPart.replace(/\D/g, '').length;
     const empty = !localPart.trim();
     const tooShort = !empty && digitCount < 8;
     const showError = tried && (empty || tooShort);

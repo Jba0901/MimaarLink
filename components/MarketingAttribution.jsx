@@ -8,6 +8,7 @@ import { ShieldCheck } from 'lucide-react';
 import {
   captureMarketingAttribution,
   getMarketingConsent,
+  MARKETING_CONSENT_KEY,
   hasTrackedMarketingParams,
   metaPixelConfigured,
   setMarketingConsent,
@@ -29,11 +30,18 @@ export default function MarketingAttribution() {
   const hasDedicatedSettings = pathname === '/privacy';
   const shouldPrompt = !isPrivate && !hasDedicatedSettings && (metaPixelConfigured() || hasTrackedMarketingParams(search));
   const sitsAboveMobileNav = pathname === '/';
-  const sitsBelowFormHeader = pathname === '/post-project' || pathname === '/contractor' || pathname === '/consultant';
+  const isForm = pathname === '/post-project' || pathname === '/contractor' || pathname === '/consultant';
 
   useEffect(() => {
     setConsent(getMarketingConsent());
     setConsentReady(true);
+    const syncConsent = (event) => {
+      if (event.key === MARKETING_CONSENT_KEY || event.key === null) {
+        setConsent(getMarketingConsent());
+      }
+    };
+    window.addEventListener('storage', syncConsent);
+    return () => window.removeEventListener('storage', syncConsent);
   }, []);
 
   useEffect(() => {
@@ -68,16 +76,16 @@ export default function MarketingAttribution() {
       role="region"
       aria-labelledby="marketing-consent-title"
       aria-describedby="marketing-consent-description"
-      className={`marketing-consent-panel fixed inset-x-2.5 z-[100] mx-auto max-w-xl overflow-y-auto overscroll-contain rounded-[18px] border border-[#00B59E]/25 bg-card p-2.5 shadow-lift sm:inset-x-3 sm:rounded-[22px] sm:p-5 ${
-        sitsBelowFormHeader
-          ? 'top-[calc(4.5rem+env(safe-area-inset-top))] max-h-[calc(100dvh_-_5.25rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))] sm:bottom-4 sm:top-auto sm:max-h-[calc(100dvh_-_2rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'
-          : sitsAboveMobileNav
+      className={`marketing-consent-panel mx-auto rounded-[18px] border border-[#00B59E]/25 bg-card p-2.5 ${
+        isForm
+          ? 'marketing-consent-inline relative mt-3 w-[calc(100%-2rem)] max-w-7xl shadow-soft sm:w-[calc(100%-3rem)] sm:p-3 lg:w-[calc(100%-4rem)]'
+          : `fixed inset-x-2.5 z-[100] max-w-xl overflow-y-auto overscroll-contain shadow-lift sm:inset-x-3 sm:rounded-[22px] sm:p-5 ${sitsAboveMobileNav
             ? 'bottom-[calc(5.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_6.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))] lg:bottom-4 lg:max-h-[calc(100dvh_-_2rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'
-            : 'bottom-[calc(0.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_1.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'
+            : 'bottom-[calc(0.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_1.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'}`
       }`}
       dir={arabic ? 'rtl' : 'ltr'}
     >
-      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 sm:block">
+      <div className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 ${isForm ? 'max-[359px]:grid-cols-1' : 'sm:block'}`}>
         <div className="flex min-w-0 items-start gap-2.5 sm:gap-3">
           <span className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E] sm:flex sm:h-11 sm:w-11 sm:rounded-2xl" aria-hidden="true">
             <ShieldCheck className="h-[18px] w-[18px] sm:h-5 sm:w-5" />
@@ -91,13 +99,19 @@ export default function MarketingAttribution() {
                 ? 'نستخدم أدوات Meta لقياس الإعلان فقط بموافقتك.'
                 : 'We use Meta tools to measure advertising only with your consent.'}
               {' '}
-              <Link href="/privacy" className="font-bold text-teal underline decoration-2 underline-offset-2">
+              <Link
+                href="/privacy"
+                target={isForm ? '_blank' : undefined}
+                rel={isForm ? 'noopener noreferrer' : undefined}
+                className="font-bold text-teal underline decoration-2 underline-offset-2"
+              >
                 {arabic ? 'التفاصيل' : 'Details'}
+                {isForm && <span className="sr-only">{arabic ? ' (تفتح في علامة تبويب جديدة)' : ' (opens in a new tab)'}</span>}
               </Link>
             </p>
           </div>
         </div>
-        <div className="z-10 flex gap-1.5 bg-card/95 backdrop-blur-sm sm:mt-4 sm:grid sm:grid-cols-2 sm:gap-2.5 sm:pt-2">
+        <div className={`flex gap-1.5 ${isForm ? 'max-[359px]:grid max-[359px]:grid-cols-2' : 'z-10 bg-card/95 backdrop-blur-sm sm:mt-4 sm:grid sm:grid-cols-2 sm:gap-2.5 sm:pt-2'}`}>
           <button type="button" onClick={reject} className="btn btn-outline h-11 min-h-11 whitespace-normal px-2.5 py-2 text-center text-[12px] leading-snug sm:h-auto sm:px-3 sm:text-[13px]">
             {arabic ? 'رفض' : 'Decline'}
           </button>

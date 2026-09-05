@@ -1,9 +1,7 @@
 import './globals.css';
-import { Suspense } from 'react';
 import { Cairo, Inter } from 'next/font/google';
 import { LangProvider } from '@/lib/LangContext';
 import { Toaster } from '@/components/ui/sonner';
-import MarketingAttribution from '@/components/MarketingAttribution';
 
 const cairo = Cairo({
   subsets: ['arabic'],
@@ -42,9 +40,6 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <LangProvider>
-          <Suspense fallback={null}>
-            <MarketingAttribution />
-          </Suspense>
           {children}
           <Toaster />
         </LangProvider>

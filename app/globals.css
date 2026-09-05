@@ -948,7 +948,7 @@
     padding-bottom: 2.5rem !important;
   }
 
-  .marketing-consent-panel {
+  .marketing-consent-panel:not(.marketing-consent-inline) {
     bottom: calc(0.75rem + env(safe-area-inset-bottom)) !important;
     max-height: calc(100dvh - 1.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
   }
@@ -1019,7 +1019,7 @@
     padding-bottom: 2.5rem !important;
   }
 
-  .marketing-consent-panel {
+  .marketing-consent-panel:not(.marketing-consent-inline) {
     bottom: calc(0.75rem + env(safe-area-inset-bottom)) !important;
     max-height: calc(100dvh - 1.5rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
   }

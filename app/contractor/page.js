@@ -248,8 +248,8 @@ function ContractorApplicationInner() {
             <RequiredField id="provider-whatsapp" label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
           </div>
           <div>
-            <Label className="text-sm">{t('email')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-            <Input value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
+            <Label htmlFor="provider-email" className="text-sm">{t('email')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
+            <Input id="provider-email" autoComplete="email" dir="ltr" value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
           </div>
           <div className="pt-2">
             <Button variant="navy" onClick={goNextFromBasics} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
@@ -324,12 +324,12 @@ function ContractorApplicationInner() {
           )}
           <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
             <div>
-              <Label className="text-sm">{t('serviceAreas')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-              <Input value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
+              <Label htmlFor="provider-service-areas" className="text-sm">{t('serviceAreas')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
+              <Input id="provider-service-areas" value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
             </div>
             <div>
-              <Label className="text-sm">{t('projectSize')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-              <Input value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
+              <Label htmlFor="provider-project-size" className="text-sm">{t('projectSize')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
+              <Input id="provider-project-size" value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-2 pt-2 min-[320px]:grid-cols-2">

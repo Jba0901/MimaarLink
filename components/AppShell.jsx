@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -25,6 +25,7 @@ import {
   X,
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
+import MarketingAttribution from '@/components/MarketingAttribution';
 
 function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9', priority = false }) {
   return (
@@ -83,7 +84,8 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const stored = localStorage.getItem('mlTheme');
+    let stored;
+    try { stored = localStorage.getItem('mlTheme'); } catch {}
     const initial = stored === 'dark' || stored === 'light' ? stored : 'light';
     setTheme(initial);
     document.documentElement.classList.toggle('dark', initial === 'dark');
@@ -195,6 +197,9 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       />
 
       <main className={`mobile-nav-main flex-1 w-full ${hideFooter ? (hideNav ? 'pb-10' : 'pb-32 lg:pb-12') : 'pb-0'}`}>
+        <Suspense fallback={null}>
+          <MarketingAttribution />
+        </Suspense>
         {bleed ? (
           children
         ) : (
@@ -338,7 +343,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
 
   return (
     <div
-      className={`fixed inset-0 z-[110] overflow-hidden transition ${open ? 'pointer-events-auto' : 'pointer-events-none'}`}
+      className={`fixed inset-0 z-[110] overflow-hidden ${open ? 'visible pointer-events-auto' : 'invisible pointer-events-none'}`}
       aria-hidden={!open}
       {...(!open ? { inert: '' } : {})}
       onKeyDown={keepFocusInDrawer}
@@ -358,6 +363,9 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
         role="dialog"
         aria-modal="true"
         aria-label={copy.menu}
+        onClick={(event) => {
+          if (event.target.closest('a[href]')) onClose();
+        }}
         className={`absolute bottom-0 top-0 ${rtl ? 'left-0' : 'right-0'} w-[min(88vw,390px)] overflow-x-hidden overflow-y-auto border-s border-border bg-card text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.24)] transition-transform duration-300 ease-out ${
           open ? 'translate-x-0' : rtl ? '-translate-x-full' : 'translate-x-full'
         }`}
