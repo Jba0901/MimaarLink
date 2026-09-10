@@ -124,6 +124,7 @@
   /* ---------- brand / theme-safe surfaces ---------- */
   .brand-mark {
     position: relative;
+    isolation: isolate;
     display: inline-block;
     aspect-ratio: 1 / 1;
     overflow: visible;
@@ -135,16 +136,22 @@
     height: 100%;
     width: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 1px 1px rgba(21,43,84,0.08));
+    filter: none;
   }
   .brand-mark .brand-mark-dark { display: none; }
   .dark .brand-mark .brand-mark-light { display: none; }
   .dark .brand-mark .brand-mark-dark { display: block; }
-  .dark .brand-mark img {
-    filter:
-      drop-shadow(0 0 1px rgba(255,255,255,0.72))
-      drop-shadow(0 8px 18px rgba(0,0,0,0.48))
-      drop-shadow(0 0 14px rgba(94,234,212,0.16));
+  /* A neutral backing preserves the official mark on dark surfaces.
+     The image itself stays unchanged, unfiltered, and at its original display size. */
+  .dark .brand-mark::before,
+  .brand-mark-on-dark::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    z-index: -1;
+    border-radius: 8px;
+    background: #F5F4F1;
+    pointer-events: none;
   }
   .surface-band {
     background:

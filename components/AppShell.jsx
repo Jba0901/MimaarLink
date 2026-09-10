@@ -27,9 +27,9 @@ import {
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import MarketingAttribution from '@/components/MarketingAttribution';
 
-function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9', priority = false }) {
+function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9', priority = false, onDark = false }) {
   return (
-    <span className={`brand-mark ${className} shrink-0`} aria-hidden="true">
+    <span className={`brand-mark ${onDark ? 'brand-mark-on-dark' : ''} ${className} shrink-0`} aria-hidden="true">
       <Image
         src="/logo.png"
         alt=""
@@ -119,8 +119,9 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
   useEffect(() => {
     if (menuOpen) {
       menuWasOpenRef.current = true;
-      const focusFrame = window.requestAnimationFrame(() => menuCloseButtonRef.current?.focus());
-      return () => window.cancelAnimationFrame(focusFrame);
+      // Finish the opening input event without waiting for a rendered animation frame.
+      const focusTimer = window.setTimeout(() => menuCloseButtonRef.current?.focus(), 0);
+      return () => window.clearTimeout(focusTimer);
     }
 
     if (menuWasOpenRef.current) {
@@ -516,7 +517,7 @@ function SecondaryDrawerLink({ item, active }) {
     <Link
       href={item.href}
       aria-current={active ? 'page' : undefined}
-      className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[12px] font-extrabold leading-tight transition-all tap-highlight ${
+      className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[12px] font-extrabold leading-tight transition-all tap-highlight max-[359px]:gap-1 max-[359px]:px-2 ${
         active
           ? 'border-[#00B59E]/35 bg-[#D0F2EE]/55 text-navy dark:bg-[#00B59E]/15'
           : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#00B59E]/35 dark:bg-[#0D1B2A]/70'
@@ -580,7 +581,7 @@ function SiteFooter({ flush = false, reserveMobileNav = false }) {
         <div className="grid grid-cols-2 gap-x-5 gap-y-6 lg:grid-cols-[1.6fr_1fr_1fr]">
           <div className="col-span-2 max-w-sm lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-3">
-              <Logo className="h-8 w-8" />
+              <Logo className="h-8 w-8" onDark />
               <BrandText size={16} onDark />
             </div>
             <p className="text-[13px] leading-relaxed text-white/70">{dir === 'rtl' ? 'للمشاريع والمقاولين والاستشاريين في قطر.' : 'For projects, contractors and consultants in Qatar.'}</p>
