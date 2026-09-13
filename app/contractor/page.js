@@ -452,7 +452,7 @@ function RequiredField({ id, label, value, onChange, tried, t, placeholder, inpu
             aria-invalid={showError}
             aria-required="true"
             aria-describedby={showError ? errorId : undefined}
-            className="min-w-0 flex-1 bg-transparent px-3 text-base outline-none md:text-sm [@media(pointer:coarse)]:!text-base"
+            className="min-h-11 min-w-0 flex-1 bg-transparent px-3 text-base outline-none md:text-sm [@media(pointer:coarse)]:!text-base"
           />
         </div>
         {showError && <InlineFieldMessage id={errorId}>{errMsg}</InlineFieldMessage>}
