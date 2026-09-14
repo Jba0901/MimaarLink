@@ -786,7 +786,7 @@ export async function POST(request, { params }) {
         id: projectId,
         requesterId: requester.id,
         category: body.category || 'other',
-        location: body.location || '',
+        location: body.location || 'Doha',
         description: body.description || '',
         files,
         budgetRange: body.budgetRange || '',

@@ -116,17 +116,11 @@ function ContractorApplicationInner() {
   const phoneValid = phoneDigits >= 8;
   const hasOther = data.categories.includes('other');
   const otherDescValid = !hasOther || (data.otherCategoryDesc || '').trim().length >= 3;
-  const basicsValid = data.companyName && data.crNumber && data.contactPerson && data.whatsapp && phoneValid;
+  const basicsValid = Boolean(data.crNumber.trim() && phoneValid);
   const servicesValid = data.categories.length > 0 && otherDescValid;
   const formValid = basicsValid && servicesValid;
   const showServicesError = triedServices && data.categories.length === 0;
-  const firstInvalidBasicsField = !data.companyName
-    ? 'provider-company-name'
-    : !data.crNumber
-      ? 'provider-cr-number'
-      : !data.contactPerson
-        ? 'provider-contact-person'
-        : 'provider-whatsapp';
+  const firstInvalidBasicsField = !data.crNumber.trim() ? 'provider-cr-number' : 'provider-whatsapp';
 
   const goNextFromBasics = () => {
     setTriedBasics(true);
@@ -240,12 +234,12 @@ function ContractorApplicationInner() {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-            <RequiredField id="provider-company-name" label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedBasics} t={t} />
-            <RequiredField id="provider-cr-number" label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedBasics} t={t} />
+            <FormField id="provider-company-name" label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedBasics} t={t} required={false} />
+            <FormField id="provider-cr-number" label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedBasics} t={t} />
           </div>
           <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-            <RequiredField id="provider-contact-person" label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedBasics} t={t} />
-            <RequiredField id="provider-whatsapp" label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
+            <FormField id="provider-contact-person" label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedBasics} t={t} required={false} />
+            <FormField id="provider-whatsapp" label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
           </div>
           <div>
             <Label htmlFor="provider-email" className="text-sm">{t('email')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
@@ -416,7 +410,7 @@ function ContractorApplicationInner() {
   );
 }
 
-function RequiredField({ id, label, value, onChange, tried, t, placeholder, inputMode, type, kind }) {
+function FormField({ id, label, value, onChange, tried, t, placeholder, inputMode, type, kind, required = true }) {
   const generatedId = React.useId();
   const fieldId = id || generatedId;
   const errorId = `${fieldId}-error`;
@@ -460,11 +454,13 @@ function RequiredField({ id, label, value, onChange, tried, t, placeholder, inpu
     );
   }
 
-  const showError = tried && !value;
+  const showError = required && tried && !value;
   return (
     <div>
       <Label htmlFor={fieldId} className="text-sm">
-        {label} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
+        {label} {required
+          ? <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
+          : <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>}
       </Label>
       <Input
         id={fieldId}
@@ -474,7 +470,7 @@ function RequiredField({ id, label, value, onChange, tried, t, placeholder, inpu
         inputMode={inputMode}
         type={type}
         aria-invalid={showError}
-        aria-required="true"
+        aria-required={required ? 'true' : undefined}
         aria-describedby={showError ? errorId : undefined}
         className="mt-1.5 h-11"
       />

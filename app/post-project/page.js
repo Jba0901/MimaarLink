@@ -67,7 +67,7 @@ function PostProjectInner() {
   const [tried2, setTried2] = useState(false);
   const [tried3, setTried3] = useState(false);
   const [data, setData] = useState({
-    category: '', location: '', description: '', timeline: '', budgetRange: '', files: [],
+    category: '', description: '', timeline: '', budgetRange: '', files: [],
     name: '', company: '', phone: '+974 ', email: '', role: '', languagePreference: 'en',
   });
 
@@ -162,12 +162,6 @@ function PostProjectInner() {
 
       {step === 2 && (
         <div className="space-y-3.5">
-          <div>
-            <Label htmlFor="project-location" className="text-sm">
-              {t('location')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>
-            </Label>
-            <Input id="project-location" value={data.location} onChange={e => update('location', e.target.value)} placeholder={t('locationPh')} className="h-11 mt-1.5" />
-          </div>
           <div>
             <Label htmlFor="project-description" className="text-sm">{t('description')} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span></Label>
             <Textarea
