@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Building2, CalendarClock, ChevronLeft, ChevronRight, ClipboardCheck, Lock, Loader2, LogOut, RefreshCw, ShieldCheck, TriangleAlert } from 'lucide-react';
 import { toast } from 'sonner';
+import { providerDisplayName, providerTypeLabel } from '@/lib/providerPresentation.mjs';
 
 const formatAdminTime = (value, lang = 'en') => {
   if (!value) return '-';
@@ -25,10 +26,6 @@ const formatAdminTime = (value, lang = 'en') => {
     timeStyle: 'short',
   }).format(date);
 };
-
-const providerTypeLabel = (provider, t) => (
-  provider?.providerType === 'consultant' ? t('providerTypeConsultant') : t('providerTypeContractor')
-);
 
 const consultantGradeLabel = (grade, t) => {
   if (grade === 'grade_a') return t('gradeA');
@@ -253,7 +250,7 @@ function AdminInner() {
                     <div className="flex flex-col gap-2.5 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-1.5">
-                        <span dir="auto" className="break-words text-sm font-semibold leading-snug text-navy">{c.companyName}</span>
+                        <span dir="auto" className="break-words text-sm font-semibold leading-snug text-navy">{providerDisplayName(c, t, { includeCr: true })}</span>
                         <Badge variant="outline" className="max-w-full gap-1 whitespace-normal text-start text-[12px]">
                           <TypeIcon className="h-3 w-3 shrink-0" />
                           {providerTypeLabel(c, t)}
@@ -261,9 +258,9 @@ function AdminInner() {
                         {c.verificationStatus === 'verified' && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" />}
                       </div>
                       <div className="mt-0.5 flex flex-wrap items-center gap-x-1 break-words text-xs text-muted-foreground">
-                        <span dir="auto">{c.contactPerson}</span>
-                        <span aria-hidden="true">·</span>
-                        <span dir="ltr" className="inline-block whitespace-nowrap">{c.whatsapp}</span>
+                        {c.contactPerson && <span dir="auto">{c.contactPerson}</span>}
+                        {c.contactPerson && c.whatsapp && <span aria-hidden="true">·</span>}
+                        {c.whatsapp && <span dir="ltr" className="inline-block whitespace-nowrap">{c.whatsapp}</span>}
                       </div>
                       {isConsultant && (
                         <div className="mt-0.5 break-words text-[12px] text-muted-foreground">{consultantGradeLabel(c.consultantGrade, t)}</div>

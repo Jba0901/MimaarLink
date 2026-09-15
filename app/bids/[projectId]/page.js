@@ -10,10 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import PageState from '@/components/PageState';
 import { BookmarkPlus, Building2, CalendarCheck2, ClipboardCheck, ShieldCheck, Clock, Wallet, FileWarning, FileCheck2, Loader2, Paperclip } from 'lucide-react';
 import { toast } from 'sonner';
-
-const providerTypeLabel = (provider, t) => (
-  provider?.providerType === 'consultant' ? t('providerTypeConsultant') : t('providerTypeContractor')
-);
+import { providerDisplayName, providerTypeLabel } from '@/lib/providerPresentation.mjs';
 
 export default function BidsPage() {
   const { projectId } = useParams();
@@ -104,7 +101,7 @@ export default function BidsPage() {
                       <ProviderIcon className="h-5 w-5" />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <div dir="auto" className="min-w-0 break-words text-base font-bold leading-snug text-navy">{c.companyName || t('provider')}</div>
+                      <div dir="auto" className="min-w-0 break-words text-base font-bold leading-snug text-navy">{providerDisplayName(c, t)}</div>
                       <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                         {c.providerType && <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">{providerTypeLabel(c, t)}</Badge>}
                         {c.verificationStatus === 'verified' && (

@@ -11,6 +11,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import PageState from '@/components/PageState';
 import StatusTimeline from '@/components/StatusTimeline';
 import StatusBadge from '@/components/StatusBadge';
+import { providerDisplayName } from '@/lib/providerPresentation.mjs';
 import { ClipboardCheck, Hammer, House, MapPin, Paperclip, Wallet } from 'lucide-react';
 
 const consultantGradeLabel = (grade, t) => {
@@ -81,7 +82,7 @@ export default function ContractorStatusPage() {
           </span>
           <div className="min-w-0 flex-1">
             <h1 className="display-title break-words text-[22px] sm:text-[28px]">{t('providerStatus')}</h1>
-            <p dir="auto" className="mt-1 break-words text-[13px] font-semibold leading-snug text-muted-foreground">{contractor.companyName}</p>
+            <p dir="auto" className="mt-1 break-words text-[13px] font-semibold leading-snug text-muted-foreground">{providerDisplayName(contractor, t)}</p>
             <div className="mt-2 flex flex-wrap items-center gap-1.5">
               <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">
                 {isConsultant ? t('providerTypeConsultant') : t('providerTypeContractor')}

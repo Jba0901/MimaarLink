@@ -16,6 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { ArrowLeft, ArrowRight, Building2, CalendarClock, ClipboardCheck, Loader2, ShieldCheck, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { providerDisplayName, providerTypeLabel } from '@/lib/providerPresentation.mjs';
 
 const formatAdminTime = (value, lang = 'en') => {
   if (!value) return '-';
@@ -26,10 +27,6 @@ const formatAdminTime = (value, lang = 'en') => {
     timeStyle: 'short',
   }).format(date);
 };
-
-const providerTypeLabel = (provider, t) => (
-  provider?.providerType === 'consultant' ? t('providerTypeConsultant') : t('providerTypeContractor')
-);
 
 const consultantGradeLabel = (grade, t) => {
   if (grade === 'grade_a') return t('gradeA');
@@ -150,7 +147,7 @@ export default function AdminContractorPage() {
 
       <div className="mb-3 flex min-w-0 flex-wrap items-start justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2">
-          <h1 dir="auto" className="min-w-0 break-words text-xl font-bold text-navy">{c.companyName}</h1>
+          <h1 dir="auto" className="min-w-0 break-words text-xl font-bold text-navy">{providerDisplayName(c, t, { includeCr: true })}</h1>
           {c.verificationStatus === 'verified' && <ShieldCheck className="h-5 w-5 shrink-0 text-[#00B59E]" aria-hidden="true" />}
         </div>
         <StatusBadge status={c.verificationStatus} className="self-start">{t(`cstatus_${c.verificationStatus}`)}</StatusBadge>
@@ -168,11 +165,11 @@ export default function AdminContractorPage() {
           </div>
           <dl className="grid gap-x-4 gap-y-3 pt-1 sm:grid-cols-2">
             <div><dt className="text-[12px] text-muted-foreground">{t('crNumber')}</dt><dd className="mt-0.5 break-words font-semibold text-navy" dir="ltr">{c.crNumber}</dd></div>
-            <div><dt className="text-[12px] text-muted-foreground">{t('contactPerson')}</dt><dd dir="auto" className="mt-0.5 break-words font-semibold text-navy">{c.contactPerson}</dd></div>
+            {c.contactPerson && <div><dt className="text-[12px] text-muted-foreground">{t('contactPerson')}</dt><dd dir="auto" className="mt-0.5 break-words font-semibold text-navy">{c.contactPerson}</dd></div>}
             <div><dt className="text-[12px] text-muted-foreground">{t('whatsapp')}</dt><dd className="mt-0.5 font-semibold text-navy" dir="ltr">{c.whatsapp}</dd></div>
             {c.email && <div><dt className="text-[12px] text-muted-foreground">{t('email')}</dt><dd className="mt-0.5 break-all font-semibold text-navy" dir="ltr">{c.email}</dd></div>}
-            <div><dt className="text-[12px] text-muted-foreground">{t('serviceAreas')}</dt><dd dir="auto" className="mt-0.5 break-words font-semibold text-navy">{c.serviceAreas}</dd></div>
-            <div><dt className="text-[12px] text-muted-foreground">{t('projectSize')}</dt><dd className="mt-0.5 break-words font-semibold text-navy" dir="ltr">{c.projectSizeRange}</dd></div>
+            {c.serviceAreas && <div><dt className="text-[12px] text-muted-foreground">{t('serviceAreas')}</dt><dd dir="auto" className="mt-0.5 break-words font-semibold text-navy">{c.serviceAreas}</dd></div>}
+            {c.projectSizeRange && <div><dt className="text-[12px] text-muted-foreground">{t('projectSize')}</dt><dd className="mt-0.5 break-words font-semibold text-navy" dir="ltr">{c.projectSizeRange}</dd></div>}
             {isConsultant && <div><dt className="text-[12px] text-muted-foreground">{t('consultantGrade')}</dt><dd className="mt-0.5 break-words font-semibold text-navy">{consultantGradeLabel(c.consultantGrade, t)}</dd></div>}
           </dl>
           <div className="flex flex-wrap gap-1 pt-1">

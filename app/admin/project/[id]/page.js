@@ -20,6 +20,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { ArrowLeft, ArrowRight, Building2, CalendarClock, ClipboardCheck, Clock, FileCheck2, FileWarning, Plus, ShieldCheck, Loader2, ExternalLink, Trash2, Paperclip, Wallet } from 'lucide-react';
 import { toast } from 'sonner';
 import { MAX_FILE_SIZE_BYTES, fileTooLargeMessage } from '@/lib/uploadLimits';
+import { providerDisplayName, providerTypeLabel } from '@/lib/providerPresentation.mjs';
 
 async function fileToDataURL(file) {
   return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsDataURL(file); });
@@ -35,14 +36,10 @@ const formatAdminTime = (value, lang = 'en') => {
   }).format(date);
 };
 
-const providerTypeLabel = (provider, t) => (
-  provider?.providerType === 'consultant' ? t('providerTypeConsultant') : t('providerTypeContractor')
-);
-
 const providerOptionLabel = (provider, t) => {
   if (!provider) return '';
   const status = provider.verificationStatus ? t(`cstatus_${provider.verificationStatus}`) : '';
-  return `${provider.companyName} - ${providerTypeLabel(provider, t)}${status ? ` - ${status}` : ''}`;
+  return `${providerDisplayName(provider, t, { includeCr: true })} - ${providerTypeLabel(provider, t)}${status ? ` - ${status}` : ''}`;
 };
 
 const inviteResponseVariant = (status) => {
@@ -340,7 +337,7 @@ export default function AdminProjectPage() {
                       <ProviderIcon className="h-5 w-5" />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <span dir="auto" className="block break-words font-semibold leading-snug text-navy">{provider?.companyName || inv.contractorId}</span>
+                      <span dir="auto" className="block break-words font-semibold leading-snug text-navy">{provider ? providerDisplayName(provider, t, { includeCr: true }) : inv.contractorId}</span>
                       {provider && (
                         <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                           <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">{providerTypeLabel(provider, t)}</Badge>
@@ -384,7 +381,7 @@ export default function AdminProjectPage() {
                         <ProviderIcon className="h-5 w-5" />
                       </span>
                       <div className="min-w-0 flex-1">
-                        <span dir="auto" className="block break-words text-sm font-semibold leading-snug text-navy">{provider?.companyName || b.contractorId || t('provider')}</span>
+                        <span dir="auto" className="block break-words text-sm font-semibold leading-snug text-navy">{provider ? providerDisplayName(provider, t, { includeCr: true }) : (b.contractorId || t('provider'))}</span>
                         <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                           {provider && <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">{providerTypeLabel(provider, t)}</Badge>}
                           {provider?.verificationStatus === 'verified' && (
