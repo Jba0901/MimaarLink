@@ -5,6 +5,8 @@ import AppShell from '@/components/AppShell';
 import FormProgress from '@/components/FormProgress';
 import DesktopFormAside from '@/components/DesktopFormAside';
 import InlineFieldMessage from '@/components/InlineFieldMessage';
+import QuickChoiceField from '@/components/QuickChoiceField';
+import { intakeChoices } from '@/lib/intakeChoices.mjs';
 import { LazyFileUploadDropzone, LazyNativeSelect, LazyNetworkStatusNotice, LazySubmissionRetryNotice, LazySuccessPanel } from '@/components/LazyFormControls';
 import { useLang } from '@/lib/LangContext';
 import { CATEGORIES, CONSULTANT_CATEGORIES, CONSULTANT_GRADES } from '@/lib/i18n';
@@ -42,7 +44,7 @@ function FormLoadingState({ title }) {
 }
 
 function ContractorApplicationInner() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const sp = useSearchParams();
   const requestedType = sp.get('type') === 'consultant' ? 'consultant' : 'contractor';
   const [step, setStep] = useState(1);
@@ -316,15 +318,14 @@ function ContractorApplicationInner() {
               {triedServices && !otherDescValid && <InlineFieldMessage id="provider-other-category-error">{t('requireField')}</InlineFieldMessage>}
             </div>
           )}
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+          <div className="space-y-5 py-1">
             <div>
               <Label htmlFor="provider-service-areas" className="text-sm">{t('serviceAreas')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
               <Input id="provider-service-areas" value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
             </div>
-            <div>
-              <Label htmlFor="provider-project-size" className="text-sm">{t('projectSize')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-              <Input id="provider-project-size" value={data.projectSizeRange} onChange={e => update('projectSizeRange', e.target.value)} placeholder={t('projectSizePh')} className="h-11 mt-1.5" />
-            </div>
+            <QuickChoiceField id="provider-project-size" label={t('projectSize')} value={data.projectSizeRange}
+              onChange={value => update('projectSizeRange', value)} options={intakeChoices('budget', lang)}
+              placeholder={t('projectSizePh')} t={t} />
           </div>
           <div className="grid grid-cols-1 gap-2 pt-2 min-[320px]:grid-cols-2">
             <Button variant="outline" onClick={() => showStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>

@@ -5,6 +5,8 @@ import AppShell from '@/components/AppShell';
 import FormProgress from '@/components/FormProgress';
 import DesktopFormAside from '@/components/DesktopFormAside';
 import InlineFieldMessage from '@/components/InlineFieldMessage';
+import QuickChoiceField from '@/components/QuickChoiceField';
+import { intakeChoices } from '@/lib/intakeChoices.mjs';
 import { LazyFileUploadDropzone, LazyNativeSelect, LazyNetworkStatusNotice, LazySubmissionRetryNotice, LazySuccessPanel } from '@/components/LazyFormControls';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
@@ -176,15 +178,13 @@ function PostProjectInner() {
             />
             {tried2 && !data.description && <InlineFieldMessage id="project-description-error">{t('requireField')}</InlineFieldMessage>}
           </div>
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-            <div>
-              <Label htmlFor="project-timeline" className="text-sm">{t('timeline')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-              <Input id="project-timeline" value={data.timeline} onChange={e => update('timeline', e.target.value)} placeholder={t('timelinePh')} className="h-11 mt-1.5" />
-            </div>
-            <div>
-              <Label htmlFor="project-budget" className="text-sm">{t('budget')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-              <Input id="project-budget" value={data.budgetRange} onChange={e => update('budgetRange', e.target.value)} placeholder={t('budgetPh')} className="h-11 mt-1.5" />
-            </div>
+          <div className="space-y-5 py-1">
+            <QuickChoiceField id="project-timeline" label={t('preferredStart')} value={data.timeline}
+              onChange={value => update('timeline', value)} options={intakeChoices('timeline', dir === 'rtl' ? 'ar' : 'en')}
+              placeholder={t('timelinePh')} t={t} />
+            <QuickChoiceField id="project-budget" label={t('budget')} value={data.budgetRange}
+              onChange={value => update('budgetRange', value)} options={intakeChoices('budget', dir === 'rtl' ? 'ar' : 'en')}
+              placeholder={t('budgetPh')} t={t} />
           </div>
           <div>
             <Label htmlFor="project-files" className="text-sm">{t('uploadFilesLabel')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
