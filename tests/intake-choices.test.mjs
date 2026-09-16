@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { intakeChoices, matchesChoice } from '../lib/intakeChoices.mjs';
 
 test('preset selections survive either language switch without rewriting the submitted answer', () => {
-  for (const kind of ['timeline', 'budget']) {
+  for (const kind of ['timeline', 'budget', 'projectSize']) {
     const arabic = intakeChoices(kind, 'ar');
     const english = intakeChoices(kind, 'en');
     for (const [index, option] of arabic.entries()) {
@@ -15,7 +15,7 @@ test('preset selections survive either language switch without rewriting the sub
 });
 
 test('blank optional answers and custom free text never silently select a preset', () => {
-  for (const kind of ['timeline', 'budget']) {
+  for (const kind of ['timeline', 'budget', 'projectSize']) {
     for (const lang of ['en', 'ar']) {
       const options = intakeChoices(kind, lang);
       assert.equal(options.some(option => matchesChoice(option, '')), false);

@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { CheckCircle2, X, Loader2, FileText, Building2, ClipboardCheck } from 'lucide-react';
+import { CheckCircle2, X, Loader2, FileText, Building2, ClipboardCheck, WalletCards } from 'lucide-react';
 import { toast } from 'sonner';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 import { focusFormField } from '@/lib/focusFormField';
@@ -324,8 +324,8 @@ function ContractorApplicationInner() {
               <Input id="provider-service-areas" value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
             </div>
             <QuickChoiceField id="provider-project-size" label={t('projectSize')} value={data.projectSizeRange}
-              onChange={value => update('projectSizeRange', value)} options={intakeChoices('budget', lang)}
-              placeholder={t('projectSizePh')} t={t} />
+              onChange={value => update('projectSizeRange', value)} options={intakeChoices('projectSize', lang)}
+              placeholder={t('projectSizePh')} icon={WalletCards} lang={lang} t={t} />
           </div>
           <div className="grid grid-cols-1 gap-2 pt-2 min-[320px]:grid-cols-2">
             <Button variant="outline" onClick={() => showStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>

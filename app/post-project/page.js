@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal, PencilLine } from 'lucide-react';
+import { CalendarClock, CheckCircle2, X, Loader2, FileText, Layers, WalletCards, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal, PencilLine } from 'lucide-react';
 import { toast } from 'sonner';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 import { focusFormField } from '@/lib/focusFormField';
@@ -178,13 +178,13 @@ function PostProjectInner() {
             />
             {tried2 && !data.description && <InlineFieldMessage id="project-description-error">{t('requireField')}</InlineFieldMessage>}
           </div>
-          <div className="space-y-5 py-1">
+          <div className="space-y-2 py-1">
             <QuickChoiceField id="project-timeline" label={t('preferredStart')} value={data.timeline}
               onChange={value => update('timeline', value)} options={intakeChoices('timeline', dir === 'rtl' ? 'ar' : 'en')}
-              placeholder={t('timelinePh')} t={t} />
+              placeholder={t('timelinePh')} icon={CalendarClock} lang={dir === 'rtl' ? 'ar' : 'en'} t={t} />
             <QuickChoiceField id="project-budget" label={t('budget')} value={data.budgetRange}
               onChange={value => update('budgetRange', value)} options={intakeChoices('budget', dir === 'rtl' ? 'ar' : 'en')}
-              placeholder={t('budgetPh')} t={t} />
+              placeholder={t('budgetPh')} icon={WalletCards} lang={dir === 'rtl' ? 'ar' : 'en'} t={t} />
           </div>
           <div>
             <Label htmlFor="project-files" className="text-sm">{t('uploadFilesLabel')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
