@@ -24,3 +24,16 @@ test('blank optional answers and custom free text never silently select a preset
     }
   }
 });
+
+test('visual scales keep labels short and separate non-ordinal answers', () => {
+  for (const kind of ['timeline', 'budget', 'projectSize']) {
+    for (const lang of ['en', 'ar']) {
+      const options = intakeChoices(kind, lang);
+      assert.equal(options.every(option => option.shortLabel.length > 0), true);
+      assert.equal(options.filter(option => option.auxiliary).length, 1);
+      assert.equal(options.filter(option => !option.auxiliary).length >= 4, true);
+      assert.equal(options.every(option => option.aliases.length <= 2), true);
+      assert.equal(options.every(option => option.aliases.every(alias => typeof alias === 'string')), true);
+    }
+  }
+});
