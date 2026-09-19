@@ -5,7 +5,7 @@ import { Check, PencilLine, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { matchesChoice } from '@/lib/intakeChoices.mjs';
 
-/** A visual, inline scale for optional intake preferences. */
+/** A visual, inline scale for intake preferences. */
 export default function QuickChoiceField({ id, label, value, onChange, options, placeholder, icon: Icon, t }) {
   const matchedOption = options.find(option => matchesChoice(option, value));
   const isCustomValue = Boolean(value && !matchedOption);
@@ -40,9 +40,7 @@ export default function QuickChoiceField({ id, label, value, onChange, options, 
           <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
         </span>
         <div className="min-w-0 flex-1">
-          <h3 className="text-[12px] font-medium leading-4 text-muted-foreground">
-            {label} <span className="font-normal">({t('optional')})</span>
-          </h3>
+          <h3 className="text-[12px] font-medium leading-4 text-muted-foreground">{label}</h3>
           <div className={`mt-0.5 truncate text-[14px] font-semibold leading-5 ${value ? 'text-navy' : 'text-muted-foreground'}`} aria-live="polite">
             <bdi dir="auto">{summary}</bdi>
           </div>
@@ -85,7 +83,7 @@ export default function QuickChoiceField({ id, label, value, onChange, options, 
                   {active && <Check className="h-3.5 w-3.5" strokeWidth={3} />}
                 </span>
                 <span className={`mt-1.5 min-h-7 break-words text-center text-[10.5px] font-medium leading-[14px] min-[360px]:text-[11px] ${active ? 'text-navy' : 'text-muted-foreground'}`}>
-                  <bdi dir="auto">{option.shortLabel || option.label}</bdi>
+                  <bdi dir={option.shortDir || 'auto'}>{option.shortLabel || option.label}</bdi>
                 </span>
               </button>
             );

@@ -37,3 +37,14 @@ test('visual scales keep labels short and separate non-ordinal answers', () => {
     }
   }
 });
+
+test('owner budget bands do not jump directly from 25,000 to 100,000', () => {
+  for (const lang of ['en', 'ar']) {
+    const budget = intakeChoices('budget', lang).filter(option => !option.auxiliary);
+    assert.equal(budget.length, 5);
+    assert.equal(budget[1].aliases.includes('25,000–50,000'), true);
+    assert.equal(budget[2].aliases.includes('50,000–100,000'), true);
+    assert.equal(budget[1].shortDir, 'ltr');
+    assert.equal(budget[2].shortDir, 'ltr');
+  }
+});
