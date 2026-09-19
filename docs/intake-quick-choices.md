@@ -1,5 +1,9 @@
 # Intake visual-scale refinement — 18 September 2026
 
+## 19 September owner-budget simplification
+
+Q replaced the owner budget scale with a single manual text input and one `Not sure` / `غير متأكد` shortcut. There are no budget presets, modal pickers, or unit-conversion rules. Existing free-text values continue to display unchanged, the shortcut remains bilingual across a language switch, and focusing the input clears a selected shortcut. This change affects only the owner budget question; the timing and provider-size visual scales remain in place. The budget label uses QAR, not thousands, because the user types the full amount or range.
+
 Q rejected both the original visible option grids and the follow-up popup picker as too reading-heavy. The final direction is an inline visual scale: the common answers are visible as short, tappable points, while uncertain and custom answers remain small secondary actions.
 
 ## Shipped behavior

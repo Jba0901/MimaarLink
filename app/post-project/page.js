@@ -6,6 +6,7 @@ import FormProgress from '@/components/FormProgress';
 import DesktopFormAside from '@/components/DesktopFormAside';
 import InlineFieldMessage from '@/components/InlineFieldMessage';
 import QuickChoiceField from '@/components/QuickChoiceField';
+import BudgetTextField from '@/components/BudgetTextField';
 import { intakeChoices } from '@/lib/intakeChoices.mjs';
 import { LazyFileUploadDropzone, LazyNativeSelect, LazyNetworkStatusNotice, LazySubmissionRetryNotice, LazySuccessPanel } from '@/components/LazyFormControls';
 import { useLang } from '@/lib/LangContext';
@@ -14,7 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { CalendarClock, CheckCircle2, X, Loader2, FileText, Layers, WalletCards, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal, PencilLine } from 'lucide-react';
+import { CalendarClock, CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal, PencilLine } from 'lucide-react';
 import { toast } from 'sonner';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 import { focusFormField } from '@/lib/focusFormField';
@@ -182,9 +183,9 @@ function PostProjectInner() {
             <QuickChoiceField id="project-timeline" label={t('preferredStart')} value={data.timeline}
               onChange={value => update('timeline', value)} options={intakeChoices('timeline', dir === 'rtl' ? 'ar' : 'en')}
               placeholder={t('timelinePh')} icon={CalendarClock} lang={dir === 'rtl' ? 'ar' : 'en'} t={t} />
-            <QuickChoiceField id="project-budget" label={t('budget')} value={data.budgetRange}
-              onChange={value => update('budgetRange', value)} options={intakeChoices('budget', dir === 'rtl' ? 'ar' : 'en')}
-              placeholder={t('budgetPh')} icon={WalletCards} lang={dir === 'rtl' ? 'ar' : 'en'} t={t} />
+            <BudgetTextField id="project-budget" label={t('budget')} value={data.budgetRange}
+              onChange={value => update('budgetRange', value)} placeholder={t('budgetPh')}
+              lang={dir === 'rtl' ? 'ar' : 'en'} />
           </div>
           <div>
             <Label htmlFor="project-files" className="text-sm">{t('uploadFilesLabel')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>

@@ -26,7 +26,7 @@ test('blank optional answers and custom free text never silently select a preset
 });
 
 test('visual scales keep labels short and separate non-ordinal answers', () => {
-  for (const kind of ['timeline', 'budget', 'projectSize']) {
+  for (const kind of ['timeline', 'projectSize']) {
     for (const lang of ['en', 'ar']) {
       const options = intakeChoices(kind, lang);
       assert.equal(options.every(option => option.shortLabel.length > 0), true);
@@ -38,13 +38,12 @@ test('visual scales keep labels short and separate non-ordinal answers', () => {
   }
 });
 
-test('owner budget bands do not jump directly from 25,000 to 100,000', () => {
+test('owner budget offers only the bilingual not-sure shortcut', () => {
   for (const lang of ['en', 'ar']) {
-    const budget = intakeChoices('budget', lang).filter(option => !option.auxiliary);
-    assert.equal(budget.length, 5);
-    assert.equal(budget[1].aliases.includes('25,000–50,000'), true);
-    assert.equal(budget[2].aliases.includes('50,000–100,000'), true);
-    assert.equal(budget[1].shortDir, 'ltr');
-    assert.equal(budget[2].shortDir, 'ltr');
+    const budget = intakeChoices('budget', lang);
+    assert.equal(budget.length, 1);
+    assert.equal(budget[0].auxiliary, true);
+    assert.equal(matchesChoice(budget[0], 'Not sure yet'), true);
+    assert.equal(matchesChoice(budget[0], 'لست متأكداً بعد'), true);
   }
 });
