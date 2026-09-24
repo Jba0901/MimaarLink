@@ -4,9 +4,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { intakeChoices, matchesChoice } from '@/lib/intakeChoices.mjs';
 
-/** One free-text budget answer, with a quick answer for owners who are unsure. */
-export default function BudgetTextField({ id, label, value, onChange, placeholder, lang }) {
-  const unsure = intakeChoices('budget', lang)[0];
+/** One free-text answer with a single shortcut for people who are unsure. */
+export default function TextOrUnsureField({ id, label, value, onChange, placeholder, lang, choiceKind }) {
+  const unsure = intakeChoices(choiceKind, lang)[0];
   const isUnsure = matchesChoice(unsure, value);
 
   return (

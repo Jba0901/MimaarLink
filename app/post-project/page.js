@@ -5,9 +5,7 @@ import AppShell from '@/components/AppShell';
 import FormProgress from '@/components/FormProgress';
 import DesktopFormAside from '@/components/DesktopFormAside';
 import InlineFieldMessage from '@/components/InlineFieldMessage';
-import QuickChoiceField from '@/components/QuickChoiceField';
-import BudgetTextField from '@/components/BudgetTextField';
-import { intakeChoices } from '@/lib/intakeChoices.mjs';
+import TextOrUnsureField from '@/components/TextOrUnsureField';
 import { LazyFileUploadDropzone, LazyNativeSelect, LazyNetworkStatusNotice, LazySubmissionRetryNotice, LazySuccessPanel } from '@/components/LazyFormControls';
 import { useLang } from '@/lib/LangContext';
 import { PROJECT_CATEGORIES } from '@/lib/i18n';
@@ -15,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { CalendarClock, CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal, PencilLine } from 'lucide-react';
+import { CheckCircle2, X, Loader2, FileText, Layers, Wrench, Snowflake, HardHat, ClipboardCheck, MoreHorizontal, PencilLine } from 'lucide-react';
 import { toast } from 'sonner';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 import { focusFormField } from '@/lib/focusFormField';
@@ -180,12 +178,12 @@ function PostProjectInner() {
             {tried2 && !data.description && <InlineFieldMessage id="project-description-error">{t('requireField')}</InlineFieldMessage>}
           </div>
           <div className="space-y-2 py-1">
-            <QuickChoiceField id="project-timeline" label={t('preferredStart')} value={data.timeline}
-              onChange={value => update('timeline', value)} options={intakeChoices('timeline', dir === 'rtl' ? 'ar' : 'en')}
-              placeholder={t('timelinePh')} icon={CalendarClock} lang={dir === 'rtl' ? 'ar' : 'en'} t={t} />
-            <BudgetTextField id="project-budget" label={t('budget')} value={data.budgetRange}
+            <TextOrUnsureField id="project-timeline" label={t('preferredStart')} value={data.timeline}
+              onChange={value => update('timeline', value)} placeholder={t('timelinePh')}
+              lang={dir === 'rtl' ? 'ar' : 'en'} choiceKind="timeline" />
+            <TextOrUnsureField id="project-budget" label={t('budget')} value={data.budgetRange}
               onChange={value => update('budgetRange', value)} placeholder={t('budgetPh')}
-              lang={dir === 'rtl' ? 'ar' : 'en'} />
+              lang={dir === 'rtl' ? 'ar' : 'en'} choiceKind="budget" />
           </div>
           <div>
             <Label htmlFor="project-files" className="text-sm">{t('uploadFilesLabel')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
