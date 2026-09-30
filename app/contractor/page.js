@@ -271,7 +271,7 @@ function ContractorApplicationInner() {
           )}
           <div>
             <Label id="provider-services-label" className="text-sm mb-2 block">
-              {serviceLabel} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
+              {serviceLabel} <span aria-hidden="true" className="ms-1 text-[#B5462B]">*</span>
             </Label>
             {showServicesError && <InlineFieldMessage id="provider-services-error" className="mb-2 mt-0">{t('requireField')}</InlineFieldMessage>}
             <div
@@ -279,7 +279,7 @@ function ContractorApplicationInner() {
               aria-labelledby="provider-services-label"
               aria-invalid={showServicesError}
               aria-describedby={showServicesError ? 'provider-services-error' : undefined}
-              className={`grid grid-cols-1 gap-2 rounded-2xl border p-1.5 transition-[border-color,background-color] min-[320px]:grid-cols-2 ${showServicesError ? 'border-[#EF4444]/45 bg-[#EF4444]/[0.04] dark:bg-[#EF4444]/[0.07]' : 'border-transparent bg-transparent'}`}
+              className={`grid grid-cols-1 gap-2 rounded-2xl border p-1.5 transition-[border-color,background-color] min-[320px]:grid-cols-2 ${showServicesError ? 'border-[#B5462B]/45 bg-[#B5462B]/[0.04] dark:bg-[#B5462B]/[0.07]' : 'border-transparent bg-transparent'}`}
             >
               {serviceOptions.map((c, index) => (
                 <button key={c} id={index === 0 ? 'provider-first-service' : undefined} type="button" onClick={() => toggleCat(c)} aria-pressed={data.categories.includes(c)}
@@ -299,7 +299,7 @@ function ContractorApplicationInner() {
           {hasOther && (
             <div>
               <Label htmlFor="provider-other-category" className="text-sm">
-                {t('otherCategoryLabel')} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
+                {t('otherCategoryLabel')} <span aria-hidden="true" className="ms-1 text-[#B5462B]">*</span>
               </Label>
               <Textarea
                 id="provider-other-category"
@@ -432,9 +432,9 @@ function FormField({ id, label, value, onChange, tried, t, placeholder, inputMod
     return (
       <div>
         <Label htmlFor={fieldId} className="text-sm">
-          {label} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
+          {label} <span aria-hidden="true" className="ms-1 text-[#B5462B]">*</span>
         </Label>
-        <div dir="ltr" data-invalid={showError || undefined} className={`phone-field-shell mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-[#EF4444] focus-within:ring-2 focus-within:ring-[#EF4444]/25' : 'border-input hover:border-[#009F91]/45 focus-within:border-[#009F91]/60 focus-within:ring-2 focus-within:ring-[#009F91]/25'}`}>
+        <div dir="ltr" data-invalid={showError || undefined} className={`phone-field-shell mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-[#B5462B] focus-within:ring-2 focus-within:ring-[#B5462B]/25' : 'border-input hover:border-[#009F91]/45 focus-within:border-[#009F91]/60 focus-within:ring-2 focus-within:ring-[#009F91]/25'}`}>
           <div className="px-3 flex items-center bg-secondary text-navy text-sm font-semibold select-none border-e border-input shrink-0">
             {PREFIX}
           </div>
@@ -459,7 +459,7 @@ function FormField({ id, label, value, onChange, tried, t, placeholder, inputMod
     <div>
       <Label htmlFor={fieldId} className="text-sm">
         {label} {required
-          ? <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
+          ? <span aria-hidden="true" className="ms-1 text-[#B5462B]">*</span>
           : <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>}
       </Label>
       <Input

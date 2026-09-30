@@ -14,6 +14,7 @@ export default function TextOrUnsureField({ id, label, value, onChange, placehol
       <Label htmlFor={id}>{label}</Label>
       <Input
         id={id}
+        data-autofocus
         type="text"
         value={isUnsure ? '' : value}
         onFocus={() => { if (isUnsure) onChange(''); }}

@@ -15,6 +15,7 @@ export default function SuccessPanel({
   copiedLabel,
   actionHref,
   actionLabel,
+  children,
 }) {
   React.useEffect(() => {
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -67,6 +68,7 @@ export default function SuccessPanel({
           <Button asChild variant="brand" size="lg" className="mt-4 h-auto min-h-12 w-full whitespace-normal py-2.5 text-center text-sm leading-snug">
             <Link href={actionHref}>{actionLabel}</Link>
           </Button>
+          {children}
         </div>
       </section>
     </div>

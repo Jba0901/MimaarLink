@@ -150,14 +150,14 @@ function AdminInner() {
     <AppShell hideNav hideFooter>
       <h1 className="display-title mb-4 text-[26px] sm:text-[30px]">{t('adminTitle')}</h1>
       {loadError && (
-        <Card role="alert" aria-live="assertive" className="mb-4 border-[#EF4444]/35 bg-[#EF4444]/[0.06] dark:border-[#EF4444]/40 dark:bg-[#EF4444]/10">
+        <Card role="alert" aria-live="assertive" className="mb-4 border-[#B5462B]/35 bg-[#B5462B]/[0.06] dark:border-[#B5462B]/40 dark:bg-[#B5462B]/10">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EF4444]/10 text-[#EF4444]" aria-hidden="true">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#B5462B]/10 text-[#B5462B]" aria-hidden="true">
                 <TriangleAlert className="h-5 w-5" />
               </span>
               <div className="min-w-0 flex-1">
-                <div className="text-sm font-bold text-[#EF4444]">{t('adminDataLoadError')}</div>
+                <div className="text-sm font-bold text-[#B5462B]">{t('adminDataLoadError')}</div>
                 <p className="mt-1 break-words text-xs leading-relaxed text-muted-foreground">{t('adminDataLoadErrorDesc')}</p>
               </div>
             </div>

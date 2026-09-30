@@ -23,9 +23,9 @@ const stateVisuals = {
   },
   error: {
     icon: TriangleAlert,
-    iconClass: 'text-[#EF4444]',
-    tileClass: 'bg-[#EF4444]/10 dark:bg-[#EF4444]/15',
-    panelClass: 'border border-[#EF4444]/30 bg-[#EF4444]/[0.03] dark:bg-[#EF4444]/[0.06]',
+    iconClass: 'text-[#B5462B]',
+    tileClass: 'bg-[#B5462B]/10 dark:bg-[#B5462B]/15',
+    panelClass: 'border border-[#B5462B]/30 bg-[#B5462B]/[0.03] dark:bg-[#B5462B]/[0.06]',
   },
 };
 

@@ -483,7 +483,7 @@ export default function AdminProjectPage() {
         </AlertDialogTrigger>
         <AlertDialogContent dir={dir}>
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-[#EF4444]">{t('deleteConfirmTitle')}</AlertDialogTitle>
+            <AlertDialogTitle className="text-[#B5462B]">{t('deleteConfirmTitle')}</AlertDialogTitle>
             <AlertDialogDescription>{t('deleteConfirmDesc')}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

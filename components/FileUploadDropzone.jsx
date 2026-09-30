@@ -109,7 +109,7 @@ export default function FileUploadDropzone({
               ? 'cursor-default border-[#009F91]/40 bg-[#EAF7F4]/20 shadow-none dark:bg-[#009F91]/[0.08]'
               : 'cursor-not-allowed border-border bg-secondary/60 opacity-65 shadow-none'
             : error
-              ? 'border-[#EF4444] bg-[#EF4444]/[0.03] focus-within:ring-[#EF4444]/30 dark:bg-[#EF4444]/[0.06]'
+              ? 'border-[#B5462B] bg-[#B5462B]/[0.03] focus-within:ring-[#B5462B]/30 dark:bg-[#B5462B]/[0.06]'
               : hasFiles
                 ? 'border-[#009F91]/45 bg-[#EAF7F4]/20 hover:border-[#009F91]/60 hover:bg-[#EAF7F4]/35 focus-within:border-[#009F91]/60 focus-within:ring-[#009F91]/30 dark:bg-[#009F91]/[0.08] dark:hover:bg-[#009F91]/[0.12]'
                 : 'border-border hover:border-[#009F91]/45 hover:bg-[#EAF7F4]/30 focus-within:border-[#009F91]/60 focus-within:ring-[#009F91]/30 dark:hover:bg-[#009F91]/10',

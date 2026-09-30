@@ -12,15 +12,15 @@ const buttonVariants = cva(
         default:
           "bg-primary text-primary-foreground shadow hover:bg-primary/90",
         brand:
-          "border border-transparent bg-[#009F91] text-[#0D1B2A] shadow-sm shadow-[#009F91]/20 hover:bg-[#009F91]/90 focus-visible:ring-[#009F91]/35",
+          "border border-transparent bg-[var(--ml-accent)] text-[var(--ml-on-accent)] hover:bg-[var(--ml-accent-hover)] focus-visible:ring-[#009F91]/35",
         navy:
           "border border-transparent bg-[#152B54] text-white shadow-sm shadow-[#152B54]/20 hover:bg-[#152B54]/90 focus-visible:ring-[#009F91]/35 dark:border-[#009F91]/25 dark:hover:bg-[#142A44]",
         destructive:
-          "bg-[#EF4444] text-white shadow-sm hover:bg-[#EF4444]/90 focus-visible:ring-[#EF4444]/35",
+          "bg-[#B5462B] text-white shadow-sm hover:bg-[#B5462B]/90 focus-visible:ring-[#B5462B]/35",
         destructiveOutline:
-          "border border-[#EF4444]/35 bg-card text-[#EF4444] shadow-sm hover:border-[#EF4444]/55 hover:bg-[#EF4444]/10 hover:text-[#EF4444] focus-visible:ring-[#EF4444]/35",
+          "border border-[#B5462B]/35 bg-card text-[#B5462B] shadow-sm hover:border-[#B5462B]/55 hover:bg-[#B5462B]/10 hover:text-[#B5462B] focus-visible:ring-[#B5462B]/35",
         destructiveGhost:
-          "text-[#EF4444] hover:bg-[#EF4444]/10 hover:text-[#EF4444] focus-visible:ring-[#EF4444]/35",
+          "text-[#B5462B] hover:bg-[#B5462B]/10 hover:text-[#B5462B] focus-visible:ring-[#B5462B]/35",
         outline:
           "border border-input bg-background text-primary shadow-sm hover:border-primary/25 hover:bg-secondary hover:text-primary",
         secondary:

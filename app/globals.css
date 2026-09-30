@@ -1140,3 +1140,74 @@ html[dir="rtl"] .ml-sectors a:hover svg { transform: rotate(180deg) translateX(3
   .cta-press:active,
   .btn:active { transform: none; }
 }
+
+/* ---------- Guided one-question flow (components/GuidedFlow.jsx) ---------- */
+.ml-flow { width: 100%; max-width: 40rem; }
+.ml-flow-progress { margin-bottom: 28px; }
+.ml-flow-bar { display: flex; gap: 4px; }
+.ml-flow-bar span { height: 4px; flex: 1; border-radius: 999px; background: var(--ml-line); transition: background-color var(--ml-base) var(--ml-ease); }
+.ml-flow-bar span[data-state="done"],
+.ml-flow-bar span[data-state="current"] { background: var(--ml-accent); }
+.ml-flow-left { margin-top: 10px; font-size: 13px; font-weight: 500; color: var(--ml-muted); }
+.ml-step { --ml-step-x: 20px; animation: ml-step-in var(--ml-slow) var(--ml-ease) both; }
+.ml-step[data-direction="back"] { --ml-step-x: -20px; }
+html[dir="rtl"] .ml-step { --ml-step-x: -20px; }
+html[dir="rtl"] .ml-step[data-direction="back"] { --ml-step-x: 20px; }
+@keyframes ml-step-in { from { opacity: 0; transform: translateX(var(--ml-step-x)); } to { opacity: 1; transform: none; } }
+.ml-step-title { font-size: 26px; line-height: 1.3; outline: none; }
+html[dir="rtl"] .ml-step-title { line-height: 1.6; }
+.ml-step-desc { margin-top: 8px; font-size: 15px; line-height: 1.6; color: var(--ml-muted); }
+html[dir="rtl"] .ml-step-desc { line-height: 1.8; }
+.ml-step-body { margin-top: 24px; display: grid; gap: 20px; }
+.ml-flow-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--ml-line); }
+.ml-flow-nav .btn { min-height: 48px; }
+.ml-flow-nav .btn:last-child { min-width: 9rem; }
+@media (max-width: 479px) {
+  .ml-flow-nav { display: grid; grid-template-columns: auto 1fr; }
+  .ml-flow-nav .btn:last-child { min-width: 0; }
+}
+
+.ml-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ml-chip { min-height: 44px; padding: 8px 16px; border: 1px solid var(--ml-line); border-radius: 999px; background: var(--ml-surface); color: var(--ml-heading); font-size: 14px; font-weight: 500; transition: border-color var(--ml-fast) var(--ml-ease), background-color var(--ml-fast) var(--ml-ease); }
+.ml-chip:hover { border-color: var(--ml-accent); }
+.ml-chip[aria-pressed="true"] { border-color: var(--ml-accent); background: var(--ml-signature-bg); color: var(--ml-signature-fg); box-shadow: inset 0 0 0 1px var(--ml-accent); }
+.ml-chip:active { transform: translateY(1px); }
+
+.ml-choice-list { display: grid; gap: 8px; }
+@media (min-width: 640px) { .ml-choice-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.ml-choice { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 12px 16px; border: 1px solid var(--ml-line); border-radius: var(--ml-radius); background: var(--ml-surface); color: var(--ml-heading); text-align: start; font-weight: 500; transition: border-color var(--ml-fast) var(--ml-ease), background-color var(--ml-fast) var(--ml-ease); }
+.ml-choice:hover { border-color: var(--ml-accent); }
+.ml-choice:active { transform: translateY(1px); }
+.ml-choice[aria-pressed="true"] { border-color: var(--ml-accent); background: var(--ml-signature-bg); box-shadow: inset 0 0 0 1px var(--ml-accent); }
+.ml-choice-icon { display: flex; height: 40px; width: 40px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: var(--ml-radius); background: var(--ml-pale-teal); color: var(--ml-teal-ink); }
+.dark .ml-choice-icon { background: var(--ml-signature-bg); color: var(--ml-bright-teal); }
+.ml-choice-text { min-width: 0; flex: 1; }
+.ml-choice-text small { display: block; margin-top: 2px; font-size: 13px; font-weight: 400; color: var(--ml-muted); }
+
+.ml-review { border-top: 1px solid var(--ml-line); }
+.ml-review-row { display: grid; gap: 4px; padding-block: 14px; border-bottom: 1px solid var(--ml-line); }
+.ml-review-row dt { font-size: 13px; color: var(--ml-muted); }
+.ml-review-row dd { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; color: var(--ml-heading); font-weight: 500; }
+.ml-review-row dd > span { min-width: 0; overflow-wrap: anywhere; white-space: pre-line; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; }
+.ml-review-empty { color: var(--ml-muted); font-weight: 400; }
+.ml-review-edit { display: inline-flex; flex-shrink: 0; align-items: center; gap: 6px; min-height: 44px; margin-block: -12px; padding-inline: 8px; color: var(--ml-teal-ink); font-size: 14px; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
+.dark .ml-review-edit { color: var(--ml-bright-teal); }
+@media (min-width: 640px) { .ml-review-row { grid-template-columns: 11rem 1fr; gap: 16px; align-items: baseline; } }
+
+.ml-draft { display: grid; gap: 16px; margin-bottom: 28px; padding: 16px; border: 1px solid var(--ml-accent); border-radius: var(--ml-radius); background: var(--ml-signature-bg); color: var(--ml-signature-fg); }
+.ml-draft-title { font-weight: 600; }
+.ml-draft-body { margin-top: 4px; font-size: 14px; line-height: 1.6; color: var(--ml-body); }
+.ml-draft-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.ml-draft-actions .btn { min-height: 44px; }
+.ml-draft .btn-secondary { background: var(--ml-surface); }
+@media (min-width: 640px) { .ml-draft { grid-template-columns: 1fr auto; align-items: center; } }
+
+.ml-field-hint { margin-top: 6px; font-size: 13px; color: var(--ml-muted); }
+.ml-next-steps { margin-top: 20px; text-align: start; border-top: 1px solid var(--ml-line); }
+.ml-next-steps li { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding-block: 12px; border-bottom: 1px solid var(--ml-line); font-size: 14px; line-height: 1.6; color: var(--ml-body); }
+.ml-next-steps li > span { font-family: var(--ml-serif); color: var(--ml-teal-ink); font-variant-numeric: tabular-nums; }
+.dark .ml-next-steps li > span { color: var(--ml-bright-teal); }
+
+/* Warn colour lifts to its dark-mode value wherever it is hard-coded. */
+.dark .text-\[\#B5462B\] { color: #F08A6C; }
+.dark .border-\[\#B5462B\] { border-color: #F08A6C; }

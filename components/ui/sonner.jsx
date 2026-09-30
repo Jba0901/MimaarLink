@@ -24,7 +24,7 @@ const Toaster = ({
     description: "!break-words !text-muted-foreground",
     content: "!min-w-0 !gap-1",
     success: "!border-[#009F91]/45 !bg-[#EAF7F4] dark:!bg-[#142A44]",
-    error: "!border-[#EF4444]/45 !bg-[#FEF2F2] dark:!bg-[#2A1720]",
+    error: "!border-[#B5462B]/45 !bg-[#FEF2F2] dark:!bg-[#2A1720]",
     warning: "!border-[#B5462B]/55 !bg-[#B5462B]/10",
     info: "!border-[#152B54]/30 !bg-card dark:!border-[#009F91]/30",
     loading: "!border-[#009F91]/35 !bg-card",
@@ -51,7 +51,7 @@ const Toaster = ({
       className="toaster group"
       icons={{
         success: <CheckCircle2 className="h-5 w-5 text-[#152B54] dark:text-[#009F91]" />,
-        error: <TriangleAlert className="h-5 w-5 text-[#EF4444]" />,
+        error: <TriangleAlert className="h-5 w-5 text-[#B5462B]" />,
         warning: <TriangleAlert className="h-5 w-5 text-[#B5462B]" />,
         info: <Info className="h-5 w-5 text-[#152B54] dark:text-[#009F91]" />,
         loading: <Loader2 className="h-5 w-5 animate-spin text-[#009F91]" />,
