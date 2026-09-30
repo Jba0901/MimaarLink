@@ -1,25 +1,104 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import ResultFileLink from '@/components/ResultFileLink';
-import { useLang } from '@/lib/LangContext';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import PageState from '@/components/PageState';
-import { BookmarkPlus, Building2, CalendarCheck2, ClipboardCheck, ShieldCheck, Clock, Wallet, FileWarning, FileCheck2, Loader2, Paperclip } from 'lucide-react';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
+import { useLang } from '@/lib/LangContext';
+import { ArrowRight, Check, Loader2, Paperclip } from 'lucide-react';
 import { toast } from 'sonner';
 import { providerDisplayName, providerTypeLabel } from '@/lib/providerPresentation.mjs';
 
+const COPY = {
+  en: {
+    eyebrow: 'Offer comparison',
+    title: 'Compare your offers',
+    sub: 'Every firm priced the same brief. Check what each one excludes before you choose.',
+    sortBy: 'Sort by',
+    sortPrice: 'Price',
+    sortDuration: 'Duration',
+    swipe: 'Swipe to see every offer',
+    duration: 'Duration',
+    warranty: 'Warranty',
+    exclusions: 'Exclusions',
+    notes: 'Notes',
+    none: 'None stated',
+    vetted: 'Vetted',
+    selected: 'Selected',
+    choose: 'Shortlist this offer',
+    meeting: 'Request a meeting',
+    meetingRequested: 'Meeting requested. Our team will coordinate with you.',
+    emptyTitle: 'No offers yet',
+    emptyBody: 'Offers will appear here as firms respond. We will also message you on WhatsApp.',
+    backToStatus: 'Back to project status',
+    whatsapp: 'Message us on WhatsApp',
+    money: (n) => `QAR ${n}`,
+  },
+  ar: {
+    eyebrow: 'مقارنة العروض',
+    title: 'قارن العروض',
+    sub: 'سعّرت كل الشركات الوصف نفسه. راجع ما يستثنيه كل عرض قبل أن تختار.',
+    sortBy: 'الترتيب حسب',
+    sortPrice: 'السعر',
+    sortDuration: 'المدة',
+    swipe: 'اسحب لمشاهدة كل العروض',
+    duration: 'المدة',
+    warranty: 'الضمان',
+    exclusions: 'الاستثناءات',
+    notes: 'ملاحظات',
+    none: 'لم يُذكر',
+    vetted: 'معتمد',
+    selected: 'العرض المختار',
+    choose: 'رشّح هذا العرض',
+    meeting: 'اطلب اجتماعًا',
+    meetingRequested: 'تم طلب الاجتماع، وسيتواصل فريقنا معك.',
+    emptyTitle: 'لا توجد عروض بعد',
+    emptyBody: 'ستظهر العروض هنا فور رد الشركات، وسنراسلك أيضًا عبر واتساب.',
+    backToStatus: 'العودة إلى حالة المشروع',
+    whatsapp: 'راسلنا على واتساب',
+    money: (n) => `${n} ر.ق`,
+  },
+};
+
+// Durations are free text ("6 weeks", "٤٥ يوم"); read a number and unit for sorting, unknowns last.
+function durationInDays(text) {
+  const normalized = String(text || '').replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+  const match = normalized.match(/(\d+(?:\.\d+)?)/);
+  if (!match) return Number.POSITIVE_INFINITY;
+  const n = parseFloat(match[1]);
+  if (/month|شهر|أشهر/i.test(normalized)) return n * 30;
+  if (/week|أسبوع|أسابيع/i.test(normalized)) return n * 7;
+  return n;
+}
+
+// Which offer the owner shortlisted is kept on this device; the server records the project status.
+const selectionKey = (projectId) => `ml:selected-offer:${projectId}`;
+const readSelection = (projectId) => { try { return window.localStorage.getItem(selectionKey(projectId)); } catch { return null; } };
+const writeSelection = (projectId, contractorId) => { try { window.localStorage.setItem(selectionKey(projectId), contractorId); } catch {} };
+
+function OffersSkeleton() {
+  return (
+    <div className="mx-auto max-w-6xl py-4" aria-hidden="true">
+      <div className="h-3 w-32 animate-pulse rounded bg-muted" />
+      <div className="mt-4 h-9 w-1/2 animate-pulse rounded-[6px] bg-muted" />
+      <div className="mt-8 grid gap-4 md:grid-cols-3">{Array.from({ length: 3 }, (_, i) => <div key={i} className="h-80 animate-pulse rounded-[6px] bg-muted" />)}</div>
+    </div>
+  );
+}
+
 export default function BidsPage() {
   const { projectId } = useParams();
-  const router = useRouter();
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const copy = COPY[lang === 'ar' ? 'ar' : 'en'];
   const [d, setD] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [pendingAction, setPendingAction] = useState(null);
+  const [sortBy, setSortBy] = useState('price');
+  const [selectedId, setSelectedId] = useState(null);
+  const [meetingFor, setMeetingFor] = useState(null);
 
   const load = async ({ showErrorState = false } = {}) => {
     try {
@@ -30,8 +109,7 @@ export default function BidsPage() {
         return false;
       }
       if (!response.ok) throw new Error('Bid comparison failed to load');
-      const json = await response.json();
-      setD(json);
+      setD(await response.json());
       setLoadError(false);
       return true;
     } catch {
@@ -42,7 +120,10 @@ export default function BidsPage() {
     }
   };
 
-  useEffect(() => { load({ showErrorState: true }); }, [projectId]);
+  useEffect(() => {
+    setSelectedId(readSelection(projectId));
+    load({ showErrorState: true });
+  }, [projectId]);
 
   const retryLoad = () => {
     setLoadError(false);
@@ -50,18 +131,19 @@ export default function BidsPage() {
     load({ showErrorState: true });
   };
 
-  if (loading) return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (loading) return <AppShell hideNav hideFooter wide><span className="sr-only" role="status">{t('loading')}</span><OffersSkeleton /></AppShell>;
   if (loadError) return <AppShell hideNav hideFooter><PageState kind="error" title={t('bidLoadErrorTitle')} description={t('bidLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={retryLoad} actionVariant="primary" /></AppShell>;
   if (!d || d.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
 
   const action = async (act, contractorId) => {
     if (pendingAction) return;
-
-    const actionKey = `${act}:${contractorId}`;
-    setPendingAction(actionKey);
+    setPendingAction(`${act}:${contractorId}`);
     try {
       const response = await fetch('/api/projects/shortlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ projectId, contractorId, action: act }) });
       if (!response.ok) throw new Error('Bid action failed');
+      writeSelection(projectId, contractorId);
+      setSelectedId(contractorId);
+      if (act === 'meeting') setMeetingFor(contractorId);
       toast.success(act === 'meeting' ? t('bidRequest') : t('shortlistDone'));
       await load();
     } catch {
@@ -71,95 +153,92 @@ export default function BidsPage() {
     }
   };
 
-  const sortedBids = [...d.bids].sort((a, b) => a.price - b.price);
-  const lowest = sortedBids[0]?.price;
+  const bids = [...d.bids].sort((a, b) => (sortBy === 'price' ? a.price - b.price : durationInDays(a.timeline) - durationInDays(b.timeline) || a.price - b.price));
+  const statusLink = `/project/${projectId}`;
+
+  if (bids.length === 0) {
+    return (
+      <AppShell hideNav hideFooter>
+        <PageState kind="empty" title={copy.emptyTitle} description={copy.emptyBody} actionHref={statusLink} actionLabel={copy.backToStatus} actionVariant="primary" />
+        <div className="mx-auto -mt-4 flex max-w-md justify-center pb-8">
+          <a href="https://wa.me/97466259219" target="_blank" rel="noreferrer" className="btn btn-secondary"><WhatsAppIcon className="h-4 w-4" />{copy.whatsapp}</a>
+        </div>
+      </AppShell>
+    );
+  }
 
   return (
-    <AppShell hideNav={sortedBids.length === 0} hideFooter={sortedBids.length === 0}>
-      <div className="mx-auto max-w-3xl">
-        <div className="mb-2 flex min-w-0 items-center justify-between gap-3">
-          <h1 className="display-title min-w-0 break-words text-[24px] sm:text-[28px]">{t('bidComparison')}</h1>
-          <Button variant="ghost" size="sm" className="h-auto min-h-11 shrink-0 whitespace-normal px-3 py-2 text-center leading-snug sm:min-h-9" onClick={() => router.back()}>{t('back')}</Button>
+    <AppShell wide>
+      <div className="mx-auto max-w-6xl pb-10 pt-2 sm:pt-6">
+        <div>
+          <Link href={statusLink} className="inline-flex min-h-11 items-center gap-2 text-[14px] font-medium text-muted-foreground hover:text-navy">
+            <ArrowRight className="h-4 w-4 rotate-180 rtl:rotate-0" aria-hidden="true" />{copy.backToStatus}
+          </Link>
         </div>
-        <p className="mb-4 max-w-2xl break-words text-[13px] leading-relaxed text-muted-foreground">{t('onlyVerified')}</p>
+        <p className="eyebrow mt-4">{copy.eyebrow}</p>
+        <h1 className="mt-3 text-[28px] leading-tight sm:text-[36px]">{copy.title}</h1>
+        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">{copy.sub}</p>
 
-        <div className="space-y-3">
-          {sortedBids.length === 0 && <PageState kind="empty" compact title={t('noBidsYet')} />}
-          {sortedBids.map((b) => {
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+          <div className="ml-segment" role="group" aria-label={copy.sortBy}>
+            <span className="text-[13px] text-muted-foreground">{copy.sortBy}</span>
+            {[['price', copy.sortPrice], ['duration', copy.sortDuration]].map(([value, label]) => (
+              <button key={value} type="button" aria-pressed={sortBy === value} onClick={() => setSortBy(value)}>{label}</button>
+            ))}
+          </div>
+          {bids.length > 1 && <p className="text-[13px] text-muted-foreground md:hidden">{copy.swipe}</p>}
+        </div>
+
+        <div className="ml-offers" data-count={bids.length}>
+          {bids.map((b) => {
             const c = d.contractors[b.contractorId] || {};
-            const isLowest = b.price === lowest;
-            const ProviderIcon = c.providerType === 'consultant' ? ClipboardCheck : Building2;
-            const shortlistActionKey = `shortlist:${b.contractorId}`;
-            const meetingActionKey = `meeting:${b.contractorId}`;
-            const actionsDisabled = Boolean(pendingAction);
+            const selected = selectedId === b.contractorId;
+            const busyChoose = pendingAction === `shortlist:${b.contractorId}`;
+            const busyMeeting = pendingAction === `meeting:${b.contractorId}`;
+            const meetingDone = selected && (meetingFor === b.contractorId || d.project?.status === 'meeting_arranged');
             return (
-              <Card key={b.id} className={`overflow-hidden rounded-[6px] border shadow-soft ${isLowest ? 'border-[#009F91]/70 bg-[#EAF7F4]/10 ring-1 ring-[#009F91]/15 dark:bg-[#009F91]/[0.04]' : 'border-border'}`}>
-                {isLowest && <div className="h-1 bg-[#009F91]" aria-hidden="true" />}
-                <CardContent className="p-4 sm:p-5">
-                  <div className="flex min-w-0 items-start gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] text-[#152B54] max-[359px]:hidden dark:bg-[#009F91]/15 dark:text-[#009F91]" aria-hidden="true">
-                      <ProviderIcon className="h-5 w-5" />
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <div dir="auto" className="min-w-0 break-words text-base font-bold leading-snug text-navy">{providerDisplayName(c, t)}</div>
-                      <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
-                        {c.providerType && <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">{providerTypeLabel(c, t)}</Badge>}
-                        {c.verificationStatus === 'verified' && (
-                          <Badge variant="outline" className="max-w-full gap-1 whitespace-normal text-start text-[12px] text-[#009F91]">
-                            <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
-                            {t('cstatus_verified')}
-                          </Badge>
-                        )}
-                        {isLowest && <Badge variant="success" className="max-w-full whitespace-normal text-start text-[12px] leading-4">{t('lowestBid')}</Badge>}
-                      </div>
-                      {c.serviceAreas && <div dir="auto" className="mt-1.5 break-words text-[13px] leading-relaxed text-muted-foreground">{c.serviceAreas}</div>}
-                    </div>
+              <article key={b.id} className={`ml-offer ml-offer-full ${selected ? 'is-selected ml-cut' : ''}`} aria-label={`${providerDisplayName(c, t)}${selected ? `, ${copy.selected}` : ''}`}>
+                <div className="ml-offer-head">
+                  <span className="ml-offer-firm" dir="auto">{providerDisplayName(c, t)}</span>
+                  {selected
+                    ? <span className="ml-offer-selected">{copy.selected}</span>
+                    : c.verificationStatus === 'verified' && <span className="ml-vetted"><Check size={12} strokeWidth={2.5} aria-hidden="true" />{copy.vetted}</span>}
+                </div>
+                <p className="mt-1 text-[13px] text-muted-foreground">{providerTypeLabel(c, t)}{c.serviceAreas ? <> · <span dir="auto">{c.serviceAreas}</span></> : null}</p>
+                <p className="ml-offer-price"><bdi>{copy.money(Number(b.price || 0).toLocaleString('en-US'))}</bdi></p>
+                <dl className="ml-offer-rows">
+                  <div><dt>{copy.duration}</dt><dd dir="auto">{b.timeline || copy.none}</dd></div>
+                  <div><dt>{copy.warranty}</dt><dd dir="auto">{b.warranty || copy.none}</dd></div>
+                  <div><dt>{copy.exclusions}</dt><dd dir="auto" className={b.exclusions ? 'ml-offer-excl' : undefined}>{b.exclusions || copy.none}</dd></div>
+                </dl>
+                {b.notes && <p dir="auto" className="mt-3 whitespace-pre-wrap text-[14px] leading-relaxed text-muted-foreground"><span className="font-medium text-navy">{copy.notes}: </span>{b.notes}</p>}
+                {b.attachments?.length > 0 && (
+                  <div className="mt-4">
+                    <p className="mb-1.5 flex items-center gap-1.5 text-[13px] text-muted-foreground"><Paperclip className="h-3.5 w-3.5" aria-hidden="true" />{t('bidFiles')}</p>
+                    <div className="space-y-1.5">{b.attachments.map((f, i) => <ResultFileLink key={i} file={f} fallbackLabel={t('files')} actionLabel={t('openLink')} newTab />)}</div>
                   </div>
-
-                  <div className="mt-3 grid grid-cols-1 gap-2 min-[560px]:grid-cols-2">
-                    <div className={`min-w-0 rounded-[6px] border p-3 ${isLowest ? 'border-[#009F91]/35 bg-[#EAF7F4]/45 dark:bg-[#009F91]/10' : 'border-border/70 bg-secondary/70'}`}>
-                      <div className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Wallet className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('price')}</span></div>
-                      <div className="mt-1 min-w-0 text-navy" dir="ltr">
-                        <span className="inline-flex min-w-0 max-w-full items-baseline gap-1">
-                          <span className="min-w-0 break-all text-[22px] font-extrabold leading-none tabular-nums max-[263px]:text-[18px] sm:text-[24px]">{b.price.toLocaleString()}</span>
-                          <span className="shrink-0 text-xs font-semibold text-muted-foreground max-[319px]:hidden">{t('currencyQar')}</span>
-                        </span>
-                      </div>
-                    </div>
-                    <div className="min-w-0 rounded-[6px] border border-border/70 bg-secondary/70 p-3">
-                      <div className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Clock className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('timeline')}</span></div>
-                      <div dir="auto" className="mt-1 break-words text-sm font-semibold leading-snug text-navy">{b.timeline || '—'}</div>
-                    </div>
-                  </div>
-
-                  <div className="mt-3 space-y-1.5">
-                    {b.warranty && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileCheck2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#009F91]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('warranty')}:</span><span dir="auto" className="mt-0.5 block">{b.warranty}</span></span></div>}
-                    {b.exclusions && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileWarning className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#B5462B]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('exclusions')}:</span><span dir="auto" className="mt-0.5 block">{b.exclusions}</span></span></div>}
-                    {b.notes && <div dir="auto" className="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-muted-foreground">{b.notes}</div>}
-                  </div>
-
-                  {b.attachments && b.attachments.length > 0 && (
-                    <div className="mt-3 border-t border-border pt-3">
-                      <div className="mb-1.5 flex items-center gap-1.5 text-[12px] font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">
-                        <Paperclip className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                        {t('bidFiles')}
-                      </div>
-                      <div className="space-y-1.5">
-                        {b.attachments.map((f, i) => (
-                          <ResultFileLink key={i} file={f} fallbackLabel={t('files')} actionLabel={t('openLink')} newTab />
-                        ))}
-                      </div>
-                    </div>
+                )}
+                <div className="ml-offer-actions">
+                  {!selected && (
+                    <button type="button" className="btn btn-secondary w-full" disabled={Boolean(pendingAction)} aria-busy={busyChoose || undefined} onClick={() => action('shortlist', b.contractorId)}>
+                      {busyChoose && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}{copy.choose}
+                    </button>
                   )}
-
-                  <div className="mt-3 flex flex-col gap-2 border-t border-border pt-3 min-[390px]:flex-row">
-                    <Button variant="outline" size="sm" disabled={actionsDisabled} aria-busy={pendingAction === shortlistActionKey || undefined} className="h-auto min-h-11 w-full flex-1 whitespace-normal py-2 text-center leading-snug" onClick={() => action('shortlist', b.contractorId)}>{pendingAction === shortlistActionKey ? <Loader2 className="animate-spin" aria-hidden="true" /> : <BookmarkPlus className="h-4 w-4" aria-hidden="true" />}{t('shortlist')}</Button>
-                    <Button variant="brand" size="sm" disabled={actionsDisabled} aria-busy={pendingAction === meetingActionKey || undefined} className="h-auto min-h-11 w-full flex-1 whitespace-normal py-2 text-center leading-snug" onClick={() => action('meeting', b.contractorId)}>{pendingAction === meetingActionKey ? <Loader2 className="animate-spin" aria-hidden="true" /> : <CalendarCheck2 className="h-4 w-4" aria-hidden="true" />}{t('requestMeeting')}</Button>
-                  </div>
-                </CardContent>
-              </Card>
+                  {selected && !meetingDone && (
+                    <button type="button" className="btn btn-primary w-full" disabled={Boolean(pendingAction)} aria-busy={busyMeeting || undefined} onClick={() => action('meeting', b.contractorId)}>
+                      {busyMeeting ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}{copy.meeting}
+                    </button>
+                  )}
+                  {meetingDone && <p className="text-[14px] font-medium text-signature-fg">{copy.meetingRequested}</p>}
+                </div>
+              </article>
             );
           })}
+        </div>
+
+        <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-border pt-6">
+          <p className="text-[14px] text-muted-foreground">{t('onlyVerified')}</p>
+          <a href="https://wa.me/97466259219" target="_blank" rel="noreferrer" className="btn btn-secondary ms-auto"><WhatsAppIcon className="h-4 w-4" />{copy.whatsapp}</a>
         </div>
       </div>
     </AppShell>
