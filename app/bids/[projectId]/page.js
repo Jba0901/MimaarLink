@@ -81,9 +81,9 @@ const writeSelection = (projectId, contractorId) => { try { window.localStorage.
 function OffersSkeleton() {
   return (
     <div className="mx-auto max-w-6xl py-4" aria-hidden="true">
-      <div className="h-3 w-32 animate-pulse rounded bg-muted" />
-      <div className="mt-4 h-9 w-1/2 animate-pulse rounded-[6px] bg-muted" />
-      <div className="mt-8 grid gap-4 md:grid-cols-3">{Array.from({ length: 3 }, (_, i) => <div key={i} className="h-80 animate-pulse rounded-[6px] bg-muted" />)}</div>
+      <div className="h-3 w-32 animate-pulse rounded ml-skel" />
+      <div className="mt-4 h-9 w-1/2 animate-pulse rounded-[6px] ml-skel" />
+      <div className="mt-8 grid gap-4 md:grid-cols-3">{Array.from({ length: 3 }, (_, i) => <div key={i} className="h-80 animate-pulse rounded-[6px] ml-skel" />)}</div>
     </div>
   );
 }
@@ -132,8 +132,8 @@ export default function BidsPage() {
   };
 
   if (loading) return <AppShell hideNav hideFooter wide><span className="sr-only" role="status">{t('loading')}</span><OffersSkeleton /></AppShell>;
-  if (loadError) return <AppShell hideNav hideFooter><PageState kind="error" title={t('bidLoadErrorTitle')} description={t('bidLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={retryLoad} actionVariant="primary" /></AppShell>;
-  if (!d || d.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
+  if (loadError) return <AppShell hideNav hideFooter><PageState kind="error" title={t('bidLoadErrorTitle')} description={t('bidLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={retryLoad} actionVariant="primary" whatsapp /></AppShell>;
+  if (!d || d.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" whatsapp /></AppShell>;
 
   const action = async (act, contractorId) => {
     if (pendingAction) return;

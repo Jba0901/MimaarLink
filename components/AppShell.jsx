@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import MarketingAttribution from '@/components/MarketingAttribution';
+import RouteProgress from '@/components/RouteProgress';
 
 // Official v1.4 logo files (brand/logo). Never retype the wordmark in a font.
 function BrandLogo({ onDark = false, priority = false, className = '' }) {
@@ -117,6 +118,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
 
   return (
     <div className="app-viewport flex flex-col">
+      <RouteProgress routeKey={`${pathname}?${navigationSearch ?? ''}`} />
       <a
         href="#main-content"
         className="fixed start-4 top-3 z-[120] -translate-y-24 rounded-xl bg-[#152B54] px-4 py-3 text-sm font-bold text-white shadow-lift focus-visible:translate-y-0"

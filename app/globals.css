@@ -1268,3 +1268,11 @@ html[dir="rtl"] .ml-status-panel .ml-status-msg { font-family: var(--ml-serif-ar
 .ml-sticky-cta { position: fixed; inset-inline: 16px; bottom: calc(68px + env(safe-area-inset-bottom)); z-index: 39; transition: opacity var(--ml-base) var(--ml-ease), transform var(--ml-base) var(--ml-ease); }
 .ml-sticky-cta[data-visible="false"] { opacity: 0; transform: translateY(8px); pointer-events: none; }
 .ml-sticky-cta .btn { min-height: 48px; box-shadow: var(--ml-shadow); }
+
+/* Route progress line (components/RouteProgress.jsx) */
+.ml-route-progress { position: fixed; top: 0; inset-inline-start: 0; z-index: 130; height: 2px; width: 0; background: var(--ml-accent); opacity: 0; pointer-events: none; }
+.ml-route-progress[data-state="loading"] { opacity: 1; width: 80%; transition: width 2.4s cubic-bezier(.1,.6,.2,1), opacity var(--ml-fast) var(--ml-ease); }
+.ml-route-progress[data-state="done"] { opacity: 0; width: 100%; transition: width var(--ml-base) var(--ml-ease), opacity var(--ml-base) var(--ml-ease) 160ms; }
+
+/* Skeleton blocks: the line colour reads on both the ground and card surfaces. */
+.ml-skel { background-color: var(--ml-line); }

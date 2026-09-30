@@ -511,11 +511,11 @@ function FormLoadingState() {
   return (
     <AppShell hideFooter hideNav wide>
       <div className="ml-flow" aria-hidden="true">
-        <div className="mb-7 h-1 w-full animate-pulse rounded-full bg-muted" />
-        <div className="h-8 w-2/3 animate-pulse rounded-[6px] bg-muted" />
-        <div className="mt-3 h-4 w-1/2 animate-pulse rounded-[6px] bg-muted" />
+        <div className="mb-7 h-1 w-full animate-pulse rounded-full ml-skel" />
+        <div className="h-8 w-2/3 animate-pulse rounded-[6px] ml-skel" />
+        <div className="mt-3 h-4 w-1/2 animate-pulse rounded-[6px] ml-skel" />
         <div className="mt-8 grid gap-2 sm:grid-cols-2">
-          {Array.from({ length: 6 }, (_, i) => <div key={i} className="h-16 animate-pulse rounded-[6px] bg-muted" />)}
+          {Array.from({ length: 6 }, (_, i) => <div key={i} className="h-16 animate-pulse rounded-[6px] ml-skel" />)}
         </div>
       </div>
     </AppShell>

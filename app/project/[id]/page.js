@@ -60,11 +60,11 @@ const COPY = {
 function StatusSkeleton() {
   return (
     <div className="mx-auto max-w-4xl py-4" aria-hidden="true">
-      <div className="h-3 w-32 animate-pulse rounded bg-muted" />
-      <div className="mt-4 h-9 w-2/3 animate-pulse rounded-[6px] bg-muted" />
-      <div className="mt-8 grid gap-4 sm:grid-cols-4">{Array.from({ length: 4 }, (_, i) => <div key={i} className="h-10 animate-pulse rounded-[6px] bg-muted" />)}</div>
-      <div className="mt-8 h-32 animate-pulse rounded-[6px] bg-muted" />
-      <div className="mt-6 h-48 animate-pulse rounded-[6px] bg-muted" />
+      <div className="h-3 w-32 animate-pulse rounded ml-skel" />
+      <div className="mt-4 h-9 w-2/3 animate-pulse rounded-[6px] ml-skel" />
+      <div className="mt-8 grid gap-4 sm:grid-cols-4">{Array.from({ length: 4 }, (_, i) => <div key={i} className="h-10 animate-pulse rounded-[6px] ml-skel" />)}</div>
+      <div className="mt-8 h-32 animate-pulse rounded-[6px] ml-skel" />
+      <div className="mt-6 h-48 animate-pulse rounded-[6px] ml-skel" />
     </div>
   );
 }
@@ -98,8 +98,8 @@ export default function ProjectPage() {
   useEffect(() => { load(); }, [id]);
 
   if (loading) return <AppShell hideNav hideFooter wide><span className="sr-only" role="status">{t('loading')}</span><StatusSkeleton /></AppShell>;
-  if (loadError) return <AppShell hideNav hideFooter><PageState kind="error" title={t('statusLoadErrorTitle')} description={t('statusLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={load} actionVariant="primary" /></AppShell>;
-  if (!data || data.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
+  if (loadError) return <AppShell hideNav hideFooter><PageState kind="error" title={t('statusLoadErrorTitle')} description={t('statusLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={load} actionVariant="primary" whatsapp /></AppShell>;
+  if (!data || data.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" whatsapp /></AppShell>;
 
   const phase = PHASE_OF_STATUS[data.status] ?? 0;
   const offersVisible = OFFERS_VISIBLE.includes(data.status);
