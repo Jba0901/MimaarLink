@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/AppShell';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
@@ -159,11 +159,36 @@ function OfferCard({ copy, offer, index, compact = false }) {
   );
 }
 
+// Phones only: once the hero's actions scroll away, keep one slim way to post a
+// project above the bottom bar; it steps aside again at the closing section.
+function StickyPostCta({ label, watchRefs }) {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const targets = watchRefs.map((ref) => ref.current).filter(Boolean);
+    if (!targets.length || typeof IntersectionObserver === 'undefined') return undefined;
+    const onScreen = new Map();
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => onScreen.set(entry.target, entry.isIntersecting));
+      setVisible(targets.every((target) => onScreen.get(target) === false));
+    });
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, [watchRefs]);
+  return (
+    <div className="ml-sticky-cta lg:hidden" data-visible={visible} aria-hidden={!visible}>
+      <Link href="/post-project" className="btn btn-primary w-full" tabIndex={visible ? undefined : -1}>{label}</Link>
+    </div>
+  );
+}
+
 export default function HomePage() {
   const { dir } = useLang();
   const copy = COPY[dir === 'rtl' ? 'ar' : 'en'];
   const arrow = <ArrowRight className="btn-arrow h-4 w-4 shrink-0 rtl:rotate-180" aria-hidden="true" />;
   const trackPath = (pathType) => () => trackMeta('PathSelected', { path_type: pathType }, { custom: true });
+  const heroActionsRef = useRef(null);
+  const closeRef = useRef(null);
+  const [watchRefs] = useState(() => [heroActionsRef, closeRef]);
 
   return (
     <AppShell wide bleed flushFooter>
@@ -174,7 +199,7 @@ export default function HomePage() {
             <p className="eyebrow">{copy.heroLabel}</p>
             <h1 id="hero-title">{copy.heroTitle}</h1>
             <p className="ml-lead">{copy.heroSub}</p>
-            <div className="ml-actions">
+            <div className="ml-actions" ref={heroActionsRef}>
               <Link href="/post-project" className="btn btn-primary">{copy.primary}{arrow}</Link>
               <Link href="/contractor" className="btn btn-secondary" onClick={trackPath('contractor')}>{copy.secondary}</Link>
             </div>
@@ -270,7 +295,7 @@ export default function HomePage() {
         </section>
 
         {/* 7. Close */}
-        <section className="ml-close" aria-labelledby="close-title">
+        <section className="ml-close" aria-labelledby="close-title" ref={closeRef}>
           <div className="ml-wrap ml-close-inner">
             <div>
               <h2 id="close-title">{copy.closeTitle}</h2>
@@ -283,6 +308,7 @@ export default function HomePage() {
           </div>
         </section>
       </div>
+      <StickyPostCta label={copy.primary} watchRefs={watchRefs} />
     </AppShell>
   );
 }

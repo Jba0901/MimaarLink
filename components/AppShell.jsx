@@ -130,7 +130,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
             : 'backdrop-blur-xl border-b border-transparent'
         }`}
       >
-        <div className="container-x relative h-16 sm:h-[68px] flex items-center justify-between gap-2">
+        <div className={`container-x relative flex items-center justify-between gap-2 transition-[height] duration-base ease-brand ${scrolled ? 'h-14 sm:h-[60px]' : 'h-16 sm:h-[72px]'}`}>
           <Link href="/" aria-label={t('appName')} className="flex min-h-11 min-w-11 items-center gap-2 rounded-xl sm:gap-2.5 shrink tap-highlight">
             <BrandLogo priority />
           </Link>
@@ -198,8 +198,8 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       </main>
 
       {!hideNav && (
-        <nav className="mobile-bottom-nav safe-pad-bottom fixed bottom-3 left-1/2 z-40 w-[min(94vw,360px)] -translate-x-1/2 lg:hidden" aria-label={copy.quickTitle}>
-          <div className="grid grid-cols-3 gap-1 rounded-[6px] border border-border bg-white/95 p-1.5 shadow-lift backdrop-blur-xl dark:bg-[#0D1B2A]/95">
+        <nav className="mobile-bottom-nav safe-pad-bottom fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 backdrop-blur-xl lg:hidden" aria-label={copy.quickTitle}>
+          <div className="mx-auto grid max-w-md grid-cols-3">
             <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
             <NavBtn href="/post-project" icon={FilePlus} label={copy.projectNav} ariaLabel={t('postProject')} matches={['/post-project', '/for-projects']} />
             <NavBtn href="/contractor" icon={Hammer} label={copy.providerNav} ariaLabel={t('joinContractor')} matches={['/contractor', '/consultant', '/for-contractors']} />
@@ -516,8 +516,8 @@ function HeaderLink({ href, label, ariaLabel = label, navigationSearch }) {
       aria-label={ariaLabel}
       aria-current={active ? 'page' : undefined}
       title={ariaLabel}
-      className={`inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3.5 py-2 text-[13px] font-semibold transition-colors tap-highlight ${
-        active ? 'text-navy bg-muted' : 'text-muted-foreground hover:text-navy hover:bg-muted/70'
+      className={`relative inline-flex min-h-11 items-center whitespace-nowrap px-3.5 py-2 text-[14px] font-medium transition-colors duration-fast ease-brand tap-highlight ${
+        active ? 'text-navy after:absolute after:inset-x-3.5 after:bottom-1 after:h-0.5 after:rounded-full after:bg-[#009F91]' : 'text-muted-foreground hover:text-navy'
       }`}
     >
       {label}
@@ -535,15 +535,15 @@ function NavBtn({ href, icon: Icon, label, ariaLabel = label, matches = [] }) {
       aria-current={active ? 'page' : undefined}
       title={ariaLabel}
       className={
-        'flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-2xl px-2 py-1.5 transition-colors duration-fast ease-brand cta-press tap-highlight ' +
+        'relative flex min-h-[60px] min-w-0 flex-col items-center justify-center gap-1 px-2 pb-1.5 pt-2 transition-colors duration-fast ease-brand tap-highlight ' +
         (active
-          ? 'text-[#152B54] shadow-soft'
-          : 'text-muted-foreground hover:bg-muted hover:text-navy')
+          ? 'text-[#00786D] dark:text-[#0AC7CE]'
+          : 'text-muted-foreground hover:text-navy')
       }
-      style={active ? { background: '#009F91' } : undefined}
     >
+      {active && <span className="absolute inset-x-6 top-0 h-0.5 rounded-full bg-[#009F91] dark:bg-[#0AC7CE]" aria-hidden="true" />}
       <Icon className="h-[19px] w-[19px] shrink-0" />
-      <span className="line-clamp-2 max-w-full text-center text-[11px] font-bold leading-[1.2] min-[360px]:text-[11.5px] min-[360px]:leading-tight">
+      <span className="line-clamp-2 max-w-full text-center text-[12px] font-medium leading-tight">
         {label}
       </span>
     </Link>
