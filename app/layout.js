@@ -28,7 +28,9 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <script
           dangerouslySetInnerHTML={{
-            __html: "try{if(localStorage.getItem('mlTheme')==='dark')document.documentElement.classList.add('dark')}catch(e){}",
+            __html: "try{if(localStorage.getItem('mlTheme')==='dark')document.documentElement.classList.add('dark')}catch(e){}"
+              // Homepage hero: offers arrive one by one on the first visit only, never with reduced motion.
+              + "try{if(location.pathname==='/'&&!localStorage.getItem('mlHeroSeen')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('ml-hero-intro');localStorage.setItem('mlHeroSeen','1');setTimeout(function(){r.classList.remove('ml-hero-intro')},2400)}}catch(e){}",
           }}
         />
       </head>

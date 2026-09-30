@@ -1276,3 +1276,15 @@ html[dir="rtl"] .ml-status-panel .ml-status-msg { font-family: var(--ml-serif-ar
 
 /* Skeleton blocks: the line colour reads on both the ground and card surfaces. */
 .ml-skel { background-color: var(--ml-line); }
+
+/* Homepage hero sequence (first visit only; class set before paint in app/layout.js). */
+@keyframes ml-offer-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes ml-offer-select { from { background-color: var(--ml-surface); border-color: var(--ml-line); box-shadow: none; } }
+@keyframes ml-fade-in { from { opacity: 0; } to { opacity: 1; } }
+html.ml-hero-intro .ml-signature-offers > .ml-offer { animation: ml-offer-in var(--ml-slow) var(--ml-ease) both; }
+html.ml-hero-intro .ml-signature-offers > .ml-offer:nth-child(1) { animation-delay: 200ms; }
+html.ml-hero-intro .ml-signature-offers > .ml-offer:nth-child(2) { animation-delay: 380ms; }
+html.ml-hero-intro .ml-signature-offers > .ml-offer:nth-child(3) { animation-delay: 560ms; }
+html.ml-hero-intro .ml-signature-offers > .ml-offer.is-selected { animation: ml-offer-in var(--ml-slow) var(--ml-ease) 200ms both, ml-offer-select var(--ml-slow) var(--ml-ease) 1100ms both; }
+html.ml-hero-intro .ml-signature-offers > .ml-offer.is-selected .ml-offer-selected { animation: ml-fade-in var(--ml-base) var(--ml-ease) 1250ms both; }
+html.ml-hero-intro .ml-signature-offers > .ml-offer:not(.is-selected) .ml-vetted { animation: ml-fade-in var(--ml-base) var(--ml-ease) 800ms both; }
