@@ -54,7 +54,7 @@ export default function MarketingLanding({
             )}
             <h1 className="landing-hero-title display-title mx-auto max-w-[23rem] text-[30px] sm:max-w-2xl sm:text-[42px] lg:text-[46px]">
               {words.join(' ')}{' '}
-              <span className="home-hero-emphasis" style={{ textDecorationColor: accentColor }}>{accentWords.join(' ')}</span>
+              <span className="home-hero-emphasis" style={{ textDecorationColor: '#009F91' }}>{accentWords.join(' ')}</span>
             </h1>
             <p className="landing-hero-subtitle mx-auto mt-3.5 max-w-lg text-[14.5px] leading-7 text-muted-foreground sm:mt-4 sm:text-[15px] sm:leading-relaxed">
               {subtitle}
