@@ -1188,7 +1188,7 @@ html[dir="rtl"] .ml-step-desc { line-height: 1.8; }
 .ml-review-row { display: grid; gap: 4px; padding-block: 14px; border-bottom: 1px solid var(--ml-line); }
 .ml-review-row dt { font-size: 13px; color: var(--ml-muted); }
 .ml-review-row dd { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; color: var(--ml-heading); font-weight: 500; }
-.ml-review-row dd > span { min-width: 0; overflow-wrap: anywhere; white-space: pre-line; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; }
+.ml-review-row dd > span { min-width: 0; overflow-wrap: anywhere; white-space: pre-line; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; text-align: start; unicode-bidi: plaintext; }
 .ml-review-empty { color: var(--ml-muted); font-weight: 400; }
 .ml-review-edit { display: inline-flex; flex-shrink: 0; align-items: center; gap: 6px; min-height: 44px; margin-block: -12px; padding-inline: 8px; color: var(--ml-teal-ink); font-size: 14px; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
 .dark .ml-review-edit { color: var(--ml-bright-teal); }
@@ -1211,3 +1211,34 @@ html[dir="rtl"] .ml-step-desc { line-height: 1.8; }
 /* Warn colour lifts to its dark-mode value wherever it is hard-coded. */
 .dark .text-\[\#B5462B\] { color: #F08A6C; }
 .dark .border-\[\#B5462B\] { border-color: #F08A6C; }
+
+/* ---------- Owner status timeline (components/PhaseTimeline.jsx) ---------- */
+.ml-phases { display: grid; }
+.ml-phase { position: relative; display: flex; align-items: flex-start; gap: 12px; padding-bottom: 24px; }
+.ml-phase:last-child { padding-bottom: 0; }
+.ml-phase::before { content: ''; position: absolute; top: 24px; bottom: 0; inset-inline-start: 11px; width: 2px; background: var(--ml-line); }
+.ml-phase:last-child::before { display: none; }
+.ml-phase[data-state="done"]::before { background: var(--ml-accent); }
+.ml-phase-dot { position: relative; z-index: 1; display: flex; height: 24px; width: 24px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 999px; border: 2px solid var(--ml-line); background: var(--ml-surface); color: var(--ml-on-accent); transition: background-color var(--ml-base) var(--ml-ease), border-color var(--ml-base) var(--ml-ease); }
+.ml-phase[data-state="done"] .ml-phase-dot { border-color: var(--ml-accent); background: var(--ml-accent); }
+.ml-phase[data-state="current"] .ml-phase-dot { border-color: var(--ml-accent); box-shadow: 0 0 0 4px var(--ml-signature-bg); }
+.ml-phase[data-state="current"] .ml-phase-dot::after { content: ''; height: 8px; width: 8px; border-radius: 999px; background: var(--ml-accent); }
+.ml-phase-label { padding-top: 1px; font-size: 15px; color: var(--ml-muted); }
+.ml-phase[data-state="done"] .ml-phase-label { color: var(--ml-heading); }
+.ml-phase[data-state="current"] .ml-phase-label { color: var(--ml-heading); font-weight: 600; }
+@media (min-width: 640px) {
+  .ml-phases { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .ml-phase { flex-direction: column; gap: 12px; padding-bottom: 0; padding-inline-end: 12px; }
+  .ml-phase::before { top: 11px; bottom: auto; inset-inline-start: 24px; inset-inline-end: 0; width: auto; height: 2px; }
+}
+
+.ml-status-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.ml-status-panel { padding: 20px; }
+.ml-status-panel .ml-status-msg { margin-top: 6px; font-family: var(--ml-serif); font-size: 20px; line-height: 1.45; color: var(--ml-signature-fg); }
+html[dir="rtl"] .ml-status-panel .ml-status-msg { font-family: var(--ml-serif-ar); line-height: 1.7; }
+.ml-card { border: 1px solid var(--ml-line); border-radius: var(--ml-radius); background: var(--ml-surface); }
+.ml-meta { border-top: 1px solid var(--ml-line); }
+.ml-meta > div { display: grid; gap: 4px; padding-block: 12px; border-bottom: 1px solid var(--ml-line); }
+.ml-meta dt { font-size: 13px; color: var(--ml-muted); }
+.ml-meta dd { color: var(--ml-heading); overflow-wrap: anywhere; white-space: pre-line; }
+@media (min-width: 640px) { .ml-meta > div { grid-template-columns: 9rem 1fr; gap: 16px; } }

@@ -1,22 +1,78 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
 import ResultFileLink from '@/components/ResultFileLink';
-import { useLang } from '@/lib/LangContext';
-import { PROJECT_STATUSES } from '@/lib/i18n';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import PageState from '@/components/PageState';
-import StatusTimeline from '@/components/StatusTimeline';
-import StatusBadge from '@/components/StatusBadge';
-import { Calendar, ClipboardList, GitCompareArrows, MapPin, Paperclip, Wallet } from 'lucide-react';
+import PhaseTimeline from '@/components/PhaseTimeline';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
+import { useLang } from '@/lib/LangContext';
+import { ArrowRight } from 'lucide-react';
+
+// The owner sees four brand phases; the admin keeps its detailed statuses.
+const PHASE_OF_STATUS = {
+  received: 0, reviewing: 0, approved: 0,
+  contractors_invited: 1,
+  bids_received: 2,
+  shortlisted: 3, meeting_arranged: 3,
+  closed: 4,
+};
+const OFFERS_VISIBLE = ['bids_received', 'shortlisted', 'meeting_arranged', 'closed'];
+
+const COPY = {
+  en: {
+    eyebrow: 'Project status',
+    phases: ['Brief received', 'Sent to firms', 'Offers in', 'Compare and choose'],
+    timelineLabel: 'Project progress',
+    nextLabel: 'What happens next',
+    viewOffers: 'Compare offers',
+    waitingOffers: 'Offers will appear here as firms respond. We will also message you on WhatsApp.',
+    whatsapp: 'Message us on WhatsApp',
+    details: 'Your brief',
+    type: 'Project type',
+    location: 'Location',
+    description: 'Description',
+    start: 'Start',
+    budget: 'Budget',
+    files: 'Attachments',
+    saveLink: 'Keep this page’s link to check progress at any time.',
+  },
+  ar: {
+    eyebrow: 'حالة المشروع',
+    phases: ['تم استلام الطلب', 'أُرسل إلى الشركات', 'وصلت العروض', 'قارن واختر'],
+    timelineLabel: 'مراحل المشروع',
+    nextLabel: 'ماذا يحدث بعد ذلك',
+    viewOffers: 'قارن العروض',
+    waitingOffers: 'ستظهر العروض هنا فور رد الشركات، وسنراسلك أيضًا عبر واتساب.',
+    whatsapp: 'راسلنا على واتساب',
+    details: 'طلبك',
+    type: 'نوع المشروع',
+    location: 'الموقع',
+    description: 'الوصف',
+    start: 'موعد البدء',
+    budget: 'الميزانية',
+    files: 'المرفقات',
+    saveLink: 'احتفظ برابط هذه الصفحة لمتابعة التقدم في أي وقت.',
+  },
+};
+
+function StatusSkeleton() {
+  return (
+    <div className="mx-auto max-w-4xl py-4" aria-hidden="true">
+      <div className="h-3 w-32 animate-pulse rounded bg-muted" />
+      <div className="mt-4 h-9 w-2/3 animate-pulse rounded-[6px] bg-muted" />
+      <div className="mt-8 grid gap-4 sm:grid-cols-4">{Array.from({ length: 4 }, (_, i) => <div key={i} className="h-10 animate-pulse rounded-[6px] bg-muted" />)}</div>
+      <div className="mt-8 h-32 animate-pulse rounded-[6px] bg-muted" />
+      <div className="mt-6 h-48 animate-pulse rounded-[6px] bg-muted" />
+    </div>
+  );
+}
 
 export default function ProjectPage() {
   const { id } = useParams();
-  const router = useRouter();
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const copy = COPY[lang === 'ar' ? 'ar' : 'en'];
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
@@ -41,85 +97,67 @@ export default function ProjectPage() {
 
   useEffect(() => { load(); }, [id]);
 
-  if (loading) return <AppShell hideNav hideFooter><PageState kind="loading" title={t('loading')} /></AppShell>;
+  if (loading) return <AppShell hideNav hideFooter wide><span className="sr-only" role="status">{t('loading')}</span><StatusSkeleton /></AppShell>;
   if (loadError) return <AppShell hideNav hideFooter><PageState kind="error" title={t('statusLoadErrorTitle')} description={t('statusLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={load} actionVariant="primary" /></AppShell>;
   if (!data || data.error) return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
 
-  const idx = PROJECT_STATUSES.indexOf(data.status);
+  const phase = PHASE_OF_STATUS[data.status] ?? 0;
+  const offersVisible = OFFERS_VISIBLE.includes(data.status);
+  const details = [
+    [copy.type, t(`cat_${data.category}`)],
+    [copy.location, data.location],
+    [copy.description, data.description],
+    [copy.start, data.timeline],
+    [copy.budget, data.budgetRange],
+  ].filter(([, value]) => value && String(value).trim());
 
   return (
     <AppShell wide>
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-4 flex min-w-0 items-start gap-3 rounded-[6px] border border-border bg-card p-4 shadow-soft sm:items-center sm:p-5">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91]" aria-hidden="true">
-            <ClipboardList className="h-5 w-5" />
-          </span>
-          <div className="min-w-0 flex-1">
-            <h1 className="display-title min-w-0 break-words text-[22px] sm:text-[28px]">{t('projectStatus')}</h1>
-            <StatusBadge status={data.status} className="mt-2 self-start">{t(`status_${data.status}`)}</StatusBadge>
+      <div className="mx-auto max-w-4xl pb-8 pt-2 sm:pt-6">
+        <div className="ml-status-head">
+          <div>
+            <p className="eyebrow">{copy.eyebrow}</p>
+            <h1 className="mt-3 text-[28px] leading-tight sm:text-[36px]">{copy.phases[Math.min(phase, 3)]}</h1>
           </div>
         </div>
 
-        <div className="grid items-start gap-4 lg:grid-cols-[1.45fr_1fr]">
-          {/* details column */}
-          <div className="order-2 min-w-0 space-y-3 lg:order-1">
-            <Card className="rounded-2xl shadow-soft">
-              <CardContent className="p-4 space-y-2.5 sm:p-5">
-                <div className="text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('projectSummary')}</div>
-                <div className="break-words text-base font-bold text-navy">{t(`cat_${data.category}`)}</div>
-                {data.location && <div className="flex items-start gap-2 text-sm text-navy"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span dir="auto" className="min-w-0 break-words">{data.location}</span></div>}
-                <div dir="auto" className="break-words text-sm leading-relaxed text-muted-foreground">{data.description}</div>
-                {data.timeline && <div className="flex items-start gap-2 text-sm text-navy"><Calendar className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span dir="auto" className="min-w-0 break-words">{data.timeline}</span></div>}
-                {data.budgetRange && <div className="flex items-start gap-2 text-sm text-navy"><Wallet className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" /><span dir="ltr" className="min-w-0 break-words">{data.budgetRange}</span></div>}
-              </CardContent>
-            </Card>
+        <section className="mt-8">
+          <PhaseTimeline phases={copy.phases} currentIndex={phase} allDone={phase >= 4} label={copy.timelineLabel} />
+        </section>
 
-            {data.files && data.files.length > 0 && (
-              <Card className="rounded-2xl shadow-soft">
-                <CardContent className="p-4 sm:p-5">
-                  <div className="mb-2 flex min-w-0 items-center justify-between gap-2">
-                    <div className="flex min-w-0 items-center gap-1.5 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">
-                      <Paperclip className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                      <span className="min-w-0 break-words">{t('uploadedFiles')}</span>
-                    </div>
-                    <Badge variant="info" className="shrink-0 text-[12px]">{data.files.length}</Badge>
-                  </div>
-                  <div className="space-y-1.5">
-                    {data.files.map((f, i) => (
-                      <ResultFileLink key={i} file={f} fallbackLabel={t('files')} actionLabel={t('download')} />
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+        <section className="ml-status-panel ml-cut mt-8 bg-signature" aria-labelledby="next-step-label">
+          <p id="next-step-label" className="text-[12px] font-semibold text-signature-label ltr:uppercase ltr:tracking-[0.2em]">{copy.nextLabel}</p>
+          <p className="ml-status-msg">{t(`msg_${data.status}`)}</p>
+          {!offersVisible && <p className="mt-3 text-[14px] leading-relaxed text-muted-foreground">{copy.waitingOffers}</p>}
+          <div className="mt-5 flex flex-wrap gap-3">
+            {offersVisible && (
+              <Link href={`/bids/${id}`} className="btn btn-primary min-h-12">
+                {copy.viewOffers}<ArrowRight className="btn-arrow h-4 w-4 rtl:rotate-180" aria-hidden="true" />
+              </Link>
             )}
+            <a href="https://wa.me/97466259219" target="_blank" rel="noreferrer" className="btn btn-secondary min-h-12 bg-card">
+              <WhatsAppIcon className="h-4 w-4" />{copy.whatsapp}
+            </a>
           </div>
+        </section>
 
-          {/* status column */}
-          <div className="order-1 min-w-0 space-y-3 lg:order-2 lg:sticky lg:top-20">
-            <Card className="rounded-2xl border-[#009F91]/25 bg-[#EAF7F4]/55 shadow-soft dark:bg-[#142A44]">
-              <CardContent className="p-4 sm:p-5">
-                <div className="mb-1 text-xs font-semibold text-navy ltr:uppercase ltr:tracking-wide">{t('nextStep')}</div>
-                <div className="break-words text-sm leading-relaxed text-navy">{t(`msg_${data.status}`)}</div>
-              </CardContent>
-            </Card>
-
-            {['bids_received', 'shortlisted', 'meeting_arranged'].includes(data.status) ? (
-              <Button variant="brand" size="lg" onClick={() => router.push(`/bids/${id}`)} className="h-auto min-h-12 w-full whitespace-normal py-2.5 text-center text-base leading-snug">
-                <GitCompareArrows className="h-4 w-4" aria-hidden="true" />
-                {t('viewBids')}
-              </Button>
-            ) : (
-              <PageState kind="empty" compact title={t('noBidsYet')} />
+        <section className="mt-10" aria-labelledby="brief-title">
+          <h2 id="brief-title" className="text-[22px]">{copy.details}</h2>
+          <dl className="ml-meta mt-4">
+            {details.map(([label, value]) => (
+              <div key={label}><dt>{label}</dt><dd><span dir="auto">{value}</span></dd></div>
+            ))}
+            {data.files?.length > 0 && (
+              <div>
+                <dt>{copy.files}</dt>
+                <dd className="space-y-1.5">
+                  {data.files.map((f, i) => <ResultFileLink key={i} file={f} fallbackLabel={t('files')} actionLabel={t('download')} />)}
+                </dd>
+              </div>
             )}
-
-            <Card className="rounded-2xl shadow-soft">
-              <CardContent className="p-4 sm:p-5">
-                <div className="mb-3 text-xs font-semibold text-muted-foreground ltr:uppercase ltr:tracking-wide">{t('statusTimeline')}</div>
-                <StatusTimeline statuses={PROJECT_STATUSES} currentIndex={idx} getLabel={(status) => t(`status_${status}`)} />
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+          </dl>
+          <p className="mt-4 text-[13px] text-muted-foreground">{copy.saveLink}</p>
+        </section>
       </div>
     </AppShell>
   );

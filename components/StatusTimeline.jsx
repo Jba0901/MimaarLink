@@ -27,7 +27,7 @@ export default function StatusTimeline({ statuses, currentIndex, getLabel }) {
               aria-hidden="true"
               className={`relative z-10 mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
                 complete
-                  ? 'bg-[#009F91] text-[#152B54]'
+                  ? 'bg-[#009F91] text-white'
                   : current
                     ? 'border-2 border-[#009F91] bg-[#EAF7F4] dark:bg-[#0D1B2A]'
                     : 'border border-border bg-card'
@@ -38,7 +38,7 @@ export default function StatusTimeline({ statuses, currentIndex, getLabel }) {
             </span>
 
             <div
-              className={`min-w-0 flex-1 rounded-xl px-3 py-2 text-sm leading-snug ${
+              className={`min-w-0 flex-1 rounded-[6px] px-3 py-2 text-sm leading-snug ${
                 current
                   ? 'bg-[#EAF7F4]/60 font-bold text-navy dark:bg-[#009F91]/15'
                   : complete
