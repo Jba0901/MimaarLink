@@ -145,18 +145,24 @@ export function DraftNotice({ hadFiles, onContinue, onRestart }) {
   );
 }
 
-/** Quick-pick chips that set a text answer (tap again to clear). */
-export function ChoiceChips({ options, value, onChange, label }) {
+/**
+ * Quick-pick chips that set a text answer (tap again to clear). With `multiple`,
+ * chips add or remove themselves from a comma-separated answer.
+ */
+export function ChoiceChips({ options, value, onChange, label, multiple = false, separator = ', ' }) {
+  const parts = multiple ? String(value || '').split(/\s*[,،]\s*/).filter(Boolean) : [];
+  const isSelected = (option) => (multiple ? parts.includes(option) : value === option);
+  const toggle = (option) => {
+    if (!multiple) { onChange(isSelected(option) ? '' : option); return; }
+    onChange((isSelected(option) ? parts.filter(p => p !== option) : [...parts, option]).join(separator));
+  };
   return (
     <div className="ml-chips" role="group" aria-label={label}>
-      {options.map((option) => {
-        const selected = value === option;
-        return (
-          <button key={option} type="button" aria-pressed={selected} className="ml-chip" onClick={() => onChange(selected ? '' : option)}>
-            {option}
-          </button>
-        );
-      })}
+      {options.map((option) => (
+        <button key={option} type="button" aria-pressed={isSelected(option)} className="ml-chip" onClick={() => toggle(option)}>
+          {option}
+        </button>
+      ))}
     </div>
   );
 }
