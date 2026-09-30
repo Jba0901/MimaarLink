@@ -23,12 +23,12 @@ const Toaster = ({
     title: "!break-words !font-bold !text-foreground",
     description: "!break-words !text-muted-foreground",
     content: "!min-w-0 !gap-1",
-    success: "!border-[#00B59E]/45 !bg-[#D0F2EE] dark:!bg-[#142A44]",
+    success: "!border-[#009F91]/45 !bg-[#EAF7F4] dark:!bg-[#142A44]",
     error: "!border-[#EF4444]/45 !bg-[#FEF2F2] dark:!bg-[#2A1720]",
-    warning: "!border-[#FFB638]/55 !bg-[#FFB638]/10",
-    info: "!border-[#152B54]/30 !bg-card dark:!border-[#00B59E]/30",
-    loading: "!border-[#00B59E]/35 !bg-card",
-    actionButton: "!h-11 !rounded-xl !border !border-transparent !bg-[#152B54] !px-4 !text-white dark:!border-[#00B59E]/25 dark:!bg-[#142A44]",
+    warning: "!border-[#B5462B]/55 !bg-[#B5462B]/10",
+    info: "!border-[#152B54]/30 !bg-card dark:!border-[#009F91]/30",
+    loading: "!border-[#009F91]/35 !bg-card",
+    actionButton: "!h-11 !rounded-xl !border !border-transparent !bg-[#152B54] !px-4 !text-white dark:!border-[#009F91]/25 dark:!bg-[#142A44]",
     cancelButton: "!h-11 !rounded-xl !border !border-border !bg-card !px-4 !text-foreground",
   }
 
@@ -50,11 +50,11 @@ const Toaster = ({
       dir="auto"
       className="toaster group"
       icons={{
-        success: <CheckCircle2 className="h-5 w-5 text-[#152B54] dark:text-[#00B59E]" />,
+        success: <CheckCircle2 className="h-5 w-5 text-[#152B54] dark:text-[#009F91]" />,
         error: <TriangleAlert className="h-5 w-5 text-[#EF4444]" />,
-        warning: <TriangleAlert className="h-5 w-5 text-[#FFB638]" />,
-        info: <Info className="h-5 w-5 text-[#152B54] dark:text-[#00B59E]" />,
-        loading: <Loader2 className="h-5 w-5 animate-spin text-[#00B59E]" />,
+        warning: <TriangleAlert className="h-5 w-5 text-[#B5462B]" />,
+        info: <Info className="h-5 w-5 text-[#152B54] dark:text-[#009F91]" />,
+        loading: <Loader2 className="h-5 w-5 animate-spin text-[#009F91]" />,
       }}
       toastOptions={{
         ...toastOptions,

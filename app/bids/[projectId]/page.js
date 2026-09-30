@@ -93,11 +93,11 @@ export default function BidsPage() {
             const meetingActionKey = `meeting:${b.contractorId}`;
             const actionsDisabled = Boolean(pendingAction);
             return (
-              <Card key={b.id} className={`overflow-hidden rounded-[18px] border shadow-soft ${isLowest ? 'border-[#00B59E]/70 bg-[#D0F2EE]/10 ring-1 ring-[#00B59E]/15 dark:bg-[#00B59E]/[0.04]' : 'border-border'}`}>
-                {isLowest && <div className="h-1 bg-[#00B59E]" aria-hidden="true" />}
+              <Card key={b.id} className={`overflow-hidden rounded-[6px] border shadow-soft ${isLowest ? 'border-[#009F91]/70 bg-[#EAF7F4]/10 ring-1 ring-[#009F91]/15 dark:bg-[#009F91]/[0.04]' : 'border-border'}`}>
+                {isLowest && <div className="h-1 bg-[#009F91]" aria-hidden="true" />}
                 <CardContent className="p-4 sm:p-5">
                   <div className="flex min-w-0 items-start gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] max-[359px]:hidden dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] text-[#152B54] max-[359px]:hidden dark:bg-[#009F91]/15 dark:text-[#009F91]" aria-hidden="true">
                       <ProviderIcon className="h-5 w-5" />
                     </span>
                     <div className="min-w-0 flex-1">
@@ -105,7 +105,7 @@ export default function BidsPage() {
                       <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                         {c.providerType && <Badge variant="secondary" className="max-w-full whitespace-normal text-start text-[12px]">{providerTypeLabel(c, t)}</Badge>}
                         {c.verificationStatus === 'verified' && (
-                          <Badge variant="outline" className="max-w-full gap-1 whitespace-normal text-start text-[12px] text-[#00B59E]">
+                          <Badge variant="outline" className="max-w-full gap-1 whitespace-normal text-start text-[12px] text-[#009F91]">
                             <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
                             {t('cstatus_verified')}
                           </Badge>
@@ -117,7 +117,7 @@ export default function BidsPage() {
                   </div>
 
                   <div className="mt-3 grid grid-cols-1 gap-2 min-[560px]:grid-cols-2">
-                    <div className={`min-w-0 rounded-[14px] border p-3 ${isLowest ? 'border-[#00B59E]/35 bg-[#D0F2EE]/45 dark:bg-[#00B59E]/10' : 'border-border/70 bg-secondary/70'}`}>
+                    <div className={`min-w-0 rounded-[6px] border p-3 ${isLowest ? 'border-[#009F91]/35 bg-[#EAF7F4]/45 dark:bg-[#009F91]/10' : 'border-border/70 bg-secondary/70'}`}>
                       <div className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Wallet className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('price')}</span></div>
                       <div className="mt-1 min-w-0 text-navy" dir="ltr">
                         <span className="inline-flex min-w-0 max-w-full items-baseline gap-1">
@@ -126,15 +126,15 @@ export default function BidsPage() {
                         </span>
                       </div>
                     </div>
-                    <div className="min-w-0 rounded-[14px] border border-border/70 bg-secondary/70 p-3">
+                    <div className="min-w-0 rounded-[6px] border border-border/70 bg-secondary/70 p-3">
                       <div className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground ltr:uppercase ltr:tracking-wide"><Clock className="h-3.5 w-3.5 shrink-0" aria-hidden="true" /><span className="min-w-0 break-words">{t('timeline')}</span></div>
                       <div dir="auto" className="mt-1 break-words text-sm font-semibold leading-snug text-navy">{b.timeline || '—'}</div>
                     </div>
                   </div>
 
                   <div className="mt-3 space-y-1.5">
-                    {b.warranty && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileCheck2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('warranty')}:</span><span dir="auto" className="mt-0.5 block">{b.warranty}</span></span></div>}
-                    {b.exclusions && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileWarning className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#FFB638]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('exclusions')}:</span><span dir="auto" className="mt-0.5 block">{b.exclusions}</span></span></div>}
+                    {b.warranty && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileCheck2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#009F91]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('warranty')}:</span><span dir="auto" className="mt-0.5 block">{b.warranty}</span></span></div>}
+                    {b.exclusions && <div className="flex items-start gap-2 text-[13px] leading-relaxed"><FileWarning className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#B5462B]" aria-hidden="true" /><span className="min-w-0 break-words"><span className="font-semibold text-navy">{t('exclusions')}:</span><span dir="auto" className="mt-0.5 block">{b.exclusions}</span></span></div>}
                     {b.notes && <div dir="auto" className="whitespace-pre-wrap break-words text-[13px] leading-relaxed text-muted-foreground">{b.notes}</div>}
                   </div>
 

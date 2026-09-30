@@ -50,8 +50,8 @@ export default function ProjectPage() {
   return (
     <AppShell wide>
       <div className="mx-auto max-w-5xl">
-        <div className="mb-4 flex min-w-0 items-start gap-3 rounded-[20px] border border-border bg-card p-4 shadow-soft sm:items-center sm:p-5">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+        <div className="mb-4 flex min-w-0 items-start gap-3 rounded-[6px] border border-border bg-card p-4 shadow-soft sm:items-center sm:p-5">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91]" aria-hidden="true">
             <ClipboardList className="h-5 w-5" />
           </span>
           <div className="min-w-0 flex-1">
@@ -96,7 +96,7 @@ export default function ProjectPage() {
 
           {/* status column */}
           <div className="order-1 min-w-0 space-y-3 lg:order-2 lg:sticky lg:top-20">
-            <Card className="rounded-2xl border-[#00B59E]/25 bg-[#D0F2EE]/55 shadow-soft dark:bg-[#142A44]">
+            <Card className="rounded-2xl border-[#009F91]/25 bg-[#EAF7F4]/55 shadow-soft dark:bg-[#142A44]">
               <CardContent className="p-4 sm:p-5">
                 <div className="mb-1 text-xs font-semibold text-navy ltr:uppercase ltr:tracking-wide">{t('nextStep')}</div>
                 <div className="break-words text-sm leading-relaxed text-navy">{t(`msg_${data.status}`)}</div>

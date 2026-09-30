@@ -13,7 +13,7 @@ export default function ForContractorsPage() {
       subtitle={t('contL_sub')}
       ctaLabel={t('contL_cta')}
       ctaHref="/contractor"
-      tone="amber"
+      tone="navy"
       benefits={[
         { icon: TrendingUp, title: t('contL_b1'), desc: t('contL_b1d') },
         { icon: Wallet, title: t('contL_b2'), desc: t('contL_b2d') },

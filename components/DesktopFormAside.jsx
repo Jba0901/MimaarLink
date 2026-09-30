@@ -8,7 +8,7 @@ function FormAsideFallback() {
   return (
     <div
       aria-hidden="true"
-      className="min-h-[22rem] animate-pulse rounded-[22px] border border-border bg-card shadow-soft"
+      className="min-h-[22rem] animate-pulse rounded-[6px] border border-border bg-card shadow-soft"
     />
   );
 }

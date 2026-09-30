@@ -76,10 +76,10 @@ export default function MarketingAttribution() {
       role="region"
       aria-labelledby="marketing-consent-title"
       aria-describedby="marketing-consent-description"
-      className={`marketing-consent-panel mx-auto rounded-[18px] border border-[#00B59E]/25 bg-card p-2.5 ${
+      className={`marketing-consent-panel mx-auto rounded-[6px] border border-[#009F91]/25 bg-card p-2.5 ${
         isForm
           ? 'marketing-consent-inline relative mt-3 w-[calc(100%-2rem)] max-w-7xl shadow-soft sm:w-[calc(100%-3rem)] sm:p-3 lg:w-[calc(100%-4rem)]'
-          : `fixed inset-x-2.5 z-[100] max-w-xl overflow-y-auto overscroll-contain shadow-lift sm:inset-x-3 sm:rounded-[22px] sm:p-5 ${sitsAboveMobileNav
+          : `fixed inset-x-2.5 z-[100] max-w-xl overflow-y-auto overscroll-contain shadow-lift sm:inset-x-3 sm:rounded-[6px] sm:p-5 ${sitsAboveMobileNav
             ? 'bottom-[calc(5.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_6.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))] lg:bottom-4 lg:max-h-[calc(100dvh_-_2rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'
             : 'bottom-[calc(0.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_1.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'}`
       }`}
@@ -87,7 +87,7 @@ export default function MarketingAttribution() {
     >
       <div className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 ${isForm ? 'max-[359px]:grid-cols-1' : 'sm:block'}`}>
         <div className="flex min-w-0 items-start gap-2.5 sm:gap-3">
-          <span className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E] sm:flex sm:h-11 sm:w-11 sm:rounded-2xl" aria-hidden="true">
+          <span className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91] sm:flex sm:h-11 sm:w-11 sm:rounded-2xl" aria-hidden="true">
             <ShieldCheck className="h-[18px] w-[18px] sm:h-5 sm:w-5" />
           </span>
           <div className="min-w-0 flex-1">

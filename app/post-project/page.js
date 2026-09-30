@@ -35,9 +35,9 @@ function SelectedCategorySummary({ category, t, onChange }) {
   return (
     <section
       aria-label={t('selectedCategory')}
-      className="project-category-summary mb-4 flex min-w-0 items-center gap-3 rounded-2xl border border-[#00B59E]/25 bg-[#D0F2EE]/35 p-3 shadow-soft dark:bg-[#00B59E]/10"
+      className="project-category-summary mb-4 flex min-w-0 items-center gap-3 rounded-2xl border border-[#009F91]/25 bg-[#EAF7F4]/35 p-3 shadow-soft dark:bg-[#009F91]/10"
     >
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] dark:bg-[#00B59E]/15">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] dark:bg-[#009F91]/15">
         <Icon className="h-5 w-5 text-teal" aria-hidden="true" />
       </span>
       <span className="min-w-0 flex-1 text-start">
@@ -48,7 +48,7 @@ function SelectedCategorySummary({ category, t, onChange }) {
         type="button"
         onClick={onChange}
         aria-label={t('changeCategory')}
-        className="tap-highlight inline-flex h-11 w-11 shrink-0 items-center justify-center gap-1.5 rounded-xl px-0 text-[13px] font-bold text-navy transition-colors hover:bg-card/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 min-[360px]:w-auto min-[360px]:px-3 dark:focus-visible:ring-offset-[#07111D]"
+        className="tap-highlight inline-flex h-11 w-11 shrink-0 items-center justify-center gap-1.5 rounded-xl px-0 text-[13px] font-bold text-navy transition-colors hover:bg-card/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91] focus-visible:ring-offset-2 min-[360px]:w-auto min-[360px]:px-3 dark:focus-visible:ring-offset-[#07111D]"
       >
         <PencilLine className="h-4 w-4" aria-hidden="true" />
         <span className="hidden min-[360px]:inline">{t('changeCategory')}</span>
@@ -146,9 +146,9 @@ function PostProjectInner() {
               const selected = data.category === c;
               return (
                 <button key={c} type="button" onClick={() => { update('category', c); showStep(2); }} aria-pressed={selected}
-                  className={`interactive-card tap-highlight min-h-[62px] min-w-0 rounded-2xl border px-4 py-3 text-start shadow-soft ${selected ? 'border-[#00B59E]/55 bg-[#D0F2EE]/45 dark:bg-[#00B59E]/15' : 'border-border bg-card hover:border-[#00B59E]/35 hover:bg-secondary/40'}`}>
+                  className={`interactive-card tap-highlight min-h-[62px] min-w-0 rounded-2xl border px-4 py-3 text-start shadow-soft ${selected ? 'border-[#009F91]/55 bg-[#EAF7F4]/45 dark:bg-[#009F91]/15' : 'border-border bg-card hover:border-[#009F91]/35 hover:bg-secondary/40'}`}>
                   <div className="flex items-center gap-3">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] dark:bg-[#00B59E]/15">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] dark:bg-[#009F91]/15">
                       <Icon className="h-5 w-5 text-teal" />
                     </span>
                     <span className="min-w-0 flex-1 break-words text-[15px] font-bold leading-tight text-navy">{t(`cat_${c}`)}</span>
@@ -333,7 +333,7 @@ function RequiredField({ id, label, value, onChange, tried, t, placeholder, inpu
         <Label htmlFor={fieldId} className="text-sm">
           {label} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
         </Label>
-        <div dir="ltr" data-invalid={showError || undefined} className={`phone-field-shell mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-[#EF4444] focus-within:ring-2 focus-within:ring-[#EF4444]/25' : 'border-input hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/60 focus-within:ring-2 focus-within:ring-[#00B59E]/25'}`}>
+        <div dir="ltr" data-invalid={showError || undefined} className={`phone-field-shell mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-[#EF4444] focus-within:ring-2 focus-within:ring-[#EF4444]/25' : 'border-input hover:border-[#009F91]/45 focus-within:border-[#009F91]/60 focus-within:ring-2 focus-within:ring-[#009F91]/25'}`}>
           <div className="px-3 flex items-center bg-secondary text-navy text-sm font-semibold select-none border-e border-input shrink-0">
             {PREFIX}
           </div>
@@ -390,7 +390,7 @@ function FormLoadingState({ title }) {
     <AppShell hideFooter hideNav wide>
       <div className="mx-auto flex min-h-[50dvh] w-full max-w-md items-center justify-center">
         <div role="status" className="flex items-center gap-3 rounded-2xl border border-border bg-card px-5 py-4 text-sm font-bold text-navy shadow-soft">
-          <Loader2 className="h-5 w-5 animate-spin text-[#00B59E]" aria-hidden="true" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#009F91]" aria-hidden="true" />
           <span>{title}</span>
         </div>
       </div>

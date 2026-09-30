@@ -71,16 +71,16 @@ export default function NetworkStatusNotice() {
       className={cn(
         'mb-3 flex min-w-0 items-start gap-3 rounded-2xl border px-3 py-3 text-start shadow-soft sm:mb-4',
         offline
-          ? 'border-[#FFB638]/50 bg-[#FFB638]/[0.10] dark:bg-[#FFB638]/[0.12]'
-          : 'border-[#00B59E]/40 bg-[#D0F2EE]/40 dark:bg-[#00B59E]/[0.12]'
+          ? 'border-[#B5462B]/50 bg-[#B5462B]/[0.10] dark:bg-[#F08A6C]/[0.12]'
+          : 'border-[#009F91]/40 bg-[#EAF7F4]/40 dark:bg-[#009F91]/[0.12]'
       )}
     >
       <span
         className={cn(
           'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl',
           offline
-            ? 'bg-[#FFB638]/20 text-[#9A6200] dark:text-[#FFB638]'
-            : 'bg-[#D0F2EE] text-[#007F70] dark:bg-[#00B59E]/15 dark:text-[#00B59E]'
+            ? 'bg-[#B5462B]/20 text-[#B5462B] dark:text-[#F08A6C]'
+            : 'bg-[#EAF7F4] text-[#007F70] dark:bg-[#009F91]/15 dark:text-[#009F91]'
         )}
         aria-hidden="true"
       >

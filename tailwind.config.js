@@ -25,7 +25,24 @@ module.exports = {
                 extrabold: '600',
                 black: '600',
             },
+    		fontFamily: {
+    			serif: ['var(--ml-serif)'],
+    			sans: ['var(--ml-sans)'],
+    		},
     		colors: {
+    			// MimaarLink brand v1.4 (brand/tailwind.brand.js), minus names already owned by shadcn.
+    			navy: 'var(--ml-navy)',
+    			teal: { DEFAULT: 'var(--ml-teal)', ink: 'var(--ml-teal-ink)' },
+    			'pale-teal': 'var(--ml-pale-teal)',
+    			night: 'var(--ml-night)',
+    			'bright-teal': 'var(--ml-bright-teal)',
+    			ground: 'var(--ml-ground)',
+    			surface: 'var(--ml-surface)',
+    			heading: 'var(--ml-heading)',
+    			body: 'var(--ml-body)',
+    			line: 'var(--ml-line)',
+    			signature: { DEFAULT: 'var(--ml-signature-bg)', fg: 'var(--ml-signature-fg)', label: 'var(--ml-signature-label)' },
+    			warn: 'var(--ml-warn)',
     			border: 'hsl(var(--border))',
     			input: 'hsl(var(--input))',
     			ring: 'hsl(var(--ring))',
@@ -77,11 +94,20 @@ module.exports = {
     				ring: 'hsl(var(--sidebar-ring))'
     			}
     		},
+    		// Brand radius is 6px for buttons, inputs and cards; only pills stay fully round.
     		borderRadius: {
+    			brand: 'var(--ml-radius)',
+    			'3xl': 'var(--radius)',
+    			'2xl': 'var(--radius)',
+    			xl: 'var(--radius)',
     			lg: 'var(--radius)',
     			md: 'calc(var(--radius) - 2px)',
     			sm: 'calc(var(--radius) - 4px)'
     		},
+    		boxShadow: { brand: 'var(--ml-shadow)' },
+    		transitionTimingFunction: { brand: 'var(--ml-ease)' },
+    		transitionDuration: { fast: '140ms', base: '220ms', slow: '360ms' },
+    		maxWidth: { content: '1200px' },
     		keyframes: {
     			'accordion-down': {
     				from: {

@@ -202,9 +202,9 @@ function AdminInner() {
           {loadingData && <PageState kind="loading" compact title={t('loading')} />}
           {!loadingData && !loadError && projects.length === 0 && <PageState kind="empty" compact title={t('noProjects')} />}
           {!loadingData && !loadError && projects.map(p => (
-            <Card key={p.id} className="interactive-card hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/45">
+            <Card key={p.id} className="interactive-card hover:border-[#009F91]/45 focus-within:border-[#009F91]/45">
               <CardContent className="p-3.5">
-                <button type="button" onClick={() => router.push(`/admin/project/${p.id}`)} className="w-full rounded-xl text-start ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
+                <button type="button" onClick={() => router.push(`/admin/project/${p.id}`)} className="w-full rounded-xl text-start ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/30 focus-visible:ring-offset-2">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
@@ -244,8 +244,8 @@ function AdminInner() {
             const services = providerServices(c);
 
             return (
-              <Link key={c.id} href={`/admin/contractor/${c.id}`} className="block rounded-2xl ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
-                <Card className="interactive-card hover:border-[#00B59E]/45">
+              <Link key={c.id} href={`/admin/contractor/${c.id}`} className="block rounded-2xl ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/30 focus-visible:ring-offset-2">
+                <Card className="interactive-card hover:border-[#009F91]/45">
                   <CardContent className="p-3.5">
                     <div className="flex flex-col gap-2.5 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0">
@@ -255,7 +255,7 @@ function AdminInner() {
                           <TypeIcon className="h-3 w-3 shrink-0" />
                           {providerTypeLabel(c, t)}
                         </Badge>
-                        {c.verificationStatus === 'verified' && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" />}
+                        {c.verificationStatus === 'verified' && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#009F91]" aria-hidden="true" />}
                       </div>
                       <div className="mt-0.5 flex flex-wrap items-center gap-x-1 break-words text-xs text-muted-foreground">
                         {c.contactPerson && <span dir="auto">{c.contactPerson}</span>}

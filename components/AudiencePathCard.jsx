@@ -30,11 +30,11 @@ export default function AudiencePathCard({
       href={href}
       aria-label={cta ? `${title} — ${cta}` : title}
       onClick={() => trackMeta('PathSelected', { path_type: pathType }, { custom: true })}
-      className={`group block h-full tap-highlight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D] ${detailed ? 'rounded-[22px] md:rounded-[26px]' : 'rounded-[20px] sm:rounded-[22px]'}`}
+      className={`group block h-full tap-highlight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D] ${detailed ? 'rounded-[6px] md:rounded-[6px]' : 'rounded-[6px] sm:rounded-[6px]'}`}
     >
       {detailed ? (
         <article
-          className="path-card interactive-card card-sheen relative flex h-full flex-col overflow-hidden rounded-[22px] border border-t-[3px] p-4 shadow-soft sm:p-5 md:rounded-[26px] md:p-7"
+          className="path-card interactive-card card-sheen relative flex h-full flex-col overflow-hidden rounded-[6px] border border-t-[3px] p-4 shadow-soft sm:p-5 md:rounded-[6px] md:p-7"
           data-tone={tone}
           data-primary={primary ? 'true' : undefined}
           style={{ borderTopColor: 'var(--path-accent)' }}
@@ -73,12 +73,12 @@ export default function AudiencePathCard({
         </article>
       ) : (
         <article
-          className="path-card interactive-card relative flex h-full min-h-[104px] items-center gap-3 rounded-[20px] border p-3.5 shadow-soft sm:min-h-0 sm:flex-col sm:items-stretch sm:gap-0 sm:rounded-[22px] sm:p-5"
+          className="path-card interactive-card relative flex h-full min-h-[104px] items-center gap-3 rounded-[6px] border p-3.5 shadow-soft sm:min-h-0 sm:flex-col sm:items-stretch sm:gap-0 sm:rounded-[6px] sm:p-5"
           data-tone={tone}
           data-primary={primary ? 'true' : undefined}
         >
           <span
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl sm:h-[52px] sm:w-[52px] sm:rounded-[18px]"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl sm:h-[52px] sm:w-[52px] sm:rounded-[6px]"
             style={{ background: 'var(--path-accent-soft)', color: 'var(--path-accent)' }}
             aria-hidden="true"
           >
@@ -88,7 +88,7 @@ export default function AudiencePathCard({
             <h2 className="text-[16px] font-extrabold leading-tight text-navy sm:text-[17px]">{title}</h2>
             <p className="mt-1 text-[12.5px] leading-5 text-muted-foreground sm:mt-1.5 sm:leading-relaxed">{desc}</p>
             {cta && (
-              <span className="path-card-link-label mt-2 inline-flex max-w-full items-center gap-2 text-start text-[12px] font-bold leading-snug text-navy underline decoration-[#00B59E] underline-offset-4 sm:mt-4 sm:text-[13px]">
+              <span className="path-card-link-label mt-2 inline-flex max-w-full items-center gap-2 text-start text-[12px] font-bold leading-snug text-navy underline decoration-[#009F91] underline-offset-4 sm:mt-4 sm:text-[13px]">
                 <span className="min-w-0 break-words">{cta}</span>
                 <Arrow />
               </span>

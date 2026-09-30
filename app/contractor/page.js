@@ -34,7 +34,7 @@ function FormLoadingState({ title }) {
     <AppShell hideFooter hideNav wide>
       <div className="mx-auto flex min-h-[50dvh] w-full max-w-md items-center justify-center">
         <div role="status" className="flex items-center gap-3 rounded-2xl border border-border bg-card px-5 py-4 text-sm font-bold text-navy shadow-soft">
-          <Loader2 className="h-5 w-5 animate-spin text-[#00B59E]" aria-hidden="true" />
+          <Loader2 className="h-5 w-5 animate-spin text-[#009F91]" aria-hidden="true" />
           <span>{title}</span>
         </div>
       </div>
@@ -285,8 +285,8 @@ function ContractorApplicationInner() {
                 <button key={c} id={index === 0 ? 'provider-first-service' : undefined} type="button" onClick={() => toggleCat(c)} aria-pressed={data.categories.includes(c)}
                   className={`interactive-card tap-highlight min-h-12 min-w-0 rounded-xl border px-3 py-2 text-start text-[13px] font-semibold ${
                     data.categories.includes(c)
-                      ? 'border-[#00B59E]/50 bg-[#D0F2EE]/55 text-navy shadow-soft dark:border-[#00B59E]/45 dark:bg-[#00B59E]/15'
-                      : 'border-border bg-card text-navy hover:border-[#00B59E]/35 dark:bg-[#0D1B2A]/75'
+                      ? 'border-[#009F91]/50 bg-[#EAF7F4]/55 text-navy shadow-soft dark:border-[#009F91]/45 dark:bg-[#009F91]/15'
+                      : 'border-border bg-card text-navy hover:border-[#009F91]/35 dark:bg-[#0D1B2A]/75'
                   }`}>
                   <span className="flex items-center justify-between gap-2">
                     <span className="min-w-0 flex-1 break-words leading-snug">{t(`cat_${c}`)}</span>
@@ -434,7 +434,7 @@ function FormField({ id, label, value, onChange, tried, t, placeholder, inputMod
         <Label htmlFor={fieldId} className="text-sm">
           {label} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
         </Label>
-        <div dir="ltr" data-invalid={showError || undefined} className={`phone-field-shell mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-[#EF4444] focus-within:ring-2 focus-within:ring-[#EF4444]/25' : 'border-input hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/60 focus-within:ring-2 focus-within:ring-[#00B59E]/25'}`}>
+        <div dir="ltr" data-invalid={showError || undefined} className={`phone-field-shell mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-[#EF4444] focus-within:ring-2 focus-within:ring-[#EF4444]/25' : 'border-input hover:border-[#009F91]/45 focus-within:border-[#009F91]/60 focus-within:ring-2 focus-within:ring-[#009F91]/25'}`}>
           <div className="px-3 flex items-center bg-secondary text-navy text-sm font-semibold select-none border-e border-input shrink-0">
             {PREFIX}
           </div>
@@ -488,7 +488,7 @@ function ProviderTypeButton({ active, icon: Icon, title, desc, onClick }) {
       className={`provider-type-card interactive-card tap-highlight min-w-0 rounded-2xl border p-3.5 text-start ${active ? 'is-active shadow-soft' : ''}`}
     >
       <span className="flex items-start gap-3">
-        <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/20 dark:text-[#00B59E]' : 'bg-muted text-muted-foreground'}`}>
+        <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/20 dark:text-[#009F91]' : 'bg-muted text-muted-foreground'}`}>
           <Icon className="h-5 w-5" />
         </span>
         <span className="min-w-0 flex-1">

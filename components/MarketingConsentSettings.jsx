@@ -32,15 +32,15 @@ export default function MarketingConsentSettings() {
       ? (arabic ? 'مرفوض' : 'Declined')
       : (arabic ? 'لم يتم الاختيار' : 'Not selected');
   const statusClasses = status === 'accepted'
-    ? 'border-[#00B59E]/40 bg-[#00B59E] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]'
+    ? 'border-[#009F91]/40 bg-[#009F91] text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91]'
     : status === 'rejected'
       ? 'border-border bg-muted text-muted-foreground'
-      : 'border-[#FFB638]/50 bg-[#FFB638] text-[#152B54] dark:bg-[#FFB638]/15 dark:text-[#FFB638]';
+      : 'border-[#B5462B]/50 bg-[#B5462B] text-white dark:bg-[#F08A6C]/15 dark:text-[#F08A6C]';
 
   return (
-    <div className="rounded-[20px] border border-border bg-card p-4 shadow-soft min-[390px]:rounded-[22px] min-[390px]:p-5 sm:p-6">
+    <div className="rounded-[6px] border border-border bg-card p-4 shadow-soft min-[390px]:rounded-[6px] min-[390px]:p-5 sm:p-6">
       <div className="flex items-start gap-3">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91]" aria-hidden="true">
           <ShieldCheck className="h-5 w-5" />
         </span>
         <div className="min-w-0 flex-1">
@@ -58,7 +58,7 @@ export default function MarketingConsentSettings() {
           type="button"
           onClick={withdraw}
           aria-pressed={status === 'rejected'}
-          className={`btn h-auto min-h-11 w-full whitespace-normal px-4 py-2 text-center text-[13px] leading-snug ${status === 'rejected' ? 'border border-[#FFB638]/55 bg-[#FFB638]/15 text-navy shadow-sm' : 'btn-outline'}`}
+          className={`btn h-auto min-h-11 w-full whitespace-normal px-4 py-2 text-center text-[13px] leading-snug ${status === 'rejected' ? 'border border-[#B5462B]/55 bg-[#B5462B]/15 text-navy shadow-sm' : 'btn-outline'}`}
         >
           {status === 'rejected' && <Check className="h-4 w-4" aria-hidden="true" />}
           {arabic ? 'رفض أو سحب الموافقة' : 'Decline or withdraw'}

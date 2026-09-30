@@ -5,21 +5,21 @@ import { Inbox, Loader2, SearchX, TriangleAlert } from 'lucide-react';
 const stateVisuals = {
   loading: {
     icon: Loader2,
-    iconClass: 'animate-spin text-[#00B59E]',
-    tileClass: 'bg-[#D0F2EE]/70 dark:bg-[#00B59E]/15',
+    iconClass: 'animate-spin text-[#009F91]',
+    tileClass: 'bg-[#EAF7F4]/70 dark:bg-[#009F91]/15',
     panelClass: '',
   },
   empty: {
     icon: Inbox,
-    iconClass: 'text-[#152B54] dark:text-[#00B59E]',
-    tileClass: 'bg-[#D0F2EE]/70 dark:bg-[#00B59E]/15',
+    iconClass: 'text-[#152B54] dark:text-[#009F91]',
+    tileClass: 'bg-[#EAF7F4]/70 dark:bg-[#009F91]/15',
     panelClass: '',
   },
   missing: {
     icon: SearchX,
-    iconClass: 'text-[#FFB638]',
-    tileClass: 'bg-[#FFB638]/15',
-    panelClass: 'border border-[#FFB638]/30 bg-[#FFB638]/[0.03] dark:bg-[#FFB638]/[0.06]',
+    iconClass: 'text-[#B5462B]',
+    tileClass: 'bg-[#B5462B]/15',
+    panelClass: 'border border-[#B5462B]/30 bg-[#B5462B]/[0.03] dark:bg-[#F08A6C]/[0.06]',
   },
   error: {
     icon: TriangleAlert,
@@ -45,13 +45,13 @@ export default function PageState({
   const Icon = visual.icon;
   const Heading = compact ? 'h3' : 'h1';
   const panelSurfaceClass = compact ? visual.panelClass : (visual.panelClass || 'border-border bg-card');
-  const actionClassName = `btn ${actionVariant === 'primary' ? 'btn-primary' : 'btn-outline'} mt-5 h-auto min-h-11 w-full whitespace-normal px-5 py-2 text-center text-[14px] leading-snug focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D] sm:w-auto`;
+  const actionClassName = `btn ${actionVariant === 'primary' ? 'btn-primary' : 'btn-outline'} mt-5 h-auto min-h-11 w-full whitespace-normal px-5 py-2 text-center text-[14px] leading-snug focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D] sm:w-auto`;
   const content = (
     <div
       className={`page-state-panel ${compact ? 'page-state-compact' : ''} w-full text-center ${
         compact
           ? 'rounded-2xl bg-secondary/55 px-4 py-6'
-          : 'rounded-[22px] border p-4 shadow-soft min-[264px]:p-5 sm:rounded-[24px] sm:p-8'
+          : 'rounded-[6px] border p-4 shadow-soft min-[264px]:p-5 sm:rounded-[6px] sm:p-8'
       } ${panelSurfaceClass} ${className}`}
       role={kind === 'loading' ? 'status' : kind === 'error' ? 'alert' : undefined}
       aria-live={kind === 'loading' ? 'polite' : kind === 'error' ? 'assertive' : undefined}

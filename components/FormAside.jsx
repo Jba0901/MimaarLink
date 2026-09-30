@@ -14,7 +14,7 @@ export default function FormAside({ steps = [], note }) {
   return (
     <aside className="hidden lg:block">
       <div className="sticky top-20 space-y-3">
-        <div className="rounded-[22px] border border-border bg-card p-5 shadow-soft">
+        <div className="rounded-[6px] border border-border bg-card p-5 shadow-soft">
           <h3 className="text-[13.5px] font-bold text-navy">{t('formAsideTitle')}</h3>
           <ol className="mt-4 space-y-4">
             {steps.map((s, i) => (
@@ -24,7 +24,7 @@ export default function FormAside({ steps = [], note }) {
                 )}
                 <span
                   className="relative z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[12px] font-bold text-[#152B54] shadow-soft"
-                  style={{ background: '#00B59E' }}
+                  style={{ background: '#009F91' }}
                 >
                   {i + 1}
                 </span>
@@ -38,8 +38,8 @@ export default function FormAside({ steps = [], note }) {
         </div>
 
         {note && (
-          <div className="flex items-start gap-2.5 rounded-[22px] border border-border bg-card p-4 shadow-soft">
-            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" style={{ color: '#00B59E' }} />
+          <div className="flex items-start gap-2.5 rounded-[6px] border border-border bg-card p-4 shadow-soft">
+            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" style={{ color: '#009F91' }} />
             <p className="text-[12px] leading-relaxed text-muted-foreground">{note}</p>
           </div>
         )}
@@ -51,7 +51,7 @@ export default function FormAside({ steps = [], note }) {
           className="btn btn-outline w-full text-[12.5px]"
           style={{ minHeight: 44 }}
         >
-          <WhatsAppIcon className="h-[15px] w-[15px]" style={{ color: '#00B59E' }} />
+          <WhatsAppIcon className="h-[15px] w-[15px]" style={{ color: '#009F91' }} />
           {t('startWhatsapp')}
         </a>
       </div>

@@ -1,6 +1,5 @@
 'use client';
 import React, { Suspense, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useLang } from '@/lib/LangContext';
@@ -27,39 +26,20 @@ import {
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 import MarketingAttribution from '@/components/MarketingAttribution';
 
-function Logo({ className = 'h-8 w-8 sm:h-9 sm:w-9', priority = false, onDark = false }) {
+// Official v1.4 logo files (brand/logo). Never retype the wordmark in a font.
+function BrandLogo({ onDark = false, priority = false, className = '' }) {
+  const { lang } = useLang();
+  const script = lang === 'ar' ? 'ar' : 'en';
+  const light = `/brand/logo/mimaarlink-logo-${script}.svg`;
+  const dark = `/brand/logo/mimaarlink-logo-${script}-dark.svg`;
+  const width = script === 'ar' ? 418.1 : 474.2;
+  const imgProps = { alt: '', width, height: 146.7, decoding: 'async', fetchPriority: priority ? 'high' : undefined };
   return (
-    <span className={`brand-mark ${onDark ? 'brand-mark-on-dark' : ''} ${className} shrink-0`} aria-hidden="true">
-      <Image
-        src="/logo.png"
-        alt=""
-        width={860}
-        height={830}
-        sizes="(min-width: 640px) 40px, 32px"
-        quality={100}
-        priority={priority}
-      />
-    </span>
-  );
-}
-
-function BrandText({ size = 17, onDark = false }) {
-  const { t, lang } = useLang();
-  const first = onDark ? '#FFFFFF' : '#152B54';
-  const second = '#00B59E';
-  if (lang === 'ar') {
-    const parts = t('appName').split(' ');
-    return (
-      <span className="font-extrabold leading-tight whitespace-nowrap" style={{ fontSize: size }}>
-        <span style={{ color: first }}>{parts[0]}</span>
-        {parts[1] && <span style={{ color: second }} className="ms-1">{parts[1]}</span>}
-      </span>
-    );
-  }
-  return (
-    <span className="font-extrabold leading-tight tracking-tight whitespace-nowrap" style={{ fontSize: size }}>
-      <span style={{ color: first }}>Mimaar</span>
-      <span style={{ color: second }}>Link</span>
+    <span className={`brand-logo brand-logo-${script} ${onDark ? 'brand-logo-on-dark' : ''} ${className}`} aria-hidden="true">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img {...imgProps} src={light} className="brand-logo-light" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img {...imgProps} src={dark} className="brand-logo-dark" />
     </span>
   );
 }
@@ -152,8 +132,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       >
         <div className="container-x relative h-16 sm:h-[68px] flex items-center justify-between gap-2">
           <Link href="/" aria-label={t('appName')} className="flex min-h-11 min-w-11 items-center gap-2 rounded-xl sm:gap-2.5 shrink tap-highlight">
-            <Logo className="h-8 w-8 sm:h-10 sm:w-10" priority />
-            <span className="max-[263px]:hidden"><BrandText size={17} onDark={isDark} /></span>
+            <BrandLogo priority />
           </Link>
 
           {/* centered desktop nav */}
@@ -220,7 +199,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
 
       {!hideNav && (
         <nav className="mobile-bottom-nav safe-pad-bottom fixed bottom-3 left-1/2 z-40 w-[min(94vw,360px)] -translate-x-1/2 lg:hidden" aria-label={copy.quickTitle}>
-          <div className="grid grid-cols-3 gap-1 rounded-[22px] border border-border bg-white/95 p-1.5 shadow-lift backdrop-blur-xl dark:bg-[#0D1B2A]/95">
+          <div className="grid grid-cols-3 gap-1 rounded-[6px] border border-border bg-white/95 p-1.5 shadow-lift backdrop-blur-xl dark:bg-[#0D1B2A]/95">
             <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
             <NavBtn href="/post-project" icon={FilePlus} label={copy.projectNav} ariaLabel={t('postProject')} matches={['/post-project', '/for-projects']} />
             <NavBtn href="/contractor" icon={Hammer} label={copy.providerNav} ariaLabel={t('joinContractor')} matches={['/contractor', '/consultant', '/for-contractors']} />
@@ -340,7 +319,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
   const drawerRef = useRef(null);
   const actionItems = [
     { href: '/post-project', label: t('startProjectTitle'), helper: t('startProjectCta'), icon: Building2, accent: 'teal' },
-    { href: '/contractor', label: t('startContractorTitle'), helper: t('startContractorCta'), icon: Hammer, accent: 'amber' },
+    { href: '/contractor', label: t('startContractorTitle'), helper: t('startContractorCta'), icon: Hammer, accent: 'navy' },
     { href: '/contractor?type=consultant', label: t('startConsultantTitle'), helper: t('startConsultantCta'), icon: ClipboardList, accent: 'navy' },
   ];
   const secondaryItems = [
@@ -400,8 +379,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
         <div className="menu-drawer-content min-h-full">
           <div className="flex items-center justify-between gap-3">
             <Link href="/" aria-label={t('appName')} className="flex min-h-11 min-w-11 items-center gap-2.5 rounded-xl tap-highlight">
-              <Logo className="h-9 w-9" />
-              <span className="max-[263px]:hidden"><BrandText size={17} onDark={isDark} /></span>
+              <BrandLogo />
             </Link>
             <button
               ref={closeButtonRef}
@@ -439,14 +417,14 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
             </div>
           </div>
 
-          <div className="mt-6 rounded-[1.25rem] border border-border bg-muted/60 dark:bg-white/[0.04] p-2.5">
+          <div className="mt-6 rounded-[6px] border border-border bg-muted/60 dark:bg-white/[0.04] p-2.5">
             <button
               type="button"
               onClick={onThemeToggle}
               className="flex w-full min-w-0 items-center justify-between gap-2.5 rounded-2xl px-2.5 py-2 text-start transition hover:bg-white dark:hover:bg-white/[0.06]"
             >
               <span className="flex min-w-0 items-center gap-2.5">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/20 dark:text-[#00B59E]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/20 dark:text-[#009F91]">
                   {isDark ? <Sun className="h-[17px] w-[17px]" /> : <Moon className="h-[17px] w-[17px]" />}
                 </span>
                 <span className="min-w-0">
@@ -475,16 +453,16 @@ function ActionTile({ item, active }) {
   const Icon = item.icon;
   const accents = {
     teal: {
-      icon: 'bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/20 dark:text-[#00B59E]',
-      active: 'border-[#00B59E]/45 bg-[#D0F2EE]/55 dark:bg-[#00B59E]/15',
+      icon: 'bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/20 dark:text-[#009F91]',
+      active: 'border-[#009F91]/45 bg-[#EAF7F4]/55 dark:bg-[#009F91]/15',
     },
     amber: {
-      icon: 'bg-[#FFB638]/20 text-[#152B54] dark:bg-[#FFB638]/20 dark:text-[#FFB638]',
-      active: 'border-[#FFB638]/55 bg-[#FFB638]/15 dark:bg-[#FFB638]/[0.12]',
+      icon: 'bg-[#B5462B]/20 text-[#152B54] dark:bg-[#F08A6C]/20 dark:text-[#F08A6C]',
+      active: 'border-[#B5462B]/55 bg-[#B5462B]/15 dark:bg-[#F08A6C]/[0.12]',
     },
     navy: {
-      icon: 'bg-[#F5F4F1] text-[#152B54] dark:bg-white/[0.08] dark:text-white',
-      active: 'border-[#152B54]/30 bg-[#F5F4F1] dark:border-white/20 dark:bg-white/[0.08]',
+      icon: 'bg-[#F6F8FB] text-[#152B54] dark:bg-white/[0.08] dark:text-white',
+      active: 'border-[#152B54]/30 bg-[#F6F8FB] dark:border-white/20 dark:bg-white/[0.08]',
     },
   };
   const accent = accents[item.accent] || accents.teal;
@@ -493,10 +471,10 @@ function ActionTile({ item, active }) {
       href={item.href}
       data-tone={item.accent}
       aria-current={active ? 'page' : undefined}
-      className={`group path-card flex items-center gap-3 rounded-[1.25rem] border px-3.5 py-3 transition-all tap-highlight max-[263px]:gap-2 max-[263px]:px-2.5 ${
+      className={`group path-card flex items-center gap-3 rounded-[6px] border px-3.5 py-3 transition-all tap-highlight max-[263px]:gap-2 max-[263px]:px-2.5 ${
         active
           ? `${accent.active} shadow-soft`
-          : 'hover:-translate-y-0.5 hover:border-[#00B59E]/35 hover:shadow-card'
+          : 'hover:-translate-y-0.5 hover:border-[#009F91]/35 hover:shadow-card'
       }`}
     >
       <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl max-[263px]:h-10 max-[263px]:w-10 ${accent.icon}`}>
@@ -519,8 +497,8 @@ function SecondaryDrawerLink({ item, active }) {
       aria-current={active ? 'page' : undefined}
       className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[12px] font-extrabold leading-tight transition-all tap-highlight max-[359px]:gap-1 max-[359px]:px-2 ${
         active
-          ? 'border-[#00B59E]/35 bg-[#D0F2EE]/55 text-navy dark:bg-[#00B59E]/15'
-          : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#00B59E]/35 dark:bg-[#0D1B2A]/70'
+          ? 'border-[#009F91]/35 bg-[#EAF7F4]/55 text-navy dark:bg-[#009F91]/15'
+          : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#009F91]/35 dark:bg-[#0D1B2A]/70'
       }`}
     >
       <Icon className="h-4 w-4 shrink-0" />
@@ -562,7 +540,7 @@ function NavBtn({ href, icon: Icon, label, ariaLabel = label, matches = [] }) {
           ? 'text-[#152B54] shadow-soft'
           : 'text-muted-foreground hover:bg-muted hover:text-navy')
       }
-      style={active ? { background: '#00B59E' } : undefined}
+      style={active ? { background: '#009F91' } : undefined}
     >
       <Icon className="h-[19px] w-[19px] shrink-0" />
       <span className="line-clamp-2 max-w-full text-center text-[11px] font-bold leading-[1.2] min-[360px]:text-[11.5px] min-[360px]:leading-tight">
@@ -580,13 +558,13 @@ function SiteFooter({ flush = false, reserveMobileNav = false }) {
       <div className={`container-x pt-8 lg:py-12 ${reserveMobileNav ? 'pb-28' : 'pb-8'}`}>
         <div className="grid grid-cols-2 gap-x-5 gap-y-6 lg:grid-cols-[1.6fr_1fr_1fr]">
           <div className="col-span-2 max-w-sm lg:col-span-1">
-            <div className="flex items-center gap-2.5 mb-3">
-              <Logo className="h-8 w-8" onDark />
-              <BrandText size={16} onDark />
+            <div className="mb-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/logo/mimaarlink-logo-bilingual-dark.svg" alt={t('appName')} width={170} height={52} className="h-auto w-[170px]" decoding="async" />
             </div>
             <p className="text-[13px] leading-relaxed text-white/70">{dir === 'rtl' ? 'للمشاريع والمقاولين والاستشاريين في قطر.' : 'For projects, contractors and consultants in Qatar.'}</p>
             <p className="mt-4 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-white/70">
-              <MapPin className="w-3.5 h-3.5 shrink-0" style={{ color: '#00B59E' }} />
+              <MapPin className="w-3.5 h-3.5 shrink-0" style={{ color: '#009F91' }} />
               {t('contactLocationValue')}
             </p>
           </div>
@@ -614,9 +592,11 @@ function SiteFooter({ flush = false, reserveMobileNav = false }) {
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-t border-white/10 pt-4 text-center text-[12px] font-medium text-white/60">
           <span>&copy; {year} {t('appName')} &middot; {t('allRights')}</span>
+          {/* PLACEHOLDER: replace with the real commercial registration number before launch. */}
+          <span>{dir === 'rtl' ? 'مسجلة في قطر · سجل تجاري رقم [يُضاف لاحقًا]' : 'Registered in Qatar · CR No. [placeholder]'}</span>
           <Link
             href="/privacy"
-            className="inline-flex min-h-11 items-center rounded-lg px-1.5 font-bold text-white/80 transition-colors hover:text-[#00B59E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#152B54]"
+            className="inline-flex min-h-11 items-center rounded-lg px-1.5 font-bold text-white/80 transition-colors hover:text-[#009F91] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#152B54]"
           >
             {t('privacyNotice')}
           </Link>
@@ -628,8 +608,8 @@ function SiteFooter({ flush = false, reserveMobileNav = false }) {
 
 function FooterIcon({ href, label, icon: Icon, external = false, variant = 'footer' }) {
   const classes = variant === 'surface'
-    ? 'border-border bg-white text-navy shadow-soft hover:border-[#00B59E]/45 hover:bg-[#D0F2EE]/45 focus-visible:ring-offset-background dark:bg-[#0D1B2A] dark:text-white/85 dark:hover:text-[#00B59E]'
-    : 'border-white/15 bg-white/5 text-white/80 hover:border-[#00B59E]/50 hover:text-[#00B59E] hover:bg-white/10 focus-visible:ring-offset-[#0D1B2A]';
+    ? 'border-border bg-white text-navy shadow-soft hover:border-[#009F91]/45 hover:bg-[#EAF7F4]/45 focus-visible:ring-offset-background dark:bg-[#0D1B2A] dark:text-white/85 dark:hover:text-[#009F91]'
+    : 'border-white/15 bg-white/5 text-white/80 hover:border-[#009F91]/50 hover:text-[#009F91] hover:bg-white/10 focus-visible:ring-offset-[#0D1B2A]';
   return (
     <a
       href={href}
@@ -637,10 +617,10 @@ function FooterIcon({ href, label, icon: Icon, external = false, variant = 'foot
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className={`cta-press tap-highlight relative inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/50 focus-visible:ring-offset-2 ${classes}`}
+      className={`cta-press tap-highlight relative inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/50 focus-visible:ring-offset-2 ${classes}`}
     >
       <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
-      {external && <ArrowUpRight className="absolute end-1 top-1 h-2.5 w-2.5 text-[#00B59E]" aria-hidden="true" />}
+      {external && <ArrowUpRight className="absolute end-1 top-1 h-2.5 w-2.5 text-[#009F91]" aria-hidden="true" />}
     </a>
   );
 }
