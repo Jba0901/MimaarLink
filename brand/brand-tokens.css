@@ -1,0 +1,92 @@
+/* MimaarLink brand tokens v1.4 — import once in app/globals.css */
+
+:root {
+  /* Brand */
+  --ml-navy: #152B54;
+  --ml-teal: #009F91;
+  --ml-teal-hover: #04A3AB;
+  --ml-teal-ink: #00786D;
+  --ml-pale-teal: #EAF7F4;
+  --ml-night: #0D1B2A;
+  --ml-bright-teal: #0AC7CE;
+
+  /* Surfaces and text (light) */
+  --ml-bg: #FFFFFF;
+  --ml-ground: #F6F8FB;
+  --ml-surface: #FFFFFF;
+  --ml-heading: #152B54;
+  --ml-body: #2E3E57;
+  --ml-muted: #586576;
+  --ml-line: #DCE3EA;
+  --ml-accent: #009F91;
+  --ml-accent-hover: #04A3AB;
+  --ml-on-accent: #FFFFFF;
+  --ml-signature-bg: #EAF7F4;
+  --ml-signature-fg: #152B54;
+  --ml-signature-label: #00786D;
+  --ml-warn: #B5462B;
+
+  /* Shape, motion, elevation */
+  --ml-radius: 6px;
+  --ml-cut: 14px;
+  --ml-fast: 140ms;
+  --ml-base: 220ms;
+  --ml-slow: 360ms;
+  --ml-ease: cubic-bezier(.2, .7, .2, 1);
+  --ml-shadow: 0 18px 40px -24px rgba(13, 27, 42, .28);
+}
+
+.dark, [data-theme="dark"] {
+  --ml-bg: #0D1B2A;
+  --ml-ground: #101F33;
+  --ml-surface: #13243B;
+  --ml-heading: #F2F5FA;
+  --ml-body: #C9D6E8;
+  --ml-muted: #8FA0B6;
+  --ml-line: #243650;
+  --ml-accent: #0AC7CE;
+  --ml-accent-hover: #3FD6DB;
+  --ml-on-accent: #0D1B2A;
+  --ml-signature-bg: #0F2E3A;
+  --ml-signature-fg: #F2F5FA;
+  --ml-signature-label: #0AC7CE;
+  --ml-warn: #F08A6C;
+  --ml-shadow: 0 18px 40px -24px rgba(0, 0, 0, .6);
+}
+
+/* Signature chamfered corner */
+.ml-cut {
+  clip-path: polygon(0 0, calc(100% - var(--ml-cut)) 0, 100% var(--ml-cut), 100% 100%, var(--ml-cut) 100%, 0 calc(100% - var(--ml-cut)));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+}
+
+/* ---------- Tailwind v4: keep this block. Tailwind v3: delete it and use tailwind.brand.js ---------- */
+@theme inline {
+  --color-navy: var(--ml-navy);
+  --color-teal: var(--ml-teal);
+  --color-teal-ink: var(--ml-teal-ink);
+  --color-pale-teal: var(--ml-pale-teal);
+  --color-night: var(--ml-night);
+  --color-bright-teal: var(--ml-bright-teal);
+  --color-bg: var(--ml-bg);
+  --color-ground: var(--ml-ground);
+  --color-surface: var(--ml-surface);
+  --color-heading: var(--ml-heading);
+  --color-body: var(--ml-body);
+  --color-muted: var(--ml-muted);
+  --color-line: var(--ml-line);
+  --color-accent: var(--ml-accent);
+  --color-accent-hover: var(--ml-accent-hover);
+  --color-on-accent: var(--ml-on-accent);
+  --color-signature: var(--ml-signature-bg);
+  --color-signature-fg: var(--ml-signature-fg);
+  --color-signature-label: var(--ml-signature-label);
+  --color-warn: var(--ml-warn);
+  --radius-brand: var(--ml-radius);
+  --font-serif: var(--font-source-serif), var(--font-naskh), Georgia, serif;
+  --font-sans: var(--font-plex), var(--font-plex-arabic), "Segoe UI", system-ui, sans-serif;
+  --ease-brand: var(--ml-ease);
+}
