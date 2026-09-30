@@ -116,7 +116,7 @@ export default function FileUploadDropzone({
         className
       )}
     >
-      <span className={cn('relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91]', !disabled && 'transition-transform group-hover:scale-[1.03]')} aria-hidden="true">
+      <span className={cn('relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91]')} aria-hidden="true">
         {busy ? <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" /> : <Upload className="h-5 w-5" aria-hidden="true" />}
         {hasFiles && !busy && <CheckCircle2 className="absolute -end-1 -top-1 h-4 w-4 rounded-full bg-card text-[#009F91] ring-2 ring-card" />}
       </span>

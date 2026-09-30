@@ -60,7 +60,7 @@ export default function MarketingLanding({
               {subtitle}
             </p>
             <div className="landing-hero-action mt-6 sm:mt-7">
-              <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
+              <Link href={ctaHref} className={`btn ${ctaClass} w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
                 {ctaLabel} <Arrow />
               </Link>
               {ctaSubtext && <p className="landing-hero-subtext mt-3 text-[12.5px] text-muted-foreground/80">{ctaSubtext}</p>}
@@ -153,7 +153,7 @@ export default function MarketingLanding({
             <div className="relative mx-auto max-w-xl">
               <h3 className="text-[22px] font-extrabold leading-snug sm:text-[30px] sm:leading-tight">{finalTitle}</h3>
               <p className="mb-5 mt-2.5 text-[13.5px] leading-6 text-white/75 sm:mb-7 sm:text-[14px]">{finalSub}</p>
-              <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
+              <Link href={ctaHref} className={`btn ${ctaClass} w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
                 {ctaLabel} <Arrow />
               </Link>
             </div>

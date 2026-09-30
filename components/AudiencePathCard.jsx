@@ -34,14 +34,14 @@ export default function AudiencePathCard({
     >
       {detailed ? (
         <article
-          className="path-card interactive-card card-sheen relative flex h-full flex-col overflow-hidden rounded-[6px] border border-t-[3px] p-4 shadow-soft sm:p-5 md:rounded-[6px] md:p-7"
+          className="path-card interactive-card relative flex h-full flex-col overflow-hidden rounded-[6px] border border-t-[3px] p-4 shadow-soft sm:p-5 md:rounded-[6px] md:p-7"
           data-tone={tone}
           data-primary={primary ? 'true' : undefined}
           style={{ borderTopColor: 'var(--path-accent)' }}
         >
           <div className="flex min-w-0 items-center gap-3.5 md:block">
             <span
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-105 md:h-14 md:w-14 md:group-hover:scale-110 md:group-hover:-rotate-3"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl md:h-14 md:w-14"
               style={{ background: 'var(--path-accent-soft)', color: 'var(--path-accent)' }}
               aria-hidden="true"
             >
@@ -66,7 +66,7 @@ export default function AudiencePathCard({
             <Arrow />
           </span>
           <Icon
-            className="pointer-events-none absolute bottom-[-22px] hidden h-28 w-28 select-none transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6 md:block"
+            className="pointer-events-none absolute bottom-[-22px] hidden h-28 w-28 select-none md:block"
             style={{ color: 'var(--path-accent-soft)', insetInlineEnd: '-10px' }}
             aria-hidden="true"
           />
@@ -96,7 +96,7 @@ export default function AudiencePathCard({
           </div>
           {!cta && (
             <span
-              className="path-card-compact-action flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-soft transition-transform duration-200 group-hover:scale-105 sm:absolute sm:top-5"
+              className="path-card-compact-action flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white sm:absolute sm:top-5"
               style={{ background: 'var(--path-accent)', insetInlineEnd: '1.25rem' }}
               aria-hidden="true"
             >

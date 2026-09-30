@@ -124,7 +124,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         {copy.skipToContent}
       </a>
       <header
-        className={`site-header sticky top-0 z-40 transition-all duration-300 ${
+        className={`site-header sticky top-0 z-40 transition-[background-color,border-color,box-shadow] duration-base ease-brand ${
           scrolled
             ? 'is-scrolled backdrop-blur-xl border-b border-border shadow-soft'
             : 'backdrop-blur-xl border-b border-transparent'
@@ -356,7 +356,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
     >
       <button
         type="button"
-        className={`absolute inset-0 bg-[#07111D]/45 backdrop-blur-[5px] transition-opacity duration-300 dark:bg-black/60 ${
+        className={`absolute inset-0 bg-[#07111D]/45 backdrop-blur-[5px] transition-opacity duration-base ease-brand dark:bg-black/60 ${
           open ? 'opacity-100' : 'opacity-0'
         }`}
         aria-hidden="true"
@@ -372,7 +372,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
         onClick={(event) => {
           if (event.target.closest('a[href]')) onClose();
         }}
-        className={`absolute bottom-0 top-0 ${rtl ? 'left-0' : 'right-0'} w-[min(88vw,390px)] overflow-x-hidden overflow-y-auto border-s border-border bg-card text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.24)] transition-transform duration-300 ease-out ${
+        className={`absolute bottom-0 top-0 ${rtl ? 'left-0' : 'right-0'} w-[min(88vw,390px)] overflow-x-hidden overflow-y-auto border-s border-border bg-card text-foreground shadow-[0_24px_80px_rgba(0,0,0,0.24)] transition-transform duration-base ease-brand ${
           open ? 'translate-x-0' : rtl ? '-translate-x-full' : 'translate-x-full'
         }`}
       >
@@ -471,10 +471,10 @@ function ActionTile({ item, active }) {
       href={item.href}
       data-tone={item.accent}
       aria-current={active ? 'page' : undefined}
-      className={`group path-card flex items-center gap-3 rounded-[6px] border px-3.5 py-3 transition-all tap-highlight max-[263px]:gap-2 max-[263px]:px-2.5 ${
+      className={`group path-card flex items-center gap-3 rounded-[6px] border px-3.5 py-3 transition-colors duration-fast ease-brand tap-highlight max-[263px]:gap-2 max-[263px]:px-2.5 ${
         active
           ? `${accent.active} shadow-soft`
-          : 'hover:-translate-y-0.5 hover:border-[#009F91]/35 hover:shadow-card'
+          : 'hover:border-[#009F91]/45'
       }`}
     >
       <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl max-[263px]:h-10 max-[263px]:w-10 ${accent.icon}`}>
@@ -495,7 +495,7 @@ function SecondaryDrawerLink({ item, active }) {
     <Link
       href={item.href}
       aria-current={active ? 'page' : undefined}
-      className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[12px] font-extrabold leading-tight transition-all tap-highlight max-[359px]:gap-1 max-[359px]:px-2 ${
+      className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[12px] font-extrabold leading-tight transition-colors duration-fast ease-brand tap-highlight max-[359px]:gap-1 max-[359px]:px-2 ${
         active
           ? 'border-[#009F91]/35 bg-[#EAF7F4]/55 text-navy dark:bg-[#009F91]/15'
           : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#009F91]/35 dark:bg-[#0D1B2A]/70'
@@ -535,7 +535,7 @@ function NavBtn({ href, icon: Icon, label, ariaLabel = label, matches = [] }) {
       aria-current={active ? 'page' : undefined}
       title={ariaLabel}
       className={
-        'flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-2xl px-2 py-1.5 transition-all cta-press tap-highlight ' +
+        'flex min-h-[56px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-2xl px-2 py-1.5 transition-colors duration-fast ease-brand cta-press tap-highlight ' +
         (active
           ? 'text-[#152B54] shadow-soft'
           : 'text-muted-foreground hover:bg-muted hover:text-navy')
@@ -617,7 +617,7 @@ function FooterIcon({ href, label, icon: Icon, external = false, variant = 'foot
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className={`cta-press tap-highlight relative inline-flex h-11 w-11 items-center justify-center rounded-full border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/50 focus-visible:ring-offset-2 ${classes}`}
+      className={`cta-press tap-highlight relative inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-fast ease-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/50 focus-visible:ring-offset-2 ${classes}`}
     >
       <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
       {external && <ArrowUpRight className="absolute end-1 top-1 h-2.5 w-2.5 text-[#009F91]" aria-hidden="true" />}
