@@ -26,7 +26,6 @@ We cover a wide range of project activities, because the market demands it:
 
 - MimaarLink is a serious Qatar construction and project marketplace: one request, three to five offers, the owner chooses.
 - Arabic-first UX and copy unless the task says English. Every user-facing string exists in both languages; Arabic is written natively, not machine-translated.
-- Do not overpromise verification, legal responsibility, lowest price, guaranteed projects or guaranteed contractor quality. Never invent statistics, testimonials, client logos or counts; label examples as examples.
 - Keep forms, uploads, admin data, status pages, tracking links and file access working. Do not change Supabase tables, auth or submission payloads without Jassim's approval (additive, nullable columns added through the existing migration block in the API are the only exception, and must be noted in the handoff).
 
 ## Brand defaults (v1.4, full spec in `brand/BRAND.md`)
