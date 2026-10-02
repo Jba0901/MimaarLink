@@ -21,7 +21,7 @@ const COPY = {
   },
   ar: {
     continue: 'متابعة',
-    skip: 'تخطٍّ',
+    skip: 'تخطَّ',
     back: 'رجوع',
     backToReview: 'العودة إلى المراجعة',
     edit: 'تعديل',

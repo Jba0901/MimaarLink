@@ -362,7 +362,7 @@ function PostProjectInner() {
             {step === 'location' && (
               <div>
                 <Label htmlFor="project-location">{copy.locationLabel}</Label>
-                <Input id="project-location" data-autofocus dir="auto" autoComplete="off" value={data.location} onChange={e => update('location', e.target.value)} placeholder={copy.locationPh} className="mt-1.5" />
+                <Input id="project-location" data-autofocus autoComplete="off" value={data.location} onChange={e => update('location', e.target.value)} placeholder={copy.locationPh} className="mt-1.5" />
                 <div className="mt-3">
                   <ChoiceChips options={copy.locationChips} value={data.location} onChange={v => update('location', v)} label={copy.locationLabel} />
                 </div>

@@ -56,3 +56,13 @@ test('the shortlist records only a firm that bid on the project', () => {
   assert.match(api, /select 1 from bids where project_id = \$1 and contractor_id = \$2 limit 1/);
   assert.match(api, /if \(!bidMatch\.length\) return err\('Offer not found for this project', 404\)/);
 });
+
+test('Arabic placeholders sit on the right: free-text fields use plaintext bidi, never an empty dir="auto"', async () => {
+  const globals = await read('../app/globals.css');
+  const unsureField = await read('../components/TextOrUnsureField.jsx');
+  assert.match(globals, /:where\(input:not\(\[dir\]\), textarea:not\(\[dir\]\)\) \{ unicode-bidi: plaintext; \}/);
+  for (const [name, source] of [['provider', providerForm], ['project', projectForm], ['unsure field', unsureField]]) {
+    assert.doesNotMatch(source, /<(Input|Textarea|input|textarea)\b[^>]*dir="auto"/, name);
+  }
+  assert.doesNotMatch(unsureField, /dir="auto"/);
+});

@@ -402,7 +402,7 @@ function ContractorApplicationInner() {
             {stepName === 'areas' && (
               <div>
                 <Label htmlFor="provider-service-areas">{t('serviceAreas')}</Label>
-                <Input id="provider-service-areas" data-autofocus dir="auto" value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="mt-1.5" />
+                <Input id="provider-service-areas" data-autofocus value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="mt-1.5" />
                 <div className="mt-3">
                   <ChoiceChips multiple separator={copy.areaSeparator} options={copy.areaChips} value={data.serviceAreas} onChange={v => update('serviceAreas', v)} label={t('serviceAreas')} />
                 </div>

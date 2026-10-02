@@ -20,7 +20,6 @@ export default function TextOrUnsureField({ id, label, value, onChange, placehol
         onFocus={() => { if (isUnsure) onChange(''); }}
         onChange={event => onChange(event.target.value)}
         placeholder={placeholder}
-        dir="auto"
         autoComplete="off"
         className="mt-1.5"
       />
