@@ -2,6 +2,11 @@
 
 Date: `2026-07-11`
 
+> **Status note (2026-10-02, Jassim):** the long-term thinking here still holds. Two decisions have changed since July:
+> - **Scope:** MimaarLink now accepts the full range of project activities listed in `AGENTS.md`. The narrow "villa renovation, fit-out, consultant" focus below is a *marketing* focus, not an intake limit.
+> - **Fees:** the service is **free for owners and providers** for now. QAR 750 below is an untested hypothesis, not the current price. Read "QAR 750 fee" as "first paid introduction, at whatever price we validate".
+> See `COMPANY-BRAIN.md` for the current picture.
+
 ## Chief Operator Decision
 
 MimaarLink should aim to become Qatar's trusted private-project procurement intelligence layer, then expand through country-specific GCC cells. It should not try to become a broad contractor directory, a government-tender substitute, an escrow company, or a Procore clone.

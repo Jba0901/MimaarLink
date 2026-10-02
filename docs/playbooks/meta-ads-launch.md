@@ -9,7 +9,7 @@ Chief Operator: Codex / Jassim2
 
 Status: `PREPARED - NOT LAUNCHED`
 
-Current command plan: `C:\Users\Q\Documents\Codex\MoneyCEO\MIMAARLINK_MARKETING_COMMAND_PLAN_2026-07-13.md`
+> **Status note (2026-10-02):** ready playbook, never launched. Before using it: check creative against `brand/BRAND.md` v1.4, drop any mention of a QAR 750 provider fee (the service is free for now), and get Jassim's approval for any spend. The July "command plan" it referred to lives on Jassim's PC, not in this repo.
 
 Positioning update: MimaarLink should be strategically aggressive internally but calm and helpful externally. Lead with the recipient's actual pain, free owner project posting, suitable contractor/consultant invitations, and organized offer comparison. Do not use generic partnership language where a specific maintenance, fit-out, procurement, or provider-fit problem can be named.
 

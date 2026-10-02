@@ -1,5 +1,7 @@
 # MimaarLink Weekly Execution Board
 
+> **Archived 2026-10-02.** Kept for history only; do not follow it. Last updated week of 20 July. Current status is in `COMPANY-BRAIN.md`.
+
 Week of: `2026-07-20`
 
 ## Chief Operator Decision

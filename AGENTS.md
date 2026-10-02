@@ -18,9 +18,19 @@ We cover a wide range of project activities, because the market demands it:
 
 1. Read `docs/HANDOFF.md` (latest entry first). It says what changed last, what is half-done, and what is waiting on Jassim.
 2. For UI, copy, ads, landing pages or any visual work, read `brand/BRAND.md` (v1.4). It is the source of truth for colour, type, logo, layout, motion, components, copy and the homepage structure. Where older docs disagree, `brand/BRAND.md` wins.
-3. For strategy, outreach, ads, operations, pricing, provider acquisition or long-term planning, read `mimaarlink-agent-operating-system.md`, `mimaarlink-agent-prompts.md` and `mimaarlink-weekly-execution-board.md`.
+3. For strategy, outreach, ads, operations, pricing, provider acquisition or long-term planning, read `COMPANY-BRAIN.md` (one-page company picture and current status), then the linked file: `docs/operating-system.md` (how agents work for MimaarLink), `docs/operations.md` (running a project by hand), `docs/strategy/10-year-moat.md`, `docs/playbooks/meta-ads-launch.md`. Files in `docs/archive/` are history only; do not follow them.
 
-`mimaarlink-design-system.md` and `mimaarlink-brand-theme-draft.md` predate v1.4. Their positioning and channel guidance is still useful; their palette, fonts and logo rules are superseded.
+`mimaarlink-design-system.md`, `mimaarlink-brand-theme-draft.md`, `mimaarlink-worker-design-brief.md` and `mimaarlink-mobile-web-app-design-roadmap.md` predate v1.4. Their positioning and channel guidance is still useful; their palette, fonts and logo rules are superseded.
+
+## Recording decisions
+
+When Jassim decides something real (a feature, price, name, design choice or rule), it must be written down so other sessions and agents can build on it. Chat alone is not a record.
+
+- Brand and design → `brand/BRAND.md`
+- Product rules → `AGENTS.md` (Product rules)
+- Everything else (pricing, names, business, operations) → `DECISIONS.md`
+
+If you can edit the repo, add it yourself in the same change and mention it in the handoff. If you can't (a chat-only session), tell Jassim which file it belongs in and give the exact line to paste. One dated line per decision, short and factual. Ideas, options and "maybe later" are not decisions; don't record them.
 
 ## Product rules
 

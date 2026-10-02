@@ -1,5 +1,7 @@
 # MimaarLink Multi-Agent Operating System
 
+> **Archived 2026-10-02.** Kept for history only; do not follow it. Replaced by `docs/operating-system.md`.
+
 Last updated: 2026-07-07
 
 This file defines how MimaarLink should use Codex/sub-agents for long-term business execution.
