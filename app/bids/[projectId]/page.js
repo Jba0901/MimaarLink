@@ -73,7 +73,7 @@ function durationInDays(text) {
   return n;
 }
 
-// Which offer the owner shortlisted is kept on this device; the server records the project status.
+// The server records the shortlisted firm; this device's copy covers projects shortlisted before that.
 const selectionKey = (projectId) => `ml:selected-offer:${projectId}`;
 const readSelection = (projectId) => { try { return window.localStorage.getItem(selectionKey(projectId)); } catch { return null; } };
 const writeSelection = (projectId, contractorId) => { try { window.localStorage.setItem(selectionKey(projectId), contractorId); } catch {} };
@@ -192,7 +192,7 @@ export default function BidsPage() {
         <div className="ml-offers" data-count={bids.length}>
           {bids.map((b) => {
             const c = d.contractors[b.contractorId] || {};
-            const selected = selectedId === b.contractorId;
+            const selected = (d.project?.selectedContractorId || selectedId) === b.contractorId;
             const busyChoose = pendingAction === `shortlist:${b.contractorId}`;
             const busyMeeting = pendingAction === `meeting:${b.contractorId}`;
             const meetingDone = selected && (meetingFor === b.contractorId || d.project?.status === 'meeting_arranged');

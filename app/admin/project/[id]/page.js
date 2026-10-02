@@ -390,6 +390,9 @@ export default function AdminProjectPage() {
                               {t('cstatus_verified')}
                             </Badge>
                           )}
+                          {project.selectedContractorId === b.contractorId && (
+                            <Badge variant="success" className="max-w-full whitespace-normal text-start text-[12px]">{t('ownerShortlisted')}</Badge>
+                          )}
                           {fileCount > 0 && (
                             <Badge variant="info" className="max-w-full shrink-0 gap-1 whitespace-normal text-start text-[12px]">
                               <Paperclip className="h-3 w-3" aria-hidden="true" />{fileCount}
