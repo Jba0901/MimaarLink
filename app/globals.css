@@ -100,6 +100,12 @@
   html[dir="rtl"] .tracking-widest { letter-spacing: 0 !important; }
 }
 
+/* Button box model lives in the components layer: it beats the preflight reset on <button>,
+   and utilities such as px-0 or rounded-full still override it. */
+@layer components {
+  .btn { padding: 12px 20px; border-radius: var(--ml-radius); }
+}
+
 @layer utilities {
   /* ---------- brand colors ---------- */
   .navy { background-color: #152B54; }
@@ -390,8 +396,6 @@
     -webkit-tap-highlight-color: transparent;
     transition: transform var(--ml-fast) var(--ml-ease), box-shadow var(--ml-fast) var(--ml-ease), background-color var(--ml-fast) var(--ml-ease), border-color var(--ml-fast) var(--ml-ease), color var(--ml-fast) var(--ml-ease);
   }
-  /* Zero specificity so utilities such as px-0 or rounded-full still win. */
-  :where(.btn) { padding: 12px 20px; border-radius: var(--ml-radius); }
   .btn:active { transform: translateY(1px); }
   .btn-primary { background: var(--ml-accent); color: var(--ml-on-accent); }
   .btn-primary:hover { background: var(--ml-accent-hover); box-shadow: 0 10px 24px -14px rgba(0,159,145,0.7); }
@@ -1107,7 +1111,7 @@ html[dir="rtl"] .ml-sectors a:hover svg { transform: rotate(180deg) translateX(3
 .dark .starter-category:focus-visible { outline-color: #EAF7F4; }
 .dark .path-card-eyebrow { color: var(--path-accent); }
 
-@media (max-width: 639px), (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .reveal.is-pending:not(:focus-within) { opacity: 1; transform: none; transition: none; will-change: auto; }
 }
 
@@ -1162,6 +1166,7 @@ html[dir="rtl"] .ml-step-desc { line-height: 1.8; }
 .ml-flow-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--ml-line); }
 .ml-flow-nav .btn { min-height: 48px; }
 .ml-flow-nav .btn:last-child { min-width: 9rem; }
+.ml-flow-back { min-width: 6.5rem; padding-inline: 16px; }
 @media (max-width: 479px) {
   .ml-flow-nav { display: grid; grid-template-columns: auto 1fr; }
   .ml-flow-nav .btn:last-child { min-width: 0; }
@@ -1288,3 +1293,54 @@ html.ml-hero-intro .ml-signature-offers > .ml-offer:nth-child(3) { animation-del
 html.ml-hero-intro .ml-signature-offers > .ml-offer.is-selected { animation: ml-offer-in var(--ml-slow) var(--ml-ease) 200ms both, ml-offer-select var(--ml-slow) var(--ml-ease) 1100ms both; }
 html.ml-hero-intro .ml-signature-offers > .ml-offer.is-selected .ml-offer-selected { animation: ml-fade-in var(--ml-base) var(--ml-ease) 1250ms both; }
 html.ml-hero-intro .ml-signature-offers > .ml-offer:not(.is-selected) .ml-vetted { animation: ml-fade-in var(--ml-base) var(--ml-ease) 800ms both; }
+
+/* ---------- Scroll reveals (components/RevealGroup.jsx), phones and desktop ---------- */
+[data-reveal].is-armed,
+[data-reveal-stagger].is-armed > * { transition: opacity var(--ml-slow) var(--ml-ease), transform var(--ml-slow) var(--ml-ease); }
+[data-reveal].is-pending,
+[data-reveal-stagger].is-pending > * { opacity: 0; transform: translateY(12px); }
+[data-reveal-stagger].is-armed > * { transition-delay: calc(var(--i, 0) * 70ms); }
+[data-reveal-stagger] > :nth-child(2) { --i: 1; }
+[data-reveal-stagger] > :nth-child(3) { --i: 2; }
+[data-reveal-stagger] > :nth-child(4) { --i: 3; }
+[data-reveal-stagger] > :nth-child(5) { --i: 4; }
+[data-reveal-stagger] > :nth-child(6) { --i: 5; }
+[data-reveal-stagger] > :nth-child(n+7) { --i: 6; }
+
+/* ---------- Touch: the press is the hover. Same colours desktop shows on hover. ---------- */
+html { -webkit-tap-highlight-color: transparent; }
+:where(a, button, [role="button"], label, summary) { touch-action: manipulation; }
+@media (hover: none) {
+  .btn-primary:active { background: var(--ml-accent-hover); }
+  .btn-secondary:active,
+  .btn-outline:active { border-color: var(--ml-heading); background-color: var(--ml-ground); }
+  .btn:active .btn-arrow { transform: translateX(3px); }
+  html[dir="rtl"] .btn:active .btn-arrow { transform: translateX(-3px); }
+  .ml-choice:active,
+  .ml-chip:active,
+  .ml-segment button:active { border-color: var(--ml-accent); background: var(--ml-signature-bg); }
+  .ml-sectors a:active { color: var(--ml-accent); background: var(--ml-signature-bg); }
+  .ml-sectors a:active svg { color: var(--ml-accent); transform: translateX(3px); }
+  html[dir="rtl"] .ml-sectors a:active svg { transform: rotate(180deg) translateX(3px); }
+  .ml-review-edit:active,
+  .ml-whatsapp:active { opacity: 0.7; }
+  .path-card:active,
+  .interactive-card:active { border-color: var(--ml-accent); }
+  .mobile-bottom-nav a:active { background: var(--ml-ground); }
+  .ml-offer:active { border-color: var(--ml-accent); }
+  /* Hover colours would otherwise stick after a tap. */
+  .ml-sectors a:hover:not(:active) { color: var(--ml-heading); }
+  .ml-sectors a:hover:not(:active) svg { color: var(--ml-muted); transform: none; }
+  html[dir="rtl"] .ml-sectors a:hover:not(:active) svg { transform: rotate(180deg); }
+}
+.ml-sectors a { transition: color var(--ml-fast) var(--ml-ease), background-color var(--ml-fast) var(--ml-ease); }
+
+/* ---------- Page enter: after the first in-app navigation, new pages settle in. ---------- */
+@keyframes ml-page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+html.ml-routed #main-content > :not(.ml-sticky-cta) { animation: ml-page-in var(--ml-base) var(--ml-ease) both; }
+
+/* ---------- Installed app (standalone) ---------- */
+@media (display-mode: standalone) {
+  body { overscroll-behavior-y: none; }
+  .site-header, .mobile-bottom-nav { -webkit-user-select: none; user-select: none; }
+}

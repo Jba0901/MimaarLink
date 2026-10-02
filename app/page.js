@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import AppShell from '@/components/AppShell';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
+import RevealGroup from '@/components/RevealGroup';
 import { useLang } from '@/lib/LangContext';
 import { trackMeta } from '@/lib/marketingAttribution';
 import { ArrowRight, Check, FileCheck2, ShieldCheck, Lock, MessageCircle } from 'lucide-react';
@@ -192,7 +193,7 @@ export default function HomePage() {
 
   return (
     <AppShell wide bleed flushFooter>
-      <div className="ml-home">
+      <RevealGroup className="ml-home">
         {/* 1. Hero */}
         <section className="ml-hero ml-wrap" aria-labelledby="hero-title">
           <div className="ml-hero-copy">
@@ -219,8 +220,8 @@ export default function HomePage() {
         {/* 2. How it works */}
         <section className="ml-section ml-wrap" aria-labelledby="how-title">
           <p className="eyebrow">{copy.howLabel}</p>
-          <h2 id="how-title">{copy.howTitle}</h2>
-          <ol className="ml-steps">
+          <h2 id="how-title" data-reveal>{copy.howTitle}</h2>
+          <ol className="ml-steps" data-reveal-stagger>
             {copy.steps.map(([title, desc], i) => (
               <li key={title}>
                 <span className="ml-step-num" aria-hidden="true">{i + 1}</span>
@@ -235,10 +236,10 @@ export default function HomePage() {
         <section className="ml-band" aria-labelledby="compare-title">
           <div className="ml-section ml-wrap">
             <p className="eyebrow">{copy.compareLabel}</p>
-            <h2 id="compare-title">{copy.compareTitle}</h2>
+            <h2 id="compare-title" data-reveal>{copy.compareTitle}</h2>
             <p className="ml-sub">{copy.compareSub}</p>
             <p className="ml-example-note"><span>{copy.example}</span>{copy.compareNote}</p>
-            <div className="ml-compare">
+            <div className="ml-compare" data-reveal-stagger>
               {copy.offers.map((offer, i) => <OfferCard key={i} copy={copy} offer={offer} index={i} />)}
             </div>
           </div>
@@ -248,14 +249,14 @@ export default function HomePage() {
         <section className="ml-section ml-wrap ml-split" aria-labelledby="providers-title">
           <div>
             <p className="eyebrow">{copy.providersLabel}</p>
-            <h2 id="providers-title">{copy.providersTitle}</h2>
+            <h2 id="providers-title" data-reveal>{copy.providersTitle}</h2>
             <p className="ml-sub">{copy.providersSub}</p>
             <div className="ml-actions">
               <Link href="/contractor" className="btn btn-secondary" onClick={trackPath('contractor')}>{copy.applyContractor}{arrow}</Link>
               <Link href="/contractor?type=consultant" className="btn btn-secondary" onClick={trackPath('consultant')}>{copy.applyConsultant}{arrow}</Link>
             </div>
           </div>
-          <ul className="ml-lines">
+          <ul className="ml-lines" data-reveal-stagger>
             {copy.providerPoints.map(([title, desc]) => <li key={title}><h3>{title}</h3><p>{desc}</p></li>)}
           </ul>
         </section>
@@ -263,8 +264,8 @@ export default function HomePage() {
         {/* 5. Sectors */}
         <section className="ml-section ml-wrap ml-sectors-section" aria-labelledby="sectors-title">
           <p className="eyebrow">{copy.sectorsLabel}</p>
-          <h2 id="sectors-title">{copy.sectorsTitle}</h2>
-          <ul className="ml-sectors">
+          <h2 id="sectors-title" data-reveal>{copy.sectorsTitle}</h2>
+          <ul className="ml-sectors" data-reveal-stagger>
             {copy.sectors.map((sector, i) => {
               const category = SECTOR_CATEGORY[i];
               return (
@@ -283,8 +284,8 @@ export default function HomePage() {
         <section className="ml-band" aria-labelledby="trust-title">
           <div className="ml-section ml-wrap">
             <p className="eyebrow">{copy.trustLabel}</p>
-            <h2 id="trust-title">{copy.trustTitle}</h2>
-            <ul className="ml-trust">
+            <h2 id="trust-title" data-reveal>{copy.trustTitle}</h2>
+            <ul className="ml-trust" data-reveal-stagger>
               {copy.trust.map(([title, desc], i) => {
                 const Icon = TRUST_ICONS[i];
                 return <li key={title}><Icon size={20} strokeWidth={1.75} aria-hidden="true" /><h3>{title}</h3><p>{desc}</p></li>;
@@ -296,7 +297,7 @@ export default function HomePage() {
 
         {/* 7. Close */}
         <section className="ml-close" aria-labelledby="close-title" ref={closeRef}>
-          <div className="ml-wrap ml-close-inner">
+          <div className="ml-wrap ml-close-inner" data-reveal>
             <div>
               <h2 id="close-title">{copy.closeTitle}</h2>
               <p>{copy.closeSub}</p>
@@ -307,7 +308,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-      </div>
+      </RevealGroup>
       <StickyPostCta label={copy.primary} watchRefs={watchRefs} />
     </AppShell>
   );

@@ -93,7 +93,11 @@ export function StepNav({ onBack, primaryLabel, optionalEmpty = false, returnToR
   const label = primaryLabel || (returnToReview ? copy.backToReview : optionalEmpty ? copy.skip : copy.continue);
   return (
     <div className="ml-flow-nav">
-      {onBack ? <button type="button" className="btn btn-secondary" onClick={onBack} disabled={busy}>{copy.back}</button> : <span />}
+      {onBack ? (
+        <button type="button" className="btn btn-secondary ml-flow-back" onClick={onBack} disabled={busy}>
+          <ArrowRight className="h-4 w-4 rotate-180 rtl:rotate-0" aria-hidden="true" />{copy.back}
+        </button>
+      ) : <span />}
       <button
         type="submit"
         className={`btn ${optionalEmpty && !returnToReview && !primaryLabel ? 'btn-secondary' : 'btn-primary'}`}

@@ -18,6 +18,18 @@ export const metadata = {
     shortcut: [{ url: '/brand/logo/mimaarlink-icon-512.png?v=2', type: 'image/png' }],
     apple: [{ url: '/brand/logo/mimaarlink-icon-180.png?v=2', type: 'image/png', sizes: '180x180' }],
   },
+  appleWebApp: { capable: true, title: 'MimaarLink', statusBarStyle: 'default' },
+  formatDetection: { telephone: false },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#FFFFFF' },
+    { media: '(prefers-color-scheme: dark)', color: '#0D1B2A' },
+  ],
 };
 
 export default function RootLayout({ children }) {
@@ -25,7 +37,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang={initialLang} dir={initialLang === 'ar' ? 'rtl' : 'ltr'} className={fontVariables} suppressHydrationWarning>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <script
           dangerouslySetInnerHTML={{
             __html: "try{if(localStorage.getItem('mlTheme')==='dark')document.documentElement.classList.add('dark')}catch(e){}"

@@ -19,6 +19,8 @@ export default function RouteProgress({ routeKey }) {
       if (url.origin !== window.location.origin) return;
       if (url.pathname === window.location.pathname && url.search === window.location.search) return;
       setState('loading');
+      // From now on, pages that mount get a short settle-in (see .ml-routed in globals.css).
+      document.documentElement.classList.add('ml-routed');
     };
     // Capture phase: Next.js links cancel the default before bubbling listeners run.
     document.addEventListener('click', onClick, true);
