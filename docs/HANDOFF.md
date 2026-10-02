@@ -4,6 +4,26 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #5](https://github.com/Jba0901/MimaarLink/pull/5) · provider form cleanup from Jassim's review
+
+**What changed** (one commit each)
+- Arabic placeholders sat on the left in free-text fields (budget, size, start, location). Cause: `dir="auto"` makes an empty field left to right. Those fields now use `unicode-bidi: plaintext` (`app/globals.css`) with no `dir`, so placeholders follow the page and typed numbers still read in order. Arabic "Skip" spelling fixed (تخطَّ).
+- Contractor/consultant application: the "Where do you work?" step is gone (most work is in Doha; `DECISIONS.md`). Contractor is 7 steps, consultant 8. No API or database change: `serviceAreas` is simply not sent and the API stores `''`.
+- Nothing preselected: `/contractor` without `?type` starts with no type chosen (neutral eyebrow "Join as a contractor or consultant"), and the consultant classification starts empty. A consultant who continues without choosing is still sent as `'unknown'`.
+- Provider copy no longer promises matching by area (aside box, for-contractors page, homepage provider point, after-apply steps), EN and AR.
+
+**Behaving differently**
+- An unknown `?type=` value now shows the type question instead of meaning contractor.
+- Owners keep the "Where is the project?" step (Jassim chose to keep it).
+
+**Waiting on Jassim**
+- Optional: header/footer links labelled "Contractor" go to `/contractor` and show the type question. They could point to `/contractor?type=contractor` to skip it. Not changed.
+
+**Verified**
+- `npm run build` and `node --test tests/*.test.mjs` (46/46) pass at each commit. Chromium: Arabic budget and size steps (empty and typed) at 375px; full consultant walk-through in English and Arabic at 1280px (nothing preselected, review has no area row).
+
+---
+
 ## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · working rules from Jassim
 
 **What changed**
