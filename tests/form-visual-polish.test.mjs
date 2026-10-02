@@ -79,3 +79,12 @@ test('provider form preselects nothing: type and classification start empty', ()
   // The API still receives 'unknown' when a consultant does not pick a classification.
   assert.match(providerForm, /consultantGrade: isConsultant \? \(data\.consultantGrade \|\| 'unknown'\) : ''/);
 });
+
+test('provider copy no longer promises matching by area (no area step)', async () => {
+  const home = await read('../app/page.js');
+  for (const [name, source] of [['i18n', copy], ['home', home], ['provider form', providerForm]]) {
+    assert.doesNotMatch(source, /and service area|trade and area|size and area|services and area|ومنطقتك|ومناطق عملك/, name);
+  }
+  assert.match(copy, /contL_s3d: 'We send opportunities that fit your services and project size\.'/);
+  assert.match(copy, /contL_s3d: 'نرسل لك فرصًا تناسب خدماتك وحجم مشاريعك\.'/);
+});

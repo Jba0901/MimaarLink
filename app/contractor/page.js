@@ -49,7 +49,7 @@ const COPY = {
     none: 'None',
     successTitle: 'Application received.',
     nextTitle: 'What happens after you apply',
-    next: ['We verify your CR number and review your services.', 'We may message you on WhatsApp to confirm details.', 'Once approved, you receive projects that match your trade and area.', 'Your tracking link shows your application status at any time.'],
+    next: ['We verify your CR number and review your services.', 'We may message you on WhatsApp to confirm details.', 'Once approved, you receive projects that match your services.', 'Your tracking link shows your application status at any time.'],
     whatsapp: 'Questions? Message us on WhatsApp',
   },
   ar: {
@@ -71,7 +71,7 @@ const COPY = {
     none: 'لا يوجد',
     successTitle: 'تم استلام طلبك.',
     nextTitle: 'ماذا يحدث بعد التقديم',
-    next: ['نتحقق من رقم السجل التجاري ونراجع خدماتك.', 'قد نراسلك عبر واتساب لتأكيد بعض التفاصيل.', 'بعد الاعتماد، تستلم مشاريع تناسب تخصصك ومنطقتك.', 'يعرض رابط المتابعة حالة طلبك في أي وقت.'],
+    next: ['نتحقق من رقم السجل التجاري ونراجع خدماتك.', 'قد نراسلك عبر واتساب لتأكيد بعض التفاصيل.', 'بعد الاعتماد، تستلم مشاريع تناسب خدماتك.', 'يعرض رابط المتابعة حالة طلبك في أي وقت.'],
     whatsapp: 'لديك سؤال؟ راسلنا على واتساب',
   },
 };
