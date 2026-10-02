@@ -82,6 +82,7 @@ Growth gates (adapted from the strategy file; "paid" becomes "successful" while 
 |---|---|
 | Agent instructions, product rules, code map | `AGENTS.md` |
 | Brand and website spec | `brand/BRAND.md` |
+| Decisions log (pricing, names, business) | `DECISIONS.md` |
 | How agents help run the business | `docs/operating-system.md` |
 | Running a project by hand (intake, matching, bids, scripts) | `docs/operations.md` |
 | Long-term strategy, data, privacy | `docs/strategy/10-year-moat.md` |

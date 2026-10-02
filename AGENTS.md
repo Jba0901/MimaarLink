@@ -22,6 +22,16 @@ We cover a wide range of project activities, because the market demands it:
 
 `mimaarlink-design-system.md`, `mimaarlink-brand-theme-draft.md`, `mimaarlink-worker-design-brief.md` and `mimaarlink-mobile-web-app-design-roadmap.md` predate v1.4. Their positioning and channel guidance is still useful; their palette, fonts and logo rules are superseded.
 
+## Recording decisions
+
+When Jassim decides something real (a feature, price, name, design choice or rule), it must be written down so other sessions and agents can build on it. Chat alone is not a record.
+
+- Brand and design → `brand/BRAND.md`
+- Product rules → `AGENTS.md` (Product rules)
+- Everything else (pricing, names, business, operations) → `DECISIONS.md`
+
+If you can edit the repo, add it yourself in the same change and mention it in the handoff. If you can't (a chat-only session), tell Jassim which file it belongs in and give the exact line to paste. One dated line per decision, short and factual. Ideas, options and "maybe later" are not decisions; don't record them.
+
 ## Product rules
 
 - MimaarLink is a serious Qatar construction and project marketplace: one request, three to five offers, the owner chooses.

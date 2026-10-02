@@ -4,6 +4,20 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · decisions log
+
+**What changed**
+- New "Recording decisions" section in `AGENTS.md`: when Jassim decides something real, it goes in `brand/BRAND.md` (brand/design), `AGENTS.md` (product rules) or `DECISIONS.md` (everything else). Agents that can edit the repo write it themselves; chat-only sessions tell Jassim the file and the exact line.
+- New `DECISIONS.md` at the root, seeded with decisions already made (free for now, open intake, CR number shown). Linked from the `COMPANY-BRAIN.md` index.
+
+**Waiting on Jassim**
+- Nothing new.
+
+**Verified**
+- Doc-only change; no code touched. Build and tests run before commit.
+
+---
+
 ## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · business docs cleanup
 
 **What changed**
