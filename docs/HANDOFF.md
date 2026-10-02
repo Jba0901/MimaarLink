@@ -4,6 +4,25 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · menu drawer cleanup
+
+**What changed**
+- Menu drawer and contact icons (`components/AppShell.jsx`), from Jassim's review of night mode:
+  - No ↗ arrows: removed from the three path cards (internal links) and from the WhatsApp/Instagram badges in the drawer and footer.
+  - Night mode is flat: the drawer cards no longer use the `path-card` gradient and heavy shadow; they are card surfaces with a 1px line.
+  - 6px corners on icon tiles, quick links, appearance row, contact buttons and close button (no more rounded-2xl / circles).
+  - No extra-bold: "Choose your path" is serif 500; labels and card titles are semibold.
+  - "Toggle theme" now says "Switch to light" / "Switch to night" (AR: التبديل إلى الوضع الفاتح / الليلي).
+- `.path-card` in `globals.css` is unchanged and still used on the start-here page.
+
+**Waiting on Jassim**
+- Nothing.
+
+**Verified**
+- Build and tests (47/47). Screenshots at 390px: EN night, AR night, EN light.
+
+---
+
 ## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #5](https://github.com/Jba0901/MimaarLink/pull/5) · provider form cleanup from Jassim's review
 
 **What changed** (one commit each)

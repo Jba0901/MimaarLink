@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useLang } from '@/lib/LangContext';
 import {
-  ArrowUpRight,
   Building2,
   CheckCircle2,
   ClipboardList,
@@ -240,7 +239,8 @@ function getShellCopy(lang) {
       theme: 'المظهر',
       lightMode: 'الوضع الفاتح',
       darkMode: 'الوضع الليلي',
-      themeHint: 'تبديل المظهر',
+      switchToLight: 'التبديل إلى الوضع الفاتح',
+      switchToNight: 'التبديل إلى الوضع الليلي',
       start: 'ابدأ هنا',
       startDesc: 'اختر هل لديك مشروع أو تريد الانضمام كمقدم خدمة.',
       homeDesc: 'الصفحة الرئيسية والخدمات.',
@@ -273,7 +273,8 @@ function getShellCopy(lang) {
     theme: 'Theme',
     lightMode: 'Light mode',
     darkMode: 'Night mode',
-    themeHint: 'Toggle theme',
+    switchToLight: 'Switch to light',
+    switchToNight: 'Switch to night',
     start: 'Start here',
     startDesc: 'Choose whether you have a project or want to join as a provider.',
     homeDesc: 'Homepage and services.',
@@ -387,7 +388,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
               ref={closeButtonRef}
               type="button"
               onClick={onClose}
-              className="btn btn-outline h-11 w-11 shrink-0 px-0 rounded-full"
+              className="btn btn-outline h-11 w-11 shrink-0 px-0"
               aria-label={copy.closeMenu}
             >
               <X className="h-[18px] w-[18px]" />
@@ -395,8 +396,8 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
           </div>
 
           <section className="mt-6">
-            <p className="text-[12px] font-extrabold text-teal">{t('startEyebrow')}</p>
-            <h2 className="mt-1 text-[25px] font-extrabold leading-tight text-navy">{copy.quickTitle}</h2>
+            <p className="text-[12px] font-semibold text-teal">{t('startEyebrow')}</p>
+            <h2 className="mt-1 text-[25px] leading-tight text-navy">{copy.quickTitle}</h2>
             <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">{copy.quickSubtitle}</p>
           </section>
 
@@ -411,7 +412,7 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
           </nav>
 
           <div className="mt-6">
-            <p className="mb-2.5 text-[12px] font-extrabold text-muted-foreground">{copy.moreLinks}</p>
+            <p className="mb-2.5 text-[12px] font-semibold text-muted-foreground">{copy.moreLinks}</p>
             <div className="grid grid-cols-2 gap-2.5 max-[263px]:grid-cols-1">
               {secondaryItems.map((item) => (
                 <SecondaryDrawerLink key={item.href} item={item} active={isActive(item.href)} />
@@ -423,18 +424,18 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
             <button
               type="button"
               onClick={onThemeToggle}
-              className="flex w-full min-w-0 items-center justify-between gap-2.5 rounded-2xl px-2.5 py-2 text-start transition hover:bg-white dark:hover:bg-white/[0.06]"
+              className="flex w-full min-w-0 items-center justify-between gap-2.5 rounded-[6px] px-2.5 py-2 text-start transition hover:bg-white dark:hover:bg-white/[0.06]"
             >
               <span className="flex min-w-0 items-center gap-2.5">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/20 dark:text-[#009F91]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[6px] bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/20 dark:text-[#009F91]">
                   {isDark ? <Sun className="h-[17px] w-[17px]" /> : <Moon className="h-[17px] w-[17px]" />}
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-[12px] font-extrabold text-navy">{copy.appearance}</span>
+                  <span className="block text-[12px] font-semibold text-navy">{copy.appearance}</span>
                   <span className="block text-[12px] text-muted-foreground">{theme === 'dark' ? copy.darkMode : copy.lightMode}</span>
                 </span>
               </span>
-              <span className="hidden shrink-0 whitespace-nowrap text-[12px] font-extrabold text-teal min-[360px]:inline">{copy.themeHint}</span>
+              <span className="hidden shrink-0 whitespace-nowrap text-[12px] font-semibold text-teal min-[360px]:inline">{isDark ? copy.switchToLight : copy.switchToNight}</span>
             </button>
 
             <div className="mt-2.5 grid grid-cols-2 gap-2 min-[264px]:grid-cols-4 min-[264px]:gap-2.5">
@@ -451,7 +452,6 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
 }
 
 function ActionTile({ item, active }) {
-  const { dir } = useLang();
   const Icon = item.icon;
   const accents = {
     teal: {
@@ -473,20 +473,19 @@ function ActionTile({ item, active }) {
       href={item.href}
       data-tone={item.accent}
       aria-current={active ? 'page' : undefined}
-      className={`group path-card flex items-center gap-3 rounded-[6px] border px-3.5 py-3 transition-colors duration-fast ease-brand tap-highlight max-[263px]:gap-2 max-[263px]:px-2.5 ${
+      className={`group flex items-center gap-3 rounded-[6px] border px-3.5 py-3 transition-colors duration-fast ease-brand tap-highlight max-[263px]:gap-2 max-[263px]:px-2.5 ${
         active
           ? `${accent.active} shadow-soft`
-          : 'hover:border-[#009F91]/45'
+          : 'border-border bg-card hover:border-[#009F91]/45'
       }`}
     >
-      <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl max-[263px]:h-10 max-[263px]:w-10 ${accent.icon}`}>
+      <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[6px] max-[263px]:h-10 max-[263px]:w-10 ${accent.icon}`}>
         <Icon className="h-5 w-5" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-[16px] font-extrabold text-navy leading-snug">{item.label}</span>
+        <span className="block text-[16px] font-semibold text-navy leading-snug">{item.label}</span>
         <span className="mt-0.5 block text-[12px] font-semibold text-muted-foreground">{item.helper}</span>
       </span>
-      <ArrowUpRight className={`h-[18px] w-[18px] shrink-0 text-muted-foreground transition-transform max-[263px]:hidden ${dir === 'rtl' ? '-scale-x-100 group-hover:-translate-x-0.5' : 'group-hover:translate-x-0.5'}`} />
     </Link>
   );
 }
@@ -497,10 +496,10 @@ function SecondaryDrawerLink({ item, active }) {
     <Link
       href={item.href}
       aria-current={active ? 'page' : undefined}
-      className={`flex min-h-11 items-center gap-2 rounded-2xl border px-3 py-2.5 text-[12px] font-extrabold leading-tight transition-colors duration-fast ease-brand tap-highlight max-[359px]:gap-1 max-[359px]:px-2 ${
+      className={`flex min-h-11 items-center gap-2 rounded-[6px] border px-3 py-2.5 text-[12px] font-semibold leading-tight transition-colors duration-fast ease-brand tap-highlight max-[359px]:gap-1 max-[359px]:px-2 ${
         active
           ? 'border-[#009F91]/35 bg-[#EAF7F4]/55 text-navy dark:bg-[#009F91]/15'
-          : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#009F91]/35 dark:bg-[#0D1B2A]/70'
+          : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#009F91]/35 dark:bg-transparent'
       }`}
     >
       <Icon className="h-4 w-4 shrink-0" />
@@ -609,7 +608,7 @@ function SiteFooter({ flush = false, reserveMobileNav = false }) {
 
 function FooterIcon({ href, label, icon: Icon, external = false, variant = 'footer' }) {
   const classes = variant === 'surface'
-    ? 'border-border bg-white text-navy shadow-soft hover:border-[#009F91]/45 hover:bg-[#EAF7F4]/45 focus-visible:ring-offset-background dark:bg-[#0D1B2A] dark:text-white/85 dark:hover:text-[#009F91]'
+    ? 'border-border bg-white text-navy hover:border-[#009F91]/45 hover:bg-[#EAF7F4]/45 focus-visible:ring-offset-background dark:bg-transparent dark:text-white/85 dark:hover:text-[#0AC7CE]'
     : 'border-white/15 bg-white/5 text-white/80 hover:border-[#009F91]/50 hover:text-[#009F91] hover:bg-white/10 focus-visible:ring-offset-[#0D1B2A]';
   return (
     <a
@@ -618,10 +617,9 @@ function FooterIcon({ href, label, icon: Icon, external = false, variant = 'foot
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className={`cta-press tap-highlight relative inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-fast ease-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/50 focus-visible:ring-offset-2 ${classes}`}
+      className={`cta-press tap-highlight relative inline-flex h-11 w-11 items-center justify-center rounded-[6px] border transition-colors duration-fast ease-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/50 focus-visible:ring-offset-2 ${classes}`}
     >
       <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
-      {external && <ArrowUpRight className="absolute end-1 top-1 h-2.5 w-2.5 text-[#009F91]" aria-hidden="true" />}
     </a>
   );
 }
