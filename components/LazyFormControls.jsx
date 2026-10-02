@@ -14,7 +14,7 @@ export function LazySuccessPanel(props) {
     <Suspense
       fallback={(
         <div className="mx-auto w-full max-w-xl pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 sm:py-8">
-          <div className="min-h-[20rem] animate-pulse rounded-[24px] border border-border bg-card shadow-card" />
+          <div className="min-h-[20rem] animate-pulse rounded-[6px] border border-border bg-card shadow-card" />
         </div>
       )}
     >
@@ -28,7 +28,7 @@ export function LazyFileUploadDropzone(props) {
     <Suspense
       fallback={(
         <div aria-hidden="true" className="flex min-h-[92px] min-w-0 items-center gap-3 rounded-2xl border-2 border-dashed border-border bg-card px-4 py-3 text-start shadow-soft">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91]">
             <Upload className="h-5 w-5" />
           </span>
           <span className="min-w-0 flex-1">

@@ -4,22 +4,22 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold leading-tight ring-offset-background transition-colors focus:outline-none focus:ring-2 focus:ring-[#00B59E]/35 focus:ring-offset-2",
+  "inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold leading-tight ring-offset-background transition-colors focus:outline-none focus:ring-2 focus:ring-[#009F91]/35 focus:ring-offset-2",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-[#152B54] text-white hover:bg-[#152B54]/90 dark:border-[#00B59E]/25 dark:bg-[#142A44] dark:text-[#F8FAFC] dark:hover:bg-[#142A44]/90",
+          "border-transparent bg-[#152B54] text-white hover:bg-[#152B54]/90 dark:border-[#009F91]/25 dark:bg-[#142A44] dark:text-[#F8FAFC] dark:hover:bg-[#142A44]/90",
         success:
-          "border-transparent bg-[#00B59E] text-[#152B54] hover:bg-[#00B59E]/90 dark:border-[#00B59E]/40 dark:bg-[#00B59E]/15 dark:text-[#00B59E] dark:hover:bg-[#00B59E]/20",
+          "border-transparent bg-[#009F91] text-[#152B54] hover:bg-[#009F91]/90 dark:border-[#009F91]/40 dark:bg-[#009F91]/15 dark:text-[#009F91] dark:hover:bg-[#009F91]/20",
         warning:
-          "border-transparent bg-[#FFB638] text-[#152B54] hover:bg-[#FFB638]/90 dark:border-[#FFB638]/45 dark:bg-[#FFB638]/15 dark:text-[#FFB638] dark:hover:bg-[#FFB638]/20",
+          "border-transparent bg-[#B5462B] text-white hover:bg-[#B5462B]/90 dark:border-[#F08A6C]/45 dark:bg-[#F08A6C]/15 dark:text-[#F08A6C] dark:hover:bg-[#B5462B]/20",
         info:
-          "border-transparent bg-[#D0F2EE] text-[#152B54] hover:bg-[#D0F2EE]/80 dark:border-[#00B59E]/35 dark:bg-[#00B59E]/15 dark:text-[#00B59E] dark:hover:bg-[#00B59E]/20",
+          "border-transparent bg-[#EAF7F4] text-[#152B54] hover:bg-[#EAF7F4]/80 dark:border-[#009F91]/35 dark:bg-[#009F91]/15 dark:text-[#009F91] dark:hover:bg-[#009F91]/20",
         secondary:
           "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
         destructive:
-          "border-transparent bg-[#EF4444] text-white hover:bg-[#EF4444]/90 dark:border-[#EF4444]/45 dark:bg-[#EF4444]/20 dark:text-[#F8FAFC] dark:hover:bg-[#EF4444]/25",
+          "border-transparent bg-[#B5462B] text-white hover:bg-[#B5462B]/90 dark:border-[#B5462B]/45 dark:bg-[#B5462B]/20 dark:text-[#F8FAFC] dark:hover:bg-[#B5462B]/25",
         outline: "text-foreground",
       },
     },

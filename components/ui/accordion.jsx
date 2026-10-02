@@ -12,7 +12,7 @@ const AccordionItem = React.forwardRef(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
     className={cn(
-      "overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-[border-color,box-shadow] data-[state=open]:border-[#00B59E]/40",
+      "overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-[border-color,box-shadow] data-[state=open]:border-[#009F91]/40",
       className
     )}
     {...props} />
@@ -24,7 +24,7 @@ const AccordionTrigger = React.forwardRef(({ className, children, ...props }, re
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "group tap-highlight flex min-h-[68px] flex-1 items-center justify-between gap-3 px-5 py-4 text-start text-[14.5px] font-bold leading-snug text-navy transition-colors hover:bg-secondary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#00B59E]/35 sm:px-6 sm:py-5 [&[data-state=open]_.accordion-chevron]:rotate-180 [&[data-state=open]_.accordion-icon]:bg-[#00B59E] [&[data-state=open]_.accordion-icon]:text-[#152B54]",
+        "group tap-highlight flex min-h-[68px] flex-1 items-center justify-between gap-3 px-5 py-4 text-start text-[14.5px] font-bold leading-snug text-navy transition-colors hover:bg-secondary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#009F91]/35 sm:px-6 sm:py-5 [&[data-state=open]_.accordion-chevron]:rotate-180 [&[data-state=open]_.accordion-icon]:bg-[#009F91] [&[data-state=open]_.accordion-icon]:text-[#152B54]",
         className
       )}
       {...props}>

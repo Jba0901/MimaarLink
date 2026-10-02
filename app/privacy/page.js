@@ -32,10 +32,10 @@ export default function PrivacyPage() {
           {ar ? 'يوضح هذا الإشعار طريقة تعامل معمار لينك مع بيانات النماذج وقياس الحملات الإعلانية.' : 'This notice explains how MimaarLink handles form data and advertising measurement.'}
         </p>
 
-        <div className="mt-6 overflow-hidden rounded-[20px] border border-border bg-card shadow-soft sm:rounded-[24px]">
+        <div className="mt-6 overflow-hidden rounded-[6px] border border-border bg-card shadow-soft sm:rounded-[6px]">
           {sections.map(([title, body], index) => (
             <section key={title} className={`grid grid-cols-[40px_minmax(0,1fr)] items-start gap-x-3 gap-y-2.5 p-3.5 min-[390px]:gap-x-3.5 min-[390px]:p-4 sm:p-6 ${index < sections.length - 1 ? 'border-b border-border' : ''}`}>
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[12px] font-extrabold text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] text-[12px] font-extrabold text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91]" aria-hidden="true">
                 {index + 1}
               </span>
               <h2 className="min-w-0 self-center break-words text-[15.5px] font-extrabold leading-snug text-navy sm:text-base">{title}</h2>
@@ -49,15 +49,15 @@ export default function PrivacyPage() {
         </div>
 
         <a
-          className="group mt-5 flex min-h-[64px] items-center gap-3 rounded-[18px] border border-border bg-secondary/50 px-3.5 py-2.5 shadow-soft transition-colors hover:border-[#00B59E]/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D]"
+          className="group mt-5 flex min-h-[64px] items-center gap-3 rounded-[6px] border border-border bg-secondary/50 px-3.5 py-2.5 shadow-soft transition-colors hover:border-[#009F91]/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D]"
           href="mailto:MimaarLink@gmail.com"
         >
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91]" aria-hidden="true">
             <Mail className="h-[18px] w-[18px]" />
           </span>
           <span className="min-w-0 flex-1">
             <span className="block text-[12px] font-semibold text-muted-foreground">{ar ? 'للتواصل' : 'Contact'}</span>
-            <span className="mt-0.5 block break-all text-[13.5px] font-extrabold text-navy transition-colors group-hover:text-[#00B59E]">
+            <span className="mt-0.5 block break-all text-[13.5px] font-extrabold text-navy transition-colors group-hover:text-[#009F91]">
               <bdi dir="ltr">MimaarLink@gmail.com</bdi>
             </span>
           </span>

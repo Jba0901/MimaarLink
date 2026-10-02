@@ -17,17 +17,23 @@ test('the project owner is the only primary path and all destinations stay intac
   assert.equal((card.match(/data-primary=\{primary \? 'true' : undefined\}/g) || []).length, 2);
 });
 
-test('category affordance follows writing direction without replacing real links', () => {
-  assert.match(css, /\.studio-category > svg:last-child \{[^}]*display: block;[^}]*inset-inline-end: 12px/);
-  assert.ok(home.includes('href={`/post-project?category=${category}`}'));
-  assert.match(home, /dir === 'rtl' \? 'rotate-180'/);
+test('sector arrows follow writing direction without replacing real links', () => {
+  assert.ok(home.includes("href={category ? `/post-project?category=${category}` : '/post-project'}"));
+  assert.match(home, /<ArrowRight className="h-4 w-4 shrink-0 rtl:rotate-180" aria-hidden="true" \/>/);
+  assert.match(css, /html\[dir="rtl"\] \.ml-sectors a:hover svg \{ transform: rotate\(180deg\) translateX\(3px\); \}/);
 });
 
-test('FAQ open-state styling keeps the existing accessible accordion behavior', () => {
-  assert.match(home, /<Accordion type="single" collapsible/);
-  assert.match(css, /\.studio-accordion > div\[data-state="open"\]/);
-  assert.match(css, /\.studio-accordion \[role="region"\] \{ margin-inline: 16px/);
-  assert.match(css, /\.studio-accordion button\[data-state="open"\] \.accordion-chevron \{ color: #152B54/);
+test('homepage example offers are always labelled as illustrative, never real figures', () => {
+  assert.match(home, /compareNote: 'Example\. Firm names and figures are illustrative, not real offers\.'/);
+  assert.match(home, /compareNote: 'مثال توضيحي\. الأسماء والأرقام افتراضية وليست عروضًا حقيقية\.'/);
+  assert.match(home, /<aside className="ml-signature ml-cut" aria-label=\{copy\.example\}>/);
+});
+
+test('touch devices get the same feedback as desktop hover, and reveals run on phones', () => {
+  assert.match(css, /@media \(hover: none\) \{[\s\S]*?\.btn-primary:active \{ background: var\(--ml-accent-hover\); \}/);
+  assert.match(css, /\.ml-choice:active,\s+\.ml-chip:active/);
+  assert.doesNotMatch(css, /@media \(max-width: 639px\), \(prefers-reduced-motion: reduce\) \{\s+\.reveal\.is-pending/);
+  assert.match(home, /<RevealGroup className="ml-home">/);
 });
 
 test('entry-card feedback is scoped and does not add motion or a new tracker', () => {

@@ -8,6 +8,8 @@ const postcss = require('postcss');
 const config = require('../tailwind.config.js');
 const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 const layout = await read('../app/layout.js');
+const fonts = await read('../lib/fonts.js');
+const tokens = await read('../app/brand-tokens.css');
 const css = await read('../app/typography.css');
 const globals = await read('../app/globals.css');
 const parsed = postcss.parse(css);
@@ -19,26 +21,24 @@ const declarations = (selector) => {
   return result;
 };
 
-test('the bilingual fonts are build-time self-hosted with visible fallback text', () => {
-  assert.match(layout, /IBM_Plex_Sans_Arabic, Manrope/);
-  assert.equal((layout.match(/display: 'swap'/g) || []).length, 2);
-  assert.match(layout, /weight: \['400', '500', '600'\]/);
-  assert.match(layout, /adjustFontFallback: false/);
-  assert.doesNotMatch(layout, /fonts\.googleapis\.com|fonts\.gstatic\.com|--font-cairo|--font-inter/);
+test('the brand fonts are build-time self-hosted with visible fallback text', () => {
+  assert.match(fonts, /import \{ Source_Serif_4, IBM_Plex_Sans, IBM_Plex_Sans_Arabic, Noto_Naskh_Arabic \} from 'next\/font\/google'/);
+  assert.equal((fonts.match(/display: 'swap'/g) || []).length, 4);
+  assert.match(layout, /className=\{fontVariables\}/);
+  for (const source of [layout, css, globals, tokens]) assert.doesNotMatch(source, /fonts\.googleapis\.com|fonts\.gstatic\.com|Manrope/);
 });
 
-test('both directions keep Manrope before Plex so Latin glyphs are not duplicated', () => {
-  for (const direction of ['rtl', 'ltr']) {
-    const rule = `html[dir="${direction}"] body { font-family: var(--font-latin), var(--font-arabic), Arial, sans-serif; }`;
-    assert.ok(globals.includes(rule));
-  }
+test('each direction leads with its own script so glyphs are never borrowed', () => {
+  assert.match(tokens, /--ml-sans: var\(--font-plex\), var\(--font-plex-arabic\)/);
+  assert.match(tokens, /--ml-sans-ar: var\(--font-plex-arabic\), var\(--font-plex\)/);
+  assert.match(tokens, /--ml-serif-ar: var\(--font-naskh\)/);
+  assert.match(globals, /html\[dir="rtl"\] body \{ font-family: var\(--ml-sans-ar\); line-height: 1\.8; \}/);
   assert.match(layout, /<html lang=\{initialLang\} dir=\{initialLang === 'ar' \? 'rtl' : 'ltr'\}/);
 });
 
 test('Arabic headings have natural spacing and room for ascenders and marks', () => {
-  const hero = declarations("html[dir='rtl'] .studio-hero h1");
-  assert.ok(hero.some(([property, value]) => property === 'letter-spacing' && value === '0'));
-  assert.ok(hero.some(([property, value]) => property === 'line-height' && Number(value) >= 1.4));
+  assert.match(globals, /html\[dir="rtl"\] \.ml-home h1 \{ line-height: 1\.45; letter-spacing: 0; \}/);
+  assert.match(css, /html\[dir='rtl'\] :where\(h1, h2, h3, h4, button, input, textarea, label\) \{ letter-spacing: 0; \}/);
   assert.match(css, /font-synthesis: none/);
 });
 
@@ -55,18 +55,18 @@ test('body copy and supporting text have explicit readable type tokens', () => {
   assert.match(css, /font-variant-numeric: lining-nums tabular-nums/);
 });
 
-test('category names may reflow when a reader increases text spacing', () => {
-  assert.ok(declarations('.studio-category span').some(([property, value]) => property === 'overflow-wrap' && value === 'break-word'));
-  assert.ok(declarations('.studio-category span').some(([property, value]) => property === 'width' && value === '100%'));
-  assert.ok(declarations('.studio-category span').some(([property, value]) => property === 'min-width' && value === '0'));
+test('choice labels may reflow when a reader increases text spacing', () => {
+  assert.match(globals, /\.ml-choice-text \{ min-width: 0; flex: 1; overflow-wrap: break-word; \}/);
+  assert.match(globals, /\.ml-review-row dd > span \{ min-width: 0; overflow-wrap: anywhere;/);
 });
 
-test('the final project action retains breathing room around either script', () => {
-  assert.ok(declarations('.studio-final .btn').some(([property, value]) => property === 'padding-inline' && value === '1.5rem'));
+test('buttons keep breathing room around either script', () => {
+  assert.match(globals, /@layer components \{\s+\.btn \{ padding: 12px 20px; border-radius: var\(--ml-radius\); \}/);
+  assert.match(globals, /\.ml-flow-back \{ min-width: 6\.5rem; padding-inline: 16px; \}/);
 });
 
-test('both font licenses remain available in the public distribution', async () => {
-  for (const file of ['IBM-Plex-Sans-Arabic-OFL.txt', 'Manrope-OFL.txt']) {
+test('every shipped font licence is available in the public distribution', async () => {
+  for (const file of ['Source-Serif-4-OFL.txt', 'IBM-Plex-Sans-OFL.txt', 'IBM-Plex-Sans-Arabic-OFL.txt', 'Noto-Naskh-Arabic-OFL.txt']) {
     const license = await read(`../public/fonts/licenses/${file}`);
     assert.match(license, /SIL OPEN FONT LICENSE Version 1\.1/);
     assert.match(license, /Copyright/);

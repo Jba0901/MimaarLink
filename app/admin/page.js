@@ -150,14 +150,14 @@ function AdminInner() {
     <AppShell hideNav hideFooter>
       <h1 className="display-title mb-4 text-[26px] sm:text-[30px]">{t('adminTitle')}</h1>
       {loadError && (
-        <Card role="alert" aria-live="assertive" className="mb-4 border-[#EF4444]/35 bg-[#EF4444]/[0.06] dark:border-[#EF4444]/40 dark:bg-[#EF4444]/10">
+        <Card role="alert" aria-live="assertive" className="mb-4 border-[#B5462B]/35 bg-[#B5462B]/[0.06] dark:border-[#B5462B]/40 dark:bg-[#B5462B]/10">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#EF4444]/10 text-[#EF4444]" aria-hidden="true">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#B5462B]/10 text-[#B5462B]" aria-hidden="true">
                 <TriangleAlert className="h-5 w-5" />
               </span>
               <div className="min-w-0 flex-1">
-                <div className="text-sm font-bold text-[#EF4444]">{t('adminDataLoadError')}</div>
+                <div className="text-sm font-bold text-[#B5462B]">{t('adminDataLoadError')}</div>
                 <p className="mt-1 break-words text-xs leading-relaxed text-muted-foreground">{t('adminDataLoadErrorDesc')}</p>
               </div>
             </div>
@@ -202,9 +202,9 @@ function AdminInner() {
           {loadingData && <PageState kind="loading" compact title={t('loading')} />}
           {!loadingData && !loadError && projects.length === 0 && <PageState kind="empty" compact title={t('noProjects')} />}
           {!loadingData && !loadError && projects.map(p => (
-            <Card key={p.id} className="interactive-card hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/45">
+            <Card key={p.id} className="interactive-card hover:border-[#009F91]/45 focus-within:border-[#009F91]/45">
               <CardContent className="p-3.5">
-                <button type="button" onClick={() => router.push(`/admin/project/${p.id}`)} className="w-full rounded-xl text-start ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
+                <button type="button" onClick={() => router.push(`/admin/project/${p.id}`)} className="w-full rounded-xl text-start ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/30 focus-visible:ring-offset-2">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
@@ -244,8 +244,8 @@ function AdminInner() {
             const services = providerServices(c);
 
             return (
-              <Link key={c.id} href={`/admin/contractor/${c.id}`} className="block rounded-2xl ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 focus-visible:ring-offset-2">
-                <Card className="interactive-card hover:border-[#00B59E]/45">
+              <Link key={c.id} href={`/admin/contractor/${c.id}`} className="block rounded-2xl ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/30 focus-visible:ring-offset-2">
+                <Card className="interactive-card hover:border-[#009F91]/45">
                   <CardContent className="p-3.5">
                     <div className="flex flex-col gap-2.5 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0">
@@ -255,7 +255,7 @@ function AdminInner() {
                           <TypeIcon className="h-3 w-3 shrink-0" />
                           {providerTypeLabel(c, t)}
                         </Badge>
-                        {c.verificationStatus === 'verified' && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#00B59E]" aria-hidden="true" />}
+                        {c.verificationStatus === 'verified' && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-[#009F91]" aria-hidden="true" />}
                       </div>
                       <div className="mt-0.5 flex flex-wrap items-center gap-x-1 break-words text-xs text-muted-foreground">
                         {c.contactPerson && <span dir="auto">{c.contactPerson}</span>}

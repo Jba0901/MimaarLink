@@ -39,7 +39,7 @@ export default function StartHerePage() {
               title={t('startContractorTitle')}
               desc={t('startContractorDesc')}
               cta={t('startContractorCta')}
-              tone="amber"
+              tone="navy"
               pathType="contractor"
             />
             <AudiencePathCard
@@ -63,7 +63,7 @@ export default function StartHerePage() {
               className="btn btn-outline px-5 text-[13px]"
               style={{ minHeight: 44 }}
             >
-              <WhatsAppIcon className="h-[15px] w-[15px]" style={{ color: '#00B59E' }} />
+              <WhatsAppIcon className="h-[15px] w-[15px]" style={{ color: '#009F91' }} />
               {t('startWhatsapp')}
             </a>
           </div>

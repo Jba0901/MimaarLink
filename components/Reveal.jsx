@@ -44,8 +44,8 @@ function observeReveal(element) {
 }
 
 /**
- * Server HTML is visible. Only offscreen desktop sections opt into a reveal
- * after hydration; mobile, keyboard and reduced-motion remain immediate.
+ * Server HTML is visible. Only offscreen sections opt into a reveal after
+ * hydration, on phones and desktop alike; keyboard and reduced motion stay immediate.
  */
 export default function Reveal({ children, delay = 0, className = '', as: Tag = 'div' }) {
   const ref = useRef(null);
@@ -54,7 +54,7 @@ export default function Reveal({ children, delay = 0, className = '', as: Tag = 
     const el = ref.current;
     if (!el) return;
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    if (reducedMotion || window.innerWidth < 640 || el.getBoundingClientRect().top < window.innerHeight + 64 || typeof IntersectionObserver === 'undefined') {
+    if (reducedMotion || el.getBoundingClientRect().top < window.innerHeight + 64 || typeof IntersectionObserver === 'undefined') {
       el.classList.add('is-visible');
       return;
     }

@@ -30,12 +30,12 @@ const sheetVariants = cva(
   {
     variants: {
       side: {
-        top: "inset-x-0 top-0 max-h-[90dvh] overflow-y-auto overscroll-contain rounded-b-[28px] border-b pt-[max(1.25rem,env(safe-area-inset-top))] data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+        top: "inset-x-0 top-0 max-h-[90dvh] overflow-y-auto overscroll-contain rounded-b-[6px] border-b pt-[max(1.25rem,env(safe-area-inset-top))] data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
         bottom:
-          "safe-pad-bottom inset-x-0 bottom-0 max-h-[90dvh] overflow-y-auto overscroll-contain rounded-t-[28px] border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
-        left: "inset-y-0 left-0 h-dvh w-[min(88vw,24rem)] overflow-y-auto overscroll-contain rounded-r-[28px] border-r pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(1.25rem,env(safe-area-inset-top))] data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left",
+          "safe-pad-bottom inset-x-0 bottom-0 max-h-[90dvh] overflow-y-auto overscroll-contain rounded-t-[6px] border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+        left: "inset-y-0 left-0 h-dvh w-[min(88vw,24rem)] overflow-y-auto overscroll-contain rounded-r-[6px] border-r pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(1.25rem,env(safe-area-inset-top))] data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left",
         right:
-          "inset-y-0 right-0 h-dvh w-[min(88vw,24rem)] overflow-y-auto overscroll-contain rounded-l-[28px] border-l pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(1.25rem,env(safe-area-inset-top))] data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
+          "inset-y-0 right-0 h-dvh w-[min(88vw,24rem)] overflow-y-auto overscroll-contain rounded-l-[6px] border-l pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(1.25rem,env(safe-area-inset-top))] data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
       },
     },
     defaultVariants: {
@@ -49,7 +49,7 @@ const SheetContent = React.forwardRef(({ side = "right", className, children, ..
     <SheetOverlay />
     <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
       <SheetPrimitive.Close
-        className="absolute end-4 top-[max(1rem,env(safe-area-inset-top))] inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card/95 text-muted-foreground shadow-soft ring-offset-background transition hover:border-[#00B59E]/45 hover:text-[#152B54] focus:outline-none focus:ring-2 focus:ring-[#00B59E]/35 focus:ring-offset-2 disabled:pointer-events-none dark:hover:text-[#00B59E]">
+        className="absolute end-4 top-[max(1rem,env(safe-area-inset-top))] inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card/95 text-muted-foreground shadow-soft ring-offset-background transition hover:border-[#009F91]/45 hover:text-[#152B54] focus:outline-none focus:ring-2 focus:ring-[#009F91]/35 focus:ring-offset-2 disabled:pointer-events-none dark:hover:text-[#009F91]">
         <X className="h-5 w-5" />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>

@@ -58,11 +58,11 @@ export default function ContractorStatusPage() {
   }
 
   if (loadError) {
-    return <AppShell hideNav hideFooter><PageState kind="error" title={t('statusLoadErrorTitle')} description={t('statusLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={load} actionVariant="primary" /></AppShell>;
+    return <AppShell hideNav hideFooter><PageState kind="error" title={t('statusLoadErrorTitle')} description={t('statusLoadErrorDesc')} actionLabel={t('tryAgain')} actionOnClick={load} actionVariant="primary" whatsapp /></AppShell>;
   }
 
   if (!contractor || contractor.error) {
-    return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" /></AppShell>;
+    return <AppShell hideNav hideFooter><PageState kind="missing" title={t('notFound')} description={t('notFoundDesc')} actionHref="/" actionLabel={t('backToHome')} actionVariant="primary" whatsapp /></AppShell>;
   }
 
   const status = contractor.verificationStatus || 'applied';
@@ -76,8 +76,8 @@ export default function ContractorStatusPage() {
   return (
     <AppShell wide>
       <div className="mx-auto max-w-5xl">
-        <div className="mb-4 flex min-w-0 items-start gap-3 rounded-[20px] border border-border bg-card p-4 shadow-soft sm:items-center sm:p-5">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#D0F2EE] text-[#152B54] max-[359px]:hidden dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+        <div className="mb-4 flex min-w-0 items-start gap-3 rounded-[6px] border border-border bg-card p-4 shadow-soft sm:items-center sm:p-5">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#EAF7F4] text-[#152B54] max-[359px]:hidden dark:bg-[#009F91]/15 dark:text-[#009F91]" aria-hidden="true">
             <ServiceIcon className="h-5 w-5" />
           </span>
           <div className="min-w-0 flex-1">

@@ -16,7 +16,7 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex min-h-11 w-full items-center justify-between gap-3 whitespace-nowrap rounded-xl border border-input bg-card px-3.5 py-2 text-start text-sm shadow-soft ring-offset-background transition-[border-color,box-shadow,background-color] data-[placeholder]:text-muted-foreground hover:border-[#00B59E]/45 focus:border-[#00B59E]/60 focus:outline-none focus:ring-2 focus:ring-[#00B59E]/25 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:min-w-0 [&>span]:line-clamp-1",
+      "flex min-h-11 w-full items-center justify-between gap-3 whitespace-nowrap rounded-xl border border-input bg-card px-3.5 py-2 text-start text-sm shadow-soft ring-offset-background transition-[border-color,box-shadow,background-color] data-[placeholder]:text-muted-foreground hover:border-[#009F91]/45 focus:border-[#009F91]/60 focus:outline-none focus:ring-2 focus:ring-[#009F91]/25 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:min-w-0 [&>span]:line-clamp-1",
       className
     )}
     {...props}>
@@ -86,7 +86,7 @@ const SelectItem = React.forwardRef(({ className, children, ...props }, ref) => 
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex min-h-11 w-full cursor-default select-none items-center whitespace-normal rounded-xl py-2 pe-9 ps-3 text-start text-sm outline-none transition-colors focus:bg-[#D0F2EE]/65 focus:text-[#152B54] data-[state=checked]:bg-[#D0F2EE]/45 data-[state=checked]:font-semibold data-[state=checked]:text-[#152B54] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-[#00B59E]/15 dark:focus:text-[#00B59E] dark:data-[state=checked]:bg-[#00B59E]/15 dark:data-[state=checked]:text-[#00B59E] [&>span:last-child]:min-w-0 [&>span:last-child]:break-words",
+      "relative flex min-h-11 w-full cursor-default select-none items-center whitespace-normal rounded-xl py-2 pe-9 ps-3 text-start text-sm outline-none transition-colors focus:bg-[#EAF7F4]/65 focus:text-[#152B54] data-[state=checked]:bg-[#EAF7F4]/45 data-[state=checked]:font-semibold data-[state=checked]:text-[#152B54] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-[#009F91]/15 dark:focus:text-[#009F91] dark:data-[state=checked]:bg-[#009F91]/15 dark:data-[state=checked]:text-[#009F91] [&>span:last-child]:min-w-0 [&>span:last-child]:break-words",
       className
     )}
     {...props}>

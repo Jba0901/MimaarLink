@@ -15,6 +15,7 @@ export default function SuccessPanel({
   copiedLabel,
   actionHref,
   actionLabel,
+  children,
 }) {
   React.useEffect(() => {
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -30,14 +31,14 @@ export default function SuccessPanel({
   return (
     <div className="mx-auto w-full max-w-xl pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 sm:py-8">
       <section
-        className="motion-fade-up overflow-hidden rounded-[24px] border border-[#00B59E]/40 bg-card shadow-card sm:rounded-[28px]"
+        className="motion-fade-up overflow-hidden rounded-[6px] border border-[#009F91]/40 bg-card shadow-card sm:rounded-[6px]"
         role="status"
         aria-live="polite"
       >
-        <div className="h-1.5 bg-[#00B59E]" />
+        <div className="h-1.5 bg-[#009F91]" />
         <div className="p-4 text-center sm:p-8">
-          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-[18px] bg-[#D0F2EE] dark:bg-[#00B59E]/15 sm:h-16 sm:w-16 sm:rounded-[22px]" aria-hidden="true">
-            <CheckCircle2 className="h-7 w-7 text-[#00B59E] sm:h-8 sm:w-8" />
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-[6px] bg-[#EAF7F4] dark:bg-[#009F91]/15 sm:h-16 sm:w-16 sm:rounded-[6px]" aria-hidden="true">
+            <CheckCircle2 className="h-7 w-7 text-[#009F91] sm:h-8 sm:w-8" />
           </span>
 
           <h1 className="mt-3 break-words text-[20px] font-extrabold leading-snug text-navy sm:mt-4 sm:text-[24px]">{title}</h1>
@@ -67,6 +68,7 @@ export default function SuccessPanel({
           <Button asChild variant="brand" size="lg" className="mt-4 h-auto min-h-12 w-full whitespace-normal py-2.5 text-center text-sm leading-snug">
             <Link href={actionHref}>{actionLabel}</Link>
           </Button>
+          {children}
         </div>
       </section>
     </div>

@@ -148,7 +148,7 @@ export default function AdminContractorPage() {
       <div className="mb-3 flex min-w-0 flex-wrap items-start justify-between gap-2">
         <div className="flex min-w-0 items-center gap-2">
           <h1 dir="auto" className="min-w-0 break-words text-xl font-bold text-navy">{providerDisplayName(c, t, { includeCr: true })}</h1>
-          {c.verificationStatus === 'verified' && <ShieldCheck className="h-5 w-5 shrink-0 text-[#00B59E]" aria-hidden="true" />}
+          {c.verificationStatus === 'verified' && <ShieldCheck className="h-5 w-5 shrink-0 text-[#009F91]" aria-hidden="true" />}
         </div>
         <StatusBadge status={c.verificationStatus} className="self-start">{t(`cstatus_${c.verificationStatus}`)}</StatusBadge>
       </div>
@@ -232,7 +232,7 @@ export default function AdminContractorPage() {
         </AlertDialogTrigger>
         <AlertDialogContent dir={dir}>
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-[#EF4444]">{t('deleteConfirmTitle')}</AlertDialogTitle>
+            <AlertDialogTitle className="text-[#B5462B]">{t('deleteConfirmTitle')}</AlertDialogTitle>
             <AlertDialogDescription>{t('deleteConfirmDesc')}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

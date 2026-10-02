@@ -245,6 +245,12 @@ async function ensureSchemaUnlocked(db) {
 
     alter table contractors
     add column if not exists marketing_attribution jsonb not null default '{}'::jsonb;
+
+    alter table projects
+    add column if not exists selected_contractor_id text references contractors(id) on delete set null;
+
+    alter table projects
+    add column if not exists selected_at timestamptz;
   `);
 
   await ensureStorageBucket(db);
@@ -371,6 +377,8 @@ function projectFromRow(row) {
     budgetRange: row.budget_range,
     timeline: row.timeline,
     status: row.status,
+    selectedContractorId: row.selected_contractor_id || null,
+    selectedAt: row.selected_at ? dbDate(row.selected_at) : null,
     createdAt: dbDate(row.created_at),
     updatedAt: dbDate(row.updated_at),
   };
@@ -967,8 +975,17 @@ export async function POST(request, { params }) {
 
     if (path === 'projects/shortlist') {
       const newStatus = body.action === 'meeting' ? 'meeting_arranged' : 'shortlisted';
-      await db.query('update projects set status = $1, updated_at = $2 where id = $3', [newStatus, now, body.projectId]);
-      return ok({ ok: true, status: newStatus });
+      // Record which firm the owner chose, but only a firm that actually bid on this project.
+      const { rows: bidMatch } = await db.query(
+        'select 1 from bids where project_id = $1 and contractor_id = $2 limit 1',
+        [body.projectId, body.contractorId || ''],
+      );
+      if (!bidMatch.length) return err('Offer not found for this project', 404);
+      await db.query(
+        'update projects set status = $1, selected_contractor_id = $2, selected_at = $3, updated_at = $3 where id = $4',
+        [newStatus, body.contractorId, now, body.projectId],
+      );
+      return ok({ ok: true, status: newStatus, selectedContractorId: body.contractorId });
     }
 
     return err('Not found', 404);

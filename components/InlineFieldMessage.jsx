@@ -9,7 +9,7 @@ export default function InlineFieldMessage({ id, children, className }) {
       id={id}
       role="alert"
       className={cn(
-        'mt-1.5 flex items-start gap-1.5 rounded-lg border border-[#EF4444]/20 bg-[#EF4444]/[0.05] px-2.5 py-1.5 text-[12px] font-semibold leading-5 text-[#EF4444] dark:bg-[#EF4444]/[0.08]',
+        'mt-1.5 flex items-start gap-1.5 rounded-lg border border-[#B5462B]/20 bg-[#B5462B]/[0.05] px-2.5 py-1.5 text-[12px] font-semibold leading-5 text-[#B5462B] dark:bg-[#B5462B]/[0.08]',
         className
       )}
     >

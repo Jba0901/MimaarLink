@@ -17,6 +17,7 @@ export default function NotFound() {
         actionLabel={arabic ? 'العودة للرئيسية' : 'Back to home'}
         actionVariant="primary"
         fullHeight
+        whatsapp
         className="relative z-10"
       />
     </main>

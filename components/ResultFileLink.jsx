@@ -19,16 +19,16 @@ export default function ResultFileLink({
       rel={newTab ? 'noreferrer' : undefined}
       aria-label={actionLabel ? `${actionLabel}: ${name}` : name}
       title={name}
-      className="group flex min-h-14 min-w-0 items-center gap-2.5 rounded-2xl border border-border/70 bg-secondary/60 p-2 pe-2.5 text-start shadow-sm transition-[border-color,background-color,box-shadow] hover:border-[#00B59E]/35 hover:bg-[#D0F2EE]/45 hover:shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/30 dark:hover:bg-[#00B59E]/10"
+      className="group flex min-h-14 min-w-0 items-center gap-2.5 rounded-2xl border border-border/70 bg-secondary/60 p-2 pe-2.5 text-start shadow-sm transition-[border-color,background-color,box-shadow] hover:border-[#009F91]/35 hover:bg-[#EAF7F4]/45 hover:shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/30 dark:hover:bg-[#009F91]/10"
     >
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/15 dark:text-[#00B59E]" aria-hidden="true">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91]" aria-hidden="true">
         <FileText className="h-4 w-4" />
       </span>
       <span className="min-w-0 flex-1">
         <span className="line-clamp-2 break-words text-[13px] font-semibold leading-snug text-navy" dir="auto">{name}</span>
         {secondaryLabel && <span dir="auto" className="mt-0.5 block truncate text-[12px] leading-snug text-muted-foreground">{secondaryLabel}</span>}
       </span>
-      <span className="flex h-9 shrink-0 items-center justify-center gap-1 rounded-xl border border-border bg-card px-2 text-[12px] font-semibold text-navy transition-colors group-hover:border-[#00B59E]/30" aria-hidden="true">
+      <span className="flex h-9 shrink-0 items-center justify-center gap-1 rounded-xl border border-border bg-card px-2 text-[12px] font-semibold text-navy transition-colors group-hover:border-[#009F91]/30" aria-hidden="true">
         <ActionIcon className="h-3.5 w-3.5" />
         {actionLabel && <span className="hidden min-[360px]:inline">{actionLabel}</span>}
       </span>

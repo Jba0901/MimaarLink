@@ -24,11 +24,11 @@ export default function MarketingLanding({
 }) {
   const { dir, t } = useLang();
   const isRTL = dir === 'rtl';
-  const isAmber = tone === 'amber';
-  const accentColor = isAmber ? '#FFB638' : '#00B59E';
-  const accentSoft = isAmber ? 'rgba(255,182,56,0.14)' : 'rgba(0,181,158,0.10)';
-  const ctaClass = isAmber ? 'btn-amber' : 'btn-primary';
-  const ctaStyle = { minHeight: 52, color: isAmber ? '#152B54' : '#0D1B2A' };
+  const isNavy = tone === 'navy';
+  const accentColor = isNavy ? '#152B54' : '#009F91';
+  const accentSoft = isNavy ? 'rgba(21,43,84,0.08)' : 'rgba(0,159,145,0.10)';
+  const ctaClass = 'btn-primary';
+  const ctaStyle = { minHeight: 52 };
   const Arrow = () =>
     isRTL
       ? <ArrowRight className="h-4 w-4 shrink-0 rotate-180" aria-hidden="true" />
@@ -54,13 +54,13 @@ export default function MarketingLanding({
             )}
             <h1 className="landing-hero-title display-title mx-auto max-w-[23rem] text-[30px] sm:max-w-2xl sm:text-[42px] lg:text-[46px]">
               {words.join(' ')}{' '}
-              <span className="home-hero-emphasis" style={{ textDecorationColor: accentColor }}>{accentWords.join(' ')}</span>
+              <span className="home-hero-emphasis" style={{ textDecorationColor: '#009F91' }}>{accentWords.join(' ')}</span>
             </h1>
             <p className="landing-hero-subtitle mx-auto mt-3.5 max-w-lg text-[14.5px] leading-7 text-muted-foreground sm:mt-4 sm:text-[15px] sm:leading-relaxed">
               {subtitle}
             </p>
             <div className="landing-hero-action mt-6 sm:mt-7">
-              <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
+              <Link href={ctaHref} className={`btn ${ctaClass} w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
                 {ctaLabel} <Arrow />
               </Link>
               {ctaSubtext && <p className="landing-hero-subtext mt-3 text-[12.5px] text-muted-foreground/80">{ctaSubtext}</p>}
@@ -74,10 +74,10 @@ export default function MarketingLanding({
         <div className="grid gap-2.5 sm:grid-cols-3 sm:gap-3.5">
           {benefits.map((b, i) => (
             <Reveal key={i} delay={i * 110} className="h-full">
-              <div className="landing-benefit-card interactive-card flex h-full items-start gap-3 rounded-[20px] border border-border bg-card p-3.5 shadow-soft min-[390px]:gap-3.5 min-[390px]:p-4 sm:block sm:rounded-3xl sm:p-6" style={{ borderInlineStartWidth: 3, borderInlineStartColor: accentColor }}>
+              <div className="landing-benefit-card interactive-card flex h-full items-start gap-3 rounded-[6px] border border-border bg-card p-3.5 shadow-soft min-[390px]:gap-3.5 min-[390px]:p-4 sm:block sm:rounded-3xl sm:p-6" style={{ borderInlineStartWidth: 3, borderInlineStartColor: accentColor }}>
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl sm:mb-4 sm:h-12 sm:w-12" style={{ background: accentSoft }}>
                   <b.icon
-                    className={`h-[22px] w-[22px] ${isAmber ? 'text-[#152B54] dark:text-[#FFB638]' : 'text-[#00B59E]'}`}
+                    className={`h-[22px] w-[22px] ${isNavy ? 'text-[#152B54] dark:text-white' : 'text-[#009F91]'}`}
                     aria-hidden="true"
                   />
                 </div>
@@ -138,8 +138,8 @@ export default function MarketingLanding({
         </div>
         {privacyLine && (
           <Reveal delay={150}>
-            <div className="mx-auto mt-6 flex max-w-xl items-center justify-center gap-2.5 rounded-2xl border border-[#00B59E]/20 bg-[#D0F2EE]/40 px-3.5 py-3 dark:bg-[#00B59E]/10 sm:mt-7">
-              <ShieldCheck className="h-4 w-4 shrink-0" style={{ color: '#00B59E' }} aria-hidden="true" />
+            <div className="mx-auto mt-6 flex max-w-xl items-center justify-center gap-2.5 rounded-2xl border border-[#009F91]/20 bg-[#EAF7F4]/40 px-3.5 py-3 dark:bg-[#009F91]/10 sm:mt-7">
+              <ShieldCheck className="h-4 w-4 shrink-0" style={{ color: '#009F91' }} aria-hidden="true" />
               <p className="text-center text-[12.5px] leading-relaxed text-muted-foreground">{privacyLine}</p>
             </div>
           </Reveal>
@@ -149,11 +149,11 @@ export default function MarketingLanding({
       {/* ============ FINAL CTA ============ */}
       <section className="pb-0 pt-6 sm:pt-8 lg:pt-12">
         <Reveal>
-          <div className="premium-panel glass-line relative overflow-hidden rounded-[22px] px-4 py-7 text-center text-white shadow-card min-[390px]:rounded-[24px] min-[390px]:px-5 sm:rounded-[28px] sm:px-10 sm:py-12">
+          <div className="premium-panel glass-line relative overflow-hidden rounded-[6px] px-4 py-7 text-center text-white shadow-card min-[390px]:rounded-[6px] min-[390px]:px-5 sm:rounded-[6px] sm:px-10 sm:py-12">
             <div className="relative mx-auto max-w-xl">
               <h3 className="text-[22px] font-extrabold leading-snug sm:text-[30px] sm:leading-tight">{finalTitle}</h3>
               <p className="mb-5 mt-2.5 text-[13.5px] leading-6 text-white/75 sm:mb-7 sm:text-[14px]">{finalSub}</p>
-              <Link href={ctaHref} className={`btn ${ctaClass} soft-shine w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
+              <Link href={ctaHref} className={`btn ${ctaClass} w-full px-9 text-[15px] sm:w-auto`} style={ctaStyle}>
                 {ctaLabel} <Arrow />
               </Link>
             </div>

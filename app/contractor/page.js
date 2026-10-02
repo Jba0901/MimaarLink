@@ -1,41 +1,99 @@
 'use client';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import AppShell from '@/components/AppShell';
-import FormProgress from '@/components/FormProgress';
 import DesktopFormAside from '@/components/DesktopFormAside';
 import InlineFieldMessage from '@/components/InlineFieldMessage';
 import TextOrUnsureField from '@/components/TextOrUnsureField';
-import { LazyFileUploadDropzone, LazyNativeSelect, LazyNetworkStatusNotice, LazySubmissionRetryNotice, LazySuccessPanel } from '@/components/LazyFormControls';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
+import { ChoiceChips, DraftNotice, ReviewList, StepFrame, StepNav, StepsLeft } from '@/components/GuidedFlow';
+import { LazyFileUploadDropzone, LazyNetworkStatusNotice, LazySubmissionRetryNotice, LazySuccessPanel } from '@/components/LazyFormControls';
 import { useLang } from '@/lib/LangContext';
 import { CATEGORIES, CONSULTANT_CATEGORIES, CONSULTANT_GRADES } from '@/lib/i18n';
+import { clearDraft, loadDraft, saveDraft } from '@/lib/formDraft';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { CheckCircle2, X, Loader2, FileText, Building2, ClipboardCheck } from 'lucide-react';
+import { Check, X, FileText, Building2, ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
 import { getMarketingAttribution, trackMeta, trackMetaOnce } from '@/lib/marketingAttribution';
 import { focusFormField } from '@/lib/focusFormField';
 
 const MAX_PROVIDER_PROFILE_FILES = 1;
+const DRAFT_KEY = 'ml:draft:provider:v1';
+// Only these fields are ever written to the browser draft. CR, WhatsApp, names, email and files are not.
+const DRAFT_FIELDS = ['providerType', 'companyName', 'categories', 'consultantGrade', 'otherCategoryDesc', 'serviceAreas', 'projectSizeRange'];
+const GRADE_LABEL_KEYS = { unknown: 'gradeUnknown', grade_a: 'gradeA', grade_b: 'gradeB', grade_c: 'gradeC' };
+
+const stepsFor = (isConsultant) => ['type', 'company', 'contact', 'services', ...(isConsultant ? ['grade'] : []), 'areas', 'size', 'profile', 'review'];
+
+const COPY = {
+  en: {
+    type: ['How would you like to join?', 'Choose the option that describes your company.'],
+    company: ['Your company', 'The CR number is all we need to start verification.'],
+    contact: ['How can we reach you?', 'We contact applicants on WhatsApp.'],
+    services: ['What work do you take on?', 'Choose every service you want projects for.'],
+    servicesConsultant: ['Which services does your office offer?', 'Choose every service you want projects for.'],
+    grade: ['What is your classification?', 'If you are not sure, choose the first option.'],
+    areas: ['Where do you work?', 'Pick the areas you cover, or skip.'],
+    size: ['What project size suits you?', 'A typical range in QAR helps us match you.'],
+    profile: ['Add a company profile?', 'Optional. One PDF or image helps our review.'],
+    review: ['Review and apply', 'Check your details. You can edit anything before sending.'],
+    areaChips: ['All of Qatar', 'Doha', 'Lusail', 'Al Rayyan', 'Al Wakrah', 'Al Khor'],
+    areaSeparator: ', ',
+    send: 'Send application',
+    sending: 'Sending…',
+    rows: { type: 'Applying as', company: 'Company', contact: 'Contact', services: 'Services', grade: 'Classification', areas: 'Service areas', size: 'Typical project size', profile: 'Company profile' },
+    notGiven: 'Skipped',
+    none: 'None',
+    successTitle: 'Application received.',
+    nextTitle: 'What happens after you apply',
+    next: ['We verify your CR number and review your services.', 'We may message you on WhatsApp to confirm details.', 'Once approved, you receive projects that match your trade and area.', 'Your tracking link shows your application status at any time.'],
+    whatsapp: 'Questions? Message us on WhatsApp',
+  },
+  ar: {
+    type: ['كيف تريد الانضمام؟', 'اختر ما يصف شركتك.'],
+    company: ['بيانات شركتك', 'رقم السجل التجاري هو كل ما نحتاجه لبدء التحقق.'],
+    contact: ['كيف نتواصل معك؟', 'نتواصل مع المتقدمين عبر واتساب.'],
+    services: ['ما الأعمال التي تنفذها؟', 'اختر كل خدمة ترغب باستلام مشاريع لها.'],
+    servicesConsultant: ['ما الخدمات التي يقدمها مكتبك؟', 'اختر كل خدمة ترغب باستلام مشاريع لها.'],
+    grade: ['ما تصنيف مكتبك؟', 'إن لم تكن متأكدًا، اختر الخيار الأول.'],
+    areas: ['أين تعمل؟', 'اختر المناطق التي تغطيها، أو تخطَّ هذه الخطوة.'],
+    size: ['ما حجم المشاريع المناسب لك؟', 'يساعدنا نطاق تقريبي بالريال في مطابقتك مع المشاريع.'],
+    profile: ['هل تريد إرفاق ملف تعريفي؟', 'اختياري. ملف PDF أو صورة واحدة تساعدنا في المراجعة.'],
+    review: ['راجع وأرسل الطلب', 'تأكد من بياناتك، ويمكنك تعديل أي شيء قبل الإرسال.'],
+    areaChips: ['كل قطر', 'الدوحة', 'لوسيل', 'الريان', 'الوكرة', 'الخور'],
+    areaSeparator: '، ',
+    send: 'إرسال الطلب',
+    sending: 'جارٍ الإرسال…',
+    rows: { type: 'الانضمام كـ', company: 'الشركة', contact: 'التواصل', services: 'الخدمات', grade: 'التصنيف', areas: 'مناطق العمل', size: 'حجم المشاريع المعتاد', profile: 'الملف التعريفي' },
+    notGiven: 'تم التخطي',
+    none: 'لا يوجد',
+    successTitle: 'تم استلام طلبك.',
+    nextTitle: 'ماذا يحدث بعد التقديم',
+    next: ['نتحقق من رقم السجل التجاري ونراجع خدماتك.', 'قد نراسلك عبر واتساب لتأكيد بعض التفاصيل.', 'بعد الاعتماد، تستلم مشاريع تناسب تخصصك ومنطقتك.', 'يعرض رابط المتابعة حالة طلبك في أي وقت.'],
+    whatsapp: 'لديك سؤال؟ راسلنا على واتساب',
+  },
+};
 
 export default function ContractorPage() {
-  const { t } = useLang();
   return (
-    <Suspense fallback={<FormLoadingState title={t('loading')} />}>
+    <Suspense fallback={<FormLoadingState />}>
       <ContractorApplicationInner />
     </Suspense>
   );
 }
 
-function FormLoadingState({ title }) {
+function FormLoadingState() {
   return (
     <AppShell hideFooter hideNav wide>
-      <div className="mx-auto flex min-h-[50dvh] w-full max-w-md items-center justify-center">
-        <div role="status" className="flex items-center gap-3 rounded-2xl border border-border bg-card px-5 py-4 text-sm font-bold text-navy shadow-soft">
-          <Loader2 className="h-5 w-5 animate-spin text-[#00B59E]" aria-hidden="true" />
-          <span>{title}</span>
+      <div className="ml-flow" aria-hidden="true">
+        <div className="mb-7 h-1 w-full animate-pulse rounded-full ml-skel" />
+        <div className="h-8 w-2/3 animate-pulse rounded-[6px] ml-skel" />
+        <div className="mt-3 h-4 w-1/2 animate-pulse rounded-[6px] ml-skel" />
+        <div className="mt-8 grid gap-2 sm:grid-cols-2">
+          {Array.from({ length: 2 }, (_, i) => <div key={i} className="h-24 animate-pulse rounded-[6px] ml-skel" />)}
         </div>
       </div>
     </AppShell>
@@ -44,16 +102,20 @@ function FormLoadingState({ title }) {
 
 function ContractorApplicationInner() {
   const { t, lang } = useLang();
+  const copy = COPY[lang === 'ar' ? 'ar' : 'en'];
   const sp = useSearchParams();
-  const requestedType = sp.get('type') === 'consultant' ? 'consultant' : 'contractor';
-  const [step, setStep] = useState(1);
-  const [done, setDone] = useState(false);
+  const requestedParam = sp.get('type');
+  const requestedType = requestedParam === 'consultant' ? 'consultant' : 'contractor';
+  const [stepName, setStepName] = useState('type');
+  const [direction, setDirection] = useState('forward');
+  const [returnToReview, setReturnToReview] = useState(false);
   const [createdId, setCreatedId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [processingDocumentKey, setProcessingDocumentKey] = useState('');
   const [submitError, setSubmitError] = useState(false);
-  const [triedBasics, setTriedBasics] = useState(false);
-  const [triedServices, setTriedServices] = useState(false);
+  const [tried, setTried] = useState({});
+  const [draft, setDraft] = useState(null);
+  const started = useRef(false);
   const [data, setData] = useState({
     providerType: requestedType,
     companyName: '', crNumber: '', contactPerson: '', whatsapp: '+974 ', email: '',
@@ -61,9 +123,14 @@ function ContractorApplicationInner() {
     otherCategoryDesc: '', serviceAreas: '', projectSizeRange: '', documents: [],
   });
 
-  const showStep = React.useCallback((nextStep) => {
-    setStep(nextStep);
-    window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+  const isConsultant = data.providerType === 'consultant';
+  const steps = stepsFor(isConsultant);
+  const stepIndex = Math.max(steps.indexOf(stepName), 0);
+  const serviceOptions = isConsultant ? CONSULTANT_CATEGORIES : CATEGORIES;
+
+  const goTo = useCallback((name, dirName = 'forward') => {
+    setDirection(dirName);
+    setStepName(name);
   }, []);
 
   useEffect(() => {
@@ -73,25 +140,54 @@ function ContractorApplicationInner() {
       consultantGrade: requestedType === 'consultant' ? (d.consultantGrade || 'unknown') : '',
       consultantServices: requestedType === 'consultant' ? d.consultantServices : [],
     }));
-  }, [requestedType]);
+    // Arriving from a contractor or consultant link skips the type question.
+    if (requestedParam) goTo('company');
+    const saved = loadDraft(DRAFT_KEY);
+    if (saved && (saved.data?.categories?.length || saved.data?.companyName)) setDraft(saved);
+  }, [requestedType, requestedParam, goTo]);
 
-  const markFormStarted = (providerType = data.providerType) => trackMetaOnce(
-    `provider_form_start_${providerType}`,
-    'FormStart',
-    { form_type: 'provider', provider_type: providerType },
-    { custom: true },
-  );
+  // Save the safe fields as the applicant types; never CR, WhatsApp, names, email or files.
+  useEffect(() => {
+    if (!started.current || createdId) return;
+    const timer = window.setTimeout(() => {
+      const safe = Object.fromEntries(DRAFT_FIELDS.map(k => [k, data[k]]));
+      const resumeAt = ['type', 'company', 'contact'].includes(stepName) ? stepName : 'services';
+      saveDraft(DRAFT_KEY, { data: safe, stepName: resumeAt, fileCount: data.documents.length });
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [data, stepName, createdId]);
+
+  const markFormStarted = (providerType = data.providerType) => {
+    started.current = true;
+    if (draft) setDraft(null);
+    trackMetaOnce(`provider_form_start_${providerType}`, 'FormStart', { form_type: 'provider', provider_type: providerType }, { custom: true });
+  };
   const update = (k, v) => {
     markFormStarted();
     setData(d => ({ ...d, [k]: v }));
   };
-  const isConsultant = data.providerType === 'consultant';
-  const serviceOptions = isConsultant ? CONSULTANT_CATEGORIES : CATEGORIES;
-  const serviceLabel = isConsultant ? t('consultantServicesLabel') : t('serviceCategoriesLabel');
+
+  const continueDraft = () => {
+    const restored = Object.fromEntries(DRAFT_FIELDS.map(k => [k, draft.data?.[k]]).filter(([, v]) => v !== undefined));
+    setData(d => {
+      const merged = { ...d, ...restored };
+      return { ...merged, consultantServices: merged.providerType === 'consultant' ? merged.categories : [] };
+    });
+    started.current = true;
+    // Contact details are never saved, so resume where they are asked again.
+    goTo(draft.data?.categories?.length ? 'company' : (draft.stepName || 'type'));
+    setDraft(null);
+  };
+  const restartDraft = () => {
+    clearDraft(DRAFT_KEY);
+    setDraft(null);
+    setData(d => ({ ...d, companyName: '', categories: [], consultantServices: [], consultantGrade: d.providerType === 'consultant' ? 'unknown' : '', otherCategoryDesc: '', serviceAreas: '', projectSizeRange: '' }));
+    goTo(requestedParam ? 'company' : 'type', 'back');
+  };
 
   const selectProviderType = (providerType) => {
     markFormStarted(providerType);
-    setData(d => ({
+    setData(d => (d.providerType === providerType ? d : {
       ...d,
       providerType,
       categories: [],
@@ -99,66 +195,61 @@ function ContractorApplicationInner() {
       consultantGrade: providerType === 'consultant' ? 'unknown' : '',
       otherCategoryDesc: '',
     }));
+    goTo('company');
   };
 
   const toggleCat = (c) => {
-    const isRemoving = data.categories.includes(c);
-    const next = isRemoving ? data.categories.filter(x => x !== c) : [...data.categories, c];
-    setData(d => ({
-      ...d,
-      categories: next,
-      consultantServices: d.providerType === 'consultant' ? next : [],
-      // clear the "other" description if user unchecks "other"
-      otherCategoryDesc: c === 'other' && isRemoving ? '' : d.otherCategoryDesc,
-    }));
+    markFormStarted();
+    setData(d => {
+      const isRemoving = d.categories.includes(c);
+      const next = isRemoving ? d.categories.filter(x => x !== c) : [...d.categories, c];
+      return {
+        ...d,
+        categories: next,
+        consultantServices: d.providerType === 'consultant' ? next : [],
+        otherCategoryDesc: c === 'other' && isRemoving ? '' : d.otherCategoryDesc,
+      };
+    });
   };
 
   const phoneDigits = (data.whatsapp || '').replace(/^\+974\s*/, '').replace(/\D/g, '').length;
   const phoneValid = phoneDigits >= 8;
   const hasOther = data.categories.includes('other');
   const otherDescValid = !hasOther || (data.otherCategoryDesc || '').trim().length >= 3;
-  const basicsValid = Boolean(data.crNumber.trim() && phoneValid);
   const servicesValid = data.categories.length > 0 && otherDescValid;
-  const formValid = basicsValid && servicesValid;
-  const showServicesError = triedServices && data.categories.length === 0;
-  const firstInvalidBasicsField = !data.crNumber.trim() ? 'provider-cr-number' : 'provider-whatsapp';
 
-  const goNextFromBasics = () => {
-    setTriedBasics(true);
-    if (basicsValid) {
-      showStep(2);
-      return;
-    }
-
-    focusFormField(firstInvalidBasicsField);
+  const next = () => {
+    if (returnToReview) { setReturnToReview(false); goTo('review'); return; }
+    goTo(steps[Math.min(stepIndex + 1, steps.length - 1)]);
   };
+  const back = () => {
+    setReturnToReview(false);
+    goTo(steps[Math.max(stepIndex - 1, 0)], 'back');
+  };
+  const edit = (name) => () => { setReturnToReview(true); goTo(name, 'back'); };
 
-  const goNextFromServices = () => {
-    setTriedServices(true);
-    if (servicesValid) {
-      showStep(3);
-      return;
+  const submitStep = () => {
+    if (stepName === 'company') {
+      setTried(s => ({ ...s, company: true }));
+      if (!data.crNumber.trim()) { focusFormField('provider-cr-number'); return; }
     }
-
-    focusFormField(data.categories.length === 0 ? 'provider-first-service' : 'provider-other-category');
+    if (stepName === 'contact') {
+      setTried(s => ({ ...s, contact: true }));
+      if (!phoneValid) { focusFormField('provider-whatsapp'); return; }
+    }
+    if (stepName === 'services') {
+      setTried(s => ({ ...s, services: true }));
+      if (!servicesValid) { focusFormField(data.categories.length === 0 ? 'provider-first-service' : 'provider-other-category'); return; }
+    }
+    if (stepName === 'profile' && processingDocumentKey) return;
+    if (stepName === 'review') { submit(); return; }
+    next();
   };
 
   const submit = async () => {
-    if (!formValid) {
-      if (!basicsValid) {
-        setTriedBasics(true);
-        setStep(1);
-        focusFormField(firstInvalidBasicsField);
-        return;
-      }
-      if (!servicesValid) {
-        setTriedServices(true);
-        setStep(2);
-        focusFormField(data.categories.length === 0 ? 'provider-first-service' : 'provider-other-category');
-        return;
-      }
-      return;
-    }
+    if (!data.crNumber.trim()) { goTo('company', 'back'); return; }
+    if (!phoneValid) { goTo('contact', 'back'); return; }
+    if (!servicesValid) { goTo('services', 'back'); return; }
     setSubmitError(false);
     setSubmitting(true);
     try {
@@ -170,8 +261,8 @@ function ContractorApplicationInner() {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || 'Error');
       trackMeta('CompleteRegistration', { content_name: 'provider_application', provider_type: data.providerType });
+      clearDraft(DRAFT_KEY);
       setCreatedId(json.id);
-      setDone(true);
     } catch {
       setSubmitError(true);
       toast.error(t('actionFailed'));
@@ -181,11 +272,11 @@ function ContractorApplicationInner() {
   const profileFiles = data.documents.filter(d => d.label === 'profile');
   const profileFileLimitReached = profileFiles.length >= MAX_PROVIDER_PROFILE_FILES;
 
-  if (done) return (
-    <AppShell hideFooter hideNav wide>
-      {createdId && (
+  if (createdId) {
+    return (
+      <AppShell hideFooter hideNav wide>
         <LazySuccessPanel
-          title={t('contractorDone')}
+          title={copy.successTitle}
           description={isConsultant ? t('consultantDoneDesc') : t('contractorDoneDesc')}
           referenceLabel={t('saveProviderLink')}
           referencePath={`/contractor-status/${createdId}`}
@@ -193,209 +284,191 @@ function ContractorApplicationInner() {
           copiedLabel={t('linkCopied')}
           actionHref={`/contractor-status/${createdId}`}
           actionLabel={t('viewProviderStatus')}
-        />
-      )}
-    </AppShell>
-  );
+        >
+          <div className="mt-6 text-start">
+            <p className="text-[14px] font-semibold text-navy">{copy.nextTitle}</p>
+            <ol className="ml-next-steps">
+              {copy.next.map((line, i) => <li key={line}><span aria-hidden="true">{i + 1}</span>{line}</li>)}
+            </ol>
+          </div>
+          <a href="https://wa.me/97466259219" target="_blank" rel="noreferrer" className="btn btn-secondary mt-5 w-full">
+            <WhatsAppIcon className="h-4 w-4" />{copy.whatsapp}
+          </a>
+        </LazySuccessPanel>
+      </AppShell>
+    );
+  }
+
+  const [title, desc] = (stepName === 'services' && isConsultant ? copy.servicesConsultant : copy[stepName]) || [];
+  const joinWith = (values) => values.filter(v => v && String(v).trim() && String(v).trim() !== '+974').join(' · ');
+  const reviewRows = [
+    { key: 'type', label: copy.rows.type, value: isConsultant ? t('providerTypeConsultant') : t('providerTypeContractor'), onEdit: edit('type') },
+    { key: 'company', label: copy.rows.company, value: joinWith([data.companyName, `${t('crNumber')}: ${data.crNumber}`]), onEdit: edit('company') },
+    { key: 'contact', label: copy.rows.contact, value: joinWith([data.contactPerson, data.whatsapp, data.email]), onEdit: edit('contact') },
+    { key: 'services', label: copy.rows.services, value: [...data.categories.map(c => t(`cat_${c}`)), hasOther ? data.otherCategoryDesc : ''].filter(Boolean).join(copy.areaSeparator), onEdit: edit('services') },
+    ...(isConsultant ? [{ key: 'grade', label: copy.rows.grade, value: t(GRADE_LABEL_KEYS[data.consultantGrade || 'unknown']), onEdit: edit('grade') }] : []),
+    { key: 'areas', label: copy.rows.areas, value: data.serviceAreas.trim() || copy.notGiven, empty: !data.serviceAreas.trim(), onEdit: edit('areas') },
+    { key: 'size', label: copy.rows.size, value: data.projectSizeRange.trim() || copy.notGiven, empty: !data.projectSizeRange.trim(), onEdit: edit('size') },
+    { key: 'profile', label: copy.rows.profile, value: profileFiles[0]?.name || copy.none, empty: !profileFiles.length, onEdit: edit('profile') },
+  ];
+  const optionalEmpty = (stepName === 'areas' && !data.serviceAreas.trim())
+    || (stepName === 'size' && !data.projectSizeRange.trim())
+    || (stepName === 'profile' && !profileFiles.length);
 
   return (
     <AppShell hideFooter hideNav wide>
-      <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
-        <div className="provider-form-flow min-w-0 w-full lg:max-w-2xl" data-form-step={step}>
-          <h1 className="provider-form-title display-title mb-1 break-words text-[24px] motion-fade-up sm:mb-1.5 sm:text-[30px]">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</h1>
-          <p className="provider-form-subtitle mb-3 break-words text-[13px] leading-relaxed text-muted-foreground motion-fade-up motion-delay-1 sm:mb-5 sm:text-[13.5px]">{isConsultant ? t('consultantSubtitle') : t('contractorSubtitle')}</p>
+      <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
+        <div className="ml-flow provider-form-flow min-w-0" data-form-step={stepIndex + 1}>
+          <p className="eyebrow mb-4">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</p>
           <LazyNetworkStatusNotice />
-          <FormProgress
-            step={step}
-            total={3}
-            label={t('stepLabel')}
-            title={step === 1 ? t('contractorStep1Title') : step === 2 ? t('contractorStep2Title') : t('contractorStep3Title')}
-            desc={step === 1 ? t('contractorStep1Desc') : step === 2 ? t('contractorStep2Desc') : t('contractorStep3Desc')}
-          />
+          {draft && <DraftNotice hadFiles={draft.fileCount > 0} onContinue={continueDraft} onRestart={restartDraft} />}
+          <StepsLeft index={stepIndex} total={steps.length} />
 
-      {step === 1 && (
-        <div className="space-y-3.5">
-          <div>
-            <Label className="text-sm mb-2 block">{t('providerTypeLabel')}</Label>
-            <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-2">
-              <ProviderTypeButton
-                active={data.providerType === 'contractor'}
-                icon={Building2}
-                title={t('providerTypeContractor')}
-                desc={t('providerTypeContractorDesc')}
-                onClick={() => selectProviderType('contractor')}
-              />
-              <ProviderTypeButton
-                active={data.providerType === 'consultant'}
-                icon={ClipboardCheck}
-                title={t('providerTypeConsultant')}
-                desc={t('providerTypeConsultantDesc')}
-                onClick={() => selectProviderType('consultant')}
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-            <FormField id="provider-company-name" label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={triedBasics} t={t} required={false} />
-            <FormField id="provider-cr-number" label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={triedBasics} t={t} />
-          </div>
-          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-            <FormField id="provider-contact-person" label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={triedBasics} t={t} required={false} />
-            <FormField id="provider-whatsapp" label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={triedBasics} t={t} placeholder="+974 ..." kind="phone" />
-          </div>
-          <div>
-            <Label htmlFor="provider-email" className="text-sm">{t('email')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-            <Input id="provider-email" autoComplete="email" dir="ltr" value={data.email} onChange={e => update('email', e.target.value)} type="email" className="h-11 mt-1.5" />
-          </div>
-          <div className="pt-2">
-            <Button variant="navy" onClick={goNextFromBasics} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
-          </div>
-        </div>
-      )}
-
-      {step === 2 && (
-        <div className="space-y-3.5">
-          {isConsultant && (
-            <div>
-              <Label htmlFor="consultant-grade" className="text-sm">{t('consultantGrade')}</Label>
-              <LazyNativeSelect
-                id="consultant-grade"
-                value={data.consultantGrade || 'unknown'}
-                onChange={e => update('consultantGrade', e.target.value)}
-                wrapperClassName="mt-1.5"
-              >
-                {CONSULTANT_GRADES.map(g => (
-                  <option key={g} value={g}>{t(g === 'unknown' ? 'gradeUnknown' : g === 'grade_a' ? 'gradeA' : g === 'grade_b' ? 'gradeB' : 'gradeC')}</option>
+          <StepFrame stepKey={stepName} direction={direction} title={title} description={desc} onSubmit={submitStep}>
+            {stepName === 'type' && (
+              <div className="ml-choice-list" role="group" aria-label={t('providerTypeLabel')}>
+                {[['contractor', Building2, t('providerTypeContractor'), t('providerTypeContractorDesc')], ['consultant', ClipboardCheck, t('providerTypeConsultant'), t('providerTypeConsultantDesc')]].map(([value, Icon, label, hint]) => (
+                  <button key={value} type="button" aria-pressed={data.providerType === value} className="ml-choice" onClick={() => selectProviderType(value)}>
+                    <span className="ml-choice-icon"><Icon className="h-5 w-5" aria-hidden="true" /></span>
+                    <span className="ml-choice-text">{label}<small>{hint}</small></span>
+                  </button>
                 ))}
-              </LazyNativeSelect>
-            </div>
-          )}
-          <div>
-            <Label id="provider-services-label" className="text-sm mb-2 block">
-              {serviceLabel} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
-            </Label>
-            {showServicesError && <InlineFieldMessage id="provider-services-error" className="mb-2 mt-0">{t('requireField')}</InlineFieldMessage>}
-            <div
-              role="group"
-              aria-labelledby="provider-services-label"
-              aria-invalid={showServicesError}
-              aria-describedby={showServicesError ? 'provider-services-error' : undefined}
-              className={`grid grid-cols-1 gap-2 rounded-2xl border p-1.5 transition-[border-color,background-color] min-[320px]:grid-cols-2 ${showServicesError ? 'border-[#EF4444]/45 bg-[#EF4444]/[0.04] dark:bg-[#EF4444]/[0.07]' : 'border-transparent bg-transparent'}`}
-            >
-              {serviceOptions.map((c, index) => (
-                <button key={c} id={index === 0 ? 'provider-first-service' : undefined} type="button" onClick={() => toggleCat(c)} aria-pressed={data.categories.includes(c)}
-                  className={`interactive-card tap-highlight min-h-12 min-w-0 rounded-xl border px-3 py-2 text-start text-[13px] font-semibold ${
-                    data.categories.includes(c)
-                      ? 'border-[#00B59E]/50 bg-[#D0F2EE]/55 text-navy shadow-soft dark:border-[#00B59E]/45 dark:bg-[#00B59E]/15'
-                      : 'border-border bg-card text-navy hover:border-[#00B59E]/35 dark:bg-[#0D1B2A]/75'
-                  }`}>
-                  <span className="flex items-center justify-between gap-2">
-                    <span className="min-w-0 flex-1 break-words leading-snug">{t(`cat_${c}`)}</span>
-                    {data.categories.includes(c) && <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-teal" />}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-          {hasOther && (
-            <div>
-              <Label htmlFor="provider-other-category" className="text-sm">
-                {t('otherCategoryLabel')} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
-              </Label>
-              <Textarea
-                id="provider-other-category"
-                value={data.otherCategoryDesc}
-                onChange={e => update('otherCategoryDesc', e.target.value)}
-                placeholder={t('otherCategoryPh')}
-                rows={3}
-                maxLength={300}
-                aria-invalid={triedServices && !otherDescValid}
-                aria-required="true"
-                aria-describedby={`provider-other-category-help${triedServices && !otherDescValid ? ' provider-other-category-error' : ''}`}
-                className="mt-1.5"
-              />
-              <div id="provider-other-category-help" className="mt-1.5 break-words text-[12px] leading-5 text-muted-foreground">{t('otherCategoryHelp')}</div>
-              {triedServices && !otherDescValid && <InlineFieldMessage id="provider-other-category-error">{t('requireField')}</InlineFieldMessage>}
-            </div>
-          )}
-          <div className="space-y-5 py-1">
-            <div>
-              <Label htmlFor="provider-service-areas" className="text-sm">{t('serviceAreas')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
-              <Input id="provider-service-areas" value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="h-11 mt-1.5" />
-            </div>
-            <TextOrUnsureField id="provider-project-size" label={t('projectSize')} value={data.projectSizeRange}
-              onChange={value => update('projectSizeRange', value)} placeholder={t('projectSizePh')}
-              lang={lang} choiceKind="projectSize" />
-          </div>
-          <div className="grid grid-cols-1 gap-2 pt-2 min-[320px]:grid-cols-2">
-            <Button variant="outline" onClick={() => showStep(1)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
-            <Button variant="navy" onClick={goNextFromServices} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('next')}</Button>
-          </div>
-        </div>
-      )}
+              </div>
+            )}
 
-      {step === 3 && (
-        <div className="space-y-3.5">
-          <div>
-            <Label htmlFor="provider-document-profile" className="text-sm">
-              {t('uploadCompanyProfile')}
-              <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>
-            </Label>
-            <LazyFileUploadDropzone
-              id="provider-document-profile"
-              className="mt-1.5 min-h-[72px]"
-              label={profileFileLimitReached ? `1/1 ${t('files')}` : `${t('uploadCompanyProfile')} · 0/1`}
-              hint={profileFileLimitReached ? t('fileLimitReached') : t('uploadHint')}
-              hasFiles={profileFiles.length > 0}
-              busy={processingDocumentKey === 'profile'}
-              disabled={Boolean(processingDocumentKey) || profileFileLimitReached}
-              selectedFiles={profileFiles}
-              maxFiles={MAX_PROVIDER_PROFILE_FILES}
-              onBusyChange={(isBusy) => setProcessingDocumentKey(isBusy ? 'profile' : '')}
-              onFilesReady={(items) => {
-                markFormStarted();
-                setData(d => ({
-                  ...d,
-                  documents: items.slice(0, MAX_PROVIDER_PROFILE_FILES).map(item => ({ ...item, label: 'profile' })),
-                }));
-              }}
-              accept="image/*,application/pdf"
-            />
-            <div className="mt-1 space-y-1">
-              {profileFiles.map((f, i) => (
-                <div key={i} className="flex min-h-11 items-center gap-2 rounded-xl border border-border/70 bg-secondary ps-3 pe-1 text-xs text-foreground">
-                  <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
-                  <span className="line-clamp-2 min-w-0 flex-1 break-words text-start leading-snug" dir="auto" title={f.name}>{f.name}</span>
-                  <Button
-                    type="button"
-                    variant="destructiveGhost"
-                    size="icon"
-                    onClick={() => {
-                      update('documents', []);
-                      focusFormField('provider-document-profile');
-                    }}
-                    disabled={Boolean(processingDocumentKey)}
-                    className="shrink-0"
-                    aria-label={`${t('removeFile')}: ${f.name}`}
-                    title={t('removeFile')}
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
+            {stepName === 'company' && (
+              <>
+                <FormField id="provider-cr-number" label={t('crNumber')} value={data.crNumber} onChange={v => update('crNumber', v)} tried={tried.company} t={t} autoFocus dir="ltr" />
+                <FormField id="provider-company-name" label={t('companyName')} value={data.companyName} onChange={v => update('companyName', v)} tried={tried.company} t={t} required={false} autoComplete="organization" />
+              </>
+            )}
+
+            {stepName === 'contact' && (
+              <>
+                <FormField id="provider-whatsapp" label={t('whatsapp')} value={data.whatsapp} onChange={v => update('whatsapp', v)} tried={tried.contact} t={t} kind="phone" />
+                <FormField id="provider-contact-person" label={t('contactPerson')} value={data.contactPerson} onChange={v => update('contactPerson', v)} tried={tried.contact} t={t} required={false} autoComplete="name" />
+                <FormField id="provider-email" label={t('email')} value={data.email} onChange={v => update('email', v)} tried={tried.contact} t={t} required={false} type="email" dir="ltr" autoComplete="email" />
+              </>
+            )}
+
+            {stepName === 'services' && (
+              <>
+                {tried.services && data.categories.length === 0 && <InlineFieldMessage id="provider-services-error" className="mt-0">{t('requireField')}</InlineFieldMessage>}
+                <div className="ml-choice-list" role="group" aria-label={title} aria-describedby={tried.services && data.categories.length === 0 ? 'provider-services-error' : undefined}>
+                  {serviceOptions.map((c, index) => {
+                    const selected = data.categories.includes(c);
+                    return (
+                      <button key={c} id={index === 0 ? 'provider-first-service' : undefined} type="button" aria-pressed={selected} className="ml-choice" style={{ minHeight: 56 }} onClick={() => toggleCat(c)}>
+                        <span className="ml-choice-text">{t(`cat_${c}`)}</span>
+                        <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-[4px] border ${selected ? 'border-[#009F91] bg-[#009F91] text-white' : 'border-border'}`} aria-hidden="true">
+                          {selected && <Check className="h-3.5 w-3.5" strokeWidth={3} />}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
-          </div>
+                {hasOther && (
+                  <div>
+                    <Label htmlFor="provider-other-category">{t('otherCategoryLabel')} <span aria-hidden="true" className="ms-1 text-[#B5462B]">*</span></Label>
+                    <Textarea
+                      id="provider-other-category"
+                      value={data.otherCategoryDesc}
+                      onChange={e => update('otherCategoryDesc', e.target.value)}
+                      placeholder={t('otherCategoryPh')}
+                      rows={3}
+                      maxLength={300}
+                      aria-invalid={Boolean(tried.services && !otherDescValid)}
+                      aria-required="true"
+                      aria-describedby={`provider-other-category-help${tried.services && !otherDescValid ? ' provider-other-category-error' : ''}`}
+                      className="mt-1.5"
+                    />
+                    <div id="provider-other-category-help" className="ml-field-hint">{t('otherCategoryHelp')}</div>
+                    {tried.services && !otherDescValid && <InlineFieldMessage id="provider-other-category-error">{t('requireField')}</InlineFieldMessage>}
+                  </div>
+                )}
+              </>
+            )}
 
-          {submitError && (
-            <LazySubmissionRetryNotice id="provider-submit-error" />
-          )}
-          <div className="grid grid-cols-1 gap-2 pt-2 min-[320px]:grid-cols-2">
-            <Button variant="outline" onClick={() => showStep(2)} disabled={Boolean(processingDocumentKey)} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">{t('back')}</Button>
-            <Button variant="navy" onClick={submit} disabled={submitting || Boolean(processingDocumentKey)} aria-busy={submitting} aria-describedby={submitError ? 'provider-submit-error' : undefined} className="h-auto min-h-11 w-full whitespace-normal py-2 text-center leading-snug cta-press">
-              {submitting ? <><Loader2 className="animate-spin" aria-hidden="true" />{t('submitting')}</> : t('submitProvider')}
-            </Button>
-          </div>
-        </div>
-      )}
+            {stepName === 'grade' && (
+              <div className="ml-choice-list" role="group" aria-label={t('consultantGrade')}>
+                {CONSULTANT_GRADES.map(g => (
+                  <button key={g} type="button" aria-pressed={(data.consultantGrade || 'unknown') === g} className="ml-choice" onClick={() => { update('consultantGrade', g); next(); }}>
+                    <span className="ml-choice-text">{t(GRADE_LABEL_KEYS[g])}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {stepName === 'areas' && (
+              <div>
+                <Label htmlFor="provider-service-areas">{t('serviceAreas')}</Label>
+                <Input id="provider-service-areas" data-autofocus dir="auto" value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="mt-1.5" />
+                <div className="mt-3">
+                  <ChoiceChips multiple separator={copy.areaSeparator} options={copy.areaChips} value={data.serviceAreas} onChange={v => update('serviceAreas', v)} label={t('serviceAreas')} />
+                </div>
+              </div>
+            )}
+
+            {stepName === 'size' && (
+              <TextOrUnsureField id="provider-project-size" label={t('projectSize')} value={data.projectSizeRange}
+                onChange={value => update('projectSizeRange', value)} placeholder={t('projectSizePh')}
+                lang={lang} choiceKind="projectSize" />
+            )}
+
+            {stepName === 'profile' && (
+              <div>
+                <Label htmlFor="provider-document-profile">{t('uploadCompanyProfile')} <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span></Label>
+                <LazyFileUploadDropzone
+                  id="provider-document-profile"
+                  className="mt-1.5 min-h-[72px]"
+                  label={profileFileLimitReached ? `1/1 ${t('files')}` : `${t('uploadCompanyProfile')} · 0/1`}
+                  hint={profileFileLimitReached ? t('fileLimitReached') : t('uploadHint')}
+                  hasFiles={profileFiles.length > 0}
+                  busy={processingDocumentKey === 'profile'}
+                  disabled={Boolean(processingDocumentKey) || profileFileLimitReached}
+                  selectedFiles={profileFiles}
+                  maxFiles={MAX_PROVIDER_PROFILE_FILES}
+                  onBusyChange={(isBusy) => setProcessingDocumentKey(isBusy ? 'profile' : '')}
+                  onFilesReady={(items) => {
+                    markFormStarted();
+                    setData(d => ({ ...d, documents: items.slice(0, MAX_PROVIDER_PROFILE_FILES).map(item => ({ ...item, label: 'profile' })) }));
+                  }}
+                  accept="image/*,application/pdf"
+                />
+                <div className="mt-2 space-y-1">
+                  {profileFiles.map((f, i) => (
+                    <div key={i} className="flex min-h-11 items-center gap-2 rounded-[6px] border border-border bg-secondary ps-3 pe-1 text-xs text-foreground">
+                      <FileText className="h-4 w-4 shrink-0 text-muted-foreground" />
+                      <span className="line-clamp-2 min-w-0 flex-1 break-words text-start leading-snug" dir="auto" title={f.name}>{f.name}</span>
+                      <Button type="button" variant="destructiveGhost" size="icon" onClick={() => { update('documents', []); focusFormField('provider-document-profile'); }} disabled={Boolean(processingDocumentKey)} className="shrink-0" aria-label={`${t('removeFile')}: ${f.name}`} title={t('removeFile')}>
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {stepName === 'review' && (
+              <>
+                <ReviewList rows={reviewRows} />
+                {submitError && <LazySubmissionRetryNotice id="provider-submit-error" />}
+              </>
+            )}
+
+            {!['type', 'grade'].includes(stepName) && (
+              <StepNav
+                onBack={stepIndex > 0 ? back : undefined}
+                optionalEmpty={optionalEmpty}
+                returnToReview={returnToReview}
+                primaryLabel={stepName === 'review' ? copy.send : undefined}
+                busy={submitting || (stepName === 'profile' && Boolean(processingDocumentKey))}
+                busyLabel={stepName === 'review' ? copy.sending : t('loading')}
+                describedBy={submitError ? 'provider-submit-error' : undefined}
+              />
+            )}
+            {stepName === 'grade' && <StepNav onBack={back} returnToReview={returnToReview} />}
+          </StepFrame>
         </div>
         <DesktopFormAside
           steps={[
@@ -410,95 +483,63 @@ function ContractorApplicationInner() {
   );
 }
 
-function FormField({ id, label, value, onChange, tried, t, placeholder, inputMode, type, kind, required = true }) {
-  const generatedId = React.useId();
-  const fieldId = id || generatedId;
-  const errorId = `${fieldId}-error`;
-  const isPhone = kind === 'phone';
+function FormField({ id, label, value, onChange, tried, t, placeholder, inputMode, type, kind, required = true, autoFocus = false, autoComplete, dir }) {
+  const errorId = `${id}-error`;
   const PREFIX = '+974';
 
-  if (isPhone) {
+  if (kind === 'phone') {
     const localPart = (value || '').replace(/^\+974\s*/, '');
-    const handleLocalChange = (raw) => {
-      // allow only digits, spaces, and dashes after the locked prefix
-      const cleaned = raw.replace(/[^\d\s-]/g, '');
-      onChange(PREFIX + ' ' + cleaned);
-    };
     const digitCount = localPart.replace(/\D/g, '').length;
     const empty = !localPart.trim();
     const tooShort = !empty && digitCount < 8;
     const showError = tried && (empty || tooShort);
-    const errMsg = tooShort ? t('invalidPhone') : t('requireField');
     return (
       <div>
-        <Label htmlFor={fieldId} className="text-sm">
-          {label} <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
-        </Label>
-        <div dir="ltr" data-invalid={showError || undefined} className={`phone-field-shell mt-1.5 flex min-h-11 items-stretch overflow-hidden rounded-xl border bg-card shadow-soft transition-[border-color,box-shadow] ${showError ? 'border-[#EF4444] focus-within:ring-2 focus-within:ring-[#EF4444]/25' : 'border-input hover:border-[#00B59E]/45 focus-within:border-[#00B59E]/60 focus-within:ring-2 focus-within:ring-[#00B59E]/25'}`}>
-          <div className="px-3 flex items-center bg-secondary text-navy text-sm font-semibold select-none border-e border-input shrink-0">
-            {PREFIX}
-          </div>
+        <Label htmlFor={id}>{label} <span aria-hidden="true" className="ms-1 text-[#B5462B]">*</span></Label>
+        <div dir="ltr" data-invalid={showError || undefined} className={`phone-field-shell mt-1.5 flex min-h-12 items-stretch overflow-hidden rounded-[6px] border bg-card transition-[border-color,box-shadow] ${showError ? 'border-[#B5462B] focus-within:ring-2 focus-within:ring-[#B5462B]/25' : 'border-input hover:border-[#009F91]/45 focus-within:border-[#009F91] focus-within:ring-2 focus-within:ring-[#009F91]/25'}`}>
+          <div className="flex shrink-0 select-none items-center border-e border-input bg-secondary px-3 text-sm font-semibold text-navy">{PREFIX}</div>
           <input
-            id={fieldId}
+            id={id}
+            data-autofocus
             value={localPart}
-            onChange={e => handleLocalChange(e.target.value)}
+            onChange={e => onChange(`${PREFIX} ${e.target.value.replace(/[^\d\s-]/g, '')}`)}
             inputMode="tel"
+            autoComplete="tel-national"
             aria-invalid={showError}
             aria-required="true"
             aria-describedby={showError ? errorId : undefined}
-            className="min-h-11 min-w-0 flex-1 bg-transparent px-3 text-base outline-none md:text-sm [@media(pointer:coarse)]:!text-base"
+            className="min-h-12 min-w-0 flex-1 bg-transparent px-3 text-base outline-none md:text-sm [@media(pointer:coarse)]:!text-base"
           />
         </div>
-        {showError && <InlineFieldMessage id={errorId}>{errMsg}</InlineFieldMessage>}
+        {showError && <InlineFieldMessage id={errorId}>{tooShort ? t('invalidPhone') : t('requireField')}</InlineFieldMessage>}
       </div>
     );
   }
 
-  const showError = required && tried && !value;
+  const showError = required && tried && !String(value || '').trim();
   return (
     <div>
-      <Label htmlFor={fieldId} className="text-sm">
+      <Label htmlFor={id}>
         {label} {required
-          ? <span aria-hidden="true" className="ms-1 text-[#EF4444]">*</span>
+          ? <span aria-hidden="true" className="ms-1 text-[#B5462B]">*</span>
           : <span className="ms-1 text-[12px] font-normal text-muted-foreground">({t('optional')})</span>}
       </Label>
       <Input
-        id={fieldId}
+        id={id}
+        data-autofocus={autoFocus || undefined}
         value={value}
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
         inputMode={inputMode}
         type={type}
+        dir={dir}
+        autoComplete={autoComplete}
         aria-invalid={showError}
         aria-required={required ? 'true' : undefined}
         aria-describedby={showError ? errorId : undefined}
-        className="mt-1.5 h-11"
+        className="mt-1.5"
       />
       {showError && <InlineFieldMessage id={errorId}>{t('requireField')}</InlineFieldMessage>}
     </div>
-  );
-}
-
-function ProviderTypeButton({ active, icon: Icon, title, desc, onClick }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className={`provider-type-card interactive-card tap-highlight min-w-0 rounded-2xl border p-3.5 text-start ${active ? 'is-active shadow-soft' : ''}`}
-    >
-      <span className="flex items-start gap-3">
-        <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${active ? 'bg-[#D0F2EE] text-[#152B54] dark:bg-[#00B59E]/20 dark:text-[#00B59E]' : 'bg-muted text-muted-foreground'}`}>
-          <Icon className="h-5 w-5" />
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="flex items-start justify-between gap-2">
-            <span className="block min-w-0 flex-1 break-words text-[13.5px] font-bold leading-tight">{title}</span>
-            {active && <CheckCircle2 className="h-4 w-4 shrink-0 text-teal" />}
-          </span>
-          <span className="mt-1 block break-words text-[12px] leading-relaxed text-muted-foreground">{desc}</span>
-        </span>
-      </span>
-    </button>
   );
 }

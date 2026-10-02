@@ -14,6 +14,7 @@ export default function TextOrUnsureField({ id, label, value, onChange, placehol
       <Label htmlFor={id}>{label}</Label>
       <Input
         id={id}
+        data-autofocus
         type="text"
         value={isUnsure ? '' : value}
         onFocus={() => { if (isUnsure) onChange(''); }}
@@ -27,7 +28,7 @@ export default function TextOrUnsureField({ id, label, value, onChange, placehol
         type="button"
         aria-pressed={isUnsure}
         onClick={() => onChange(isUnsure ? '' : unsure.value)}
-        className={`mt-2 min-h-11 rounded-full border px-4 text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00B59E]/35 motion-reduce:transition-none ${isUnsure ? 'border-[#00B59E] bg-[#D0F2EE]/70 text-navy dark:bg-[#00B59E]/15' : 'border-border bg-card text-muted-foreground hover:border-[#00B59E]/45 hover:text-navy'}`}
+        className={`mt-2 min-h-11 rounded-full border px-4 text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/35 motion-reduce:transition-none ${isUnsure ? 'border-[#009F91] bg-[#EAF7F4]/70 text-navy dark:bg-[#009F91]/15' : 'border-border bg-card text-muted-foreground hover:border-[#009F91]/45 hover:text-navy'}`}
       >
         {unsure.shortLabel}
       </button>
