@@ -17,7 +17,7 @@ MimaarLink is a Qatar-based construction technology platform. A project owner su
 - **Brand line (EN):** The trusted start of every project in Qatar.
 - **Brand line (AR):** البداية الموثوقة لكل مشروع في قطر.
 - **Descriptor:** The project-sourcing platform for Qatar's built environment.
-- **Arabic name:** معمار لينك (confirm exact spelling against the commercial registration before launch).
+- **Arabic name:** معمار لينك (confirmed against commercial registration CR No. 243332).
 
 ## 2. Personality and feeling
 
