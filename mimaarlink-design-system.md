@@ -1,5 +1,7 @@
 # MimaarLink Design System
 
+> **Superseded for visuals (2026-10-02):** palette, fonts and logo rules here predate brand v1.4. Use `brand/BRAND.md` for colour, type, logo, motion and components. Positioning and channel guidance below still apply.
+
 This is the fixed design standard for MimaarLink website, app UI, Instagram, Meta ads, WhatsApp graphics, flyers, PDFs, and future pitch material.
 
 ## 1. Brand Positioning

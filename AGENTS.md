@@ -1,43 +1,60 @@
 # MimaarLink Agent Instructions
 
-Before changing MimaarLink UI, ads, copy, landing pages, social assets, or marketing collateral, read:
+Shared instructions for every coding agent on this repo (Codex, Claude Code, others).
+`CLAUDE.md` imports this file, so there is one source of truth. Update it here.
 
-- `mimaarlink-design-system.md`
-- `mimaarlink-brand-theme-draft.md`
+## Before you start
 
-Before doing MimaarLink strategy, outreach, ads, operations, pricing, provider acquisition, or long-term planning, read:
+1. Read `docs/HANDOFF.md` (latest entry first). It says what changed last, what is half-done, and what is waiting on Jassim.
+2. For UI, copy, ads, landing pages or any visual work, read `brand/BRAND.md` (v1.4). It is the source of truth for colour, type, logo, layout, motion, components, copy and the homepage structure. Where older docs disagree, `brand/BRAND.md` wins.
+3. For strategy, outreach, ads, operations, pricing, provider acquisition or long-term planning, read `mimaarlink-agent-operating-system.md`, `mimaarlink-agent-prompts.md` and `mimaarlink-weekly-execution-board.md`.
 
-- `mimaarlink-agent-operating-system.md`
-- `mimaarlink-agent-prompts.md`
-- `mimaarlink-weekly-execution-board.md`
+`mimaarlink-design-system.md` and `mimaarlink-brand-theme-draft.md` predate v1.4. Their positioning and channel guidance is still useful; their palette, fonts and logo rules are superseded.
 
-## Operating Rules
+## Product rules
 
-- Treat MimaarLink as a serious Qatar construction/project marketplace.
-- Default to Arabic-first UX and copy unless the task explicitly asks for English.
-- Preserve the official logo assets in `public/logo.png`, `public/logo-dark-transparent.png`, and `public/brand/mimaarlink-official-logo-source.png`.
-- Do not redraw, recolor, distort, crop, rotate, or add effects to the logo.
-- Use only the official palette unless the user explicitly approves a new brand direction.
-- Keep UI mobile-first, simple, business-like, and easy to scan.
-- Prefer clear conversion paths over decoration.
-- Do not overpromise verification, legal responsibility, lowest price, guaranteed projects, or guaranteed contractor quality.
-- Keep forms, upload flows, admin data, status pages, and file access working.
+- MimaarLink is a serious Qatar construction and project marketplace: one request, three to five offers, the owner chooses.
+- Arabic-first UX and copy unless the task says English. Every user-facing string exists in both languages; Arabic is written natively, not machine-translated.
+- Do not overpromise verification, legal responsibility, lowest price, guaranteed projects or guaranteed contractor quality. Never invent statistics, testimonials, client logos or counts; label examples as examples.
+- Keep forms, uploads, admin data, status pages, tracking links and file access working. Do not change Supabase tables, auth or submission payloads without Jassim's approval (additive, nullable columns added through the existing migration block in the API are the only exception, and must be noted in the handoff).
 
-## Brand Defaults
+## Brand defaults (v1.4, full spec in `brand/BRAND.md`)
 
-- Primary navy: `#152B54`
-- Deep night navy: `#0D1B2A`
-- Primary teal: `#00B59E`
-- Light teal: `#D0F2EE`
-- Amber accent: `#FFB638`
-- Soft page background: `#F5F4F1`
-- Card background: `#FFFFFF`
-- Muted text: `#5F6B7A`
-- Border: `#E3E7EA`
+- Navy `#152B54` leads. Teal `#009F91` is for actions only. Pale teal `#EAF7F4` with navy text is the signature panel.
+- Ground `#F6F8FB`, line `#DCE3EA`, body `#2E3E57`, muted `#586576`, warn `#B5462B` (warnings and exclusions only).
+- Dark mode: night `#0D1B2A`, surfaces `#13243B`, accent bright teal `#0AC7CE`.
+- Retired: amber `#FFB638`, old teal `#00B59E`, light teal `#D0F2EE`, Manrope. Do not reintroduce them.
+- Type: Source Serif 4 / Noto Naskh Arabic for headings (weight 500), IBM Plex Sans / IBM Plex Sans Arabic for interface text. Loaded in `lib/fonts.js`.
+- Radius 6px. One soft shadow. Motion: 140ms hover/press, 220ms components, 360ms steps/pages, one easing, no bounce, respect reduced motion.
+- Logo: use the SVG files in `public/brand/logo/` (copied byte-for-byte from `brand/logo/`). Never retype the wordmark, recolour, filter or crop it. The old `public/logo.png` files stay in the repo but are no longer used by the site.
 
-## Implementation Discipline
+## Code map (things that are easy to break)
 
-- Reuse existing components and visual classes where possible.
-- Keep icon sizing consistent across contact cards, nav, CTAs, and feature cards.
-- Validate mobile, tablet, and desktop layouts for major UI changes.
-- Run `npm run build` before committing UI or code changes.
+- Tokens: `app/brand-tokens.css` (CSS variables) and `tailwind.config.js` (`navy`, `teal`, `signature`, `warn`…). The shadcn HSL variables in `app/globals.css` are mapped to the same palette.
+- Buttons: `.btn` padding and radius live in `@layer components` in `app/globals.css`. Do not move them into `@layer utilities` or `:where()`; the preflight reset then strips padding from `<button>` elements.
+- Guided forms: `components/GuidedFlow.jsx` (steps-left progress, step frame, back/continue, review list, draft notice, chips) used by `app/post-project/page.js` and `app/contractor/page.js`. Progress shows steps left only, never time.
+- Drafts: `lib/formDraft.js` stores answers in this browser for 7 days. `DRAFT_FIELDS` in each form must never include contact details, CR number or files.
+- Owner pages: `app/project/[id]/page.js` (four-phase timeline via `components/PhaseTimeline.jsx`) and `app/bids/[projectId]/page.js` (side-by-side offers, neutral sort, shortlist).
+- Shortlist: `POST /api/projects/shortlist` stores `projects.selected_contractor_id` and only accepts a firm that bid on that project.
+- Motion helpers: `components/RevealGroup.jsx` (scroll reveals via `data-reveal` / `data-reveal-stagger`), `components/RouteProgress.jsx` (tap progress line and page settle-in). Touch press states live in the `@media (hover: none)` block in `app/globals.css`.
+- App readiness: `app/manifest.js` (installable web app) and `viewport` / `appleWebApp` in `app/layout.js`.
+
+## Workflow
+
+- Keep UI mobile-first; check 375px, 768px and 1440px, Arabic and English, light and dark.
+- Before every commit run both:
+  - `npm run build`
+  - `node --test tests/*.test.mjs` (source-level tests; when a deliberate design change breaks one, rewrite it to guard the new intent, never delete the guarantee)
+- Develop on a branch and open a PR; Vercel builds a preview for every branch. Merge to `main` only when Jassim says so.
+
+## Handoff (required after every change)
+
+Several agents work on this repo. Before you finish a task, add an entry at the top of `docs/HANDOFF.md` with:
+
+- Date, agent (Codex / Claude Code), branch and PR link.
+- What changed and why, in plain words.
+- Anything half-done, risky, or behaving differently than before.
+- Decisions or inputs waiting on Jassim.
+- How you verified it (build, tests, screens checked).
+
+Also put a short "Handoff:" paragraph at the end of the commit message body so `git log` alone tells the next agent what to know.
