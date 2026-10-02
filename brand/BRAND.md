@@ -68,7 +68,7 @@ Background `night`, surfaces `#13243B`, text `#F2F5FA`, body `#C9D6E8`, muted `#
 
 ## 4. Typography
 
-Load with `next/font/google`:
+Self-hosted with `next/font/local` from `lib/font-files/` (see `lib/fonts.js`); do not switch back to `next/font/google`, it makes builds depend on Google Fonts being reachable:
 
 | Role | Latin | Arabic | Weights |
 |---|---|---|---|

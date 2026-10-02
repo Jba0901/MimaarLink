@@ -4,6 +4,21 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · working rules from Jassim
+
+**What changed**
+- `AGENTS.md` Product rules: restored "never invent statistics, testimonials, logos, project counts or awards; do not overpromise; leave a marked placeholder and flag it". This answers the open question from the business docs cleanup entry.
+- `AGENTS.md` Workflow: work in small steps, show Jassim a plan and wait for approval before non-trivial code changes, commit each step separately, tell Jassim before touching Supabase logic, auth or existing URLs.
+- `brand/BRAND.md` §4 said fonts load with `next/font/google`. Since PR #4 they are self-hosted; the line now says so, so no one switches back.
+
+**Waiting on Jassim**
+- Vercel: `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET` still need checking (see older entry).
+
+**Verified**
+- Doc-only change. Build and tests run before commit.
+
+---
+
 ## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #4](https://github.com/Jba0901/MimaarLink/pull/4) · fonts self-hosted
 
 **What changed**
