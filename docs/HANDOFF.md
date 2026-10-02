@@ -12,6 +12,7 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 - `AGENTS.md` rewritten for brand v1.4: the old version still told agents to use teal `#00B59E`, amber and `public/logo.png`, which would undo the rebrand. Added a code map, workflow and this handoff rule.
 - New `CLAUDE.md` imports `AGENTS.md`, so Codex and Claude Code read the same instructions.
 - New `docs/HANDOFF.md` (this file).
+- `AGENTS.md` gains a "What MimaarLink does" section (Jassim's wording): the full range of contracting and consulting activities, the informal market reality, and the principle "flexibility in what we accept; clarity in how we present it". Use it when designing categories, intake, copy and matching.
 
 **Waiting on Jassim**
 - Review `AGENTS.md`, then merge PR #3.

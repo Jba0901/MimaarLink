@@ -3,6 +3,17 @@
 Shared instructions for every coding agent on this repo (Codex, Claude Code, others).
 `CLAUDE.md` imports this file, so there is one source of truth. Update it here.
 
+## What MimaarLink does
+
+MimaarLink connects project owners with contractors and consultants across Qatar's built environment. An owner describes a project; we turn it into a clear brief, send it to vetted providers, and the owner receives three to five comparable offers to choose from.
+
+We cover a wide range of project activities, because the market demands it:
+
+- **Contracting / build:** fit-out, MEP (mechanical, electrical, plumbing), commercial buildings, villas and residential, healthcare and F&B spaces (clinics, restaurants, cafés), industrial facilities (warehouses, workshops), mixed-use and private developments, general contracting, and specialist trades.
+- **Consulting / design:** architecture, engineering, design, site supervision, approvals, and tendering.
+
+**Market reality to keep in mind.** Qatar's project-sourcing market is currently informal and fragmented: work is scattered across referrals, WhatsApp and personal contacts, scopes are unclear, and almost everyone does a bit of everything. There are no clean categories yet. MimaarLink's job is to bring order to this: a single clear starting point, structured briefs, qualified providers, and comparable offers. So when the product handles the long and messy range of real project types, the experience must still feel clear, calm and organized. **Flexibility in what we accept; clarity in how we present it.**
+
 ## Before you start
 
 1. Read `docs/HANDOFF.md` (latest entry first). It says what changed last, what is half-done, and what is waiting on Jassim.
