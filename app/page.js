@@ -64,7 +64,7 @@ const COPY = {
     trustTitle: 'ما الذي نلتزم به.',
     trust: [
       ['مراجعة الشركات', 'نتحقق من رقم السجل التجاري لكل شركة ونراجع خدماتها قبل أن تستلم المشاريع.'],
-      ['مسجّلة في قطر', 'معمار لينك منصة قطرية. سجل تجاري رقم [يُضاف لاحقًا].'],
+      ['مسجّلة في قطر', 'معمار لينك منصة قطرية مسجّلة. سجل تجاري رقم 243332.'],
       ['خصوصية بياناتك', 'نشارك تفاصيل مشروعك فقط بالقدر اللازم للتنسيق والمطابقة.'],
       ['دعم من أشخاص حقيقيين', 'فريقنا على بُعد رسالة واتساب في أي خطوة.'],
     ],
@@ -124,7 +124,7 @@ const COPY = {
     trustTitle: 'What we hold ourselves to.',
     trust: [
       ['Firms are reviewed', 'We verify every firm’s CR number and review its services before it receives projects.'],
-      ['Registered in Qatar', 'MimaarLink is a Qatari platform. CR No. [placeholder].'],
+      ['Registered in Qatar', 'MimaarLink is a registered Qatari platform. CR No. 243332.'],
       ['Your details stay private', 'Project details are shared only as needed for coordination and matching.'],
       ['A person is one tap away', 'Our team is one WhatsApp message away at every step.'],
     ],
