@@ -8,14 +8,16 @@ const providerForm = await read('../app/contractor/page.js');
 const projectForm = await read('../app/post-project/page.js');
 const api = await read('../app/api/[[...path]]/route.js');
 const copy = await read('../lib/i18n.js');
+const formDraft = await read('../lib/formDraft.js');
 
 test('lazy upload fallback remains visually informative while its chunk loads', () => {
   assert.match(lazyControls, /fallback=\{\([\s\S]*?border-2 border-dashed[\s\S]*?\{props\.label\}[\s\S]*?\{props\.hint\}/);
   assert.match(lazyControls, /<Upload className="h-5 w-5" \/>/);
 });
 
-test('phone input itself keeps the full mobile touch height', () => {
-  assert.match(providerForm, /className="min-h-11 min-w-0 flex-1 bg-transparent/);
+test('phone input itself keeps the full 48px mobile touch height', () => {
+  assert.match(providerForm, /className="min-h-12 min-w-0 flex-1 bg-transparent/);
+  assert.match(projectForm, /phone-field-shell mt-1\.5 flex min-h-12/);
 });
 
 test('timeline examples fit narrow mobile inputs in both languages', () => {
@@ -24,17 +26,33 @@ test('timeline examples fit narrow mobile inputs in both languages', () => {
   assert.doesNotMatch(copy, /finish in 1 month|الإنجاز خلال شهر/);
 });
 
-test('provider identity step requires only CR and WhatsApp', () => {
-  assert.match(providerForm, /const basicsValid = Boolean\(data\.crNumber\.trim\(\) && phoneValid\)/);
-  assert.match(providerForm, /provider-company-name[\s\S]*?required=\{false\}/);
-  assert.match(providerForm, /provider-contact-person[\s\S]*?required=\{false\}/);
-  assert.match(providerForm, /const firstInvalidBasicsField = !data\.crNumber\.trim\(\) \? 'provider-cr-number' : 'provider-whatsapp'/);
+test('provider identity steps require only CR and WhatsApp', () => {
+  assert.match(providerForm, /if \(!data\.crNumber\.trim\(\)\) \{ focusFormField\('provider-cr-number'\); return; \}/);
+  assert.match(providerForm, /if \(!phoneValid\) \{ focusFormField\('provider-whatsapp'\); return; \}/);
+  for (const id of ['provider-company-name', 'provider-contact-person', 'provider-email']) {
+    assert.match(providerForm, new RegExp(`id="${id}"[^\\n]*required=\\{false\\}`), id);
+  }
 });
 
-test('project location is implicit Doha and no longer requested in the owner form', () => {
-  assert.doesNotMatch(projectForm, /id="project-location"/);
-  assert.doesNotMatch(projectForm, /category: '', location:/);
+test('project location is optional, skippable, and still defaults to Doha', () => {
+  assert.match(projectForm, /const STEPS = \['type', 'describe', 'location', 'timing', 'budget', 'contact', 'review'\]/);
+  assert.match(projectForm, /\['location', 'timing', 'budget'\]\.includes\(step\)/);
+  assert.match(projectForm, /locationDefault: 'Skipped \(Doha by default\)'/);
   assert.match(api, /location: body\.location \|\| 'Doha'/);
-  assert.match(copy, /projectStep2Desc: 'A clear description is enough for us to start reviewing\.'/);
-  assert.match(copy, /projectStep2Desc: 'الوصف الواضح يكفي لبدء مراجعة الطلب\.'/);
+});
+
+test('drafts stay in this browser and never hold contact details or files', () => {
+  const projectDraft = projectForm.match(/const DRAFT_FIELDS = \[([^\]]*)\]/)[1];
+  const providerDraft = providerForm.match(/const DRAFT_FIELDS = \[([^\]]*)\]/)[1];
+  for (const field of ['name', 'phone', 'email', 'company', 'role', 'files']) assert.doesNotMatch(projectDraft, new RegExp(`'${field}'`), field);
+  for (const field of ['crNumber', 'whatsapp', 'contactPerson', 'email', 'documents']) assert.doesNotMatch(providerDraft, new RegExp(`'${field}'`), field);
+  assert.match(formDraft, /window\.localStorage\.setItem/);
+  assert.match(formDraft, /const MAX_AGE_MS = 7 \* 24 \* 60 \* 60 \* 1000/);
+  assert.doesNotMatch(formDraft, /fetch\(|document\.cookie/);
+});
+
+test('the shortlist records only a firm that bid on the project', () => {
+  assert.match(api, /alter table projects\s+add column if not exists selected_contractor_id text references contractors\(id\) on delete set null/);
+  assert.match(api, /select 1 from bids where project_id = \$1 and contractor_id = \$2 limit 1/);
+  assert.match(api, /if \(!bidMatch\.length\) return err\('Offer not found for this project', 404\)/);
 });

@@ -16,24 +16,34 @@ test('drawer focus does not depend on animation frames and narrow labels have ro
   assert.match(shell, /max-\[359px\]:gap-1 max-\[359px\]:px-2/);
 });
 
-test('brand mark rules never filter, glow, or shadow the official image', () => {
-  const filters = [];
+test('brand logo rules never filter, glow, or shadow the official artwork', () => {
+  const rules = [];
+  const effects = [];
   postcss.parse(css).walkRules(rule => {
-    if (!rule.selector.includes('.brand-mark')) return;
+    if (!rule.selector.includes('.brand-logo')) return;
+    rules.push(rule.selector);
     rule.walkDecls(decl => {
-      if (['filter', 'box-shadow', 'text-shadow'].includes(decl.prop)) filters.push(decl.value);
+      if (['filter', 'box-shadow', 'text-shadow', 'mix-blend-mode'].includes(decl.prop)) effects.push(decl.value);
     });
   });
-  assert.ok(filters.length > 0);
-  assert.ok(filters.every(value => value === 'none'));
+  assert.ok(rules.length > 0);
+  assert.ok(effects.every(value => value === 'none'));
 });
 
-test('dark surfaces use a noninteractive backing without changing image dimensions', () => {
-  assert.match(css, /\.dark \.brand-mark::before,\s+\.brand-mark-on-dark::before/);
-  assert.match(css, /background: #F5F4F1;\s+pointer-events: none;/);
-  assert.match(shell, /<Logo className="h-8 w-8" onDark \/>/);
-  assert.match(shell, /src="\/logo.png"/);
-  assert.match(css, /object-fit: contain;\s+filter: none;/);
+test('dark surfaces swap to the official dark artwork instead of altering the image', () => {
+  assert.match(css, /\.dark \.brand-logo \.brand-logo-dark,\s+\.brand-logo-on-dark \.brand-logo-dark \{ display: block; \}/);
+  assert.match(shell, /\/brand\/logo\/mimaarlink-logo-\$\{script\}-dark\.svg/);
+  assert.match(shell, /src="\/brand\/logo\/mimaarlink-logo-bilingual-dark\.svg"/);
+  // The wordmark is always the file, never typed in a font.
+  assert.doesNotMatch(shell, /<span style=\{\{ color: first \}\}>Mimaar<\/span>/);
+});
+
+test('served v1.4 logo files are byte-identical to the brand handoff', async () => {
+  for (const file of ['mimaarlink-logo-en.svg', 'mimaarlink-logo-en-dark.svg', 'mimaarlink-logo-ar.svg', 'mimaarlink-logo-ar-dark.svg', 'mimaarlink-logo-bilingual-dark.svg', 'mimaarlink-icon.svg', 'mimaarlink-icon-512.png', 'mimaarlink-icon-180.png']) {
+    const source = await readFile(new URL(`../brand/logo/${file}`, import.meta.url));
+    const served = await readFile(new URL(`../public/brand/logo/${file}`, import.meta.url));
+    assert.ok(source.equals(served), file);
+  }
 });
 
 test('official logo assets retain the released binary hashes', async () => {

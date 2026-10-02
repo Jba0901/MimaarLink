@@ -1186,7 +1186,7 @@ html[dir="rtl"] .ml-step-desc { line-height: 1.8; }
 .ml-choice[aria-pressed="true"] { border-color: var(--ml-accent); background: var(--ml-signature-bg); box-shadow: inset 0 0 0 1px var(--ml-accent); }
 .ml-choice-icon { display: flex; height: 40px; width: 40px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: var(--ml-radius); background: var(--ml-pale-teal); color: var(--ml-teal-ink); }
 .dark .ml-choice-icon { background: var(--ml-signature-bg); color: var(--ml-bright-teal); }
-.ml-choice-text { min-width: 0; flex: 1; }
+.ml-choice-text { min-width: 0; flex: 1; overflow-wrap: break-word; }
 .ml-choice-text small { display: block; margin-top: 2px; font-size: 13px; font-weight: 400; color: var(--ml-muted); }
 
 .ml-review { border-top: 1px solid var(--ml-line); }
