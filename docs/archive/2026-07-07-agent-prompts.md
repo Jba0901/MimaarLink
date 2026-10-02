@@ -1,5 +1,7 @@
 # MimaarLink Agent Prompt Library
 
+> **Archived 2026-10-02.** Kept for history only; do not follow it. Replaced by `docs/operating-system.md`. Contains retired brand colours; do not use for creative.
+
 Use these prompts when spawning sub-agents or briefing external AI tools.
 
 ## Shared Context For All Agents

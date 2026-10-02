@@ -4,6 +4,32 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · business docs cleanup
+
+**What changed**
+- New `COMPANY-BRAIN.md` at the root: one page with mission, market, customers, money model, current status, focus, long-term gates, firm rules and an index of files.
+- The July business docs were reorganised:
+  - Agent operating system and prompt library merged into a short `docs/operating-system.md`. The old prompts listed the retired colours.
+  - Matching SOP, qualification score and scripts extracted into `docs/operations.md`.
+  - The strategy file moved to `docs/strategy/10-year-moat.md` and the ads plan to `docs/playbooks/meta-ads-launch.md`; both have a status note on top.
+  - The two referral target lists moved to `docs/outreach/` with clear names.
+  - The first-wave plan, the weekly board (last updated 20 July) and the old agent files moved to `docs/archive/`, marked "history only".
+- `AGENTS.md` "Before you start" now points to the brain and the new paths.
+
+**Decisions from Jassim, recorded in the brain**
+- Intake stays open to all project types (`AGENTS.md`). Messy cases are handled case by case and turned into rules after market experience.
+- MimaarLink is free for owners and providers for now. QAR 750 is only a hypothesis; do not quote any price.
+- Status: 3 contractor applications; no confirmed real projects.
+
+**Waiting on Jassim**
+- On 2 Oct, Jassim's own commit removed the "do not overpromise / never invent statistics" line from `AGENTS.md` Product rules. The brain keeps both as firm rules. Confirm or restore.
+- Check that Vercel has `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET` set as two different values. The fail-closed admin fix (`52e5d64`) is on main, so admin stays locked without them.
+
+**Verified**
+- Doc-only change; no code was touched. Checked that no code or test references the moved file names. Build and tests run before commit.
+
+---
+
 ## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #3](https://github.com/Jba0901/MimaarLink/pull/3) (open, awaiting merge)
 
 **What changed**

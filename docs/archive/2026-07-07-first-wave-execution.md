@@ -1,5 +1,7 @@
 # MimaarLink First-Wave Execution Board
 
+> **Archived 2026-10-02.** Kept for history only; do not follow it. Useful parts were moved to `docs/operations.md`.
+
 Date: 2026-07-07
 
 This file is the Chief Operator synthesis of the first four MimaarLink sub-agents:
