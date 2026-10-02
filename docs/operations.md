@@ -4,6 +4,8 @@ How MimaarLink handles a project from request to introduction while matching is 
 
 Target: under 2 hours of work per project.
 
+Wording, offer format, owner status updates and the tracker are in `docs/ops-kit.md`.
+
 ## 1. Provider qualification
 
 **Before scoring, collect:** company name, Qatar phone and contact person, CR number, main services, recent Qatar work. For consultants, also discipline and registration or classification where relevant.
