@@ -66,3 +66,8 @@ test('Arabic placeholders sit on the right: free-text fields use plaintext bidi,
   }
   assert.doesNotMatch(unsureField, /dir="auto"/);
 });
+
+test('provider application has no service-area step (most work is in Doha)', () => {
+  assert.match(providerForm, /const stepsFor = \(isConsultant\) => \['type', 'company', 'contact', 'services', \.\.\.\(isConsultant \? \['grade'\] : \[\]\), 'size', 'profile', 'review'\];/);
+  assert.doesNotMatch(providerForm, /serviceAreas|'areas'/);
+});
