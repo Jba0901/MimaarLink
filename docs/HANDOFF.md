@@ -4,6 +4,25 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #4](https://github.com/Jba0901/MimaarLink/pull/4) · fonts self-hosted
+
+**What changed**
+- The Vercel preview build for `d1fbf08` failed because the build machine could not download the fonts from Google Fonts (`next/font/google` fetches them during every build).
+- `lib/fonts.js` now uses `next/font/local` with the woff2 files committed in `lib/font-files/`. These are the same Google Fonts files (latin subset for Source Serif 4 and IBM Plex Sans, arabic subset for IBM Plex Sans Arabic and Noto Naskh Arabic, same weights). Builds no longer need the internet for fonts. Licences were already in `public/fonts/licenses/`.
+- `tests/typography.test.mjs`: the font test now guards "self-hosted from repo files, never `next/font/google`", that every font file exists, and that `display: 'swap'` stays.
+
+**Behaving differently**
+- Each font now holds only its own script. Latin letters and Western digits inside Arabic text come from IBM Plex Sans / Source Serif (next in the font stack) instead of the Arabic fonts' own Latin glyphs. Plex looks the same; in Arabic headings, Latin digits (e.g. "3–5") now use Source Serif instead of Noto Naskh's digits.
+- To update a font later, replace the file in `lib/font-files/` (download from Google Fonts CSS with a modern browser user agent).
+
+**Waiting on Jassim**
+- Nothing.
+
+**Verified**
+- Clean `npm run build` and `node --test tests/*.test.mjs` (42/42) pass. Served the build and checked in Chromium at 375px: all four fonts load from the site itself, with no requests to Google; Arabic homepage renders correctly.
+
+---
+
 ## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · decisions log
 
 **What changed**

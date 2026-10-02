@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, stat } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
@@ -21,9 +21,15 @@ const declarations = (selector) => {
   return result;
 };
 
-test('the brand fonts are build-time self-hosted with visible fallback text', () => {
-  assert.match(fonts, /import \{ Source_Serif_4, IBM_Plex_Sans, IBM_Plex_Sans_Arabic, Noto_Naskh_Arabic \} from 'next\/font\/google'/);
+test('the brand fonts are self-hosted from repo files with visible fallback text', async () => {
+  assert.match(fonts, /import localFont from 'next\/font\/local'/);
+  assert.doesNotMatch(fonts, /next\/font\/google/, 'builds must not download fonts from Google');
   assert.equal((fonts.match(/display: 'swap'/g) || []).length, 4);
+  for (const [, file] of fonts.matchAll(/path: '\.\/(font-files\/[^']+\.woff2)'/g)) {
+    const { size } = await stat(new URL(`../lib/${file}`, import.meta.url));
+    assert.ok(size > 10000, `${file} is missing or empty`);
+  }
+  assert.equal((fonts.match(/adjustFontFallback: false/g) || []).length, 2, 'Arabic faces must not shadow the Latin family with a metric fallback');
   assert.match(layout, /className=\{fontVariables\}/);
   for (const source of [layout, css, globals, tokens]) assert.doesNotMatch(source, /fonts\.googleapis\.com|fonts\.gstatic\.com|Manrope/);
 });
