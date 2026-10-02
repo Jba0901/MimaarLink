@@ -6,7 +6,7 @@ import DesktopFormAside from '@/components/DesktopFormAside';
 import InlineFieldMessage from '@/components/InlineFieldMessage';
 import TextOrUnsureField from '@/components/TextOrUnsureField';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
-import { ChoiceChips, DraftNotice, ReviewList, StepFrame, StepNav, StepsLeft } from '@/components/GuidedFlow';
+import { DraftNotice, ReviewList, StepFrame, StepNav, StepsLeft } from '@/components/GuidedFlow';
 import { LazyFileUploadDropzone, LazyNetworkStatusNotice, LazySubmissionRetryNotice, LazySuccessPanel } from '@/components/LazyFormControls';
 import { useLang } from '@/lib/LangContext';
 import { CATEGORIES, CONSULTANT_CATEGORIES, CONSULTANT_GRADES } from '@/lib/i18n';
@@ -23,56 +23,55 @@ import { focusFormField } from '@/lib/focusFormField';
 const MAX_PROVIDER_PROFILE_FILES = 1;
 const DRAFT_KEY = 'ml:draft:provider:v1';
 // Only these fields are ever written to the browser draft. CR, WhatsApp, names, email and files are not.
-const DRAFT_FIELDS = ['providerType', 'companyName', 'categories', 'consultantGrade', 'otherCategoryDesc', 'serviceAreas', 'projectSizeRange'];
+const DRAFT_FIELDS = ['providerType', 'companyName', 'categories', 'consultantGrade', 'otherCategoryDesc', 'projectSizeRange'];
 const GRADE_LABEL_KEYS = { unknown: 'gradeUnknown', grade_a: 'gradeA', grade_b: 'gradeB', grade_c: 'gradeC' };
 
-const stepsFor = (isConsultant) => ['type', 'company', 'contact', 'services', ...(isConsultant ? ['grade'] : []), 'areas', 'size', 'profile', 'review'];
+// No service-area step: most work is in Doha (DECISIONS.md, 2026-10-02). The API stores an empty area.
+const stepsFor = (isConsultant) => ['type', 'company', 'contact', 'services', ...(isConsultant ? ['grade'] : []), 'size', 'profile', 'review'];
 
 const COPY = {
   en: {
+    eyebrowAny: 'Join as a contractor or consultant',
     type: ['How would you like to join?', 'Choose the option that describes your company.'],
     company: ['Your company', 'The CR number is all we need to start verification.'],
     contact: ['How can we reach you?', 'We contact applicants on WhatsApp.'],
     services: ['What work do you take on?', 'Choose every service you want projects for.'],
     servicesConsultant: ['Which services does your office offer?', 'Choose every service you want projects for.'],
     grade: ['What is your classification?', 'If you are not sure, choose the first option.'],
-    areas: ['Where do you work?', 'Pick the areas you cover, or skip.'],
     size: ['What project size suits you?', 'A typical range in QAR helps us match you.'],
     profile: ['Add a company profile?', 'Optional. One PDF or image helps our review.'],
     review: ['Review and apply', 'Check your details. You can edit anything before sending.'],
-    areaChips: ['All of Qatar', 'Doha', 'Lusail', 'Al Rayyan', 'Al Wakrah', 'Al Khor'],
-    areaSeparator: ', ',
+    listSeparator: ', ',
     send: 'Send application',
     sending: 'Sending…',
-    rows: { type: 'Applying as', company: 'Company', contact: 'Contact', services: 'Services', grade: 'Classification', areas: 'Service areas', size: 'Typical project size', profile: 'Company profile' },
+    rows: { type: 'Applying as', company: 'Company', contact: 'Contact', services: 'Services', grade: 'Classification', size: 'Typical project size', profile: 'Company profile' },
     notGiven: 'Skipped',
     none: 'None',
     successTitle: 'Application received.',
     nextTitle: 'What happens after you apply',
-    next: ['We verify your CR number and review your services.', 'We may message you on WhatsApp to confirm details.', 'Once approved, you receive projects that match your trade and area.', 'Your tracking link shows your application status at any time.'],
+    next: ['We verify your CR number and review your services.', 'We may message you on WhatsApp to confirm details.', 'Once approved, you receive projects that match your services.', 'Your tracking link shows your application status at any time.'],
     whatsapp: 'Questions? Message us on WhatsApp',
   },
   ar: {
+    eyebrowAny: 'انضم كمقاول أو استشاري',
     type: ['كيف تريد الانضمام؟', 'اختر ما يصف شركتك.'],
     company: ['بيانات شركتك', 'رقم السجل التجاري هو كل ما نحتاجه لبدء التحقق.'],
     contact: ['كيف نتواصل معك؟', 'نتواصل مع المتقدمين عبر واتساب.'],
     services: ['ما الأعمال التي تنفذها؟', 'اختر كل خدمة ترغب باستلام مشاريع لها.'],
     servicesConsultant: ['ما الخدمات التي يقدمها مكتبك؟', 'اختر كل خدمة ترغب باستلام مشاريع لها.'],
     grade: ['ما تصنيف مكتبك؟', 'إن لم تكن متأكدًا، اختر الخيار الأول.'],
-    areas: ['أين تعمل؟', 'اختر المناطق التي تغطيها، أو تخطَّ هذه الخطوة.'],
     size: ['ما حجم المشاريع المناسب لك؟', 'يساعدنا نطاق تقريبي بالريال في مطابقتك مع المشاريع.'],
     profile: ['هل تريد إرفاق ملف تعريفي؟', 'اختياري. ملف PDF أو صورة واحدة تساعدنا في المراجعة.'],
     review: ['راجع وأرسل الطلب', 'تأكد من بياناتك، ويمكنك تعديل أي شيء قبل الإرسال.'],
-    areaChips: ['كل قطر', 'الدوحة', 'لوسيل', 'الريان', 'الوكرة', 'الخور'],
-    areaSeparator: '، ',
+    listSeparator: '، ',
     send: 'إرسال الطلب',
     sending: 'جارٍ الإرسال…',
-    rows: { type: 'الانضمام كـ', company: 'الشركة', contact: 'التواصل', services: 'الخدمات', grade: 'التصنيف', areas: 'مناطق العمل', size: 'حجم المشاريع المعتاد', profile: 'الملف التعريفي' },
+    rows: { type: 'الانضمام كـ', company: 'الشركة', contact: 'التواصل', services: 'الخدمات', grade: 'التصنيف', size: 'حجم المشاريع المعتاد', profile: 'الملف التعريفي' },
     notGiven: 'تم التخطي',
     none: 'لا يوجد',
     successTitle: 'تم استلام طلبك.',
     nextTitle: 'ماذا يحدث بعد التقديم',
-    next: ['نتحقق من رقم السجل التجاري ونراجع خدماتك.', 'قد نراسلك عبر واتساب لتأكيد بعض التفاصيل.', 'بعد الاعتماد، تستلم مشاريع تناسب تخصصك ومنطقتك.', 'يعرض رابط المتابعة حالة طلبك في أي وقت.'],
+    next: ['نتحقق من رقم السجل التجاري ونراجع خدماتك.', 'قد نراسلك عبر واتساب لتأكيد بعض التفاصيل.', 'بعد الاعتماد، تستلم مشاريع تناسب خدماتك.', 'يعرض رابط المتابعة حالة طلبك في أي وقت.'],
     whatsapp: 'لديك سؤال؟ راسلنا على واتساب',
   },
 };
@@ -105,7 +104,8 @@ function ContractorApplicationInner() {
   const copy = COPY[lang === 'ar' ? 'ar' : 'en'];
   const sp = useSearchParams();
   const requestedParam = sp.get('type');
-  const requestedType = requestedParam === 'consultant' ? 'consultant' : 'contractor';
+  // Nothing is preselected: the type comes from a contractor/consultant link or from the applicant's tap.
+  const requestedType = requestedParam === 'consultant' || requestedParam === 'contractor' ? requestedParam : '';
   const [stepName, setStepName] = useState('type');
   const [direction, setDirection] = useState('forward');
   const [returnToReview, setReturnToReview] = useState(false);
@@ -119,8 +119,8 @@ function ContractorApplicationInner() {
   const [data, setData] = useState({
     providerType: requestedType,
     companyName: '', crNumber: '', contactPerson: '', whatsapp: '+974 ', email: '',
-    categories: [], consultantGrade: requestedType === 'consultant' ? 'unknown' : '', consultantServices: [],
-    otherCategoryDesc: '', serviceAreas: '', projectSizeRange: '', documents: [],
+    categories: [], consultantGrade: '', consultantServices: [],
+    otherCategoryDesc: '', projectSizeRange: '', documents: [],
   });
 
   const isConsultant = data.providerType === 'consultant';
@@ -134,17 +134,19 @@ function ContractorApplicationInner() {
   }, []);
 
   useEffect(() => {
-    setData(d => ({
-      ...d,
-      providerType: requestedType,
-      consultantGrade: requestedType === 'consultant' ? (d.consultantGrade || 'unknown') : '',
-      consultantServices: requestedType === 'consultant' ? d.consultantServices : [],
-    }));
     // Arriving from a contractor or consultant link skips the type question.
-    if (requestedParam) goTo('company');
+    if (requestedType) {
+      setData(d => ({
+        ...d,
+        providerType: requestedType,
+        consultantGrade: requestedType === 'consultant' ? d.consultantGrade : '',
+        consultantServices: requestedType === 'consultant' ? d.consultantServices : [],
+      }));
+      goTo('company');
+    }
     const saved = loadDraft(DRAFT_KEY);
     if (saved && (saved.data?.categories?.length || saved.data?.companyName)) setDraft(saved);
-  }, [requestedType, requestedParam, goTo]);
+  }, [requestedType, goTo]);
 
   // Save the safe fields as the applicant types; never CR, WhatsApp, names, email or files.
   useEffect(() => {
@@ -181,8 +183,8 @@ function ContractorApplicationInner() {
   const restartDraft = () => {
     clearDraft(DRAFT_KEY);
     setDraft(null);
-    setData(d => ({ ...d, companyName: '', categories: [], consultantServices: [], consultantGrade: d.providerType === 'consultant' ? 'unknown' : '', otherCategoryDesc: '', serviceAreas: '', projectSizeRange: '' }));
-    goTo(requestedParam ? 'company' : 'type', 'back');
+    setData(d => ({ ...d, companyName: '', categories: [], consultantServices: [], consultantGrade: '', otherCategoryDesc: '', projectSizeRange: '' }));
+    goTo(requestedType ? 'company' : 'type', 'back');
   };
 
   const selectProviderType = (providerType) => {
@@ -192,7 +194,7 @@ function ContractorApplicationInner() {
       providerType,
       categories: [],
       consultantServices: [],
-      consultantGrade: providerType === 'consultant' ? 'unknown' : '',
+      consultantGrade: '',
       otherCategoryDesc: '',
     }));
     goTo('company');
@@ -247,6 +249,7 @@ function ContractorApplicationInner() {
   };
 
   const submit = async () => {
+    if (!data.providerType) { goTo('type', 'back'); return; }
     if (!data.crNumber.trim()) { goTo('company', 'back'); return; }
     if (!phoneValid) { goTo('contact', 'back'); return; }
     if (!servicesValid) { goTo('services', 'back'); return; }
@@ -256,7 +259,8 @@ function ContractorApplicationInner() {
       const res = await fetch('/api/contractors', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, marketingAttribution: getMarketingAttribution() }),
+        // An unanswered classification is sent as 'unknown', as before.
+        body: JSON.stringify({ ...data, consultantGrade: isConsultant ? (data.consultantGrade || 'unknown') : '', marketingAttribution: getMarketingAttribution() }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || 'Error');
@@ -305,21 +309,19 @@ function ContractorApplicationInner() {
     { key: 'type', label: copy.rows.type, value: isConsultant ? t('providerTypeConsultant') : t('providerTypeContractor'), onEdit: edit('type') },
     { key: 'company', label: copy.rows.company, value: joinWith([data.companyName, `${t('crNumber')}: ${data.crNumber}`]), onEdit: edit('company') },
     { key: 'contact', label: copy.rows.contact, value: joinWith([data.contactPerson, data.whatsapp, data.email]), onEdit: edit('contact') },
-    { key: 'services', label: copy.rows.services, value: [...data.categories.map(c => t(`cat_${c}`)), hasOther ? data.otherCategoryDesc : ''].filter(Boolean).join(copy.areaSeparator), onEdit: edit('services') },
+    { key: 'services', label: copy.rows.services, value: [...data.categories.map(c => t(`cat_${c}`)), hasOther ? data.otherCategoryDesc : ''].filter(Boolean).join(copy.listSeparator), onEdit: edit('services') },
     ...(isConsultant ? [{ key: 'grade', label: copy.rows.grade, value: t(GRADE_LABEL_KEYS[data.consultantGrade || 'unknown']), onEdit: edit('grade') }] : []),
-    { key: 'areas', label: copy.rows.areas, value: data.serviceAreas.trim() || copy.notGiven, empty: !data.serviceAreas.trim(), onEdit: edit('areas') },
     { key: 'size', label: copy.rows.size, value: data.projectSizeRange.trim() || copy.notGiven, empty: !data.projectSizeRange.trim(), onEdit: edit('size') },
     { key: 'profile', label: copy.rows.profile, value: profileFiles[0]?.name || copy.none, empty: !profileFiles.length, onEdit: edit('profile') },
   ];
-  const optionalEmpty = (stepName === 'areas' && !data.serviceAreas.trim())
-    || (stepName === 'size' && !data.projectSizeRange.trim())
+  const optionalEmpty = (stepName === 'size' && !data.projectSizeRange.trim())
     || (stepName === 'profile' && !profileFiles.length);
 
   return (
     <AppShell hideFooter hideNav wide>
       <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
         <div className="ml-flow provider-form-flow min-w-0" data-form-step={stepIndex + 1}>
-          <p className="eyebrow mb-4">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</p>
+          <p className="eyebrow mb-4">{!data.providerType ? copy.eyebrowAny : isConsultant ? t('consultantTitle') : t('contractorTitle')}</p>
           <LazyNetworkStatusNotice />
           {draft && <DraftNotice hadFiles={draft.fileCount > 0} onContinue={continueDraft} onRestart={restartDraft} />}
           <StepsLeft index={stepIndex} total={steps.length} />
@@ -392,20 +394,10 @@ function ContractorApplicationInner() {
             {stepName === 'grade' && (
               <div className="ml-choice-list" role="group" aria-label={t('consultantGrade')}>
                 {CONSULTANT_GRADES.map(g => (
-                  <button key={g} type="button" aria-pressed={(data.consultantGrade || 'unknown') === g} className="ml-choice" onClick={() => { update('consultantGrade', g); next(); }}>
+                  <button key={g} type="button" aria-pressed={data.consultantGrade === g} className="ml-choice" onClick={() => { update('consultantGrade', g); next(); }}>
                     <span className="ml-choice-text">{t(GRADE_LABEL_KEYS[g])}</span>
                   </button>
                 ))}
-              </div>
-            )}
-
-            {stepName === 'areas' && (
-              <div>
-                <Label htmlFor="provider-service-areas">{t('serviceAreas')}</Label>
-                <Input id="provider-service-areas" data-autofocus dir="auto" value={data.serviceAreas} onChange={e => update('serviceAreas', e.target.value)} placeholder={t('serviceAreasPh')} className="mt-1.5" />
-                <div className="mt-3">
-                  <ChoiceChips multiple separator={copy.areaSeparator} options={copy.areaChips} value={data.serviceAreas} onChange={v => update('serviceAreas', v)} label={t('serviceAreas')} />
-                </div>
               </div>
             )}
 

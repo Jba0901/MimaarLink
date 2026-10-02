@@ -36,6 +36,7 @@ If you can edit the repo, add it yourself in the same change and mention it in t
 
 - MimaarLink is a serious Qatar construction and project marketplace: one request, three to five offers, the owner chooses.
 - Arabic-first UX and copy unless the task says English. Every user-facing string exists in both languages; Arabic is written natively, not machine-translated.
+- Never invent statistics, testimonials, client or partner logos, project counts or awards, and do not overpromise. Leave a clearly marked placeholder and flag it to Jassim.
 - Keep forms, uploads, admin data, status pages, tracking links and file access working. Do not change Supabase tables, auth or submission payloads without Jassim's approval (additive, nullable columns added through the existing migration block in the API are the only exception, and must be noted in the handoff).
 
 ## Brand defaults (v1.4, full spec in `brand/BRAND.md`)
@@ -66,6 +67,8 @@ If you can edit the repo, add it yourself in the same change and mention it in t
   - `npm run build`
   - `node --test tests/*.test.mjs` (source-level tests; when a deliberate design change breaks one, rewrite it to guard the new intent, never delete the guarantee)
 - Develop on a branch and open a PR; Vercel builds a preview for every branch. Merge to `main` only when Jassim says so.
+- Work in small steps. For anything non-trivial, show Jassim a plan and wait for approval before changing code. Commit each step separately.
+- Tell Jassim before touching Supabase logic, auth or existing URLs (and add redirects if a URL must change).
 
 ## Handoff (required after every change)
 
