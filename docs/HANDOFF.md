@@ -4,6 +4,23 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-02 · Claude Code · branch `claude/nice-archimedes-dfrazv` · operations kit
+
+**What changed**
+- New `docs/ops-kit.md`: bilingual provider qualification questions (contractor and consultant) with red flags, the standard seven-item offer format with request and clarification messages, ten owner status-update messages (received to introduced, plus pause), and a project tracker with daily and weekly routine.
+- `docs/operations.md` links to it. Doc-only; no code, tables or payloads touched.
+
+**Notes**
+- The admin bid form has no inclusions field. The kit asks for inclusions at the top of Notes under "Included:". A dedicated nullable column would be the additive fix if Jassim wants it.
+
+**Waiting on Jassim**
+- Review the Arabic wording, and say whether to add an inclusions field.
+
+**Verified**
+- Doc-only change. `npm run build` not run (no `node_modules` in this session). `node --test`: 29 pass, 2 fail (`brand-mark`, `typography`); the same 2 fail without my change, so they come from this branch's base, not from this doc.
+
+---
+
 ## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #4](https://github.com/Jba0901/MimaarLink/pull/4) · fonts self-hosted
 
 **What changed**
