@@ -31,6 +31,7 @@ const stepsFor = (isConsultant) => ['type', 'company', 'contact', 'services', ..
 
 const COPY = {
   en: {
+    eyebrowAny: 'Join as a contractor or consultant',
     type: ['How would you like to join?', 'Choose the option that describes your company.'],
     company: ['Your company', 'The CR number is all we need to start verification.'],
     contact: ['How can we reach you?', 'We contact applicants on WhatsApp.'],
@@ -52,6 +53,7 @@ const COPY = {
     whatsapp: 'Questions? Message us on WhatsApp',
   },
   ar: {
+    eyebrowAny: 'انضم كمقاول أو استشاري',
     type: ['كيف تريد الانضمام؟', 'اختر ما يصف شركتك.'],
     company: ['بيانات شركتك', 'رقم السجل التجاري هو كل ما نحتاجه لبدء التحقق.'],
     contact: ['كيف نتواصل معك؟', 'نتواصل مع المتقدمين عبر واتساب.'],
@@ -102,7 +104,8 @@ function ContractorApplicationInner() {
   const copy = COPY[lang === 'ar' ? 'ar' : 'en'];
   const sp = useSearchParams();
   const requestedParam = sp.get('type');
-  const requestedType = requestedParam === 'consultant' ? 'consultant' : 'contractor';
+  // Nothing is preselected: the type comes from a contractor/consultant link or from the applicant's tap.
+  const requestedType = requestedParam === 'consultant' || requestedParam === 'contractor' ? requestedParam : '';
   const [stepName, setStepName] = useState('type');
   const [direction, setDirection] = useState('forward');
   const [returnToReview, setReturnToReview] = useState(false);
@@ -116,7 +119,7 @@ function ContractorApplicationInner() {
   const [data, setData] = useState({
     providerType: requestedType,
     companyName: '', crNumber: '', contactPerson: '', whatsapp: '+974 ', email: '',
-    categories: [], consultantGrade: requestedType === 'consultant' ? 'unknown' : '', consultantServices: [],
+    categories: [], consultantGrade: '', consultantServices: [],
     otherCategoryDesc: '', projectSizeRange: '', documents: [],
   });
 
@@ -131,17 +134,19 @@ function ContractorApplicationInner() {
   }, []);
 
   useEffect(() => {
-    setData(d => ({
-      ...d,
-      providerType: requestedType,
-      consultantGrade: requestedType === 'consultant' ? (d.consultantGrade || 'unknown') : '',
-      consultantServices: requestedType === 'consultant' ? d.consultantServices : [],
-    }));
     // Arriving from a contractor or consultant link skips the type question.
-    if (requestedParam) goTo('company');
+    if (requestedType) {
+      setData(d => ({
+        ...d,
+        providerType: requestedType,
+        consultantGrade: requestedType === 'consultant' ? d.consultantGrade : '',
+        consultantServices: requestedType === 'consultant' ? d.consultantServices : [],
+      }));
+      goTo('company');
+    }
     const saved = loadDraft(DRAFT_KEY);
     if (saved && (saved.data?.categories?.length || saved.data?.companyName)) setDraft(saved);
-  }, [requestedType, requestedParam, goTo]);
+  }, [requestedType, goTo]);
 
   // Save the safe fields as the applicant types; never CR, WhatsApp, names, email or files.
   useEffect(() => {
@@ -178,8 +183,8 @@ function ContractorApplicationInner() {
   const restartDraft = () => {
     clearDraft(DRAFT_KEY);
     setDraft(null);
-    setData(d => ({ ...d, companyName: '', categories: [], consultantServices: [], consultantGrade: d.providerType === 'consultant' ? 'unknown' : '', otherCategoryDesc: '', projectSizeRange: '' }));
-    goTo(requestedParam ? 'company' : 'type', 'back');
+    setData(d => ({ ...d, companyName: '', categories: [], consultantServices: [], consultantGrade: '', otherCategoryDesc: '', projectSizeRange: '' }));
+    goTo(requestedType ? 'company' : 'type', 'back');
   };
 
   const selectProviderType = (providerType) => {
@@ -189,7 +194,7 @@ function ContractorApplicationInner() {
       providerType,
       categories: [],
       consultantServices: [],
-      consultantGrade: providerType === 'consultant' ? 'unknown' : '',
+      consultantGrade: '',
       otherCategoryDesc: '',
     }));
     goTo('company');
@@ -244,6 +249,7 @@ function ContractorApplicationInner() {
   };
 
   const submit = async () => {
+    if (!data.providerType) { goTo('type', 'back'); return; }
     if (!data.crNumber.trim()) { goTo('company', 'back'); return; }
     if (!phoneValid) { goTo('contact', 'back'); return; }
     if (!servicesValid) { goTo('services', 'back'); return; }
@@ -253,7 +259,8 @@ function ContractorApplicationInner() {
       const res = await fetch('/api/contractors', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, marketingAttribution: getMarketingAttribution() }),
+        // An unanswered classification is sent as 'unknown', as before.
+        body: JSON.stringify({ ...data, consultantGrade: isConsultant ? (data.consultantGrade || 'unknown') : '', marketingAttribution: getMarketingAttribution() }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || 'Error');
@@ -314,7 +321,7 @@ function ContractorApplicationInner() {
     <AppShell hideFooter hideNav wide>
       <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
         <div className="ml-flow provider-form-flow min-w-0" data-form-step={stepIndex + 1}>
-          <p className="eyebrow mb-4">{isConsultant ? t('consultantTitle') : t('contractorTitle')}</p>
+          <p className="eyebrow mb-4">{!data.providerType ? copy.eyebrowAny : isConsultant ? t('consultantTitle') : t('contractorTitle')}</p>
           <LazyNetworkStatusNotice />
           {draft && <DraftNotice hadFiles={draft.fileCount > 0} onContinue={continueDraft} onRestart={restartDraft} />}
           <StepsLeft index={stepIndex} total={steps.length} />
@@ -387,7 +394,7 @@ function ContractorApplicationInner() {
             {stepName === 'grade' && (
               <div className="ml-choice-list" role="group" aria-label={t('consultantGrade')}>
                 {CONSULTANT_GRADES.map(g => (
-                  <button key={g} type="button" aria-pressed={(data.consultantGrade || 'unknown') === g} className="ml-choice" onClick={() => { update('consultantGrade', g); next(); }}>
+                  <button key={g} type="button" aria-pressed={data.consultantGrade === g} className="ml-choice" onClick={() => { update('consultantGrade', g); next(); }}>
                     <span className="ml-choice-text">{t(GRADE_LABEL_KEYS[g])}</span>
                   </button>
                 ))}

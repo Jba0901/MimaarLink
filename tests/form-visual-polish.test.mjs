@@ -71,3 +71,11 @@ test('provider application has no service-area step (most work is in Doha)', () 
   assert.match(providerForm, /const stepsFor = \(isConsultant\) => \['type', 'company', 'contact', 'services', \.\.\.\(isConsultant \? \['grade'\] : \[\]\), 'size', 'profile', 'review'\];/);
   assert.doesNotMatch(providerForm, /serviceAreas|'areas'/);
 });
+
+test('provider form preselects nothing: type and classification start empty', () => {
+  assert.match(providerForm, /const requestedType = requestedParam === 'consultant' \|\| requestedParam === 'contractor' \? requestedParam : '';/);
+  assert.match(providerForm, /categories: \[\], consultantGrade: '', consultantServices: \[\],/);
+  assert.match(providerForm, /aria-pressed=\{data\.consultantGrade === g\}/);
+  // The API still receives 'unknown' when a consultant does not pick a classification.
+  assert.match(providerForm, /consultantGrade: isConsultant \? \(data\.consultantGrade \|\| 'unknown'\) : ''/);
+});
