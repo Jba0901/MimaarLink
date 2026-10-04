@@ -52,7 +52,7 @@ const COPY = {
     providersSub: 'قدّم طلب الانضمام. تستلم الشركات المؤهلة مشاريع تناسب قدراتها.',
     providerPoints: [
       ['وصف واضح قبل التسعير', 'تصلك المشاريع موصوفة بوضوح، فتسعّر نطاقًا حقيقيًا لا تخمينًا.'],
-      ['مشاريع تناسبك', 'نرسل لك ما يطابق تخصصك وحجم أعمالك ومنطقتك.'],
+      ['مشاريع تناسبك', 'نرسل لك ما يطابق تخصصك وحجم أعمالك.'],
       ['كيف يتم التأهيل', 'نتحقق من رقم السجل التجاري ونراجع تفاصيل خدماتك قبل أن تستلم أي مشروع.'],
     ],
     applyContractor: 'قدّم كمقاول',
@@ -112,7 +112,7 @@ const COPY = {
     providersSub: 'Apply to join. Qualified firms receive projects that match their capability.',
     providerPoints: [
       ['A clear brief before you price', 'Projects arrive clearly described, so you price real scope, not guesses.'],
-      ['Projects that fit', 'We send you work that matches your trade, size and area.'],
+      ['Projects that fit', 'We send you work that matches your trade and project size.'],
       ['How qualification works', 'We verify your CR number and review your service details before you receive any project.'],
     ],
     applyContractor: 'Apply as a contractor',
