@@ -2,11 +2,13 @@
 
 The one-page picture of the company. Read this before any business, strategy, outreach or product decision. Keep it short and current; details live in the linked files.
 
-Last updated: 2026-10-02 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · CR 243332
+Last updated: 2026-10-04 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · CR 243332
 
 ## 1. What we do
 
 MimaarLink connects project owners with contractors and consultants across Qatar's built environment. An owner describes a project; we turn it into a clear brief, send it to vetted providers, and the owner receives three to five comparable offers to choose from.
+
+**Our core advantage is the market record.** Every request, invite, bid, choice and outcome is recorded in a structured way. Today this information is lost in WhatsApp chats and personal contacts; recorded, it makes the market clearer for everyone and is hard to copy.
 
 We accept the full range of real project work (fit-out, MEP, commercial, villas and residential, clinics and F&B, industrial, mixed-use, general contracting, specialist trades, and architecture / engineering / design / supervision / approvals / tendering). The full list is in `AGENTS.md`.
 
@@ -17,6 +19,8 @@ Qatar's project sourcing is informal and fragmented: referrals, WhatsApp, person
 Our job is to bring order: one clear starting point, structured briefs, qualified providers, comparable offers.
 
 **Flexibility in what we accept; clarity in how we present it.** We will meet messy cases we have not planned for. Handle them case by case, write down what happened, and turn repeated patterns into rules once we have real market experience.
+
+**Related platform:** QDB's Binaa connects housing-loan citizens with registered contractors and consultants for villa builds (only Binaa-registered firms can build housing-loan homes since June 2025). It is a directory for one segment; MimaarLink covers the rest of private work with comparable offers. Treat it as complementary. Details in `docs/strategy/funding-options-2026.md`.
 
 ## 3. Who we serve
 
@@ -43,12 +47,14 @@ The July plans assumed a QAR 750 fee paid by the selected provider before handof
 | Consultant applications | 0 known |
 | Real project requests | None confirmed; check `/admin` |
 | Paid ads | None run. Playbook ready, not launched |
+| Owner outreach | Starting: Jassim contacts owners from public classifieds (Mzad first); playbook ready |
+| Funding | Invest Qatar application submitted (details to confirm). Startup Qatar START, QBIC and QRDI grants researched; none applied yet |
 | Outreach | July: 8 referral targets emailed (plus one follow-up each) and 2 WhatsApp leads answered; no qualified reply recorded. 12 more drafted first messages are held |
 | Pricing | Free; undecided |
 
 ## 6. Current focus
 
-1. **Get the first real projects.** Demand is the scarce side. Supply (3 providers) is enough to start matching manually.
+1. **Get the first real projects.** Demand is the scarce side. Supply (3 providers) is enough to start matching manually. First channel: owners who already posted a need on public classifieds (`docs/playbooks/classifieds-owner-outreach.md`).
 2. **Run each project by hand** using `docs/operations.md`, and log what happens.
 3. **Grow providers in step with projects**, not ahead of them.
 4. **Do not overbuild.** No big new software until real projects show what is needed.
@@ -87,6 +93,8 @@ Growth gates (adapted from the strategy file; "paid" becomes "successful" while 
 | Running a project by hand (intake, matching, bids, scripts) | `docs/operations.md` |
 | Long-term strategy, data, privacy | `docs/strategy/10-year-moat.md` |
 | Meta ads (ready, not launched) | `docs/playbooks/meta-ads-launch.md` |
+| Owner outreach from public classifieds | `docs/playbooks/classifieds-owner-outreach.md` |
+| Funding programmes, positioning, Binaa | `docs/strategy/funding-options-2026.md` |
 | Referral target lists (July research) | `docs/outreach/` |
 | Latest code changes and handoffs | `docs/HANDOFF.md` |
 | Old July plans (history only) | `docs/archive/` |
@@ -94,6 +102,7 @@ Growth gates (adapted from the strategy file; "paid" becomes "successful" while 
 ## 10. Open decisions
 
 - Pricing model and timing.
+- Which funding programme to apply to first, and how much equity to give up.
 - Which marketing entry points to push first.
 - When to start paid ads.
 - How to handle unusual project types; to be learned from real cases.

@@ -4,6 +4,28 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-04 · Claude Code · branch `claude/sharp-edison-g0om3c` · growth: positioning, funding research, classifieds outreach
+
+**What changed**
+- `DECISIONS.md`: three decisions from Jassim. The market record (structured data on every request, bid and outcome) is the core advantage. Positioning is data and AI first, local business growth second. First demand channel is calling owners who posted needs on public classifieds (Mzad first), posting on their behalf with consent.
+- New `docs/playbooks/classifieds-owner-outreach.md`: rules, which ads to pick, three call openers (Arabic and English), consent wording for posting on someone's behalf, follow-up message, what to log.
+- New `docs/strategy/funding-options-2026.md`: Startup Qatar Investment Program (START/GROW), QBIC, QRDI SBIG and Innovation Coupon, open questions for QDB, a pre-application checklist, and QDB's Binaa platform (housing-loan villas; must be addressed in any QDB application).
+- `COMPANY-BRAIN.md`: core advantage, Binaa note, status rows for owner outreach and funding, new open decision, links to the new files.
+
+**Risky or different**
+- Funding figures for QBIC and QRDI come from secondary sources; verify before using them in an application.
+- Housing-loan villa builds can only go to Binaa-registered firms (since June 2025). The playbook tells Jassim to invite only Binaa-registered providers in that case.
+- Automatic source tracking only works after cookie consent, so leads from classifieds must be logged by hand.
+
+**Waiting on Jassim**
+- What exactly was submitted to Invest Qatar, and its status.
+- Team (technical co-founder or developer?), how much equity he would give up, and the weekly outreach target (playbook suggests 20 ads).
+
+**Verified**
+- Docs only; no code touched. `npm run build` and `node --test tests/*.test.mjs` run before commit.
+
+---
+
 ## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #4](https://github.com/Jba0901/MimaarLink/pull/4) · fonts self-hosted
 
 **What changed**
