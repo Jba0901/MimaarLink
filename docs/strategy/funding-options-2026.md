@@ -49,6 +49,8 @@ How MimaarLink differs and complements it:
 - **Model:** Binaa is a directory. MimaarLink turns a request into a brief and returns three to five comparable offers.
 - **Possible partnership:** Binaa-registered firms are a pre-qualified supply pool; MimaarLink's market record could inform QDB. Present this as complementary, never as competition with QDB.
 
+Full note: `docs/strategy/binaa.md`.
+
 ## Before applying (checklist)
 
 - [ ] First real projects and at least one completed introduction

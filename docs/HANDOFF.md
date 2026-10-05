@@ -21,6 +21,7 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 - What exactly was submitted to Invest Qatar, and its status.
 - Team (technical co-founder or developer?), how much equity he would give up, and the weekly outreach target (playbook suggests 20 ads).
 
+- 2026-10-05: new `docs/strategy/binaa.md` (QDB's Binaa platform: what it is, how MimaarLink differs, what it means for funding, villa marketing and provider supply, open questions). Linked from COMPANY-BRAIN.
 - 2026-10-05: added the Invest Qatar pitch summary and meeting prep to `docs/strategy/funding-options-2026.md`; COMPANY-BRAIN funding row updated.
 
 **Verified**

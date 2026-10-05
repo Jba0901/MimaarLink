@@ -20,7 +20,7 @@ Our job is to bring order: one clear starting point, structured briefs, qualifie
 
 **Flexibility in what we accept; clarity in how we present it.** We will meet messy cases we have not planned for. Handle them case by case, write down what happened, and turn repeated patterns into rules once we have real market experience.
 
-**Related platform:** QDB's Binaa connects housing-loan citizens with registered contractors and consultants for villa builds (only Binaa-registered firms can build housing-loan homes since June 2025). It is a directory for one segment; MimaarLink covers the rest of private work with comparable offers. Treat it as complementary. Details in `docs/strategy/funding-options-2026.md`.
+**Related platform:** QDB's Binaa connects housing-loan citizens with registered contractors and consultants for villa builds (only Binaa-registered firms can build housing-loan homes since June 2025). It is a directory for one segment; MimaarLink covers the rest of private work with comparable offers. Treat it as complementary. Details in `docs/strategy/binaa.md`.
 
 ## 3. Who we serve
 
@@ -94,7 +94,8 @@ Growth gates (adapted from the strategy file; "paid" becomes "successful" while 
 | Long-term strategy, data, privacy | `docs/strategy/10-year-moat.md` |
 | Meta ads (ready, not launched) | `docs/playbooks/meta-ads-launch.md` |
 | Owner outreach from public classifieds | `docs/playbooks/classifieds-owner-outreach.md` |
-| Funding programmes, positioning, Binaa | `docs/strategy/funding-options-2026.md` |
+| Funding programmes, positioning, Invest Qatar pitch | `docs/strategy/funding-options-2026.md` |
+| Binaa (QDB's villa platform): what it is, how we differ | `docs/strategy/binaa.md` |
 | Referral target lists (July research) | `docs/outreach/` |
 | Latest code changes and handoffs | `docs/HANDOFF.md` |
 | Old July plans (history only) | `docs/archive/` |
