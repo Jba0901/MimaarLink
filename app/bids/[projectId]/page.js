@@ -197,7 +197,7 @@ export default function BidsPage() {
             const busyMeeting = pendingAction === `meeting:${b.contractorId}`;
             const meetingDone = selected && (meetingFor === b.contractorId || d.project?.status === 'meeting_arranged');
             return (
-              <article key={b.id} className={`ml-offer ml-offer-full ${selected ? 'is-selected ml-cut' : ''}`} aria-label={`${providerDisplayName(c, t)}${selected ? `, ${copy.selected}` : ''}`}>
+              <article key={b.id} className={`ml-offer ml-offer-full ${selected ? 'is-selected' : ''}`} aria-label={`${providerDisplayName(c, t)}${selected ? `, ${copy.selected}` : ''}`}>
                 <div className="ml-offer-head">
                   <span className="ml-offer-firm" dir="auto">{providerDisplayName(c, t)}</span>
                   {selected

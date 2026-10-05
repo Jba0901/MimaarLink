@@ -4,16 +4,16 @@
 
 @layer base {
   :root {
-    /* MimaarLink brand v1.4 (brand/BRAND.md). Navy leads, teal acts, nothing competes.
+    /* MimaarLink brand v1.5 (brand/BRAND.md). Navy leads, teal acts, nothing competes.
        Hex values live in app/brand-tokens.css; these HSL triplets feed the shadcn layer. */
     --brand-navy: 219.0476 60% 20.5882%;
     --brand-deep: 211.0345 52.7273% 10.7843%;
     --brand-teal: 174.7170 100% 31.1765%;
     --brand-mint: 166.1538 44.8276% 94.3137%;
     --brand-white: 0 0% 100%;
-    --brand-soft: 216 38.4615% 97.4510%;
+    --brand-soft: 38.1818 40.7407% 94.7059%;   /* warm ground #F7F3EC */
     --brand-muted: 214 14.5631% 40.3922%;
-    --brand-border: 210 25% 89.0196%;
+    --brand-border: 37.8947 28.3582% 86.8627%; /* warm line #E7E0D4 */
     --brand-dark-background: 211.0345 52.7273% 10.7843%;
     --brand-dark-card: 214.5 51.2821% 15.2941%;
     --brand-dark-border: 215.4545 37.9310% 22.7451%;
@@ -41,7 +41,7 @@
     --border: var(--brand-border);
     --input: var(--brand-border);
     --ring: var(--brand-teal);
-    --radius: 6px;
+    --radius: 8px;
   }
   .dark {
     --background: var(--brand-dark-background);
@@ -107,7 +107,7 @@
 /* Button box model lives in the components layer: it beats the preflight reset on <button>,
    and utilities such as px-0 or rounded-full still override it. */
 @layer components {
-  .btn { padding: 12px 20px; border-radius: var(--ml-radius); }
+  .btn { padding: 12px 20px; border-radius: var(--ml-radius-pill); }
 }
 
 @layer utilities {
@@ -250,10 +250,10 @@
     min-height: 100dvh;
   }
   .site-header {
-    background-color: rgba(255,255,255,0.72);
+    background-color: rgba(247,243,236,0.78);
     padding-top: env(safe-area-inset-top);
   }
-  .site-header.is-scrolled { background-color: rgba(255,255,255,0.88); }
+  .site-header.is-scrolled { background-color: rgba(247,243,236,0.92); }
   .dark .site-header { background-color: rgba(7,17,29,0.76); }
   .dark .site-header.is-scrolled { background-color: rgba(7,17,29,0.92); }
   .safe-pad-bottom { padding-bottom: env(safe-area-inset-bottom); }
@@ -986,8 +986,8 @@ html[dir="rtl"] .ml-signature-figure span { font-family: var(--ml-sans-ar); }
 
 .ml-vetted { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border: 1px solid var(--ml-teal); border-radius: 999px; background: var(--ml-pale-teal); color: var(--ml-teal-ink); font-size: 12px; font-weight: 500; line-height: 1.5; }
 .dark .ml-vetted { background: var(--ml-signature-bg); color: var(--ml-bright-teal); border-color: var(--ml-bright-teal); }
-.ml-offer { background: var(--ml-surface); border: 1px solid var(--ml-line); border-radius: var(--ml-radius); padding: 16px; }
-.ml-offer.is-selected { border-radius: 0; border-color: var(--ml-accent); background: var(--ml-signature-bg); box-shadow: inset 0 0 0 1px var(--ml-accent); }
+.ml-offer { background: var(--ml-surface); border: 1px solid var(--ml-line); border-radius: var(--ml-radius-card); padding: 16px; }
+.ml-offer.is-selected { border-color: var(--ml-accent); background: var(--ml-signature-bg); box-shadow: inset 0 0 0 1px var(--ml-accent); }
 .ml-offer-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .ml-offer-firm { font-weight: 600; color: var(--ml-heading); }
 .ml-offer-selected { font-size: 12px; font-weight: 600; color: var(--ml-signature-label); }
@@ -1242,7 +1242,7 @@ html[dir="rtl"] .ml-step-desc { line-height: 1.8; }
 }
 
 .ml-status-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; }
-.ml-status-panel { padding: 20px; }
+.ml-status-panel { padding: 20px; border-radius: var(--ml-radius-card); }
 .ml-status-panel .ml-status-msg { margin-top: 6px; font-family: var(--ml-serif); font-size: 20px; line-height: 1.45; color: var(--ml-signature-fg); }
 html[dir="rtl"] .ml-status-panel .ml-status-msg { font-family: var(--ml-serif-ar); line-height: 1.7; }
 .ml-card { border: 1px solid var(--ml-line); border-radius: var(--ml-radius); background: var(--ml-surface); }

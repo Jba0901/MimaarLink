@@ -1,4 +1,4 @@
-/* MimaarLink brand tokens v1.4, from brand/brand-tokens.css (Tailwind v3: the @theme block is replaced by tailwind.config.js). */
+/* MimaarLink brand tokens v1.5 (brand/BRAND.md), originally from brand/brand-tokens.css (Tailwind v3: the @theme block is replaced by tailwind.config.js). */
 
 :root {
   /* Brand */
@@ -11,13 +11,13 @@
   --ml-bright-teal: #0AC7CE;
 
   /* Surfaces and text (light) */
-  --ml-bg: #FFFFFF;
-  --ml-ground: #F6F8FB;
+  --ml-bg: #F7F3EC;
+  --ml-ground: #F7F3EC;
   --ml-surface: #FFFFFF;
   --ml-heading: #152B54;
   --ml-body: #2E3E57;
   --ml-muted: #586576;
-  --ml-line: #DCE3EA;
+  --ml-line: #E7E0D4;
   --ml-accent: #009F91;
   --ml-accent-hover: #04A3AB;
   --ml-on-accent: #FFFFFF;
@@ -25,10 +25,16 @@
   --ml-signature-fg: #152B54;
   --ml-signature-label: #00786D;
   --ml-warn: #B5462B;
+  /* Navy sections (hero, contractor band, close, footer) */
+  --ml-navy-deep: #0F2142;
+  --ml-on-navy: #F2F5FA;
+  --ml-on-navy-body: #C9D6E8;
+  --ml-on-navy-accent: #0AC7CE;
 
   /* Shape, motion, elevation */
-  --ml-radius: 6px;
-  --ml-cut: 14px;
+  --ml-radius: 8px;        /* inputs and small controls */
+  --ml-radius-card: 12px;  /* cards and panels */
+  --ml-radius-pill: 999px; /* buttons and status pills */
   --ml-fast: 140ms;
   --ml-base: 220ms;
   --ml-slow: 360ms;
@@ -58,11 +64,6 @@
   --ml-signature-label: #0AC7CE;
   --ml-warn: #F08A6C;
   --ml-shadow: 0 18px 40px -24px rgba(0, 0, 0, .6);
-}
-
-/* Signature chamfered corner */
-.ml-cut {
-  clip-path: polygon(0 0, calc(100% - var(--ml-cut)) 0, 100% var(--ml-cut), 100% 100%, var(--ml-cut) 100%, 0 calc(100% - var(--ml-cut)));
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -125,7 +125,7 @@ export default function ProjectPage() {
           <PhaseTimeline phases={copy.phases} currentIndex={phase} allDone={phase >= 4} label={copy.timelineLabel} />
         </section>
 
-        <section className="ml-status-panel ml-cut mt-8 bg-signature" aria-labelledby="next-step-label">
+        <section className="ml-status-panel mt-8 bg-signature" aria-labelledby="next-step-label">
           <p id="next-step-label" className="text-[12px] font-semibold text-signature-label ltr:uppercase ltr:tracking-[0.2em]">{copy.nextLabel}</p>
           <p className="ml-status-msg">{t(`msg_${data.status}`)}</p>
           {!offersVisible && <p className="mt-3 text-[14px] leading-relaxed text-muted-foreground">{copy.waitingOffers}</p>}
