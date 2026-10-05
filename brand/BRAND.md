@@ -84,7 +84,7 @@ Rules:
 - Headings are **serif, weight 500**, never bold 700. `text-wrap: balance`.
 - The homepage hero headline is a **display** line: serif weight 400 (Arabic 500, the lightest Naskh weight loaded), centred, with one short accent phrase in teal (bright teal on navy).
 - All interface text (buttons, inputs, nav, labels, tables) is IBM Plex Sans / IBM Plex Sans Arabic.
-- Small section labels: sans 600, 12px, uppercase, `letter-spacing: 0.2em`, colour `teal` (English only; Arabic labels are not uppercase or letter-spaced).
+- Section labels (v1.5): the small logo arch mark + sans 500, 14px, sentence case, `teal-ink` (bright teal on navy). The older uppercase letter-spaced eyebrow stays only on pages not yet redesigned.
 - Body 16–18px, line-height 1.6 (Arabic 1.8). Keep paragraphs under ~65 characters wide.
 - Arabic and English must look equally polished. Never render Arabic in the Latin font.
 

@@ -26,7 +26,7 @@ test('sector arrows follow writing direction without replacing real links', () =
 test('homepage example offers are always labelled as illustrative, never real figures', () => {
   assert.match(home, /compareNote: 'Example\. Firm names and figures are illustrative, not real offers\.'/);
   assert.match(home, /compareNote: 'مثال توضيحي\. الأسماء والأرقام افتراضية وليست عروضًا حقيقية\.'/);
-  assert.match(home, /<aside className="ml-signature ml-cut" aria-label=\{copy\.example\}>/);
+  assert.match(home, /<p className="ml-example-note"><span>\{copy\.example\}<\/span>\{copy\.compareNote\}<\/p>/);
 });
 
 test('touch devices get the same feedback as desktop hover, and reveals run on phones', () => {
@@ -56,4 +56,15 @@ test('shell stays calm: no arrow badges, no extra-bold, no bottom tab bar, foote
   assert.doesNotMatch(css, /mobile-bottom-nav|mobile-nav-main/);
   assert.match(shell, /Registered in Qatar · CR No\. 243332/);
   assert.match(shell, /data-over-hero=\{onNavy \|\| undefined\}/);
+});
+
+test('homepage v1.5: navy hero over the header, FAQ uses only decided facts, no retired chamfer', () => {
+  assert.match(home, /<AppShell wide bleed flushFooter overHero>/);
+  assert.match(home, /<HeroSkyline className="ml-hero-art" \/>/);
+  assert.doesNotMatch(home, /ml-cut|StickyPostCta/);
+  const faq = [...home.matchAll(/faq: \[([\s\S]*?)\n    \],/g)].map((m) => m[1]);
+  assert.equal(faq.length, 2, 'FAQ exists in Arabic and English');
+  // Answers carry no figures, prices or counts; facts come from DECISIONS.md.
+  for (const block of faq) assert.doesNotMatch(block, /[0-9٠-٩]|QAR|ر\.ق|%/);
+  assert.match(home, /'Is MimaarLink free\?', 'Yes, for now\./);
 });
