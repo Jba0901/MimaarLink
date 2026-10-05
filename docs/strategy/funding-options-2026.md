@@ -10,6 +10,18 @@ Research notes for applying to Qatar funding programmes. Nothing here is applied
 
 Say clearly what exists today (live site, guided intake, offer comparison, admin) and what is planned (AI brief structuring, bid normalisation, provider scoring). Never present a plan as a product.
 
+## Invest Qatar (submitted, awaiting a meeting)
+
+Jassim submitted a 6-slide pitch to Invest Qatar. Its angle: foreign contractors and consultants that set up in Qatar need their first project, and MimaarLink is the on-ramp. The ask is non-financial: introductions to firms entering Qatar, a referral to the right support route (QSTP, QDB or similar), and a point of contact.
+
+Points to prepare before the meeting:
+
+- **Market size.** The deck uses USD 52B (Mordor Intelligence, 2025, ~USD 67B by 2031). The same report puts public funding at about 78% of activity, so the private segment MimaarLink serves is roughly USD 11.5B. Say this before they do.
+- **Traction.** "Contractors are already applying" means 3 applications as of October 2026; no owner projects yet. Answer with the real numbers.
+- **Revenue.** The deck lists memberships, access fees and success fees. MimaarLink is free today and pricing is undecided; describe these as options being tested.
+- **AI.** Scoping, matching and bid comparison with AI are planned, not built. Say so.
+- **Founder line.** "Inside the economic-zones ecosystem" needs a one-sentence explanation ready.
+
 ## Programmes
 
 | Programme | What it offers | Eligibility | Fit now | Source |

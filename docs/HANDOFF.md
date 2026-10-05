@@ -21,6 +21,8 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 - What exactly was submitted to Invest Qatar, and its status.
 - Team (technical co-founder or developer?), how much equity he would give up, and the weekly outreach target (playbook suggests 20 ads).
 
+- 2026-10-05: added the Invest Qatar pitch summary and meeting prep to `docs/strategy/funding-options-2026.md`; COMPANY-BRAIN funding row updated.
+
 **Verified**
 - Docs only; no code touched. `npm run build` and `node --test tests/*.test.mjs` run before commit.
 

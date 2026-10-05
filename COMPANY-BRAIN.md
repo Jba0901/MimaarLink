@@ -48,7 +48,7 @@ The July plans assumed a QAR 750 fee paid by the selected provider before handof
 | Real project requests | None confirmed; check `/admin` |
 | Paid ads | None run. Playbook ready, not launched |
 | Owner outreach | Starting: Jassim contacts owners from public classifieds (Mzad first); playbook ready |
-| Funding | Invest Qatar application submitted (details to confirm). Startup Qatar START, QBIC and QRDI grants researched; none applied yet |
+| Funding | Invest Qatar: 6-slide pitch submitted (asks for introductions to foreign firms entering Qatar, a referral to QSTP/QDB, and a point of contact); awaiting a meeting date. Startup Qatar START, QBIC and QRDI grants researched; none applied yet |
 | Outreach | July: 8 referral targets emailed (plus one follow-up each) and 2 WhatsApp leads answered; no qualified reply recorded. 12 more drafted first messages are held |
 | Pricing | Free; undecided |
 
