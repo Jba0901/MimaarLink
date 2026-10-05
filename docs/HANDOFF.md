@@ -4,6 +4,29 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-05 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · website redesign, Phase 1 (homepage + shell)
+
+**What changed** (one commit each)
+- Brand v1.5 (`brand/BRAND.md`, `AGENTS.md`, `DECISIONS.md`): Jassim wanted the phone experience as calm as binaa.qdb.qa. Warm stone ground `#F7F3EC` + warm line `#E7E0D4`, white cards (12px), inputs 8px, pill buttons, navy sections with bright-teal accent text, centred display headline, arch line drawings instead of photos, chamfer retired, no bottom tab bar on the website, homepage order with a FAQ.
+- Tokens (`app/brand-tokens.css`, `app/globals.css` HSL mapping): every page is warmer already; `--ml-radius-card`, `--ml-radius-pill`, navy-section tokens.
+- Shell (`components/AppShell.jsx`): bottom tab bar removed (and its padding/offsets), quiet ghost header buttons, `overHero` header that shares the navy hero until scroll, calm navy footer with written-out contacts.
+- Homepage (`app/page.js`, new `components/HeroSkyline.jsx`): navy hero with two path cards, step cards, example comparison, contractor band, sectors, trust cards, FAQ, navy close. Sticky floating button removed.
+
+**Behaving differently**
+- The bottom tab bar is gone on all pages; navigation is the header menu.
+- Forms, status and offers pages only picked up the warm colours and softer corners; their full restyle is Phase 3.
+- The v1.4 design is kept for the future app at main `446f486` (a git tag could not be pushed from this session; Jassim can tag it on GitHub).
+
+**Waiting on Jassim**
+- Review Phase 1 on his phone before Phase 2 (other pages), 3 (forms/status), 4 (polish).
+- FAQ wording (5 answers, facts from `DECISIONS.md`, no figures).
+- Real photos of Doha projects, if any, to replace the line drawing later.
+
+**Verified**
+- `npm run build` + `node --test tests/*.test.mjs` (49/49) at every commit. Chromium screenshots at 390 (EN/AR, light/night), 768 (AR) and 1440 (EN); no horizontal scroll at 320/375/390/768/1024/1440 in both languages; scroll reveals confirmed on a real-paced scroll.
+
+---
+
 ## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · menu drawer cleanup
 
 **What changed**
