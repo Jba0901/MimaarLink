@@ -7,13 +7,11 @@ import {
   Building2,
   CheckCircle2,
   ClipboardList,
-  FilePlus,
   Globe,
   Hammer,
   Home,
   Instagram,
   Mail,
-  MapPin,
   Menu,
   Moon,
   Phone,
@@ -44,7 +42,8 @@ function BrandLogo({ onDark = false, priority = false, className = '' }) {
   );
 }
 
-export default function AppShell({ children, hideNav = false, hideFooter = false, flushFooter = false, wide = false, bleed = false }) {
+// hideNav is still accepted from older pages; the website no longer has a bottom tab bar (brand v1.5).
+export default function AppShell({ children, hideNav = false, hideFooter = false, flushFooter = false, wide = false, bleed = false, overHero = false }) {
   const { t, lang, setLang } = useLang();
   const pathname = usePathname();
   const [navigationSearch, setNavigationSearch] = useState(null);
@@ -114,6 +113,8 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
   const copy = getShellCopy(lang);
   const isDark = theme === 'dark';
   const toggleTheme = () => setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
+  // On the homepage the header shares the navy hero until the page scrolls.
+  const onNavy = overHero && !scrolled;
 
   return (
     <div className="app-viewport flex flex-col">
@@ -125,6 +126,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         {copy.skipToContent}
       </a>
       <header
+        data-over-hero={onNavy || undefined}
         className={`site-header sticky top-0 z-40 transition-[background-color,border-color,box-shadow] duration-base ease-brand ${
           scrolled
             ? 'is-scrolled backdrop-blur-xl border-b border-border shadow-soft'
@@ -133,7 +135,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
       >
         <div className={`container-x relative flex items-center justify-between gap-2 transition-[height] duration-base ease-brand ${scrolled ? 'h-14 sm:h-[60px]' : 'h-16 sm:h-[72px]'}`}>
           <Link href="/" aria-label={t('appName')} className="flex min-h-11 min-w-11 items-center gap-2 rounded-xl sm:gap-2.5 shrink tap-highlight">
-            <BrandLogo priority />
+            <BrandLogo priority onDark={onNavy} />
           </Link>
 
           {/* centered desktop nav */}
@@ -185,7 +187,7 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         navigationSearch={navigationSearch}
       />
 
-      <main id="main-content" tabIndex={-1} className={`mobile-nav-main scroll-mt-20 flex-1 w-full ${hideFooter ? (hideNav ? 'pb-10' : 'pb-32 lg:pb-12') : 'pb-0'}`}>
+      <main id="main-content" tabIndex={-1} className={`scroll-mt-20 flex-1 w-full ${hideFooter ? 'pb-10' : 'pb-0'}`}>
         <Suspense fallback={null}>
           <NavigationSearchSync onChange={setNavigationSearch} />
           <MarketingAttribution />
@@ -195,18 +197,8 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
         ) : (
           <div className={`${container} app-content-x mx-auto py-4`}>{children}</div>
         )}
-        {!hideFooter && <SiteFooter flush={flushFooter} reserveMobileNav={!hideNav} />}
+        {!hideFooter && <SiteFooter flush={flushFooter} />}
       </main>
-
-      {!hideNav && (
-        <nav className="mobile-bottom-nav safe-pad-bottom fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 backdrop-blur-xl lg:hidden" aria-label={copy.quickTitle}>
-          <div className="mx-auto grid max-w-md grid-cols-3">
-            <NavBtn href="/" icon={Home} label={t('home')} matches={['/']} />
-            <NavBtn href="/post-project" icon={FilePlus} label={copy.projectNav} ariaLabel={t('postProject')} matches={['/post-project', '/for-projects']} />
-            <NavBtn href="/contractor" icon={Hammer} label={copy.providerNav} ariaLabel={t('joinContractor')} matches={['/contractor', '/consultant', '/for-contractors']} />
-          </div>
-        </nav>
-      )}
     </div>
   );
 }
@@ -257,7 +249,6 @@ function getShellCopy(lang) {
       quickTitle: 'اختر المسار',
       quickSubtitle: 'ابدأ من الخيار الأقرب لك.',
       projectNav: 'مشروع جديد',
-      providerNav: 'مقدم خدمة',
       consultantNav: 'مكتب استشاري',
       moreLinks: 'روابط سريعة',
       allPaths: 'كل المسارات',
@@ -291,7 +282,6 @@ function getShellCopy(lang) {
     quickTitle: 'Choose your path',
     quickSubtitle: 'Start with the closest option.',
     projectNav: 'New project',
-    providerNav: 'Provider',
     consultantNav: 'Consultant',
     moreLinks: 'Quick links',
     allPaths: 'All paths',
@@ -420,14 +410,14 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
             </div>
           </div>
 
-          <div className="mt-6 rounded-[6px] border border-border bg-muted/60 dark:bg-white/[0.04] p-2.5">
+          <div className="mt-6 rounded-[12px] border border-border bg-muted/60 dark:bg-white/[0.04] p-2.5">
             <button
               type="button"
               onClick={onThemeToggle}
-              className="flex w-full min-w-0 items-center justify-between gap-2.5 rounded-[6px] px-2.5 py-2 text-start transition hover:bg-white dark:hover:bg-white/[0.06]"
+              className="flex w-full min-w-0 items-center justify-between gap-2.5 rounded-[12px] px-2.5 py-2 text-start transition hover:bg-white dark:hover:bg-white/[0.06]"
             >
               <span className="flex min-w-0 items-center gap-2.5">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[6px] bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/20 dark:text-[#009F91]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/20 dark:text-[#009F91]">
                   {isDark ? <Sun className="h-[17px] w-[17px]" /> : <Moon className="h-[17px] w-[17px]" />}
                 </span>
                 <span className="min-w-0">
@@ -439,10 +429,10 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
             </button>
 
             <div className="mt-2.5 grid grid-cols-2 gap-2 min-[264px]:grid-cols-4 min-[264px]:gap-2.5">
-              <FooterIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} variant="surface" />
-              <FooterIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external variant="surface" />
-              <FooterIcon href="tel:+97466259219" label={t('contactPhone')} icon={Phone} variant="surface" />
-              <FooterIcon href="https://instagram.com/MimaarLink" label={t('contactInstagram')} icon={Instagram} external variant="surface" />
+              <ContactIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} />
+              <ContactIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external />
+              <ContactIcon href="tel:+97466259219" label={t('contactPhone')} icon={Phone} />
+              <ContactIcon href="https://instagram.com/MimaarLink" label={t('contactInstagram')} icon={Instagram} external />
             </div>
           </div>
         </div>
@@ -458,13 +448,9 @@ function ActionTile({ item, active }) {
       icon: 'bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/20 dark:text-[#009F91]',
       active: 'border-[#009F91]/45 bg-[#EAF7F4]/55 dark:bg-[#009F91]/15',
     },
-    amber: {
-      icon: 'bg-[#B5462B]/20 text-[#152B54] dark:bg-[#F08A6C]/20 dark:text-[#F08A6C]',
-      active: 'border-[#B5462B]/55 bg-[#B5462B]/15 dark:bg-[#F08A6C]/[0.12]',
-    },
     navy: {
-      icon: 'bg-[#F6F8FB] text-[#152B54] dark:bg-white/[0.08] dark:text-white',
-      active: 'border-[#152B54]/30 bg-[#F6F8FB] dark:border-white/20 dark:bg-white/[0.08]',
+      icon: 'bg-[#F7F3EC] text-[#152B54] dark:bg-white/[0.08] dark:text-white',
+      active: 'border-[#152B54]/30 bg-[#F7F3EC] dark:border-white/20 dark:bg-white/[0.08]',
     },
   };
   const accent = accents[item.accent] || accents.teal;
@@ -473,13 +459,13 @@ function ActionTile({ item, active }) {
       href={item.href}
       data-tone={item.accent}
       aria-current={active ? 'page' : undefined}
-      className={`group flex items-center gap-3 rounded-[6px] border px-3.5 py-3 transition-colors duration-fast ease-brand tap-highlight max-[263px]:gap-2 max-[263px]:px-2.5 ${
+      className={`group flex items-center gap-3 rounded-[12px] border px-3.5 py-3 transition-colors duration-fast ease-brand tap-highlight max-[263px]:gap-2 max-[263px]:px-2.5 ${
         active
           ? `${accent.active} shadow-soft`
           : 'border-border bg-card hover:border-[#009F91]/45'
       }`}
     >
-      <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[6px] max-[263px]:h-10 max-[263px]:w-10 ${accent.icon}`}>
+      <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full max-[263px]:h-10 max-[263px]:w-10 ${accent.icon}`}>
         <Icon className="h-5 w-5" />
       </span>
       <span className="min-w-0 flex-1">
@@ -496,7 +482,7 @@ function SecondaryDrawerLink({ item, active }) {
     <Link
       href={item.href}
       aria-current={active ? 'page' : undefined}
-      className={`flex min-h-11 items-center gap-2 rounded-[6px] border px-3 py-2.5 text-[12px] font-semibold leading-tight transition-colors duration-fast ease-brand tap-highlight max-[359px]:gap-1 max-[359px]:px-2 ${
+      className={`flex min-h-11 items-center gap-2 rounded-[12px] border px-3 py-2.5 text-[12px] font-semibold leading-tight transition-colors duration-fast ease-brand tap-highlight max-[359px]:gap-1 max-[359px]:px-2 ${
         active
           ? 'border-[#009F91]/35 bg-[#EAF7F4]/55 text-navy dark:bg-[#009F91]/15'
           : 'border-border bg-white text-muted-foreground hover:text-navy hover:border-[#009F91]/35 dark:bg-transparent'
@@ -526,90 +512,79 @@ function HeaderLink({ href, label, ariaLabel = label, navigationSearch }) {
   );
 }
 
-function NavBtn({ href, icon: Icon, label, ariaLabel = label, matches = [] }) {
-  const pathname = usePathname();
-  const active = matches.some((m) => pathname === m);
-  return (
-    <Link
-      href={href}
-      aria-label={ariaLabel}
-      aria-current={active ? 'page' : undefined}
-      title={ariaLabel}
-      className={
-        'relative flex min-h-[60px] min-w-0 flex-col items-center justify-center gap-1 px-2 pb-1.5 pt-2 transition-colors duration-fast ease-brand tap-highlight ' +
-        (active
-          ? 'text-[#00786D] dark:text-[#0AC7CE]'
-          : 'text-muted-foreground hover:text-navy')
-      }
-    >
-      {active && <span className="absolute inset-x-6 top-0 h-0.5 rounded-full bg-[#009F91] dark:bg-[#0AC7CE]" aria-hidden="true" />}
-      <Icon className="h-[19px] w-[19px] shrink-0" />
-      <span className="line-clamp-2 max-w-full text-center text-[12px] font-medium leading-tight">
-        {label}
-      </span>
-    </Link>
-  );
-}
-
-function SiteFooter({ flush = false, reserveMobileNav = false }) {
+// Calm navy footer (brand v1.5): text links and written-out contacts, small social icon.
+function SiteFooter({ flush = false }) {
   const { t, dir } = useLang();
   const year = new Date().getFullYear();
+  const rtl = dir === 'rtl';
+  const links = [
+    ['/post-project', t('postProject')],
+    ['/contractor', t('providerTypeContractor')],
+    ['/contractor?type=consultant', t('providerTypeConsultant')],
+    ['/start-here', t('startTitle')],
+    ['/privacy', t('privacyNotice')],
+  ];
+  const contacts = [
+    [t('contactEmail'), 'MimaarLink@gmail.com', 'mailto:MimaarLink@gmail.com'],
+    [t('contactWhatsapp'), '+974 6625 9219', 'https://wa.me/97466259219'],
+    [t('contactPhone'), '+974 6625 9219', 'tel:+97466259219'],
+  ];
   return (
-    <footer className={`${flush ? 'mt-0 border-t border-white/10' : 'mt-16'} premium-panel text-white`}>
-      <div className={`container-x pt-8 lg:py-12 ${reserveMobileNav ? 'pb-28' : 'pb-8'}`}>
-        <div className="grid grid-cols-2 gap-x-5 gap-y-6 lg:grid-cols-[1.6fr_1fr_1fr]">
-          <div className="col-span-2 max-w-sm lg:col-span-1">
-            <div className="mb-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/logo/mimaarlink-logo-bilingual-dark.svg" alt={t('appName')} width={170} height={52} className="h-auto w-[170px]" decoding="async" />
-            </div>
-            <p className="text-[13px] leading-relaxed text-white/70">{dir === 'rtl' ? 'للمشاريع والمقاولين والاستشاريين في قطر.' : 'For projects, contractors and consultants in Qatar.'}</p>
-            <p className="mt-4 inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-white/70">
-              <MapPin className="w-3.5 h-3.5 shrink-0" style={{ color: '#009F91' }} />
-              {t('contactLocationValue')}
-            </p>
-          </div>
+    <footer className={`${flush ? 'mt-0' : 'mt-16'} site-footer premium-panel text-white`}>
+      <div className="container-x pb-[max(2rem,env(safe-area-inset-bottom))] pt-12 lg:pt-16">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/brand/logo/mimaarlink-logo-bilingual-dark.svg" alt={t('appName')} width={170} height={52} className="h-auto w-[170px]" decoding="async" />
+        <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-white/70">
+          {rtl ? 'للمشاريع والمقاولين والاستشاريين في قطر.' : 'For projects, contractors and consultants in Qatar.'}
+          <span className="block text-white/55">{t('contactLocationValue')}</span>
+        </p>
 
-          <div>
-            <h4 className="mb-2 text-[12px] font-bold uppercase tracking-wide text-white/60">{t('startEyebrow')}</h4>
-            <ul className="text-[13px] font-semibold text-white/75">
-              <li><Link href="/post-project" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-white">{t('postProject')}</Link></li>
-              <li><Link href="/contractor" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-white">{t('providerTypeContractor')}</Link></li>
-              <li><Link href="/contractor?type=consultant" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-white">{t('providerTypeConsultant')}</Link></li>
-              <li><Link href="/start-here" className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-white">{t('startTitle')}</Link></li>
-            </ul>
-          </div>
+        <nav className="mt-8 flex flex-wrap gap-x-6" aria-label={t('startEyebrow')}>
+          {links.map(([href, label]) => (
+            <Link key={href} href={href} className="inline-flex min-h-11 items-center text-[14px] font-medium text-white/85 transition-colors hover:text-white">{label}</Link>
+          ))}
+        </nav>
 
-          <div>
-            <h4 className="mb-4 text-[12px] font-bold uppercase tracking-wide text-white/60">{t('contactTitle')}</h4>
-            <div className="flex flex-wrap items-center gap-2">
-              <FooterIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} />
-              <FooterIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external />
-              <FooterIcon href="tel:+97466259219" label={t('contactPhone')} icon={Phone} />
-              <FooterIcon href="https://instagram.com/MimaarLink" label={t('contactInstagram')} icon={Instagram} external />
+        <div className="mt-6 grid gap-5 border-t border-white/10 pt-8 sm:grid-cols-3">
+          {contacts.map(([label, value, href]) => (
+            <div key={href}>
+              <p className="text-[12px] text-white/55">{label}</p>
+              <a
+                href={href}
+                target={href.startsWith('http') ? '_blank' : undefined}
+                rel={href.startsWith('http') ? 'noreferrer' : undefined}
+                className="mt-1 inline-flex min-h-11 items-center text-[15px] font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:decoration-white"
+              >
+                <bdi dir="ltr">{value}</bdi>
+              </a>
             </div>
-          </div>
+          ))}
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-t border-white/10 pt-4 text-center text-[12px] font-medium text-white/60">
-          <span>&copy; {year} {t('appName')} &middot; {t('allRights')}</span>
-          <span>{dir === 'rtl' ? 'مسجلة في قطر · سجل تجاري رقم 243332' : 'Registered in Qatar · CR No. 243332'}</span>
-          <Link
-            href="/privacy"
-            className="inline-flex min-h-11 items-center rounded-lg px-1.5 font-bold text-white/80 transition-colors hover:text-[#009F91] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#152B54]"
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
+          <p className="text-[12px] leading-relaxed text-white/60">
+            &copy; {year} {t('appName')} &middot; {t('allRights')}
+            <span className="block">{rtl ? 'مسجلة في قطر · سجل تجاري رقم 243332' : 'Registered in Qatar · CR No. 243332'}</span>
+          </p>
+          <a
+            href="https://instagram.com/MimaarLink"
+            target="_blank"
+            rel="noreferrer"
+            aria-label={t('contactInstagram')}
+            title={t('contactInstagram')}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
           >
-            {t('privacyNotice')}
-          </Link>
+            <Instagram className="h-5 w-5" aria-hidden="true" />
+          </a>
         </div>
       </div>
     </footer>
   );
 }
 
-function FooterIcon({ href, label, icon: Icon, external = false, variant = 'footer' }) {
-  const classes = variant === 'surface'
-    ? 'border-border bg-white text-navy hover:border-[#009F91]/45 hover:bg-[#EAF7F4]/45 focus-visible:ring-offset-background dark:bg-transparent dark:text-white/85 dark:hover:text-[#0AC7CE]'
-    : 'border-white/15 bg-white/5 text-white/80 hover:border-[#009F91]/50 hover:text-[#009F91] hover:bg-white/10 focus-visible:ring-offset-[#0D1B2A]';
+// Contact buttons in the menu drawer.
+function ContactIcon({ href, label, icon: Icon, external = false }) {
+  const classes = 'border-border bg-white text-navy hover:border-[#009F91]/45 hover:bg-[#EAF7F4]/45 focus-visible:ring-offset-background dark:bg-transparent dark:text-white/85 dark:hover:text-[#0AC7CE]';
   return (
     <a
       href={href}
@@ -617,7 +592,7 @@ function FooterIcon({ href, label, icon: Icon, external = false, variant = 'foot
       title={label}
       target={external ? '_blank' : undefined}
       rel={external ? 'noreferrer' : undefined}
-      className={`cta-press tap-highlight relative inline-flex h-11 w-11 items-center justify-center rounded-[6px] border transition-colors duration-fast ease-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/50 focus-visible:ring-offset-2 ${classes}`}
+      className={`cta-press tap-highlight relative inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-fast ease-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/50 focus-visible:ring-offset-2 ${classes}`}
     >
       <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
     </a>

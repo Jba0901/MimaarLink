@@ -47,13 +47,13 @@ test('each whole-card link exposes its existing title and action as an accessibl
   assert.ok(card.includes('aria-label={cta ? `${title} — ${cta}` : title}'));
 });
 
-test('menu drawer and contact icons stay flat and calm: no arrow badges, 6px corners, no extra-bold', async () => {
+test('shell stays calm: no arrow badges, no extra-bold, no bottom tab bar, footer keeps CR number', async () => {
   const shell = await readFile(new URL('../components/AppShell.jsx', import.meta.url), 'utf8');
   assert.doesNotMatch(shell, /ArrowUpRight/);
   assert.doesNotMatch(shell, /font-extrabold/);
   assert.doesNotMatch(shell, /path-card/);
-  for (const fn of ['ActionTile', 'SecondaryDrawerLink', 'FooterIcon']) {
-    const body = shell.slice(shell.indexOf(`function ${fn}`), shell.indexOf('\n}\n', shell.indexOf(`function ${fn}`)));
-    assert.doesNotMatch(body, /rounded-2xl|rounded-full/, fn);
-  }
+  assert.doesNotMatch(shell, /mobile-bottom-nav|function NavBtn/);
+  assert.doesNotMatch(css, /mobile-bottom-nav|mobile-nav-main/);
+  assert.match(shell, /Registered in Qatar · CR No\. 243332/);
+  assert.match(shell, /data-over-hero=\{onNavy \|\| undefined\}/);
 });
