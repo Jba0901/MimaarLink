@@ -17,10 +17,10 @@ We cover a wide range of project activities, because the market demands it:
 ## Before you start
 
 1. Read `docs/HANDOFF.md` (latest entry first). It says what changed last, what is half-done, and what is waiting on Jassim.
-2. For UI, copy, ads, landing pages or any visual work, read `brand/BRAND.md` (v1.4). It is the source of truth for colour, type, logo, layout, motion, components, copy and the homepage structure. Where older docs disagree, `brand/BRAND.md` wins.
+2. For UI, copy, ads, landing pages or any visual work, read `brand/BRAND.md` (v1.5). It is the source of truth for colour, type, logo, layout, motion, components, copy and the homepage structure. Where older docs disagree, `brand/BRAND.md` wins.
 3. For strategy, outreach, ads, operations, pricing, provider acquisition or long-term planning, read `COMPANY-BRAIN.md` (one-page company picture and current status), then the linked file: `docs/operating-system.md` (how agents work for MimaarLink), `docs/operations.md` (running a project by hand), `docs/strategy/10-year-moat.md`, `docs/playbooks/meta-ads-launch.md`. Files in `docs/archive/` are history only; do not follow them.
 
-`mimaarlink-design-system.md`, `mimaarlink-brand-theme-draft.md`, `mimaarlink-worker-design-brief.md` and `mimaarlink-mobile-web-app-design-roadmap.md` predate v1.4. Their positioning and channel guidance is still useful; their palette, fonts and logo rules are superseded.
+`mimaarlink-design-system.md`, `mimaarlink-brand-theme-draft.md`, `mimaarlink-worker-design-brief.md` and `mimaarlink-mobile-web-app-design-roadmap.md` predate v1.4/v1.5. Their positioning and channel guidance is still useful; their palette, fonts and logo rules are superseded.
 
 ## Recording decisions
 
@@ -39,14 +39,14 @@ If you can edit the repo, add it yourself in the same change and mention it in t
 - Never invent statistics, testimonials, client or partner logos, project counts or awards, and do not overpromise. Leave a clearly marked placeholder and flag it to Jassim.
 - Keep forms, uploads, admin data, status pages, tracking links and file access working. Do not change Supabase tables, auth or submission payloads without Jassim's approval (additive, nullable columns added through the existing migration block in the API are the only exception, and must be noted in the handoff).
 
-## Brand defaults (v1.4, full spec in `brand/BRAND.md`)
+## Brand defaults (v1.5, full spec in `brand/BRAND.md`)
 
 - Navy `#152B54` leads. Teal `#009F91` is for actions only. Pale teal `#EAF7F4` with navy text is the signature panel.
-- Ground `#F6F8FB`, line `#DCE3EA`, body `#2E3E57`, muted `#586576`, warn `#B5462B` (warnings and exclusions only).
-- Dark mode: night `#0D1B2A`, surfaces `#13243B`, accent bright teal `#0AC7CE`.
-- Retired: amber `#FFB638`, old teal `#00B59E`, light teal `#D0F2EE`, Manrope. Do not reintroduce them.
+- Warm ground `#F7F3EC` with white cards, line `#E7E0D4`, body `#2E3E57`, muted `#586576`, warn `#B5462B` (warnings and exclusions only).
+- Dark mode: night `#0D1B2A`, surfaces `#13243B`, accent bright teal `#0AC7CE` (also accent text on navy sections).
+- Retired: amber `#FFB638`, old teal `#00B59E`, light teal `#D0F2EE`, cool ground `#F6F8FB`, Manrope, the chamfered corner. Do not reintroduce them.
 - Type: Source Serif 4 / Noto Naskh Arabic for headings (weight 500), IBM Plex Sans / IBM Plex Sans Arabic for interface text. Loaded in `lib/fonts.js`.
-- Radius 6px. One soft shadow. Motion: 140ms hover/press, 220ms components, 360ms steps/pages, one easing, no bounce, respect reduced motion.
+- Cards 12px, inputs 8px, buttons pill. One soft shadow. Motion: 140ms hover/press, 220ms components, 360ms steps/pages, one easing, no bounce, respect reduced motion.
 - Logo: use the SVG files in `public/brand/logo/` (copied byte-for-byte from `brand/logo/`). Never retype the wordmark, recolour, filter or crop it. The old `public/logo.png` files stay in the repo but are no longer used by the site.
 
 ## Code map (things that are easy to break)
