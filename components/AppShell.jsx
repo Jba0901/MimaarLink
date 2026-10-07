@@ -594,7 +594,7 @@ function SiteFooter({ flush = false, reserveMobileNav = false }) {
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-t border-white/10 pt-4 text-center text-[12px] font-medium text-white/60">
           <span>&copy; {year} {t('appName')} &middot; {t('allRights')}</span>
-          <span>{dir === 'rtl' ? 'مسجلة في قطر · سجل تجاري رقم 243332' : 'Registered in Qatar · CR No. 243332'}</span>
+          <span>{dir === 'rtl' ? 'منصة معماري الرقمية · سجل تجاري رقم 243332' : 'Mimaary Digital Platform · CR No. 243332'}</span>
           <Link
             href="/privacy"
             className="inline-flex min-h-11 items-center rounded-lg px-1.5 font-bold text-white/80 transition-colors hover:text-[#009F91] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#152B54]"

@@ -2,7 +2,9 @@
 
 The one-page picture of the company. Read this before any business, strategy, outreach or product decision. Keep it short and current; details live in the linked files.
 
-Last updated: 2026-10-02 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · CR 243332
+Last updated: 2026-10-07 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · Mimaary Digital Platform / منصة معماري الرقمية · CR 243332 (expires 22/05/2027)
+
+**Rename in progress:** the brand moves from MimaarLink to Mimaary / معماري. The site keeps the old name until the new logo and domain are ready (see `DECISIONS.md`).
 
 ## 1. What we do
 

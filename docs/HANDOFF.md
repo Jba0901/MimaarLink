@@ -4,6 +4,30 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-07 · Claude Code · branch `claude/sweet-noether-xhtfnc` · new legal name, rename decided
+
+**What changed**
+- Jassim's commercial registration was updated (SR3003832). New legal name: **Mimaary Digital Platform / منصة معماري الرقمية**. CR number **243332 unchanged**. Individual establishment, expires 22/05/2027.
+- Footer (`components/AppShell.jsx`) now reads "Mimaary Digital Platform · CR No. 243332" (AR: "منصة معماري الرقمية · سجل تجاري رقم 243332").
+- Homepage trust item "Registered in Qatar" (`app/page.js`, EN + AR) now names the legal entity. The wording still works after the brand rename.
+- Recorded in `DECISIONS.md`, `brand/BRAND.md` §1 and the footer line in §8, and the `COMPANY-BRAIN.md` header.
+
+**Decided, not yet built: brand rename MimaarLink → Mimaary / معماري**
+- Do NOT rename strings piecemeal. The logo SVGs in `public/brand/logo/` say MimaarLink and must not be retyped or edited (brand rule), so the switch waits for a new logo set. The name appears in about 240 places across 43 files (i18n, metadata, manifest, privacy page, email, Instagram handle, logo file names).
+- Inputs needed from Jassim: new logo files, domain (`mimaary.com` was unregistered at the .com registry on 2026-10-07), email, and Instagram/WhatsApp names.
+
+**Not published on purpose**
+- The CR printout includes Jassim's ID number. Only the legal name and CR number go on the site. The PDF is not committed.
+
+**Waiting on Jassim**
+- Logo, domain, contact handles (above).
+- The CR lists one activity: "Digital Platform for Retail Trade Intermediation" (479121). Worth confirming with MOCI that it covers construction/consulting service matching before any paid ads.
+
+**Verified**
+- `npm run build` and `node --test tests/*.test.mjs` pass (see commit).
+
+---
+
 ## 2026-10-02 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #4](https://github.com/Jba0901/MimaarLink/pull/4) · fonts self-hosted
 
 **What changed**
