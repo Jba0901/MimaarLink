@@ -83,6 +83,10 @@
   .dark body { color-scheme: dark; }
   body { font-family: var(--ml-sans); color: var(--ml-body); }
   html[dir="rtl"] body { font-family: var(--ml-sans-ar); line-height: 1.8; }
+  /* Typed text takes its direction from its own first letter (numbers stay left to right),
+     while an empty field follows the page, so Arabic placeholders sit on the right.
+     Do not put dir="auto" on these fields: an empty dir="auto" field falls back to left to right. */
+  :where(input:not([dir]), textarea:not([dir])) { unicode-bidi: plaintext; }
   /* Headings are serif 500, never bold. Interface text stays sans. */
   :where(h1, h2, h3, .display-title) {
     font-family: var(--ml-serif);
