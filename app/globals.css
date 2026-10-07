@@ -80,7 +80,9 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: geometricPrecision;
   }
-  .dark body { color-scheme: dark; }
+  /* Light by default whatever the phone's system setting; night only when chosen in the menu. */
+  html { color-scheme: light; }
+  html.dark, .dark body { color-scheme: dark; }
   body { font-family: var(--ml-sans); color: var(--ml-body); }
   html[dir="rtl"] body { font-family: var(--ml-sans-ar); line-height: 1.8; }
   /* Typed text takes its direction from its own first letter (numbers stay left to right),
