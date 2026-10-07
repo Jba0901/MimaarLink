@@ -44,9 +44,9 @@ If you can edit the repo, add it yourself in the same change and mention it in t
 - Name: **Mimaary / معماري** (MimaarLink is retired). Legal name Mimaary Digital Platform / منصة معماري الرقمية, CR 243332. In Arabic sentences write «منصة معماري» where «معماري» alone could read as "architectural".
 
 - Navy `#152B54` leads. Teal `#009F91` is for actions only. Pale teal `#EAF7F4` with navy text is the signature panel.
-- Warm ground `#F7F3EC` with white cards, line `#E7E0D4`, body `#2E3E57`, muted `#586576`, warn `#B5462B` (warnings and exclusions only).
+- Cool grey ground `#F6F8FB` with white cards, line `#DCE3EA`, body `#2E3E57`, muted `#586576`, warn `#B5462B` (warnings and exclusions only).
 - Dark mode: night `#0D1B2A`, surfaces `#13243B`, accent bright teal `#0AC7CE` (also accent text on navy sections).
-- Retired: amber `#FFB638`, old teal `#00B59E`, light teal `#D0F2EE`, cool ground `#F6F8FB`, Manrope, the chamfered corner. Do not reintroduce them.
+- Retired: amber `#FFB638`, old teal `#00B59E`, light teal `#D0F2EE`, sand ground `#F7F3EC` / `#E7E0D4`, Manrope, the chamfered corner. Do not reintroduce them.
 - Type: Source Serif 4 / Noto Naskh Arabic for headings (weight 500), IBM Plex Sans / IBM Plex Sans Arabic for interface text. Loaded in `lib/fonts.js`.
 - Cards 12px, inputs 8px, buttons pill. One soft shadow. Motion: 140ms hover/press, 220ms components, 360ms steps/pages, one easing, no bounce, respect reduced motion.
 - Logo: use the `mimaary-*` SVG files in `public/brand/logo/` (copied byte-for-byte from `brand/logo/`). Never retype the wordmark, recolour, filter or crop it. The MimaarLink artwork is deleted; do not bring it back.

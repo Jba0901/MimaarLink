@@ -80,12 +80,14 @@ test('every shipped font licence is available in the public distribution', async
   }
 });
 
-test('brand v1.5 tokens: warm ground, soft card corners, pill buttons, retired values stay gone', () => {
-  assert.match(tokens, /--ml-ground: #F7F3EC;/);
-  assert.match(tokens, /--ml-line: #E7E0D4;/);
+test('brand tokens: cool grey ground, soft card corners, pill buttons, retired values stay gone', () => {
+  assert.match(tokens, /--ml-ground: #F6F8FB;/);
+  assert.match(tokens, /--ml-line: #DCE3EA;/);
   assert.match(tokens, /--ml-radius-card: 12px;/);
   assert.match(tokens, /--ml-radius-pill: 999px;/);
   assert.match(tokens, /--ml-on-navy-accent: #0AC7CE;/);
-  assert.doesNotMatch(tokens, /F6F8FB|FFB638|00B59E|D0F2EE|\.ml-cut/i);
-  assert.match(globals, /--brand-soft: 38\.1818 40\.7407% 94\.7059%;/);
+  // Sand ground (#F7F3EC / #E7E0D4) was tried in v1.5 and retired on 2026-10-07.
+  assert.doesNotMatch(tokens, /F7F3EC|E7E0D4|FFB638|00B59E|D0F2EE|\.ml-cut/i);
+  assert.match(globals, /--brand-soft: 216 38\.46% 97\.45%;/);
+  assert.match(globals, /--brand-border: 210 25% 89\.02%;/);
 });

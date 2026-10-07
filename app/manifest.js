@@ -9,7 +9,7 @@ export default function manifest() {
     scope: '/',
     display: 'standalone',
     orientation: 'portrait',
-    background_color: '#F7F3EC',
+    background_color: '#F6F8FB',
     theme_color: '#152B54',
     lang: 'ar',
     dir: 'auto',

@@ -449,8 +449,8 @@ function ActionTile({ item, active }) {
       active: 'border-[#009F91]/45 bg-[#EAF7F4]/55 dark:bg-[#009F91]/15',
     },
     navy: {
-      icon: 'bg-[#F7F3EC] text-[#152B54] dark:bg-white/[0.08] dark:text-white',
-      active: 'border-[#152B54]/30 bg-[#F7F3EC] dark:border-white/20 dark:bg-white/[0.08]',
+      icon: 'bg-[#F6F8FB] text-[#152B54] dark:bg-white/[0.08] dark:text-white',
+      active: 'border-[#152B54]/30 bg-[#F6F8FB] dark:border-white/20 dark:bg-white/[0.08]',
     },
   };
   const accent = accents[item.accent] || accents.teal;

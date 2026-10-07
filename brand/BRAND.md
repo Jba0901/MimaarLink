@@ -2,7 +2,7 @@
 
 Version 1.6 · October 2026 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO
 
-**v1.6 (7 Oct 2026):** the brand is **Mimaary / معماري**. MimaarLink is retired everywhere: name, logo files and copy. The legal entity is Mimaary Digital Platform / منصة معماري الرقمية (CR No. 243332).
+**v1.6 (7 Oct 2026):** the ground is cool grey `#F6F8FB` with line `#DCE3EA` again (sand retired); the navy hero, skyline, soft cards and large-screen scaling stay. The brand is **Mimaary / معماري**. MimaarLink is retired everywhere: name, logo files and copy. The legal entity is Mimaary Digital Platform / منصة معماري الرقمية (CR No. 243332).
 
 **v1.5 (website redesign, 5 Oct 2026):** warmer and calmer. Warm stone ground with white cards, a deep navy hero, softer shapes (12px cards, pill buttons), centred display headline with one accent phrase, arch line drawings instead of photos, no bottom tab bar on the website. The v1.4 look stays in git history (main at `446f486`) for the future app.
 
@@ -53,14 +53,14 @@ Principle: **Navy leads. Teal acts. Nothing competes.** Premium comes from navy 
 | `pale-teal` | `#EAF7F4` | **Signature panel** background (with navy text). Also info panels and selected rows. |
 | `night` | `#0D1B2A` | Dark mode background. Never replaces navy as the brand colour. |
 | `bright-teal` | `#0AC7CE` | Accent in dark mode, and accent text on navy sections (contrast). |
-| `ground` | `#F7F3EC` | Warm stone page background and alternate sections (v1.5; was cool `#F6F8FB`). |
+| `ground` | `#F6F8FB` | Cool grey page background and alternate sections (the v1.5 sand `#F7F3EC` was retired on 2026-10-07: it looked off next to the navy hero). |
 | `white` | `#FFFFFF` | Cards, forms, main surfaces. |
 | `body` | `#2E3E57` | Body text. |
 | `muted` | `#586576` | Secondary text, captions, labels. |
-| `line` | `#E7E0D4` | Warm borders and 1px dividers (v1.5; was `#DCE3EA`). |
+| `line` | `#DCE3EA` | Borders and 1px dividers (the sand line `#E7E0D4` is retired). |
 | `warn` | `#B5462B` | System warnings and proposal exclusions only. Not a brand colour. |
 
-**Retired:** Warm Amber (`#FFB638`). Remove it everywhere. Do not use gold. The warm ground is a quiet neutral, not a colour: never use sand or beige for buttons, text or accents.
+**Retired:** Warm Amber (`#FFB638`). Remove it everywhere. Do not use gold. Sand and beige grounds are retired too; the ground is cool grey.
 
 ### Usage ratio per page
 55% white and ground · 25% navy · 12% teal · 6% text grey · 2% pale teal.
@@ -115,7 +115,7 @@ Rules: minimum 120px wide for the full logo, 20px tall for the mark. Clear space
 
 - **Radius (v1.5):** cards and panels 12px; inputs and small controls 8px; buttons and status pills fully rounded (pill). No other radii.
 - **Signature shape:** the arch from the logo, used as a small section mark and in line drawings. The v1.4 chamfered corner is retired.
-- **Soft cards on the ground:** group content in white 12px cards with generous padding (24px phone, 32px desktop) on the warm ground. Thin dividers only inside cards (offer rows, FAQ).
+- **Soft cards on the ground:** group content in white 12px cards with generous padding (24px phone, 32px desktop) on the grey ground. Thin dividers only inside cards (offer rows, FAQ).
 - **Grid:** 8px spacing scale; max content width 1200px; 12 columns desktop, single column on phones; side gutter at least 16px.
 - **Shadows:** almost none. One soft shadow for raised elements: `0 18px 40px -24px rgba(13,27,42,.28)`.
 - **Imagery:** real Qatari architecture, sites, drawings, models; colour-graded cool towards navy. No handshakes, stock smiles, cartoons, or futuristic AI renders. Until real photos exist, use thin line drawings built from the logo arch (e.g. the hero skyline), never a fake photo.
@@ -169,7 +169,7 @@ Rules:
 
 ## 10. Homepage structure
 
-Build in this order. Each section has one job. Sections alternate navy and the warm ground; content sits in white 12px cards.
+Build in this order. Each section has one job. Sections alternate navy, the grey ground and white; content sits in white 12px cards.
 
 1. **Hero (navy, centred)**
    - Label: PROJECT SOURCING IN QATAR · تنفيذ مشاريعك في قطر

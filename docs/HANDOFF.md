@@ -4,6 +4,18 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · back to cool grey ground
+
+**What changed**
+- Jassim: the sand ground looked off next to the navy hero. Light ground back to cool grey `#F6F8FB`, line `#DCE3EA` (`app/brand-tokens.css`, shadcn HSL in `app/globals.css`), translucent header, drawer tiles, manifest background and light theme-color.
+- Navy hero, skyline, dark mode, large-screen sizing and the Mimaary name/logo unchanged.
+- `brand/BRAND.md` (v1.6 note, colour table), `AGENTS.md` (sand now listed as retired) and `DECISIONS.md` updated. The token test now guards the grey values and that sand stays gone.
+
+**Verified**
+- Build + tests (50/50). Checked 375px (EN light, AR dark), 1440px (AR light, EN dark), 1920px (EN light); no horizontal scroll 320–1440px.
+
+---
+
 ## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · homepage scaled up for large screens
 
 **What changed**

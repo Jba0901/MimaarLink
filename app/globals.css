@@ -11,9 +11,9 @@
     --brand-teal: 174.7170 100% 31.1765%;
     --brand-mint: 166.1538 44.8276% 94.3137%;
     --brand-white: 0 0% 100%;
-    --brand-soft: 38.1818 40.7407% 94.7059%;   /* warm ground #F7F3EC */
+    --brand-soft: 216 38.46% 97.45%;   /* cool grey ground #F6F8FB */
     --brand-muted: 214 14.5631% 40.3922%;
-    --brand-border: 37.8947 28.3582% 86.8627%; /* warm line #E7E0D4 */
+    --brand-border: 210 25% 89.02%;    /* line #DCE3EA */
     --brand-dark-background: 211.0345 52.7273% 10.7843%;
     --brand-dark-card: 214.5 51.2821% 15.2941%;
     --brand-dark-border: 215.4545 37.9310% 22.7451%;
@@ -249,10 +249,10 @@
     min-height: 100dvh;
   }
   .site-header {
-    background-color: rgba(247,243,236,0.78);
+    background-color: rgba(246,248,251,0.78);
     padding-top: env(safe-area-inset-top);
   }
-  .site-header.is-scrolled { background-color: rgba(247,243,236,0.92); }
+  .site-header.is-scrolled { background-color: rgba(246,248,251,0.92); }
   .dark .site-header { background-color: rgba(7,17,29,0.76); }
   .dark .site-header.is-scrolled { background-color: rgba(7,17,29,0.92); }
   /* Header buttons are quiet ghosts (brand v1.5). */
@@ -954,7 +954,7 @@
 @media (hover: hover) and (pointer: fine) {
   .start-here-grid a:hover .path-card { border-color: #009F91; background: hsl(var(--secondary)); }
 }
-/* ---------- Homepage v1.5 (brand/BRAND.md section 10): warm ground, navy bands, soft cards ---------- */
+/* ---------- Homepage (brand/BRAND.md section 10): cool grey ground, navy bands, soft cards ---------- */
 .ml-home { color: var(--ml-body); background: var(--ml-ground); }
 /* Same outer width as the header and footer (.container-x): 1280px with gutters, so content is 1200px. */
 .ml-wrap { width: 100%; max-width: 1280px; margin-inline: auto; padding-inline: max(1rem, env(safe-area-inset-left)); }

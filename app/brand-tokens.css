@@ -11,13 +11,13 @@
   --ml-bright-teal: #0AC7CE;
 
   /* Surfaces and text (light) */
-  --ml-bg: #F7F3EC;
-  --ml-ground: #F7F3EC;
+  --ml-bg: #F6F8FB;
+  --ml-ground: #F6F8FB;
   --ml-surface: #FFFFFF;
   --ml-heading: #152B54;
   --ml-body: #2E3E57;
   --ml-muted: #586576;
-  --ml-line: #E7E0D4;
+  --ml-line: #DCE3EA;
   --ml-accent: #009F91;
   --ml-accent-hover: #04A3AB;
   --ml-on-accent: #FFFFFF;
