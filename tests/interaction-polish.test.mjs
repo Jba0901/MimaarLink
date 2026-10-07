@@ -68,5 +68,5 @@ test('homepage v1.5: navy hero over the header, FAQ uses only decided facts, no 
   assert.equal(faq.length, 2, 'FAQ exists in Arabic and English');
   // Answers carry no figures, prices or counts; facts come from DECISIONS.md.
   for (const block of faq) assert.doesNotMatch(block, /[0-9٠-٩]|QAR|ر\.ق|%/);
-  assert.match(home, /'Is MimaarLink free\?', 'Yes, for now\./);
+  assert.match(home, /'Is Mimaary free\?', 'Yes, for now\./);
 });

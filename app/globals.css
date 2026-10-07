@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* MimaarLink brand v1.5 (brand/BRAND.md). Navy leads, teal acts, nothing competes.
+    /* Mimaary brand v1.5 (brand/BRAND.md). Navy leads, teal acts, nothing competes.
        Hex values live in app/brand-tokens.css; these HSL triplets feed the shadcn layer. */
     --brand-navy: 219.0476 60% 20.5882%;
     --brand-deep: 211.0345 52.7273% 10.7843%;
@@ -142,11 +142,10 @@
 
   /* ---------- brand / theme-safe surfaces ---------- */
   .brand-logo { display: inline-flex; flex: 0 0 auto; align-items: center; }
-  .brand-logo img { display: block; height: auto; width: 124px; }
-  .brand-logo-ar img { width: 120px; }
+  /* Sized by height so both scripts sit at the same optical size (logo files keep their ratio). */
+  .brand-logo img { display: block; width: auto; height: 40px; }
   @media (min-width: 640px) {
-    .brand-logo img { width: 140px; }
-    .brand-logo-ar img { width: 128px; }
+    .brand-logo img { height: 46px; }
   }
   .brand-logo .brand-logo-dark,
   .dark .brand-logo .brand-logo-light,
@@ -1007,7 +1006,8 @@ html[dir="rtl"] .ml-hero-sub { line-height: 1.85; }
 html[dir="rtl"] .ml-path p { line-height: 1.8; }
 .ml-path .btn { margin-top: 20px; min-height: 48px; }
 @media (max-width: 479px) { .ml-path .btn { width: 100%; } }
-.ml-hero-art { display: block; width: 100%; height: 112px; margin-top: 28px; color: rgba(234,247,244,0.34); }
+/* Height follows width (drawing is 1200x222) so tall arches are never clipped on wide screens. */
+.ml-hero-art { display: block; width: 100%; height: clamp(112px, 18.5vw, 280px); margin-top: 28px; color: rgba(234,247,244,0.34); }
 
 /* 2 and 6. Soft cards */
 .ml-cards { display: grid; gap: 12px; margin-top: 32px; }
@@ -1092,7 +1092,6 @@ html[dir="rtl"] .ml-faq details p { line-height: 1.85; }
   .ml-hero-sub { font-size: 17px; }
   .ml-paths { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .ml-path { padding: 28px; }
-  .ml-hero-art { height: 168px; }
   .ml-section { padding-top: 96px; padding-bottom: 96px; }
   .ml-card { padding: 28px; }
   .ml-cards-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1104,7 +1103,6 @@ html[dir="rtl"] .ml-faq details p { line-height: 1.85; }
   .ml-home h2 { font-size: 40px; }
   .ml-home .ml-hero h1 { font-size: 64px; }
   html[dir="rtl"] .ml-home .ml-hero h1 { font-size: 56px; }
-  .ml-hero-art { height: 210px; }
   .ml-cards-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .ml-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
   .ml-sectors { grid-template-columns: repeat(3, minmax(0, 1fr)); }

@@ -28,9 +28,9 @@ import RouteProgress from '@/components/RouteProgress';
 function BrandLogo({ onDark = false, priority = false, className = '' }) {
   const { lang } = useLang();
   const script = lang === 'ar' ? 'ar' : 'en';
-  const light = `/brand/logo/mimaarlink-logo-${script}.svg`;
-  const dark = `/brand/logo/mimaarlink-logo-${script}-dark.svg`;
-  const width = script === 'ar' ? 418.1 : 474.2;
+  const light = `/brand/logo/mimaary-logo-${script}.svg`;
+  const dark = `/brand/logo/mimaary-logo-${script}-dark.svg`;
+  const width = script === 'ar' ? 315.2 : 389.8;
   const imgProps = { alt: '', width, height: 146.7, decoding: 'async', fetchPriority: priority ? 'high' : undefined };
   return (
     <span className={`brand-logo brand-logo-${script} ${onDark ? 'brand-logo-on-dark' : ''} ${className}`} aria-hidden="true">
@@ -533,7 +533,7 @@ function SiteFooter({ flush = false }) {
     <footer className={`${flush ? 'mt-0' : 'mt-16'} site-footer premium-panel text-white`}>
       <div className="container-x pb-[max(2rem,env(safe-area-inset-bottom))] pt-12 lg:pt-16">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/brand/logo/mimaarlink-logo-bilingual-dark.svg" alt={t('appName')} width={170} height={52} className="h-auto w-[170px]" decoding="async" />
+        <img src="/brand/logo/mimaary-logo-bilingual-dark.svg" alt={t('appName')} width={160} height={69} className="h-auto w-[160px]" decoding="async" />
         <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-white/70">
           {rtl ? 'للمشاريع والمقاولين والاستشاريين في قطر.' : 'For projects, contractors and consultants in Qatar.'}
           <span className="block text-white/55">{t('contactLocationValue')}</span>

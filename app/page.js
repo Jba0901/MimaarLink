@@ -76,7 +76,7 @@ const COPY = {
     faqLabel: 'أسئلة شائعة',
     faqTitle: 'إجابات قبل أن تبدأ.',
     faq: [
-      ['هل استخدام معمار لينك مجاني؟', 'نعم، حاليًا. نشر المشروع والتقديم كشركة كلاهما مجاني.'],
+      ['هل استخدام منصة معماري مجاني؟', 'نعم، حاليًا. نشر المشروع والتقديم كشركة كلاهما مجاني.'],
       ['كيف تتحققون من الشركات؟', 'نتحقق من رقم السجل التجاري لكل شركة ونراجع خدماتها قبل أن تستلم أي مشروع.'],
       ['ماذا يحدث بعد نشر مشروعي؟', 'نراجع طلبك ونستوضح أي تفاصيل ناقصة، ثم نرسله إلى شركات معتمدة مناسبة. تظهر العروض في صفحة المتابعة فور وصولها لتقارن بينها جنبًا إلى جنب.'],
       ['هل يمكنني الكتابة بالعربية؟', 'نعم. صف مشروعك بالعربية أو الإنجليزية، وبكلماتك الخاصة.'],
@@ -147,7 +147,7 @@ const COPY = {
     faqLabel: 'Questions',
     faqTitle: 'Answers before you start.',
     faq: [
-      ['Is MimaarLink free?', 'Yes, for now. Posting a project and applying as a firm are both free.'],
+      ['Is Mimaary free?', 'Yes, for now. Posting a project and applying as a firm are both free.'],
       ['How do you check the firms?', 'We verify each firm’s commercial registration (CR) number and review its services before it receives any project.'],
       ['What happens after I post a project?', 'We review your brief and clarify anything missing, then send it to suitable vetted firms. Offers appear on your tracking page as they arrive, so you can compare them side by side.'],
       ['Can I write in Arabic?', 'Yes. Describe your project in Arabic or English, in your own words.'],

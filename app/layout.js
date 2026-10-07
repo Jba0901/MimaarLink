@@ -8,17 +8,17 @@ import { Toaster } from '@/components/ui/sonner';
 import { fontVariables } from '@/lib/fonts';
 
 export const metadata = {
-  title: 'MimaarLink - Contractor and consultant bids in Qatar',
+  title: 'Mimaary - Contractor and consultant bids in Qatar',
   description: 'Post your project and get matched with suitable Qatar contractors or consultant offices based on scope, activity, and location.',
   icons: {
     icon: [
-      { url: '/brand/logo/mimaarlink-icon.svg?v=2', type: 'image/svg+xml' },
-      { url: '/brand/logo/mimaarlink-icon-512.png?v=2', type: 'image/png', sizes: '512x512' },
+      { url: '/brand/logo/mimaary-icon.svg?v=2', type: 'image/svg+xml' },
+      { url: '/brand/logo/mimaary-icon-512.png?v=2', type: 'image/png', sizes: '512x512' },
     ],
-    shortcut: [{ url: '/brand/logo/mimaarlink-icon-512.png?v=2', type: 'image/png' }],
-    apple: [{ url: '/brand/logo/mimaarlink-icon-180.png?v=2', type: 'image/png', sizes: '180x180' }],
+    shortcut: [{ url: '/brand/logo/mimaary-icon-512.png?v=2', type: 'image/png' }],
+    apple: [{ url: '/brand/logo/mimaary-icon-180.png?v=2', type: 'image/png', sizes: '180x180' }],
   },
-  appleWebApp: { capable: true, title: 'MimaarLink', statusBarStyle: 'default' },
+  appleWebApp: { capable: true, title: 'Mimaary', statusBarStyle: 'default' },
   formatDetection: { telephone: false },
 };
 
