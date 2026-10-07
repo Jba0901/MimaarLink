@@ -45,6 +45,7 @@ If you can edit the repo, add it yourself in the same change and mention it in t
 
 - Navy `#152B54` leads. Teal `#009F91` is for actions only. Pale teal `#EAF7F4` with navy text is the signature panel.
 - Cool grey ground `#F6F8FB` with white cards, line `#DCE3EA`, body `#2E3E57`, muted `#586576`, warn `#B5462B` (warnings and exclusions only).
+- Light mode by default regardless of system setting; night mode only when the visitor picks it. Arabic is the default language.
 - Dark mode: night `#0D1B2A`, surfaces `#13243B`, accent bright teal `#0AC7CE` (also accent text on navy sections).
 - Retired: amber `#FFB638`, old teal `#00B59E`, light teal `#D0F2EE`, sand ground `#F7F3EC` / `#E7E0D4`, Manrope, the chamfered corner. Do not reintroduce them.
 - Type: Source Serif 4 / Noto Naskh Arabic for headings (weight 500), IBM Plex Sans / IBM Plex Sans Arabic for interface text. Loaded in `lib/fonts.js`.

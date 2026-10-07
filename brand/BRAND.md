@@ -72,6 +72,8 @@ Principle: **Navy leads. Teal acts. Nothing competes.** Premium comes from navy 
 The hero, the contractor band, the closing call and the footer sit on navy (`#152B54`, deepening towards `#0F2142`). On navy: headings and body in white tones, accent text in `bright-teal`, the primary button stays teal fill, secondary buttons are outline white.
 
 ### Dark mode
+The website is **light by default, whatever the phone or computer's system setting** (decided 7 Oct 2026). Night mode appears only when the visitor chooses it in the menu; that choice is remembered in their browser. Arabic is the default language; English only when chosen or linked with `?lang=en`.
+
 Background `night`, surfaces `#13243B`, text `#F2F5FA`, body `#C9D6E8`, muted `#8FA0B6`, lines `#243650`, accent `bright-teal`, signature panel `#0F2E3A` with `#F2F5FA` text.
 
 ## 4. Typography

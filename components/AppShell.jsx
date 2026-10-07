@@ -65,7 +65,8 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
   useEffect(() => {
     if (typeof window === 'undefined') return;
     let stored;
-    try { stored = localStorage.getItem('mlTheme'); } catch {}
+    // New key on purpose: earlier saved choices are dropped once, so every visitor starts light.
+    try { stored = localStorage.getItem('mimaaryTheme'); localStorage.removeItem('mlTheme'); } catch {}
     const initial = stored === 'dark' || stored === 'light' ? stored : 'light';
     setTheme(initial);
     document.documentElement.classList.toggle('dark', initial === 'dark');
@@ -75,7 +76,8 @@ export default function AppShell({ children, hideNav = false, hideFooter = false
   useEffect(() => {
     if (!themeReady || typeof document === 'undefined') return;
     document.documentElement.classList.toggle('dark', theme === 'dark');
-    try { localStorage.setItem('mlTheme', theme); } catch {}
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0D1B2A' : '#F6F8FB');
+    try { localStorage.setItem('mimaaryTheme', theme); } catch {}
   }, [theme, themeReady]);
 
   useEffect(() => {

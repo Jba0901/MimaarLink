@@ -4,6 +4,27 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · light mode and Arabic by default
+
+**What changed**
+- The site always opens in **light mode**, whatever the phone's system setting. `<meta name="color-scheme" content="only light">` stops Chrome/Samsung auto-darkening; the browser bar is one light colour (`#F6F8FB`) instead of following the system; `html { color-scheme: light }`.
+- Night mode only when the visitor taps it in the menu. The saved choice moved from `mlTheme` to `mimaaryTheme`, so every earlier saved choice (including test taps) is dropped once and everyone starts light. Choosing night still works and is remembered; the browser bar follows it.
+- **Arabic first** beyond the pages (which already defaulted to Arabic): the browser tab title, Google/WhatsApp link previews (`generateMetadata` in `app/layout.js`, English only when the visitor chose English), the iPhone home-screen name and the installed app's name, description and shortcuts (`app/manifest.js`, `dir: 'rtl'`).
+- Rule recorded in `brand/BRAND.md` (Dark mode) and `AGENTS.md` (Brand defaults). New `tests/site-defaults.test.mjs` guards both.
+
+**Behaves differently**
+- Anyone who had chosen night mode before sees light once and has to choose night again.
+- A visitor who switched to English keeps English (cookie), by design.
+
+**Waiting on Jassim**
+- Arabic page title wording: «منصة معماري | عروض المقاولين والاستشاريين في قطر».
+- QSTP folder (`public/qstp-application-2026/`): keep, update the note, or remove.
+
+**Verified**
+- Build + tests (53/53). Chromium at 390px with the system in dark mode, English browser locale and an old saved `mlTheme=dark`: page opens Arabic, light, ground `#F6F8FB`, theme-color light; choosing night in the menu switches to night and persists to the next page.
+
+---
+
 ## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · last MimaarLink traces, main address www.mimaary.com
 
 **What changed**
