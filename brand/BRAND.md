@@ -1,27 +1,32 @@
-# MimaarLink Brand & Website Spec
+# Mimaary Brand & Website Spec
 
-Version 1.4 · September 2026 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO
+Version 1.6 · October 2026 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO
 
-This is the single source of truth for how mimaarlink.com looks, reads and behaves. Follow it exactly. When something is not covered here, choose the calmer, clearer option and ask before inventing new visual patterns.
+**v1.6 (7 Oct 2026):** the ground is cool grey `#F6F8FB` with line `#DCE3EA` again (sand retired); the navy hero, skyline, soft cards and large-screen scaling stay. The brand is **Mimaary / معماري**. MimaarLink is retired everywhere: name, logo files and copy. The legal entity is Mimaary Digital Platform / منصة معماري الرقمية (CR No. 243332).
+
+**v1.5 (website redesign, 5 Oct 2026):** warmer and calmer. Warm stone ground with white cards, a deep navy hero, softer shapes (12px cards, pill buttons), centred display headline with one accent phrase, arch line drawings instead of photos, no bottom tab bar on the website. The v1.4 look stays in git history (main at `446f486`) for the future app.
+
+This is the single source of truth for how the Mimaary website (www.mimaary.com) looks, reads and behaves. Follow it exactly. When something is not covered here, choose the calmer, clearer option and ask before inventing new visual patterns.
 
 Stack: Next.js, Tailwind CSS, Supabase, Vercel. The site is bilingual (English and Arabic, full RTL).
 
 ---
 
-## 1. What MimaarLink is
+## 1. What Mimaary is
 
-MimaarLink is a Qatar-based construction technology platform. A project owner submits **one request** and receives **three to five competing offers** from vetted contractors and consultants, then compares price, timeline, scope and exclusions side by side and chooses.
+Mimaary is a Qatar-based construction technology platform. A project owner submits **one request** and receives **three to five competing offers** from vetted contractors and consultants, then compares price, timeline, scope and exclusions side by side and chooses.
 
 - **Promise (EN):** One request. Three to five offers. You choose.
 - **Promise (AR):** طلب واحد. من ثلاثة إلى خمسة عروض. والقرار لك.
 - **Brand line (EN):** The trusted start of every project in Qatar.
 - **Brand line (AR):** البداية الموثوقة لكل مشروع في قطر.
 - **Descriptor:** The project-sourcing platform for Qatar's built environment.
-- **Arabic name:** معمار لينك (confirmed against commercial registration CR No. 243332).
+- **Name:** Mimaary (EN) · معماري (AR). In Arabic sentences write «منصة معماري» wherever «معماري» alone could read as the adjective "architectural"; in headings, logos and titles «معماري» alone is fine.
+- **Legal name:** Mimaary Digital Platform / منصة معماري الرقمية (CR No. 243332). Footer and trust copy show the legal name and CR number only.
 
 ## 2. Personality and feeling
 
-**Calm authority.** MimaarLink should feel like the well-run version of this market: a private bank's composure applied to construction. Confidence comes from restraint, order and clarity, never from volume.
+**Calm authority.** Mimaary should feel like the well-run version of this market: a private bank's composure applied to construction. Confidence comes from restraint, order and clarity, never from volume.
 
 Four traits: **Trusted, Precise, Qatari, Quick.**
 
@@ -32,7 +37,7 @@ What each audience must feel:
 | Contractors & consultants | Respect | Being listed is a mark of quality. Serious, well-scoped work. |
 | Investors & institutions | Legitimacy | Polished, registered, bilingual, ready to scale. |
 
-MimaarLink is never: a crowded classifieds marketplace, a cold government portal, a flashy "AI startup" with fake dashboards, or loud and salesy.
+Mimaary is never: a crowded classifieds marketplace, a cold government portal, a flashy "AI startup" with fake dashboards, or loud and salesy.
 
 ## 3. Colour
 
@@ -47,23 +52,28 @@ Principle: **Navy leads. Teal acts. Nothing competes.** Premium comes from navy 
 | `teal-ink` | `#00786D` | Teal text on pale teal backgrounds (small labels). |
 | `pale-teal` | `#EAF7F4` | **Signature panel** background (with navy text). Also info panels and selected rows. |
 | `night` | `#0D1B2A` | Dark mode background. Never replaces navy as the brand colour. |
-| `bright-teal` | `#0AC7CE` | Accent in dark mode only. |
-| `ground` | `#F6F8FB` | Page background and alternate sections. |
+| `bright-teal` | `#0AC7CE` | Accent in dark mode, and accent text on navy sections (contrast). |
+| `ground` | `#F6F8FB` | Cool grey page background and alternate sections (the v1.5 sand `#F7F3EC` was retired on 2026-10-07: it looked off next to the navy hero). |
 | `white` | `#FFFFFF` | Cards, forms, main surfaces. |
 | `body` | `#2E3E57` | Body text. |
 | `muted` | `#586576` | Secondary text, captions, labels. |
-| `line` | `#DCE3EA` | Borders and 1px dividers. |
+| `line` | `#DCE3EA` | Borders and 1px dividers (the sand line `#E7E0D4` is retired). |
 | `warn` | `#B5462B` | System warnings and proposal exclusions only. Not a brand colour. |
 
-**Retired:** Warm Amber (`#FFB638`). Remove it everywhere. Do not use gold.
+**Retired:** Warm Amber (`#FFB638`). Remove it everywhere. Do not use gold. Sand and beige grounds are retired too; the ground is cool grey.
 
 ### Usage ratio per page
 55% white and ground · 25% navy · 12% teal · 6% text grey · 2% pale teal.
 
 ### The signature treatment
-**Navy text on pale teal** is reserved for the moments that matter: the promise panel in the hero, key figures ("3–5 offers"), and the offer an owner selects. Label text inside it uses `teal-ink`.
+**Navy text on pale teal** is reserved for the moments that matter: key figures ("3–5 offers") and the offer an owner selects. Label text inside it uses `teal-ink`.
+
+### Navy sections
+The hero, the contractor band, the closing call and the footer sit on navy (`#152B54`, deepening towards `#0F2142`). On navy: headings and body in white tones, accent text in `bright-teal`, the primary button stays teal fill, secondary buttons are outline white.
 
 ### Dark mode
+The website is **light by default, whatever the phone or computer's system setting** (decided 7 Oct 2026). Night mode appears only when the visitor chooses it in the menu; that choice is remembered in their browser. Arabic is the default language; English only when chosen or linked with `?lang=en`.
+
 Background `night`, surfaces `#13243B`, text `#F2F5FA`, body `#C9D6E8`, muted `#8FA0B6`, lines `#243650`, accent `bright-teal`, signature panel `#0F2E3A` with `#F2F5FA` text.
 
 ## 4. Typography
@@ -77,37 +87,40 @@ Self-hosted with `next/font/local` from `lib/font-files/` (see `lib/fonts.js`); 
 
 Rules:
 - Headings are **serif, weight 500**, never bold 700. `text-wrap: balance`.
+- The homepage hero headline is a **display** line: serif weight 400 (Arabic 500, the lightest Naskh weight loaded), centred, with one short accent phrase in teal (bright teal on navy).
 - All interface text (buttons, inputs, nav, labels, tables) is IBM Plex Sans / IBM Plex Sans Arabic.
-- Small section labels: sans 600, 12px, uppercase, `letter-spacing: 0.2em`, colour `teal` (English only; Arabic labels are not uppercase or letter-spaced).
+- Section labels (v1.5): the small logo arch mark + sans 500, 14px, sentence case, `teal-ink` (bright teal on navy). The older uppercase letter-spaced eyebrow stays only on pages not yet redesigned.
 - Body 16–18px, line-height 1.6 (Arabic 1.8). Keep paragraphs under ~65 characters wide.
 - Arabic and English must look equally polished. Never render Arabic in the Latin font.
 
-Scale (desktop / mobile): H1 56/38px · H2 36/28px · H3 20/18px · Body 17/16px · Small 14px · Label 12px.
+Scale (desktop / mobile): Display 64/40px · H1 56/38px · H2 36/28px · H3 20/18px · Body 17/16px · Small 14px · Label 12px.
 
 ## 5. Logo
 
-Files are in `/logo` (SVG, vector). Use them as files; **never recreate the logo in code or type the wordmark in a font.**
+Files are in `brand/logo/` and served byte-for-byte from `public/brand/logo/` (SVG, vector). Use them as files; **never recreate the logo in code or type the wordmark in a font.**
+
+The v1.6 set keeps the arch mark exactly as before. Only the wordmark was redrawn, as outlines of IBM Plex Sans SemiBold ("Mimaary") and IBM Plex Sans Arabic SemiBold («معماري»), at the old cap height and spacing, in navy (white on dark). A designer may refine the wordmark later; replace the files, keep the names.
 
 | File | Use |
 |---|---|
-| `mimaarlink-logo-en.svg` | Header on light backgrounds (default) |
-| `mimaarlink-logo-en-dark.svg` | Header/footer on navy or night, and in dark mode |
-| `mimaarlink-logo-ar.svg` / `-ar-dark.svg` | Arabic version of the site |
-| `mimaarlink-logo-bilingual.svg` | Footer or About page |
-| `mimaarlink-logo-stacked.svg` | Square spaces |
-| `mimaarlink-mark.svg` | Mark alone (loading states, small spaces) |
-| `mimaarlink-icon.svg`, `mimaarlink-icon-512.png`, `mimaarlink-icon-180.png` | Favicon, apple-touch-icon, PWA and social |
+| `mimaary-logo-en.svg` | Header on light backgrounds (default) |
+| `mimaary-logo-en-dark.svg` | Header/footer on navy or night, and in dark mode |
+| `mimaary-logo-ar.svg` / `-ar-dark.svg` | Arabic version of the site |
+| `mimaary-logo-bilingual.svg` | Footer or About page |
+| `mimaary-logo-stacked.svg` | Square spaces |
+| `mimaary-mark.svg` | Mark alone (loading states, small spaces) |
+| `mimaary-icon.svg`, `mimaary-icon-512.png`, `mimaary-icon-180.png` | Favicon, apple-touch-icon, PWA and social |
 
 Rules: minimum 120px wide for the full logo, 20px tall for the mark. Clear space around the logo at least the width of one arch leg. Never stretch, recolour, add shadows or place navy logo on navy.
 
 ## 6. Shape, layout and spacing
 
-- **Radius:** 6px for buttons, inputs and cards. Full round only for small status pills. Remove large bubbly rounded cards.
-- **Signature shape:** a chamfered corner (45° cut, 14px) echoing the brand's angular geometry. Use sparingly: hero promise panel, featured image, the recommended or selected offer. CSS: `clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));`
-- **Lines over boxes:** separate content with 1px `line` dividers and space. Use a filled card only when something must stand apart.
+- **Radius (v1.5):** cards and panels 12px; inputs and small controls 8px; buttons and status pills fully rounded (pill). No other radii.
+- **Signature shape:** the arch from the logo, used as a small section mark and in line drawings. The v1.4 chamfered corner is retired.
+- **Soft cards on the ground:** group content in white 12px cards with generous padding (24px phone, 32px desktop) on the grey ground. Thin dividers only inside cards (offer rows, FAQ).
 - **Grid:** 8px spacing scale; max content width 1200px; 12 columns desktop, single column on phones; side gutter at least 16px.
 - **Shadows:** almost none. One soft shadow for raised elements: `0 18px 40px -24px rgba(13,27,42,.28)`.
-- **Imagery:** real Qatari architecture, sites, drawings, models; colour-graded cool towards navy. No handshakes, stock smiles, cartoons, or futuristic AI renders. If no real photo exists, use no photo.
+- **Imagery:** real Qatari architecture, sites, drawings, models; colour-graded cool towards navy. No handshakes, stock smiles, cartoons, or futuristic AI renders. Until real photos exist, use thin line drawings built from the logo arch (e.g. the hero skyline), never a fake photo.
 
 ## 7. Motion and interaction
 
@@ -128,15 +141,15 @@ Interaction principles:
 
 ## 8. Components
 
-**Primary button:** teal fill, white text, 6px radius, 12px/20px padding, IBM Plex Sans 500. Hover `teal-hover` + soft teal shadow; arrow icon nudges 3px right (left in RTL). One primary button per view.
-**Secondary button:** transparent, navy text, 1px `line` border; hover border becomes navy.
+**Primary button:** teal fill, white text, pill shape, 12px/20px padding, IBM Plex Sans 500. Hover `teal-hover` + soft teal shadow; arrow icon nudges 3px right (left in RTL). One primary button per view.
+**Secondary button:** transparent pill, navy text, 1px `line` border; hover border becomes navy. On navy: white text, white 40% border.
 **Text link:** teal, underline offset 4px.
-**Inputs:** white, 1px `line` border, 6px radius, 48px tall, label above (never placeholder-only). Focus: 2px teal outline, 3px offset. Errors in `warn` below the field.
+**Inputs:** white, 1px `line` border, 8px radius, 48px tall, label above (never placeholder-only). Focus: 2px teal outline, 3px offset. Errors in `warn` below the field.
 **Section label:** see typography.
-**Signature panel:** pale teal background, navy serif text, chamfered corner.
+**Signature panel:** pale teal background, navy serif text, 12px corners.
 **Vetted badge:** small pill, pale teal background, `teal-ink` text, 1px teal border, check icon, text "Vetted" / "معتمد".
 **Status timeline:** 4 steps, teal dots and line for completed, ring for current, grey for upcoming.
-**Offer comparison card:** white card, 1px line border. Firm name + vetted badge, price in serif (tabular numbers, "QAR 38,500"), then rows: Duration, Warranty, Exclusions (exclusions in `warn`). Selected card: teal border, pale teal background, "Selected" label.
+**Offer comparison card:** white 12px card, 1px line border. Firm name + vetted badge, price in serif (tabular numbers, "QAR 38,500"), then rows: Duration, Warranty, Exclusions (exclusions in `warn`). Selected card: teal border, pale teal background, "Selected" label.
 
 ## 9. Voice and copy
 
@@ -158,23 +171,23 @@ Rules:
 
 ## 10. Homepage structure
 
-Build in this order. Each section has one job.
+Build in this order. Each section has one job. Sections alternate navy, the grey ground and white; content sits in white 12px cards.
 
-1. **Hero**
+1. **Hero (navy, centred)**
    - Label: PROJECT SOURCING IN QATAR · تنفيذ مشاريعك في قطر
-   - H1: One request. Three to five offers. You choose. · طلب واحد. من ثلاثة إلى خمسة عروض. والقرار لك.
+   - Display: One request. Three to five offers. **You choose.** · طلب واحد. من ثلاثة إلى خمسة عروض. **والقرار لك.** (accent phrase in bright teal)
    - Sub: Describe your project in your own words. We turn it into a clear brief, send it to vetted contractors and consultants, and put their offers side by side. · صف مشروعك بكلماتك، ونحوّله إلى وصف واضح نرسله إلى مقاولين واستشاريين معتمدين، ثم نعرض عروضهم جنبًا إلى جنب.
-   - Primary: Post your project · انشر مشروعك
-   - Secondary: Join as a contractor or consultant · انضم كمقاول أو استشاري
-   - Right side: signature panel showing an example offer comparison (clearly labelled "Example").
-2. **How it works:** Describe · Define · Receive offers · Choose (one line each).
+   - Two path cards: `01` Have a project? · لديك مشروع؟ → primary "Post your project · انشر مشروعك"; `02` Contractor or consultant? · مقاول أو استشاري؟ → secondary "Apply to join · قدّم طلب الانضمام".
+   - Bottom: arch line-drawing skyline (no photo).
+2. **How it works (ground):** Describe · Define · Receive offers · Choose, one white card each with an icon.
 3. **The comparison:** an example of three offers side by side (marked as an example). This is the most persuasive moment.
-4. **For contractors & consultants:** why serious firms join; how qualification works.
+4. **For contractors & consultants (navy band):** why serious firms join; how qualification works.
 5. **Sectors:** Fit-out, MEP, Commercial, Healthcare & F&B, Villas, Industrial, Design & Supervision.
-6. **Trust:** how firms are vetted, registered in Qatar (CR number placeholder), privacy, human support.
-7. **Close:** one confident call to post a project, with WhatsApp as the alternative.
+6. **Trust:** how firms are vetted, registered in Qatar (CR No. 243332), privacy, human support.
+7. **Questions:** a short FAQ answered only with decided facts (see `DECISIONS.md`). No invented figures.
+8. **Close (navy):** one confident call to post a project, with WhatsApp as the alternative.
 
-Footer: bilingual logo, links, "Registered in Qatar · CR No. [placeholder]", contact.
+Footer (navy): bilingual logo, one line, text links, contact as text, "Mimaary Digital Platform · CR No. 243332" (legal name and CR number only). No bottom tab bar on the website (it may return in the app).
 
 ## 11. Arabic and RTL
 

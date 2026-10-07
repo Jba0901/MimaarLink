@@ -26,7 +26,7 @@ test('sector arrows follow writing direction without replacing real links', () =
 test('homepage example offers are always labelled as illustrative, never real figures', () => {
   assert.match(home, /compareNote: 'Example\. Firm names and figures are illustrative, not real offers\.'/);
   assert.match(home, /compareNote: 'مثال توضيحي\. الأسماء والأرقام افتراضية وليست عروضًا حقيقية\.'/);
-  assert.match(home, /<aside className="ml-signature ml-cut" aria-label=\{copy\.example\}>/);
+  assert.match(home, /<p className="ml-example-note"><span>\{copy\.example\}<\/span>\{copy\.compareNote\}<\/p>/);
 });
 
 test('touch devices get the same feedback as desktop hover, and reveals run on phones', () => {
@@ -47,13 +47,38 @@ test('each whole-card link exposes its existing title and action as an accessibl
   assert.ok(card.includes('aria-label={cta ? `${title} — ${cta}` : title}'));
 });
 
-test('menu drawer and contact icons stay flat and calm: no arrow badges, 6px corners, no extra-bold', async () => {
+test('shell stays calm: no arrow badges, no extra-bold, no bottom tab bar, footer keeps CR number', async () => {
   const shell = await readFile(new URL('../components/AppShell.jsx', import.meta.url), 'utf8');
   assert.doesNotMatch(shell, /ArrowUpRight/);
   assert.doesNotMatch(shell, /font-extrabold/);
   assert.doesNotMatch(shell, /path-card/);
-  for (const fn of ['ActionTile', 'SecondaryDrawerLink', 'FooterIcon']) {
-    const body = shell.slice(shell.indexOf(`function ${fn}`), shell.indexOf('\n}\n', shell.indexOf(`function ${fn}`)));
-    assert.doesNotMatch(body, /rounded-2xl|rounded-full/, fn);
-  }
+  assert.doesNotMatch(shell, /mobile-bottom-nav|function NavBtn/);
+  assert.doesNotMatch(css, /mobile-bottom-nav|mobile-nav-main/);
+  // Legal name and CR number only (DECISIONS.md 2026-10-07); no personal or ID details.
+  assert.match(shell, /Mimaary Digital Platform · CR No\. 243332/);
+  assert.match(shell, /منصة معماري الرقمية · سجل تجاري رقم 243332/);
+  assert.match(shell, /data-over-hero=\{onNavy \|\| undefined\}/);
+});
+
+test('homepage v1.5: navy hero over the header, FAQ uses only decided facts, no retired chamfer', () => {
+  assert.match(home, /<AppShell wide bleed flushFooter overHero>/);
+  assert.match(home, /<HeroSkyline className="ml-hero-art" \/>/);
+  assert.doesNotMatch(home, /ml-cut|StickyPostCta/);
+  const faq = [...home.matchAll(/faq: \[([\s\S]*?)\n    \],/g)].map((m) => m[1]);
+  assert.equal(faq.length, 2, 'FAQ exists in Arabic and English');
+  // Answers carry no figures, prices or counts; facts come from DECISIONS.md.
+  for (const block of faq) assert.doesNotMatch(block, /[0-9٠-٩]|QAR|ر\.ق|%/);
+  assert.match(home, /'Is Mimaary free\?', 'Yes, for now\./);
+});
+
+test('large screens scale up the homepage while phones keep their sizes', () => {
+  // Phone/base values stay as they were.
+  assert.match(css, /\.ml-sub \{ margin-top: 12px; max-width: 36rem; font-size: 16px;/);
+  assert.match(css, /\.ml-home h1 \{ font-size: 40px;/);
+  // >=1280px: larger type, wider cards, ~70ch paragraphs; >=1536px: 1320px content.
+  const large = css.slice(css.indexOf('@media (min-width: 1280px) {\n  .ml-home { font-size: 18px; }'));
+  assert.ok(large.length > 0);
+  assert.match(large, /\.ml-home \.ml-hero h1 \{ font-size: 72px; \}/);
+  assert.match(large, /\.ml-sub \{ max-width: 70ch; font-size: 18px; \}/);
+  assert.match(css, /@media \(min-width: 1536px\) \{\n  \.ml-wrap \{ max-width: 1400px; \}/);
 });

@@ -1,6 +1,6 @@
 # Running a Project by Hand
 
-How MimaarLink handles a project from request to introduction while matching is manual. Drawn from the July first-wave plan (`docs/archive/`) and updated for the free model and open intake.
+How Mimaary handles a project from request to introduction while matching is manual. Drawn from the July first-wave plan (`docs/archive/`) and updated for the free model and open intake.
 
 Target: under 2 hours of work per project.
 
@@ -32,7 +32,7 @@ Providers often do many things. Record every service they credibly do, not only 
 **First message (Arabic):**
 
 ```text
-السلام عليكم، معك جاسم من MimaarLink.
+السلام عليكم، معك جاسم من منصة معماري.
 
 نحن نبني قائمة مزودين في قطر لمطابقة أصحاب المشاريع مع مقاولين ومكاتب استشارية مناسبة حسب نوع المشروع والموقع والميزانية.
 
@@ -42,7 +42,7 @@ Providers often do many things. Record every service they credibly do, not only 
 **First message (English):**
 
 ```text
-Hi, this is Jassim from MimaarLink.
+Hi, this is Jassim from Mimaary.
 
 We are building a Qatar provider shortlist to match project owners with suitable contractors and consultant offices based on scope, location and budget.
 
@@ -131,7 +131,7 @@ Enter bids in admin so they appear on the owner's offers page.
 - the scope stays vague after one request for information;
 - the budget is clearly unrealistic and the owner will not adjust;
 - fewer than 2 relevant providers respond after widening the shortlist once;
-- anyone asks MimaarLink to hold money, guarantee results or manage the contract.
+- anyone asks Mimaary to hold money, guarantee results or manage the contract.
 
 **Review a channel or category if:**
 

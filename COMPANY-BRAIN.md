@@ -1,12 +1,14 @@
-# MimaarLink Company Brain
+# Mimaary Company Brain
 
 The one-page picture of the company. Read this before any business, strategy, outreach or product decision. Keep it short and current; details live in the linked files.
 
-Last updated: 2026-10-07 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · CR 243332
+Last updated: 2026-10-07 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · Mimaary Digital Platform / منصة معماري الرقمية · CR 243332 (expires 22/05/2027)
+
+**Brand:** Mimaary / معماري (renamed from MimaarLink on 2026-10-07; logo, site and docs switched). Contact email: mimaary.qa@gmail.com · Instagram: @mimaary.qa. Website: www.mimaary.com (mimaary.com forwards to it; mimaarlink.com should forward too).
 
 ## 1. What we do
 
-MimaarLink connects project owners with contractors and consultants across Qatar's built environment. An owner describes a project; we turn it into a clear brief, send it to vetted providers, and the owner receives three to five comparable offers to choose from.
+Mimaary connects project owners with contractors and consultants across Qatar's built environment. An owner describes a project; we turn it into a clear brief, send it to vetted providers, and the owner receives three to five comparable offers to choose from.
 
 **Our core advantage is the market record.** Every request, invite, bid, choice and outcome is recorded in a structured way. Today this information is lost in WhatsApp chats and personal contacts; recorded, it makes the market clearer for everyone and is hard to copy.
 
@@ -20,7 +22,7 @@ Our job is to bring order: one clear starting point, structured briefs, qualifie
 
 **Flexibility in what we accept; clarity in how we present it.** We will meet messy cases we have not planned for. Handle them case by case, write down what happened, and turn repeated patterns into rules once we have real market experience.
 
-**Related platform:** QDB's Binaa connects housing-loan citizens with registered contractors and consultants for villa builds (only Binaa-registered firms can build housing-loan homes since June 2025). It is a directory for one segment; MimaarLink covers the rest of private work with comparable offers. Treat it as complementary. Details in `docs/strategy/binaa.md`.
+**Related platform:** QDB's Binaa connects housing-loan citizens with registered contractors and consultants for villa builds (only Binaa-registered firms can build housing-loan homes since June 2025). It is a directory for one segment; Mimaary covers the rest of private work with comparable offers. Treat it as complementary. Details in `docs/strategy/binaa.md`.
 
 ## 3. Who we serve
 
@@ -42,7 +44,7 @@ The July plans assumed a QAR 750 fee paid by the selected provider before handof
 
 | | Status |
 |---|---|
-| Website | Live at mimaarlink.com, brand v1.4, guided forms, owner status and offers pages |
+| Website | Live at www.mimaary.com: brand v1.6 (Mimaary name and logo, navy hero, grey ground), guided forms, owner status and offers pages |
 | Contractor applications | 3 (as of October 2026) |
 | Consultant applications | 0 known |
 | Real project requests | None confirmed; check `/admin` |
@@ -76,7 +78,7 @@ Growth gates (adapted from the strategy file; "paid" becomes "successful" while 
 ## 8. Firm rules
 
 - Jassim alone decides on spending money, contacting people, publishing ads or posts, pricing, legal wording, and sharing private data.
-- No guarantees: not of projects for providers, nor of quality, lowest price or completion for owners. MimaarLink connects; the agreement is between owner and provider.
+- No guarantees: not of projects for providers, nor of quality, lowest price or completion for owners. Mimaary connects; the agreement is between owner and provider.
 - Never invent statistics, testimonials, client logos or counts.
 - Collect only the data needed; keep owner details private until the owner chooses a provider.
 - Never hold or process project funds.

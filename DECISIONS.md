@@ -2,8 +2,15 @@
 
 Decisions Jassim has made that are not about brand/design (`brand/BRAND.md`) or product rules (`AGENTS.md`). Newest first. One dated line each, short and factual. See "Recording decisions" in `AGENTS.md`.
 
+- 2026-10-07 · Main web address is www.mimaary.com (mimaary.com forwards to it). mimaarlink.com forwards there too; old links keep working.
+- 2026-10-07 · Official Instagram is @mimaary.qa (instagram.com/mimaary.qa), replacing @MimaarLink.
+- 2026-10-07 · Official contact email is mimaary.qa@gmail.com (replaces MimaarLink@gmail.com). Move to hello@mimaary.com later, once the domain email is set up.
+- 2026-10-07 · Homepage: navy hero with skyline, cool grey ground (#F6F8FB / #DCE3EA), larger type and wider content at ≥1280px.
+- 2026-10-07 · Legal name changed to Mimaary Digital Platform / منصة معماري الرقمية (CR 243332 unchanged, individual establishment, update SR3003832). The site footer and trust section show the legal name.
+- 2026-10-07 · The brand is renamed from MimaarLink to Mimaary / معماري, everywhere at once. Logo set redrawn (arch mark unchanged, wordmark in IBM Plex Sans / IBM Plex Sans Arabic SemiBold); MimaarLink artwork deleted. Domain, email and Instagram keep the old handle until new ones exist.
 - 2026-10-07 · Skip QSTP (XLR8 and the free zone) for now. Funding focus: first projects, then QBIC, then Startup Qatar START.
-- 2026-10-04 · Core advantage: MimaarLink records every request, invite, bid, choice and outcome in a structured way, making Qatar's project market clearer over time.
+- 2026-10-05 · The website is redesigned for a calmer feel (brand v1.5: warm ground, navy hero, soft cards, no bottom tab bar). The v1.4 design is kept for the future app: main at commit `446f486`.
+- 2026-10-04 · Core advantage: Mimaary records every request, invite, bid, choice and outcome in a structured way, making Qatar's project market clearer over time.
 - 2026-10-04 · Positioning for funders and long-term story: data and AI first (structured sourcing data, comparable offers), local business growth second.
 - 2026-10-04 · First demand channel: Jassim personally contacts owners who posted project needs on public classifieds (Mzad Qatar first) and, with their consent, posts the request on their behalf and collects three to five offers. Playbook: `docs/playbooks/classifieds-owner-outreach.md`.
 - 2026-10-02 · The contractor/consultant application does not ask for a service area; most work is in Doha. Owners still give the project location.

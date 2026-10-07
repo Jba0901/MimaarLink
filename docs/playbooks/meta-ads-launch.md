@@ -1,4 +1,4 @@
-# MimaarLink First Advertising Sprint
+# Mimaary First Advertising Sprint
 
 Date: 2026-07-10
 Updated: 2026-07-13
@@ -11,7 +11,7 @@ Status: `PREPARED - NOT LAUNCHED`
 
 > **Status note (2026-10-02):** ready playbook, never launched. Before using it: check creative against `brand/BRAND.md` v1.4, drop any mention of a QAR 750 provider fee (the service is free for now), and get Jassim's approval for any spend. The July "command plan" it referred to lives on Jassim's PC, not in this repo.
 
-Positioning update: MimaarLink should be strategically aggressive internally but calm and helpful externally. Lead with the recipient's actual pain, free owner project posting, suitable contractor/consultant invitations, and organized offer comparison. Do not use generic partnership language where a specific maintenance, fit-out, procurement, or provider-fit problem can be named.
+Positioning update: Mimaary should be strategically aggressive internally but calm and helpful externally. Lead with the recipient's actual pain, free owner project posting, suitable contractor/consultant invitations, and organized offer comparison. Do not use generic partnership language where a specific maintenance, fit-out, procurement, or provider-fit problem can be named.
 
 ## Decision
 
@@ -26,7 +26,7 @@ Why:
 
 Primary offer:
 
-> Share your project details and MimaarLink will help you reach suitable contractors or consultant offices in Qatar and compare their responses more clearly.
+> Share your project details and Mimaary will help you reach suitable contractors or consultant offices in Qatar and compare their responses more clearly.
 
 Do not claim guaranteed quality, lowest price, guaranteed bids, or guaranteed project completion.
 
@@ -43,7 +43,7 @@ Use AI for:
 
 Do not let AI:
 
-- Recreate or modify the MimaarLink logo.
+- Recreate or modify the Mimaary logo.
 - Generate fake project results, testimonials, contractor ratings, prices, approvals, or documents.
 - Place final Arabic typography without human review.
 - Use fake Western villas or unrealistic construction workers as Qatar evidence.
@@ -51,10 +51,10 @@ Do not let AI:
 
 Best asset order:
 
-1. Real Qatar project/site photos that MimaarLink has permission to use.
-2. Current MimaarLink website screenshots with no user or test data.
+1. Real Qatar project/site photos that Mimaary has permission to use.
+2. Current Mimaary website screenshots with no user or test data.
 3. Licensed Qatar/GCC-relevant stock photos.
-4. AI-generated neutral plans/materials still life, used only when it cannot imply a completed MimaarLink project.
+4. AI-generated neutral plans/materials still life, used only when it cannot imply a completed Mimaary project.
 
 Do not hire three freelancers for the first test. Produce the first six concepts internally, then hire one Arabic Meta creative designer only if a concept shows real lead intent and needs professional iteration.
 
@@ -90,7 +90,7 @@ Current technical state on 2026-07-10:
 - Objective: Leads.
 - Conversion location: Website.
 - Optimization event: `Lead`, triggered only after a successful project submission.
-- Destination: `https://mimaarlink.com/post-project`.
+- Destination: `https://www.mimaary.com/post-project`.
 - Geography: Qatar.
 - Age hypothesis: 25-60.
 - Gender: All.
@@ -135,7 +135,7 @@ Image headline:
 
 Primary text:
 
-> عندك مشروع تجديد أو تشطيب في قطر؟ انشر تفاصيل مشروعك عبر معمار لينك وسنساعدك في الوصول إلى مقاولين مناسبين لنطاق العمل.
+> عندك مشروع تجديد أو تشطيب في قطر؟ انشر تفاصيل مشروعك عبر معماري وسنساعدك في الوصول إلى مقاولين مناسبين لنطاق العمل.
 
 CTA:
 
@@ -158,7 +158,7 @@ Image headline:
 
 Primary text:
 
-> بدل البحث والتواصل مع جهات كثيرة، أرسل تفاصيل مشروع مكتبك أو محلك عبر معمار لينك للوصول إلى مقدمي خدمة مناسبين في قطر.
+> بدل البحث والتواصل مع جهات كثيرة، أرسل تفاصيل مشروع مكتبك أو محلك عبر معماري للوصول إلى مقدمي خدمة مناسبين في قطر.
 
 CTA:
 
@@ -180,7 +180,7 @@ Image headline:
 
 Primary text:
 
-> وضح نطاق المشروع من البداية وقارن العروض قبل الاختيار. ابدأ بإرسال تفاصيل مشروعك عبر معمار لينك.
+> وضح نطاق المشروع من البداية وقارن العروض قبل الاختيار. ابدأ بإرسال تفاصيل مشروعك عبر معماري.
 
 CTA:
 

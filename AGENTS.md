@@ -1,26 +1,26 @@
-# MimaarLink Agent Instructions
+# Mimaary Agent Instructions
 
 Shared instructions for every coding agent on this repo (Codex, Claude Code, others).
 `CLAUDE.md` imports this file, so there is one source of truth. Update it here.
 
-## What MimaarLink does
+## What Mimaary does
 
-MimaarLink connects project owners with contractors and consultants across Qatar's built environment. An owner describes a project; we turn it into a clear brief, send it to vetted providers, and the owner receives three to five comparable offers to choose from.
+Mimaary connects project owners with contractors and consultants across Qatar's built environment. An owner describes a project; we turn it into a clear brief, send it to vetted providers, and the owner receives three to five comparable offers to choose from.
 
 We cover a wide range of project activities, because the market demands it:
 
 - **Contracting / build:** fit-out, MEP (mechanical, electrical, plumbing), commercial buildings, villas and residential, healthcare and F&B spaces (clinics, restaurants, cafés), industrial facilities (warehouses, workshops), mixed-use and private developments, general contracting, and specialist trades.
 - **Consulting / design:** architecture, engineering, design, site supervision, approvals, and tendering.
 
-**Market reality to keep in mind.** Qatar's project-sourcing market is currently informal and fragmented: work is scattered across referrals, WhatsApp and personal contacts, scopes are unclear, and almost everyone does a bit of everything. There are no clean categories yet. MimaarLink's job is to bring order to this: a single clear starting point, structured briefs, qualified providers, and comparable offers. So when the product handles the long and messy range of real project types, the experience must still feel clear, calm and organized. **Flexibility in what we accept; clarity in how we present it.**
+**Market reality to keep in mind.** Qatar's project-sourcing market is currently informal and fragmented: work is scattered across referrals, WhatsApp and personal contacts, scopes are unclear, and almost everyone does a bit of everything. There are no clean categories yet. Mimaary's job is to bring order to this: a single clear starting point, structured briefs, qualified providers, and comparable offers. So when the product handles the long and messy range of real project types, the experience must still feel clear, calm and organized. **Flexibility in what we accept; clarity in how we present it.**
 
 ## Before you start
 
 1. Read `docs/HANDOFF.md` (latest entry first). It says what changed last, what is half-done, and what is waiting on Jassim.
-2. For UI, copy, ads, landing pages or any visual work, read `brand/BRAND.md` (v1.4). It is the source of truth for colour, type, logo, layout, motion, components, copy and the homepage structure. Where older docs disagree, `brand/BRAND.md` wins.
-3. For strategy, outreach, ads, operations, pricing, provider acquisition or long-term planning, read `COMPANY-BRAIN.md` (one-page company picture and current status), then the linked file: `docs/operating-system.md` (how agents work for MimaarLink), `docs/operations.md` (running a project by hand), `docs/strategy/10-year-moat.md`, `docs/playbooks/meta-ads-launch.md`. Files in `docs/archive/` are history only; do not follow them.
+2. For UI, copy, ads, landing pages or any visual work, read `brand/BRAND.md` (v1.6). It is the source of truth for colour, type, logo, layout, motion, components, copy and the homepage structure. Where older docs disagree, `brand/BRAND.md` wins.
+3. For strategy, outreach, ads, operations, pricing, provider acquisition or long-term planning, read `COMPANY-BRAIN.md` (one-page company picture and current status), then the linked file: `docs/operating-system.md` (how agents work for Mimaary), `docs/operations.md` (running a project by hand), `docs/strategy/10-year-moat.md`, `docs/playbooks/meta-ads-launch.md`. Files in `docs/archive/` are history only; do not follow them.
 
-`mimaarlink-design-system.md`, `mimaarlink-brand-theme-draft.md`, `mimaarlink-worker-design-brief.md` and `mimaarlink-mobile-web-app-design-roadmap.md` predate v1.4. Their positioning and channel guidance is still useful; their palette, fonts and logo rules are superseded.
+The pre-v1.4 design drafts now live in `docs/archive/pre-v1.4-*.md`: history only, their name, palette, fonts and logo rules are superseded. Supabase notes: `supabase-setup.md` and `supabase-security-fix.sql`.
 
 ## Recording decisions
 
@@ -34,20 +34,23 @@ If you can edit the repo, add it yourself in the same change and mention it in t
 
 ## Product rules
 
-- MimaarLink is a serious Qatar construction and project marketplace: one request, three to five offers, the owner chooses.
+- Mimaary is a serious Qatar construction and project marketplace: one request, three to five offers, the owner chooses.
 - Arabic-first UX and copy unless the task says English. Every user-facing string exists in both languages; Arabic is written natively, not machine-translated.
 - Never invent statistics, testimonials, client or partner logos, project counts or awards, and do not overpromise. Leave a clearly marked placeholder and flag it to Jassim.
 - Keep forms, uploads, admin data, status pages, tracking links and file access working. Do not change Supabase tables, auth or submission payloads without Jassim's approval (additive, nullable columns added through the existing migration block in the API are the only exception, and must be noted in the handoff).
 
-## Brand defaults (v1.4, full spec in `brand/BRAND.md`)
+## Brand defaults (v1.6, full spec in `brand/BRAND.md`)
+
+- Name: **Mimaary / معماري** (MimaarLink is retired). Legal name Mimaary Digital Platform / منصة معماري الرقمية, CR 243332. In Arabic sentences write «منصة معماري» where «معماري» alone could read as "architectural".
 
 - Navy `#152B54` leads. Teal `#009F91` is for actions only. Pale teal `#EAF7F4` with navy text is the signature panel.
-- Ground `#F6F8FB`, line `#DCE3EA`, body `#2E3E57`, muted `#586576`, warn `#B5462B` (warnings and exclusions only).
-- Dark mode: night `#0D1B2A`, surfaces `#13243B`, accent bright teal `#0AC7CE`.
-- Retired: amber `#FFB638`, old teal `#00B59E`, light teal `#D0F2EE`, Manrope. Do not reintroduce them.
+- Cool grey ground `#F6F8FB` with white cards, line `#DCE3EA`, body `#2E3E57`, muted `#586576`, warn `#B5462B` (warnings and exclusions only).
+- Light mode by default regardless of system setting; night mode only when the visitor picks it. Arabic is the default language.
+- Dark mode: night `#0D1B2A`, surfaces `#13243B`, accent bright teal `#0AC7CE` (also accent text on navy sections).
+- Retired: amber `#FFB638`, old teal `#00B59E`, light teal `#D0F2EE`, sand ground `#F7F3EC` / `#E7E0D4`, Manrope, the chamfered corner. Do not reintroduce them.
 - Type: Source Serif 4 / Noto Naskh Arabic for headings (weight 500), IBM Plex Sans / IBM Plex Sans Arabic for interface text. Loaded in `lib/fonts.js`.
-- Radius 6px. One soft shadow. Motion: 140ms hover/press, 220ms components, 360ms steps/pages, one easing, no bounce, respect reduced motion.
-- Logo: use the SVG files in `public/brand/logo/` (copied byte-for-byte from `brand/logo/`). Never retype the wordmark, recolour, filter or crop it. The old `public/logo.png` files stay in the repo but are no longer used by the site.
+- Cards 12px, inputs 8px, buttons pill. One soft shadow. Motion: 140ms hover/press, 220ms components, 360ms steps/pages, one easing, no bounce, respect reduced motion.
+- Logo: use the `mimaary-*` SVG files in `public/brand/logo/` (copied byte-for-byte from `brand/logo/`). Never retype the wordmark, recolour, filter or crop it. The MimaarLink artwork is deleted; do not bring it back.
 
 ## Code map (things that are easy to break)
 

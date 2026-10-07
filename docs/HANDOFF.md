@@ -4,6 +4,160 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · light mode and Arabic by default
+
+**What changed**
+- The site always opens in **light mode**, whatever the phone's system setting. `<meta name="color-scheme" content="only light">` stops Chrome/Samsung auto-darkening; the browser bar is one light colour (`#F6F8FB`) instead of following the system; `html { color-scheme: light }`.
+- Night mode only when the visitor taps it in the menu. The saved choice moved from `mlTheme` to `mimaaryTheme`, so every earlier saved choice (including test taps) is dropped once and everyone starts light. Choosing night still works and is remembered; the browser bar follows it.
+- **Arabic first** beyond the pages (which already defaulted to Arabic): the browser tab title, Google/WhatsApp link previews (`generateMetadata` in `app/layout.js`, English only when the visitor chose English), the iPhone home-screen name and the installed app's name, description and shortcuts (`app/manifest.js`, `dir: 'rtl'`).
+- Rule recorded in `brand/BRAND.md` (Dark mode) and `AGENTS.md` (Brand defaults). New `tests/site-defaults.test.mjs` guards both.
+
+**Behaves differently**
+- Anyone who had chosen night mode before sees light once and has to choose night again.
+- A visitor who switched to English keeps English (cookie), by design.
+
+**Waiting on Jassim**
+- Arabic page title wording: «منصة معماري | عروض المقاولين والاستشاريين في قطر».
+- QSTP folder (`public/qstp-application-2026/`): keep, update the note, or remove.
+
+**Verified**
+- Build + tests (53/53). Chromium at 390px with the system in dark mode, English browser locale and an old saved `mlTheme=dark`: page opens Arabic, light, ground `#F6F8FB`, theme-color light; choosing night in the menu switches to night and persists to the next page.
+
+---
+
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · last MimaarLink traces, main address www.mimaary.com
+
+**What changed**
+- Main web address is **www.mimaary.com** (live on Vercel; mimaary.com forwards to it). Docs, the ads playbook, BRAND.md, START-HERE.md and the data-recovery script point there. Decision in `DECISIONS.md`.
+- The four pre-v1.4 design drafts moved to `docs/archive/pre-v1.4-*.md` (history). Supabase notes renamed to `supabase-setup.md` and `supabase-security-fix.sql`, prose says Mimaary.
+- `package.json` name is `mimaary` (was the template name).
+- The brand test now also fails if any file in the repo root or `brand/` is named mimaarlink.
+
+**Kept on purpose**
+- Supabase storage bucket `mimaarlink-files` and its two policy names (`app/api`, `scripts/recover-supabase-data.mjs`, `supabase-setup.md`). Renaming needs a planned migration (new bucket, copy files, env var `SUPABASE_STORAGE_BUCKET`); not done without Jassim's go.
+
+**Needs Jassim (dashboards, not code)**
+- GitHub: rename repo `Jba0901/MimaarLink` (Settings → General → Repository name). GitHub redirects the old URL; Vercel keeps deploying.
+- Vercel: team name ("Mimaar Link's…") and project `jba-repo` (Settings → General); domain mimaarlink.com → Edit → redirect to www.mimaary.com (308).
+- Supabase project display name, Meta/WhatsApp Business names if any.
+
+**Verified**
+- Build + tests (51/51).
+
+---
+
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · new contact email and Instagram
+
+**What changed**
+- Official contact email is now `mimaary.qa@gmail.com` (Jassim; `MimaarLink@gmail.com` is retired). Updated the footer and drawer contact in `components/AppShell.jsx` and the mailto link and visible text on `app/privacy/page.js`.
+- Recorded in `DECISIONS.md` (move to hello@mimaary.com once domain email exists) and `COMPANY-BRAIN.md`.
+- `tests/brand-mark.test.mjs`: checks the new address on both pages and that the old one is gone; the old-name check now also covers `AppShell.jsx`.
+- The grey background asked for earlier was already merged in PR #9.
+
+- Instagram is now `@mimaary.qa` (drawer and footer links in `components/AppShell.jsx`); recorded in `DECISIONS.md`. No MimaarLink handle is left in site code.
+
+**Still on the old name**
+- The domain mimaarlink.com while mimaary.com is being connected in Vercel; Supabase bucket `mimaarlink-files` (internal).
+
+**Verified**
+- Build + tests (51/51). Checked footer, menu drawer and privacy page at 390px in EN and AR: all mailto links and visible text show mimaary.qa@gmail.com; the old address appears nowhere.
+
+---
+
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · back to cool grey ground
+
+**What changed**
+- Jassim: the sand ground looked off next to the navy hero. Light ground back to cool grey `#F6F8FB`, line `#DCE3EA` (`app/brand-tokens.css`, shadcn HSL in `app/globals.css`), translucent header, drawer tiles, manifest background and light theme-color.
+- Navy hero, skyline, dark mode, large-screen sizing and the Mimaary name/logo unchanged.
+- `brand/BRAND.md` (v1.6 note, colour table), `AGENTS.md` (sand now listed as retired) and `DECISIONS.md` updated. The token test now guards the grey values and that sand stays gone.
+
+**Verified**
+- Build + tests (50/50). Checked 375px (EN light, AR dark), 1440px (AR light, EN dark), 1920px (EN light); no horizontal scroll 320–1440px.
+
+---
+
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · homepage scaled up for large screens
+
+**What changed**
+- Jassim found the desktop homepage small. At >=1280px (`app/globals.css`, after the homepage block): body text 18px (about 12% up), hero headline 72px (Arabic 63px), section headings 45px, larger cards, buttons, offer cards, sectors and FAQ; hero path cards widen to 1040px, FAQ to 1000px; paragraphs capped near 70 characters.
+- At >=1536px the homepage content widens to 1320px (outer 1400px, same as the header container).
+- Phones and tablets are unchanged: every new rule sits inside the two min-width media queries. A test guards both.
+
+**Verified**
+- Build + tests (50/50). Checked 1440px (EN light, AR light) and 1920px (EN dark, AR dark).
+
+---
+
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · MimaarLink retired, site is Mimaary / معماري
+
+**What changed**
+- Jassim: "bury MimaarLink". New logo set `mimaary-logo-*` (en, ar, bilingual, stacked; light, dark, navy, white) in `brand/logo/` and `public/brand/logo/` (byte-identical). The arch mark paths are unchanged; only the wordmark was redrawn as outlines of IBM Plex Sans SemiBold / IBM Plex Sans Arabic SemiBold at the old cap height and spacing. Mark and icon files renamed only. Old MimaarLink SVGs and unused raster logos (`public/logo.png`, `logo-dark-transparent.png`, `public/brand/mimaarlink-official-logo-source.png`) deleted.
+- All site text: Mimaary / معماري (titles, manifest, i18n, homepage FAQ, privacy page). In Arabic sentences «منصة معماري» where «معماري» alone reads as "architectural" (rule in BRAND.md §1 and AGENTS.md).
+- Internal keys renamed: language header, admin session salt, marketing storage keys.
+- Docs: BRAND.md v1.6, AGENTS.md, COMPANY-BRAIN.md, DECISIONS.md, operations/strategy/playbook/outreach docs. History (HANDOFF entries, `docs/archive/`, the four pre-v1.4 root drafts, QSTP application PDFs) left as written.
+
+**Kept on purpose (still say mimaarlink)**
+- Supabase storage bucket `mimaarlink-files` and its policy names: renaming would cut off uploaded files. Needs a planned Supabase migration if ever wanted.
+- Domain mimaarlink.com, `MimaarLink@gmail.com`, `instagram.com/MimaarLink`, GitHub repo and Vercel project names: real accounts; switch when Jassim has the new ones.
+
+**Behaving differently**
+- Admins sign in again once (session salt changed). Returning visitors see the marketing-consent question once more.
+- Header logo is sized by height (40px phone, 46px desktop). Hero drawing height now follows width so arches are never clipped.
+
+**Waiting on Jassim**
+- New domain, email, Instagram/WhatsApp names; then swap them in one change. A designer may refine the wordmark later (replace files, keep names).
+
+**Verified**
+- `npm run build` + `node --test tests/*.test.mjs` (49/49); a test now fails if MimaarLink artwork or text comes back. Checked header, menu and footer at 390 (EN/AR) and 1440, and all logo variants on light, navy and teal.
+
+---
+
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · new legal name on the redesign
+
+**What changed**
+- The commercial registration was updated: legal name **Mimaary Digital Platform / منصة معماري الرقمية**, CR **243332 unchanged** (individual establishment, update SR3003832, expires 22/05/2027).
+- Footer (`components/AppShell.jsx`): "Mimaary Digital Platform · CR No. 243332" / «منصة معماري الرقمية · سجل تجاري رقم 243332».
+- Homepage trust card "Registered in Qatar" (`app/page.js`, EN + AR) names the legal entity.
+- Recorded in `DECISIONS.md`, `brand/BRAND.md` §1 and §10 footer line, `COMPANY-BRAIN.md` header. Test guards the footer line in both languages.
+- Same decisions as branch `claude/sweet-noether-xhtfnc` (another session, built on the old v1.4 footer). This PR carries them on the redesign, so that branch is superseded and should not be merged on top.
+
+**Decided, not yet built: brand rename MimaarLink → Mimaary / معماري**
+- Do not rename strings piecemeal. The logo SVGs say MimaarLink and must not be retyped; the switch waits for a new logo set, domain, email and social handles from Jassim, then happens in one change.
+
+**Not published on purpose**
+- The CR printout includes Jassim's ID number. Only the legal name and CR number appear on the site.
+
+**Waiting on Jassim**
+- New logo, domain, contact handles. Confirm with MOCI that CR activity 479121 ("Digital Platform for Retail Trade Intermediation") covers construction/consulting service matching before paid ads.
+
+**Verified**
+- `npm run build` and `node --test tests/*.test.mjs` (49/49). Checked the Arabic footer at 390px.
+
+---
+
+## 2026-10-05 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · website redesign, Phase 1 (homepage + shell)
+
+**What changed** (one commit each)
+- Brand v1.5 (`brand/BRAND.md`, `AGENTS.md`, `DECISIONS.md`): Jassim wanted the phone experience as calm as binaa.qdb.qa. Warm stone ground `#F7F3EC` + warm line `#E7E0D4`, white cards (12px), inputs 8px, pill buttons, navy sections with bright-teal accent text, centred display headline, arch line drawings instead of photos, chamfer retired, no bottom tab bar on the website, homepage order with a FAQ.
+- Tokens (`app/brand-tokens.css`, `app/globals.css` HSL mapping): every page is warmer already; `--ml-radius-card`, `--ml-radius-pill`, navy-section tokens.
+- Shell (`components/AppShell.jsx`): bottom tab bar removed (and its padding/offsets), quiet ghost header buttons, `overHero` header that shares the navy hero until scroll, calm navy footer with written-out contacts.
+- Homepage (`app/page.js`, new `components/HeroSkyline.jsx`): navy hero with two path cards, step cards, example comparison, contractor band, sectors, trust cards, FAQ, navy close. Sticky floating button removed.
+
+**Behaving differently**
+- The bottom tab bar is gone on all pages; navigation is the header menu.
+- Forms, status and offers pages only picked up the warm colours and softer corners; their full restyle is Phase 3.
+- The v1.4 design is kept for the future app at main `446f486` (a git tag could not be pushed from this session; Jassim can tag it on GitHub).
+
+**Waiting on Jassim**
+- Review Phase 1 on his phone before Phase 2 (other pages), 3 (forms/status), 4 (polish).
+- FAQ wording (5 answers, facts from `DECISIONS.md`, no figures).
+- Real photos of Doha projects, if any, to replace the line drawing later.
+
+**Verified**
+- `npm run build` + `node --test tests/*.test.mjs` (49/49) at every commit. Chromium screenshots at 390 (EN/AR, light/night), 768 (AR) and 1440 (EN); no horizontal scroll at 320/375/390/768/1024/1440 in both languages; scroll reveals confirmed on a real-paced scroll.
+
+---
+
 ## 2026-10-04 · Claude Code · branch `claude/sharp-edison-g0om3c` · growth: positioning, funding research, classifieds outreach
 
 **What changed**
@@ -24,7 +178,7 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 - 2026-10-05: new `docs/strategy/binaa.md` (QDB's Binaa platform: what it is, how MimaarLink differs, what it means for funding, villa marketing and provider supply, open questions). Linked from COMPANY-BRAIN.
 - 2026-10-05: added the Invest Qatar pitch summary and meeting prep to `docs/strategy/funding-options-2026.md`; COMPANY-BRAIN funding row updated.
 
-- 2026-10-07: QSTP skipped (`DECISIONS.md`, COMPANY-BRAIN funding row, funding doc QSTP row and Invest Qatar referral note). The rename to Mimaary is owned by the brand work on main; this branch only follows it.
+- 2026-10-07: QSTP skipped (`DECISIONS.md`, COMPANY-BRAIN funding row, funding doc QSTP row and Invest Qatar referral note). The rename to Mimaary is owned by the brand work on main; after merging main, this branch's own docs (playbook, funding, Binaa note, its DECISIONS/COMPANY-BRAIN lines) now say Mimaary / معماري and www.mimaary.com. Note: main has `public/qstp-application-2026/`; with QSTP skipped, Jassim decides whether to keep or remove it.
 
 **Verified**
 - Docs only; no code touched. `npm run build` and `node --test tests/*.test.mjs` run before commit.

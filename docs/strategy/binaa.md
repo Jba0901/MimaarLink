@@ -1,6 +1,6 @@
 # Binaa (QDB): Related Platform
 
-Research note, 2026-10-04. Binaa is the closest existing platform to MimaarLink in Qatar, and it is run by QDB, the same bank behind the Startup Qatar Investment Program. Read this before any strategy, funding, provider-acquisition or villa-related work. Verify details on [binaa.qdb.qa](https://binaa.qdb.qa/) before quoting them externally.
+Research note, 2026-10-04. Binaa is the closest existing platform to Mimaary in Qatar, and it is run by QDB, the same bank behind the Startup Qatar Investment Program. Read this before any strategy, funding, provider-acquisition or villa-related work. Verify details on [binaa.qdb.qa](https://binaa.qdb.qa/) before quoting them externally.
 
 ## What it is
 
@@ -11,9 +11,9 @@ Research note, 2026-10-04. Binaa is the closest existing platform to MimaarLink 
 - How it works: a directory. The owner browses designs and provider profiles (experience, client feedback) and chooses. Providers do not submit comparable offers against a common brief.
 - Provider profiles are public ("Binaa experts" pages on binaa.qdb.qa).
 
-## How MimaarLink differs
+## How Mimaary differs
 
-| | Binaa | MimaarLink |
+| | Binaa | Mimaary |
 |---|---|---|
 | Who | Citizens on the QDB housing loan | Any private owner: villa owners, landlords, businesses, developers |
 | Work | New villa builds under the loan | Renovation, extensions, fit-out, MEP, shops, clinics, cafés, offices, warehouses, design, supervision, approvals |
@@ -22,11 +22,11 @@ Research note, 2026-10-04. Binaa is the closest existing platform to MimaarLink 
 
 ## What it means for us
 
-1. **Funding applications to QDB.** Reviewers know Binaa. Address it directly: MimaarLink covers the private work Binaa does not, using a different model. Present it as complementary, never as a competitor to QDB.
+1. **Funding applications to QDB.** Reviewers know Binaa. Address it directly: Mimaary covers the private work Binaa does not, using a different model. Present it as complementary, never as a competitor to QDB.
 2. **Villa marketing.** New housing-loan villas belong to Binaa. Our villa entry point should focus on renovation, extensions, maintenance and villas built without the loan.
 3. **Owners who mention the housing loan.** Invite only Binaa-registered providers, or point the owner to Binaa (already in `docs/playbooks/classifieds-owner-outreach.md`).
 4. **Provider supply.** Binaa-registered firms have already passed a government eligibility check. Their public profiles are a source of qualified contractors and consultants for outreach (contact them one by one, as in `docs/operations.md` section 2).
-5. **Possible partnership later.** Binaa could refer owners whose work falls outside the loan (fit-out, renovation, commercial) to MimaarLink, and MimaarLink's market record (bids, response times, outcomes) could interest QDB. Only worth raising once we have real projects.
+5. **Possible partnership later.** Binaa could refer owners whose work falls outside the loan (fit-out, renovation, commercial) to Mimaary, and Mimaary's market record (bids, response times, outcomes) could interest QDB. Only worth raising once we have real projects.
 
 ## Open questions for Jassim
 

@@ -7,29 +7,50 @@ import { LangProvider } from '@/lib/LangContext';
 import { Toaster } from '@/components/ui/sonner';
 import { fontVariables } from '@/lib/fonts';
 
-export const metadata = {
-  title: 'MimaarLink - Contractor and consultant bids in Qatar',
-  description: 'Post your project and get matched with suitable Qatar contractors or consultant offices based on scope, activity, and location.',
-  icons: {
-    icon: [
-      { url: '/brand/logo/mimaarlink-icon.svg?v=2', type: 'image/svg+xml' },
-      { url: '/brand/logo/mimaarlink-icon-512.png?v=2', type: 'image/png', sizes: '512x512' },
-    ],
-    shortcut: [{ url: '/brand/logo/mimaarlink-icon-512.png?v=2', type: 'image/png' }],
-    apple: [{ url: '/brand/logo/mimaarlink-icon-180.png?v=2', type: 'image/png', sizes: '180x180' }],
-  },
-  appleWebApp: { capable: true, title: 'MimaarLink', statusBarStyle: 'default' },
-  formatDetection: { telephone: false },
+const ICONS = {
+  icon: [
+    { url: '/brand/logo/mimaary-icon.svg?v=2', type: 'image/svg+xml' },
+    { url: '/brand/logo/mimaary-icon-512.png?v=2', type: 'image/png', sizes: '512x512' },
+  ],
+  shortcut: [{ url: '/brand/logo/mimaary-icon-512.png?v=2', type: 'image/png' }],
+  apple: [{ url: '/brand/logo/mimaary-icon-180.png?v=2', type: 'image/png', sizes: '180x180' }],
 };
+
+// Arabic first: search results, link previews and the browser tab read Arabic
+// unless the visitor chose English.
+const META = {
+  ar: {
+    title: 'منصة معماري | عروض المقاولين والاستشاريين في قطر',
+    description: 'طلب واحد، ومن ثلاثة إلى خمسة عروض، والقرار لك. صف مشروعك بكلماتك، ونحوّله إلى وصف واضح نرسله إلى مقاولين واستشاريين معتمدين في قطر، ثم نعرض عروضهم جنبًا إلى جنب.',
+    appTitle: 'معماري',
+  },
+  en: {
+    title: 'Mimaary | Contractor and consultant offers in Qatar',
+    description: 'One request. Three to five offers. You choose. Describe your project, we send it to vetted contractors and consultants in Qatar and put their offers side by side.',
+    appTitle: 'Mimaary',
+  },
+};
+
+export function generateMetadata() {
+  const lang = resolveLanguage(headers().get(LANG_HEADER));
+  const meta = META[lang];
+  return {
+    title: meta.title,
+    description: meta.description,
+    icons: ICONS,
+    appleWebApp: { capable: true, title: meta.appTitle, statusBarStyle: 'default' },
+    formatDetection: { telephone: false },
+  };
+}
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#FFFFFF' },
-    { media: '(prefers-color-scheme: dark)', color: '#0D1B2A' },
-  ],
+  // Light whatever the phone's system setting: no auto-darkening, light browser bar.
+  // Night mode is only ever the visitor's own choice in the menu.
+  colorScheme: 'only light',
+  themeColor: '#F6F8FB',
 };
 
 export default function RootLayout({ children }) {
@@ -39,7 +60,7 @@ export default function RootLayout({ children }) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: "try{if(localStorage.getItem('mlTheme')==='dark')document.documentElement.classList.add('dark')}catch(e){}"
+            __html: "try{if(localStorage.getItem('mimaaryTheme')==='dark')document.documentElement.classList.add('dark')}catch(e){}"
               // Homepage hero: offers arrive one by one on the first visit only, never with reduced motion.
               + "try{if(location.pathname==='/'&&!localStorage.getItem('mlHeroSeen')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){var r=document.documentElement;r.classList.add('ml-hero-intro');localStorage.setItem('mlHeroSeen','1');setTimeout(function(){r.classList.remove('ml-hero-intro')},2400)}}catch(e){}",
           }}

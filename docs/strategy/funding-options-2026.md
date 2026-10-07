@@ -2,9 +2,9 @@
 
 Research notes for applying to Qatar funding programmes. Nothing here is applied for or agreed yet. Jassim decides on every application, figure and term. Verify every figure on the official site before it goes into an application; items marked "secondary source" come from news or directory sites.
 
-## How we describe MimaarLink to funders (decided 2026-10-04)
+## How we describe Mimaary to funders (decided 2026-10-04)
 
-- **Lead: data and AI.** MimaarLink turns Qatar's informal project sourcing into structured data: clear Arabic and English briefs, comparable offers, and a record of how providers respond, bid and get chosen. Matching and comparison get better with every project.
+- **Lead: data and AI.** Mimaary turns Qatar's informal project sourcing into structured data: clear Arabic and English briefs, comparable offers, and a record of how providers respond, bid and get chosen. Matching and comparison get better with every project.
 - **Support: local business growth.** Qatar's contractors and consultants get a fair, structured way to win private work; owners get a clear way to choose.
 - **Core advantage: the market record.** Every request, invite, bid, choice and outcome is recorded in a structured way. Today this information sits in WhatsApp chats and personal contacts and is lost. Over time the record makes the market clearer for owners, providers and policymakers, and is hard for a newcomer to copy.
 
@@ -12,13 +12,13 @@ Say clearly what exists today (live site, guided intake, offer comparison, admin
 
 ## Invest Qatar (submitted, awaiting a meeting)
 
-Jassim submitted a 6-slide pitch to Invest Qatar. Its angle: foreign contractors and consultants that set up in Qatar need their first project, and MimaarLink is the on-ramp. The ask is non-financial: introductions to firms entering Qatar, a referral to the right support route (QSTP, QDB or similar), and a point of contact.
+Jassim submitted a 6-slide pitch to Invest Qatar. Its angle: foreign contractors and consultants that set up in Qatar need their first project, and Mimaary is the on-ramp. The ask is non-financial: introductions to firms entering Qatar, a referral to the right support route (QSTP, QDB or similar), and a point of contact.
 
 Points to prepare before the meeting:
 
-- **Market size.** The deck uses USD 52B (Mordor Intelligence, 2025, ~USD 67B by 2031). The same report puts public funding at about 78% of activity, so the private segment MimaarLink serves is roughly USD 11.5B. Say this before they do.
+- **Market size.** The deck uses USD 52B (Mordor Intelligence, 2025, ~USD 67B by 2031). The same report puts public funding at about 78% of activity, so the private segment Mimaary serves is roughly USD 11.5B. Say this before they do.
 - **Traction.** "Contractors are already applying" means 3 applications as of October 2026; no owner projects yet. Answer with the real numbers.
-- **Revenue.** The deck lists memberships, access fees and success fees. MimaarLink is free today and pricing is undecided; describe these as options being tested.
+- **Revenue.** The deck lists memberships, access fees and success fees. Mimaary is free today and pricing is undecided; describe these as options being tested.
 - **AI.** Scoping, matching and bid comparison with AI are planned, not built. Say so.
 - **Referral route.** The pitch asks for a referral to "QSTP, QDB or similar". QSTP is now skipped, so steer the referral to QDB (Startup Qatar START) and QBIC.
 - **Founder line.** "Inside the economic-zones ecosystem" needs a one-sentence explanation ready.
@@ -45,11 +45,11 @@ Points to prepare before the meeting:
 
 [Binaa](https://binaa.qdb.qa/) is QDB's national platform connecting citizens on the QDB housing loan with registered contractors and consultants (launched 2024, second phase with ten pre-approved villa designs). Since June 2025, only Binaa-registered firms can build homes financed by the housing loan. It works as a directory: owners search and choose; providers do not submit comparable offers.
 
-How MimaarLink differs and complements it:
+How Mimaary differs and complements it:
 
-- **Scope:** Binaa covers housing-loan villas. MimaarLink covers the rest of private work: renovations and extensions, fit-out, MEP, shops, clinics, cafés, offices, warehouses, design and supervision.
-- **Model:** Binaa is a directory. MimaarLink turns a request into a brief and returns three to five comparable offers.
-- **Possible partnership:** Binaa-registered firms are a pre-qualified supply pool; MimaarLink's market record could inform QDB. Present this as complementary, never as competition with QDB.
+- **Scope:** Binaa covers housing-loan villas. Mimaary covers the rest of private work: renovations and extensions, fit-out, MEP, shops, clinics, cafés, offices, warehouses, design and supervision.
+- **Model:** Binaa is a directory. Mimaary turns a request into a brief and returns three to five comparable offers.
+- **Possible partnership:** Binaa-registered firms are a pre-qualified supply pool; Mimaary's market record could inform QDB. Present this as complementary, never as competition with QDB.
 
 Full note: `docs/strategy/binaa.md`.
 

@@ -2,7 +2,7 @@
 
 How Jassim finds the first real projects by contacting people who have already posted a project need in public (Mzad Qatar first; the same steps apply to Qatar Living classifieds and public groups). Decided 2026-10-04 (see `DECISIONS.md`).
 
-The idea: the owner has already said in public that they need work done. We call, explain MimaarLink in one minute, and offer to do the coordination: we write the brief (or post it for them, with their consent), send it to suitable providers, and return three to five comparable offers. The owner chooses; the agreement is between owner and provider.
+The idea: the owner has already said in public that they need work done. We call, explain Mimaary in one minute, and offer to do the coordination: we write the brief (or post it for them, with their consent), send it to suitable providers, and return three to five comparable offers. The owner chooses; the agreement is between owner and provider.
 
 ## 1. Rules
 
@@ -34,13 +34,13 @@ Keep the call under 4 minutes. Three openers; use whichever feels natural, and n
 ### Option A: direct
 
 ```text
-السلام عليكم، معك جاسم من معمار لينك. شفت إعلانك في مزاد عن [ترميم الفيلا / تجهيز المحل]. 
+السلام عليكم، معك جاسم من معماري. شفت إعلانك في مزاد عن [ترميم الفيلا / تجهيز المحل]. 
 نحن منصة قطرية: نكتب تفاصيل مشروعك بشكل واضح، نرسله لمقاولين مناسبين، وتوصلك من 3 إلى 5 عروض تقدر تقارن بينها. الخدمة مجانية، والاختيار والاتفاق يكون بينك وبين المقاول مباشرة.
 عندك دقيقتين أسألك عن المشروع؟
 ```
 
 ```text
-Hello, this is Jassim from MimaarLink. I saw your ad on Mzad about [the villa renovation / the shop fit-out].
+Hello, this is Jassim from Mimaary. I saw your ad on Mzad about [the villa renovation / the shop fit-out].
 We are a Qatari platform: we write your project up clearly, send it to suitable contractors, and you receive three to five offers you can compare. It is free, and you choose and agree directly with the contractor.
 Do you have two minutes for a few questions about the project?
 ```
@@ -49,24 +49,24 @@ Do you have two minutes for a few questions about the project?
 
 ```text
 السلام عليكم، معك جاسم. شفت إعلانك عن [المشروع]. لقيت أحد ولا للحين تدور؟
-[إذا للحين يدور] نحن في معمار لينك نجمع لك من 3 إلى 5 عروض من مقاولين مناسبين بدل ما تتصل بكل واحد بنفسك. مجاناً. تحب أشرح لك بسرعة؟
+[إذا للحين يدور] نحن في معماري نجمع لك من 3 إلى 5 عروض من مقاولين مناسبين بدل ما تتصل بكل واحد بنفسك. مجاناً. تحب أشرح لك بسرعة؟
 ```
 
 ```text
 Hello, this is Jassim. I saw your ad about [the project]. Have you found someone, or are you still looking?
-[If still looking] At MimaarLink we collect three to five offers from suitable contractors for you, so you do not have to call each one yourself. It is free. Shall I explain quickly?
+[If still looking] At Mimaary we collect three to five offers from suitable contractors for you, so you do not have to call each one yourself. It is free. Shall I explain quickly?
 ```
 
 ### Option C: WhatsApp first (when calling feels too cold)
 
 ```text
-السلام عليكم، معك جاسم من معمار لينك (mimaarlink.com). شفت إعلانك في مزاد عن [المشروع].
+السلام عليكم، معك جاسم من معماري (mimaary.com). شفت إعلانك في مزاد عن [المشروع].
 نقدر نرسل تفاصيل مشروعك لمقاولين مناسبين في قطر، وتوصلك من 3 إلى 5 عروض تقارن بينها. الخدمة مجانية والاختيار لك.
 إذا يناسبك، أتصل عليك دقيقتين وقت ما تحب.
 ```
 
 ```text
-Hello, this is Jassim from MimaarLink (mimaarlink.com). I saw your ad on Mzad about [the project].
+Hello, this is Jassim from Mimaary (mimaary.com). I saw your ad on Mzad about [the project].
 We can send your project details to suitable contractors in Qatar, and you receive three to five offers to compare. It is free and the choice is yours.
 If it suits you, I can call for two minutes at a time that works for you.
 ```
@@ -84,14 +84,14 @@ If it suits you, I can call for two minutes at a time that works for you.
 **Consent question (must be asked before posting on their behalf):**
 
 ```text
-تسمح لي أكتب طلب مشروعك على معمار لينك بالنيابة عنك، وأرسل وصف المشروع بدون اسمك ورقمك لمقاولين مناسبين؟ بياناتك ما تنعطى لأي مقاول إلا بعد ما تختاره أنت.
+تسمح لي أكتب طلب مشروعك على معماري بالنيابة عنك، وأرسل وصف المشروع بدون اسمك ورقمك لمقاولين مناسبين؟ بياناتك ما تنعطى لأي مقاول إلا بعد ما تختاره أنت.
 ```
 
 ```text
-May I post your project request on MimaarLink on your behalf, and send the description to suitable contractors without your name or number? Your details go to a contractor only after you choose them.
+May I post your project request on Mimaary on your behalf, and send the description to suitable contractors without your name or number? Your details go to a contractor only after you choose them.
 ```
 
-If yes: submit the request at mimaarlink.com/post-project with their details and add "Posted on behalf: consent [date], call" in the notes. If they prefer to do it themselves, send the link.
+If yes: submit the request at www.mimaary.com/post-project with their details and add "Posted on behalf: consent [date], call" in the notes. If they prefer to do it themselves, send the link.
 
 ## 5. After the call (WhatsApp, same day)
 

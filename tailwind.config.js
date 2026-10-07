@@ -30,7 +30,7 @@ module.exports = {
     			sans: ['var(--ml-sans)'],
     		},
     		colors: {
-    			// MimaarLink brand v1.4 (brand/tailwind.brand.js), minus names already owned by shadcn.
+    			// Mimaary brand v1.4 (brand/tailwind.brand.js), minus names already owned by shadcn.
     			navy: 'var(--ml-navy)',
     			teal: { DEFAULT: 'var(--ml-teal)', ink: 'var(--ml-teal-ink)' },
     			'pale-teal': 'var(--ml-pale-teal)',
