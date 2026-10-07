@@ -1,15 +1,15 @@
-# MimaarLink 10-Year Data and Transaction Moat
+# Mimaary 10-Year Data and Transaction Moat
 
 Date: `2026-07-11`
 
 > **Status note (2026-10-02, Jassim):** the long-term thinking here still holds. Two decisions have changed since July:
-> - **Scope:** MimaarLink now accepts the full range of project activities listed in `AGENTS.md`. The narrow "villa renovation, fit-out, consultant" focus below is a *marketing* focus, not an intake limit.
+> - **Scope:** Mimaary now accepts the full range of project activities listed in `AGENTS.md`. The narrow "villa renovation, fit-out, consultant" focus below is a *marketing* focus, not an intake limit.
 > - **Fees:** the service is **free for owners and providers** for now. QAR 750 below is an untested hypothesis, not the current price. Read "QAR 750 fee" as "first paid introduction, at whatever price we validate".
 > See `COMPANY-BRAIN.md` for the current picture.
 
 ## Chief Operator Decision
 
-MimaarLink should aim to become Qatar's trusted private-project procurement intelligence layer, then expand through country-specific GCC cells. It should not try to become a broad contractor directory, a government-tender substitute, an escrow company, or a Procore clone.
+Mimaary should aim to become Qatar's trusted private-project procurement intelligence layer, then expand through country-specific GCC cells. It should not try to become a broad contractor directory, a government-tender substitute, an escrow company, or a Procore clone.
 
 The moat is a closed outcome loop:
 
@@ -35,7 +35,7 @@ Long-term work is documentation and disciplined data capture only. The first col
 
 For each provider, record CR/licence evidence, permitted categories, document expiry, signatory confirmation when required, consultant classification where applicable, capacity, project-size fit, and evidence-check dates.
 
-Public identity data is an input, not the moat. MOCI already provides business data and QR-based CR/licence verification. MimaarLink's private value is whether a provider responds, bids appropriately, honors its scope, and performs on the type and size of work claimed.
+Public identity data is an input, not the moat. MOCI already provides business data and QR-based CR/licence verification. Mimaary's private value is whether a provider responds, bids appropriately, honors its scope, and performs on the type and size of work claimed.
 
 ### 2. Scope and Cost Taxonomy
 
@@ -75,7 +75,7 @@ Own the workflow around the transaction before trying to own the money:
 - Direct handoff after cleared payment.
 - Outcome and issue follow-up.
 
-Later payments should be integrated through a licensed bank or payment-service provider unless competent advice confirms a different lawful structure. MimaarLink should not hold client or project funds merely to appear more complete.
+Later payments should be integrated through a licensed bank or payment-service provider unless competent advice confirms a different lawful structure. Mimaary should not hold client or project funds merely to appear more complete.
 
 ## Minimum Data To Capture Now
 
@@ -143,7 +143,7 @@ Test recurring revenue:
 - Provider subscription only where lead volume repeats.
 - Owner/consultant workflow fee for deeper scope and bid normalization.
 - Aggregate category benchmarks with privacy thresholds.
-- Licensed payment-link integration; no MimaarLink custody of project funds.
+- Licensed payment-link integration; no Mimaary custody of project funds.
 
 ### Gate 4: Qatar Density
 
@@ -186,13 +186,13 @@ The core economic metric is gross profit per successfully selected and paid intr
 - Use aggregated benchmarks only when re-identification risk is acceptably low.
 - Record provenance, check date, confidence, and correction history for important facts.
 
-Qatar's PDPPL guidance treats a business deciding why and how personal data is processed as a controller and requires appropriate controller/processor arrangements. This needs professional implementation review as MimaarLink's data use expands.
+Qatar's PDPPL guidance treats a business deciding why and how personal data is processed as a controller and requires appropriate controller/processor arrangements. This needs professional implementation review as Mimaary's data use expands.
 
 ## Strategic Position Relative To Public Systems
 
-- MOCI/Qatar Business Map: authoritative public identity and licence-check input; MimaarLink adds private operating outcomes.
-- Monaqasat: unified state-procurement and supplier-classification system; MimaarLink remains focused on private mid-ticket owner projects.
-- Aqarat: signals Qatar's direction toward real-estate data and analytics; MimaarLink should complement, not impersonate, national infrastructure.
+- MOCI/Qatar Business Map: authoritative public identity and licence-check input; Mimaary adds private operating outcomes.
+- Monaqasat: unified state-procurement and supplier-classification system; Mimaary remains focused on private mid-ticket owner projects.
+- Aqarat: signals Qatar's direction toward real-estate data and analytics; Mimaary should complement, not impersonate, national infrastructure.
 - Qatar Open Data: useful for aggregate market context. The published building-permit dataset explicitly excludes maintenance permits, which suggests an analytical blind spot but does not prove private-market exclusivity.
 - QCB-regulated payment systems: future transaction convenience should come from licensed rails and partners, not unauthorized fund custody.
 
@@ -216,7 +216,7 @@ Track these from the first transaction:
 - If fewer than 3 interested replies follow 30 approved qualified approaches, stop that message/channel.
 - If providers consistently reject QAR 750 despite real owner selection, reassess opportunity quality and payment timing before lowering price.
 - If 10 paid introductions do not improve matching speed or selection quality, the proposed data loop is not yet a moat.
-- If MimaarLink must perform unpaid consulting or project management to make each introduction work, narrow the offer or charge for that service within lawful CR coverage.
+- If Mimaary must perform unpaid consulting or project management to make each introduction work, narrow the offer or charge for that service within lawful CR coverage.
 - If a new revenue layer requires activities, permissions, data use, or payment handling not covered by current approvals, stop at the boundary and obtain competent review before launch.
 
 ## Official Reference Points

@@ -1,4 +1,4 @@
-# MimaarLink Week 1 Referral Targets
+# Mimaary Week 1 Referral Targets
 
 Date: 2026-07-11
 
@@ -25,7 +25,7 @@ Confidence scale:
 - Public contact: `info@topvilla.qa`; `+974 4442 9600`
 - Evidence: https://topvilla.qa/
 - Confidence: A
-- Personalized angle: Offer a no-poaching bid-comparison lane for villa owners after Top Villa completes or reviews the design. MimaarLink can standardize contractor responses around Top Villa's drawings while keeping design authority and client ownership with the practice.
+- Personalized angle: Offer a no-poaching bid-comparison lane for villa owners after Top Villa completes or reviews the design. Mimaary can standardize contractor responses around Top Villa's drawings while keeping design authority and client ownership with the practice.
 
 ### 2. ART MARK Engineering Consultant (AMEC)
 
@@ -36,7 +36,7 @@ Confidence scale:
 - Public contact: `info@amecdesign.com`; `+974 3032 4244`; Mohamed Ibrahim `+974 4444 8707`
 - Evidence: https://amecdesign.com/
 - Confidence: A
-- Personalized angle: Position MimaarLink as the controlled market-testing step after AMEC has made a villa bid-ready: same coordinated design, same inclusions, multiple comparable responses, with AMEC remaining the technical authority.
+- Personalized angle: Position Mimaary as the controlled market-testing step after AMEC has made a villa bid-ready: same coordinated design, same inclusions, multiple comparable responses, with AMEC remaining the technical authority.
 
 ### 3. Studio Khatib
 
@@ -47,7 +47,7 @@ Confidence scale:
 - Public contact: `hello@studiokhatib.com`; `+974 5054 4875`
 - Evidence: https://www.studiokhatib.com/
 - Confidence: A
-- Personalized angle: Offer an execution-partner lane for design-only or overflow clients: Studio Khatib keeps the creative relationship, while MimaarLink collects comparable contractor responses without altering the design brief.
+- Personalized angle: Offer an execution-partner lane for design-only or overflow clients: Studio Khatib keeps the creative relationship, while Mimaary collects comparable contractor responses without altering the design brief.
 
 ### 4. PASO Studios
 
@@ -64,12 +64,12 @@ Confidence scale:
 
 - Target role: Managing Director or Head of Business Development
 - Category: Interior design, fit-out, and MEP studio
-- Rationale: Its public portfolio spans villas, offices, restaurants, clinics, spas, retail, and other small commercial spaces, closely matching MimaarLink's Week 1 categories.
+- Rationale: Its public portfolio spans villas, offices, restaurants, clinics, spas, retail, and other small commercial spaces, closely matching Mimaary's Week 1 categories.
 - Best public channel: Public WhatsApp or direct email
 - Public contact: `info@idsketches.qa`; `+974 5992 6000`
 - Evidence: https://idsketches.qa/
 - Confidence: A
-- Personalized angle: Focus on scope overflow and cross-trade gaps: when an inquiry is too small, outside the studio's capacity, or needs independent bid comparison, MimaarLink can qualify it and return a clean brief instead of letting the inquiry die.
+- Personalized angle: Focus on scope overflow and cross-trade gaps: when an inquiry is too small, outside the studio's capacity, or needs independent bid comparison, Mimaary can qualify it and return a clean brief instead of letting the inquiry die.
 
 ### 6. Nabina Ceramic
 
@@ -80,7 +80,7 @@ Confidence scale:
 - Public contact: `info@nabinaceramic.com`; Al Gharaffa `+974 4497 9000`; Old Airport `+974 4429 9999`
 - Evidence: https://nabinaceramic.com/en/contact
 - Confidence: A
-- Personalized angle: Create a handoff for material-ready homeowners who ask, "Who can install or manage the rest?" MimaarLink qualifies the project and can route selected owners back to Nabina for product purchasing.
+- Personalized angle: Create a handoff for material-ready homeowners who ask, "Who can install or manage the rest?" Mimaary qualifies the project and can route selected owners back to Nabina for product purchasing.
 
 ### 7. SANIPEX Qatar / BAGNODESIGN Doha
 
@@ -113,7 +113,7 @@ Confidence scale:
 - Public contact: Project Office `+974 4482 2830`; `info@alamodigroup.com.qa`
 - Evidence: https://alamodigroup.qa/showrooms
 - Confidence: A
-- Personalized angle: Position MimaarLink as a project-conversion aid: customers with a material list but no coherent labor scope can be qualified, matched, and brought back with clearer quantities and contractor requirements.
+- Personalized angle: Position Mimaary as a project-conversion aid: customers with a material list but no coherent labor scope can be qualified, matched, and brought back with clearer quantities and contractor requirements.
 
 ### 10. Just Real Estate (JRE)
 
@@ -124,7 +124,7 @@ Confidence scale:
 - Public contact: `info@jre.com.qa`; `+974 4491 3333`
 - Evidence: https://jre.com.qa/our-services/property-and-facilities-management/
 - Confidence: A
-- Personalized angle: Offer an independent comparison lane for owner-approved works outside routine planned/reactive maintenance. JRE keeps facilities control; MimaarLink packages a bounded scope and comparable responses for decision-making.
+- Personalized angle: Offer an independent comparison lane for owner-approved works outside routine planned/reactive maintenance. JRE keeps facilities control; Mimaary packages a bounded scope and comparable responses for decision-making.
 
 ### 11. Home Link Real Estate
 
@@ -135,7 +135,7 @@ Confidence scale:
 - Public contact: `info@homelink.qa`; property-management line `+974 3155 0056`; office `+974 7447 3442`
 - Evidence: https://homelink.qa/property-management/
 - Confidence: A
-- Personalized angle: Use the pre-listing and move-out trigger: when cleaning and routine repairs reveal a real renovation need, MimaarLink can qualify the owner and return comparable bids without taking over leasing or management.
+- Personalized angle: Use the pre-listing and move-out trigger: when cleaning and routine repairs reveal a real renovation need, Mimaary can qualify the owner and return comparable bids without taking over leasing or management.
 
 ### 12. MJK Real Estate
 
@@ -146,7 +146,7 @@ Confidence scale:
 - Public contact: `mjk@mjk-group.com`; `+974 4488 8035`; `+974 4488 8036`
 - Evidence: https://www.mjk-group.com/en/companies/mjk-real-estate
 - Confidence: B
-- Personalized angle: Position MimaarLink as an independent benchmark for villa refreshes and office turnarounds when MJK wants market-tested responses beyond its usual maintenance or group-company route.
+- Personalized angle: Position Mimaary as an independent benchmark for villa refreshes and office turnarounds when MJK wants market-tested responses beyond its usual maintenance or group-company route.
 
 ### 13. BNI Qatar
 
@@ -168,7 +168,7 @@ Confidence scale:
 - Public contact: `info@fdconsult.qa`; `+974 4468 8450`; `+974 4468 8477`
 - Evidence: https://www.fdconsult.info/
 - Confidence: B
-- Personalized angle: Test a consultant-led bid lane: FD supplies or validates scope/BOQ, MimaarLink gathers normalized contractor responses, and FD can remain the paid technical reviewer or supervisor.
+- Personalized angle: Test a consultant-led bid lane: FD supplies or validates scope/BOQ, Mimaary gathers normalized contractor responses, and FD can remain the paid technical reviewer or supervisor.
 
 ### 15. Atlal Al Khaleej Trading
 
@@ -179,7 +179,7 @@ Confidence scale:
 - Public contact: `atlal.alkhaleej.local@gmail.com`; `atlalalkhaleejco@yahoo.com`; `+974 4460 2068`
 - Evidence: https://www.atlalkhaleej.com/
 - Confidence: B
-- Personalized angle: Offer a lightweight referral route for retail buyers with a mixed bill of materials but no coordinated scope. MimaarLink qualifies only mid-ticket jobs and avoids sending low-value handyman requests.
+- Personalized angle: Offer a lightweight referral route for retail buyers with a mixed bill of materials but no coordinated scope. Mimaary qualifies only mid-ticket jobs and avoids sending low-value handyman requests.
 
 ## Week 1 Order of Attack
 

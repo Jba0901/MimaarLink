@@ -4,6 +4,30 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · MimaarLink retired, site is Mimaary / معماري
+
+**What changed**
+- Jassim: "bury MimaarLink". New logo set `mimaary-logo-*` (en, ar, bilingual, stacked; light, dark, navy, white) in `brand/logo/` and `public/brand/logo/` (byte-identical). The arch mark paths are unchanged; only the wordmark was redrawn as outlines of IBM Plex Sans SemiBold / IBM Plex Sans Arabic SemiBold at the old cap height and spacing. Mark and icon files renamed only. Old MimaarLink SVGs and unused raster logos (`public/logo.png`, `logo-dark-transparent.png`, `public/brand/mimaarlink-official-logo-source.png`) deleted.
+- All site text: Mimaary / معماري (titles, manifest, i18n, homepage FAQ, privacy page). In Arabic sentences «منصة معماري» where «معماري» alone reads as "architectural" (rule in BRAND.md §1 and AGENTS.md).
+- Internal keys renamed: language header, admin session salt, marketing storage keys.
+- Docs: BRAND.md v1.6, AGENTS.md, COMPANY-BRAIN.md, DECISIONS.md, operations/strategy/playbook/outreach docs. History (HANDOFF entries, `docs/archive/`, the four pre-v1.4 root drafts, QSTP application PDFs) left as written.
+
+**Kept on purpose (still say mimaarlink)**
+- Supabase storage bucket `mimaarlink-files` and its policy names: renaming would cut off uploaded files. Needs a planned Supabase migration if ever wanted.
+- Domain mimaarlink.com, `MimaarLink@gmail.com`, `instagram.com/MimaarLink`, GitHub repo and Vercel project names: real accounts; switch when Jassim has the new ones.
+
+**Behaving differently**
+- Admins sign in again once (session salt changed). Returning visitors see the marketing-consent question once more.
+- Header logo is sized by height (40px phone, 46px desktop). Hero drawing height now follows width so arches are never clipped.
+
+**Waiting on Jassim**
+- New domain, email, Instagram/WhatsApp names; then swap them in one change. A designer may refine the wordmark later (replace files, keep names).
+
+**Verified**
+- `npm run build` + `node --test tests/*.test.mjs` (49/49); a test now fails if MimaarLink artwork or text comes back. Checked header, menu and footer at 390 (EN/AR) and 1440, and all logo variants on light, navy and teal.
+
+---
+
 ## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · new legal name on the redesign
 
 **What changed**

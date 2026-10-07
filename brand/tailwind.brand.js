@@ -1,4 +1,4 @@
-// MimaarLink brand theme for Tailwind v3.
+// Mimaary brand theme for Tailwind v3.
 // Usage in tailwind.config.js:  theme: { extend: require('./tailwind.brand.js') }
 // (Tailwind v4 projects use the @theme block in brand-tokens.css instead.)
 

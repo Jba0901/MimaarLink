@@ -1,4 +1,4 @@
-// MimaarLink brand fonts. Import in app/layout.tsx and add all four
+// Mimaary brand fonts. Import in app/layout.tsx and add all four
 // `.variable` classes to <html className=...>.
 import { Source_Serif_4, IBM_Plex_Sans, IBM_Plex_Sans_Arabic, Noto_Naskh_Arabic } from 'next/font/google';
 

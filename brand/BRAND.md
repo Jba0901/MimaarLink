@@ -1,30 +1,32 @@
-# MimaarLink Brand & Website Spec
+# Mimaary Brand & Website Spec
 
-Version 1.5 · October 2026 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO
+Version 1.6 · October 2026 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO
+
+**v1.6 (7 Oct 2026):** the brand is **Mimaary / معماري**. MimaarLink is retired everywhere: name, logo files and copy. The legal entity is Mimaary Digital Platform / منصة معماري الرقمية (CR No. 243332).
 
 **v1.5 (website redesign, 5 Oct 2026):** warmer and calmer. Warm stone ground with white cards, a deep navy hero, softer shapes (12px cards, pill buttons), centred display headline with one accent phrase, arch line drawings instead of photos, no bottom tab bar on the website. The v1.4 look stays in git history (main at `446f486`) for the future app.
 
-This is the single source of truth for how mimaarlink.com looks, reads and behaves. Follow it exactly. When something is not covered here, choose the calmer, clearer option and ask before inventing new visual patterns.
+This is the single source of truth for how the Mimaary website (currently served at mimaarlink.com) looks, reads and behaves. Follow it exactly. When something is not covered here, choose the calmer, clearer option and ask before inventing new visual patterns.
 
 Stack: Next.js, Tailwind CSS, Supabase, Vercel. The site is bilingual (English and Arabic, full RTL).
 
 ---
 
-## 1. What MimaarLink is
+## 1. What Mimaary is
 
-MimaarLink is a Qatar-based construction technology platform. A project owner submits **one request** and receives **three to five competing offers** from vetted contractors and consultants, then compares price, timeline, scope and exclusions side by side and chooses.
+Mimaary is a Qatar-based construction technology platform. A project owner submits **one request** and receives **three to five competing offers** from vetted contractors and consultants, then compares price, timeline, scope and exclusions side by side and chooses.
 
 - **Promise (EN):** One request. Three to five offers. You choose.
 - **Promise (AR):** طلب واحد. من ثلاثة إلى خمسة عروض. والقرار لك.
 - **Brand line (EN):** The trusted start of every project in Qatar.
 - **Brand line (AR):** البداية الموثوقة لكل مشروع في قطر.
 - **Descriptor:** The project-sourcing platform for Qatar's built environment.
-- **Arabic name:** معمار لينك (until the rename below ships).
-- **Rename (decided 2026-10-07):** the brand becomes **Mimaary / معماري**, matching the commercial registration "Mimaary Digital Platform / منصة معماري الرقمية" (CR No. 243332). "Link" is dropped. Until a new logo and domain exist, the site keeps the MimaarLink logo and name; switch everything in one change, never half.
+- **Name:** Mimaary (EN) · معماري (AR). In Arabic sentences write «منصة معماري» wherever «معماري» alone could read as the adjective "architectural"; in headings, logos and titles «معماري» alone is fine.
+- **Legal name:** Mimaary Digital Platform / منصة معماري الرقمية (CR No. 243332). Footer and trust copy show the legal name and CR number only.
 
 ## 2. Personality and feeling
 
-**Calm authority.** MimaarLink should feel like the well-run version of this market: a private bank's composure applied to construction. Confidence comes from restraint, order and clarity, never from volume.
+**Calm authority.** Mimaary should feel like the well-run version of this market: a private bank's composure applied to construction. Confidence comes from restraint, order and clarity, never from volume.
 
 Four traits: **Trusted, Precise, Qatari, Quick.**
 
@@ -35,7 +37,7 @@ What each audience must feel:
 | Contractors & consultants | Respect | Being listed is a mark of quality. Serious, well-scoped work. |
 | Investors & institutions | Legitimacy | Polished, registered, bilingual, ready to scale. |
 
-MimaarLink is never: a crowded classifieds marketplace, a cold government portal, a flashy "AI startup" with fake dashboards, or loud and salesy.
+Mimaary is never: a crowded classifieds marketplace, a cold government portal, a flashy "AI startup" with fake dashboards, or loud and salesy.
 
 ## 3. Colour
 
@@ -93,17 +95,19 @@ Scale (desktop / mobile): Display 64/40px · H1 56/38px · H2 36/28px · H3 20/1
 
 ## 5. Logo
 
-Files are in `/logo` (SVG, vector). Use them as files; **never recreate the logo in code or type the wordmark in a font.**
+Files are in `brand/logo/` and served byte-for-byte from `public/brand/logo/` (SVG, vector). Use them as files; **never recreate the logo in code or type the wordmark in a font.**
+
+The v1.6 set keeps the arch mark exactly as before. Only the wordmark was redrawn, as outlines of IBM Plex Sans SemiBold ("Mimaary") and IBM Plex Sans Arabic SemiBold («معماري»), at the old cap height and spacing, in navy (white on dark). A designer may refine the wordmark later; replace the files, keep the names.
 
 | File | Use |
 |---|---|
-| `mimaarlink-logo-en.svg` | Header on light backgrounds (default) |
-| `mimaarlink-logo-en-dark.svg` | Header/footer on navy or night, and in dark mode |
-| `mimaarlink-logo-ar.svg` / `-ar-dark.svg` | Arabic version of the site |
-| `mimaarlink-logo-bilingual.svg` | Footer or About page |
-| `mimaarlink-logo-stacked.svg` | Square spaces |
-| `mimaarlink-mark.svg` | Mark alone (loading states, small spaces) |
-| `mimaarlink-icon.svg`, `mimaarlink-icon-512.png`, `mimaarlink-icon-180.png` | Favicon, apple-touch-icon, PWA and social |
+| `mimaary-logo-en.svg` | Header on light backgrounds (default) |
+| `mimaary-logo-en-dark.svg` | Header/footer on navy or night, and in dark mode |
+| `mimaary-logo-ar.svg` / `-ar-dark.svg` | Arabic version of the site |
+| `mimaary-logo-bilingual.svg` | Footer or About page |
+| `mimaary-logo-stacked.svg` | Square spaces |
+| `mimaary-mark.svg` | Mark alone (loading states, small spaces) |
+| `mimaary-icon.svg`, `mimaary-icon-512.png`, `mimaary-icon-180.png` | Favicon, apple-touch-icon, PWA and social |
 
 Rules: minimum 120px wide for the full logo, 20px tall for the mark. Clear space around the logo at least the width of one arch leg. Never stretch, recolour, add shadows or place navy logo on navy.
 
