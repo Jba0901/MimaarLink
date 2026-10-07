@@ -70,3 +70,15 @@ test('homepage v1.5: navy hero over the header, FAQ uses only decided facts, no 
   for (const block of faq) assert.doesNotMatch(block, /[0-9٠-٩]|QAR|ر\.ق|%/);
   assert.match(home, /'Is Mimaary free\?', 'Yes, for now\./);
 });
+
+test('large screens scale up the homepage while phones keep their sizes', () => {
+  // Phone/base values stay as they were.
+  assert.match(css, /\.ml-sub \{ margin-top: 12px; max-width: 36rem; font-size: 16px;/);
+  assert.match(css, /\.ml-home h1 \{ font-size: 40px;/);
+  // >=1280px: larger type, wider cards, ~70ch paragraphs; >=1536px: 1320px content.
+  const large = css.slice(css.indexOf('@media (min-width: 1280px) {\n  .ml-home { font-size: 18px; }'));
+  assert.ok(large.length > 0);
+  assert.match(large, /\.ml-home \.ml-hero h1 \{ font-size: 72px; \}/);
+  assert.match(large, /\.ml-sub \{ max-width: 70ch; font-size: 18px; \}/);
+  assert.match(css, /@media \(min-width: 1536px\) \{\n  \.ml-wrap \{ max-width: 1400px; \}/);
+});

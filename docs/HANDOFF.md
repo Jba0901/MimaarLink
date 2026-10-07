@@ -4,6 +4,18 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · homepage scaled up for large screens
+
+**What changed**
+- Jassim found the desktop homepage small. At >=1280px (`app/globals.css`, after the homepage block): body text 18px (about 12% up), hero headline 72px (Arabic 63px), section headings 45px, larger cards, buttons, offer cards, sectors and FAQ; hero path cards widen to 1040px, FAQ to 1000px; paragraphs capped near 70 characters.
+- At >=1536px the homepage content widens to 1320px (outer 1400px, same as the header container).
+- Phones and tablets are unchanged: every new rule sits inside the two min-width media queries. A test guards both.
+
+**Verified**
+- Build + tests (50/50). Checked 1440px (EN light, AR light) and 1920px (EN dark, AR dark).
+
+---
+
 ## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · MimaarLink retired, site is Mimaary / معماري
 
 **What changed**
