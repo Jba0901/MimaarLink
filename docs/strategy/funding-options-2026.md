@@ -20,6 +20,8 @@ Points to prepare before the meeting:
 - **Traction.** "Contractors are already applying" means 3 applications as of October 2026; no owner projects yet. Answer with the real numbers.
 - **Revenue.** The deck lists memberships, access fees and success fees. MimaarLink is free today and pricing is undecided; describe these as options being tested.
 - **AI.** Scoping, matching and bid comparison with AI are planned, not built. Say so.
+- **Referral route.** The pitch asks for a referral to "QSTP, QDB or similar". QSTP is now skipped, so steer the referral to QDB (Startup Qatar START) and QBIC.
+- **Company name.** The registered company is Mimaary; MimaarLink is the product. Say this once so the names do not confuse them.
 - **Founder line.** "Inside the economic-zones ecosystem" needs a one-sentence explanation ready.
 
 ## Programmes
@@ -30,6 +32,7 @@ Points to prepare before the meeting:
 | Startup Qatar Investment Program, GROW | Up to USD 5.5M | 3+ years of operations, management team, financial stability | Not yet | Same |
 | QBIC (Qatar Business Incubation Center) | Incubation, mentoring, workspace, market access, seed funding (reported QR 100k to 250k) | Qatar resident with at least one active Qatari founding partner | Good now | Secondary sources |
 | QRDI Council SBIG | Non-dilutive. Phase I up to QR 800k, Phase II up to QR 2.2M, cost-reimbursed against milestones | Qatar-HQ, under 250 staff, majority Qatari-owned, R&D-driven; priority sectors include smart cities and emerging digital tech | Needs a real R&D plan | Secondary sources ([Peninsula](https://thepeninsulaqatar.com/article/18/06/2025/qrdi-councils-sbig-now-open-for-applications)) |
+| QSTP (XLR8 accelerator, free zone) | 14-week pre-company accelerator; top teams incorporated at QSTP; free-zone ownership benefits | XLR8 is not open to already established companies (Mimaary is registered) | **Skipped** (decided 2026-10-07): poor fit for a registered marketplace with a Qatari founder | [QSTP](https://qstp.org.qa/?p=9189) |
 | QRDI Innovation Coupon | Up to 50% of the cost of solving one technical problem, up to 6 months | Qatar-based startups and SMEs | Small, quick | Secondary sources |
 
 ### Startup Qatar: unknowns to ask QDB
