@@ -4,6 +4,27 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · last MimaarLink traces, main address www.mimaary.com
+
+**What changed**
+- Main web address is **www.mimaary.com** (live on Vercel; mimaary.com forwards to it). Docs, the ads playbook, BRAND.md, START-HERE.md and the data-recovery script point there. Decision in `DECISIONS.md`.
+- The four pre-v1.4 design drafts moved to `docs/archive/pre-v1.4-*.md` (history). Supabase notes renamed to `supabase-setup.md` and `supabase-security-fix.sql`, prose says Mimaary.
+- `package.json` name is `mimaary` (was the template name).
+- The brand test now also fails if any file in the repo root or `brand/` is named mimaarlink.
+
+**Kept on purpose**
+- Supabase storage bucket `mimaarlink-files` and its two policy names (`app/api`, `scripts/recover-supabase-data.mjs`, `supabase-setup.md`). Renaming needs a planned migration (new bucket, copy files, env var `SUPABASE_STORAGE_BUCKET`); not done without Jassim's go.
+
+**Needs Jassim (dashboards, not code)**
+- GitHub: rename repo `Jba0901/MimaarLink` (Settings → General → Repository name). GitHub redirects the old URL; Vercel keeps deploying.
+- Vercel: team name ("Mimaar Link's…") and project `jba-repo` (Settings → General); domain mimaarlink.com → Edit → redirect to www.mimaary.com (308).
+- Supabase project display name, Meta/WhatsApp Business names if any.
+
+**Verified**
+- Build + tests (51/51).
+
+---
+
 ## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · new contact email and Instagram
 
 **What changed**

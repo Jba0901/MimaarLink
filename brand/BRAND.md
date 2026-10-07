@@ -6,7 +6,7 @@ Version 1.6 · October 2026 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CE
 
 **v1.5 (website redesign, 5 Oct 2026):** warmer and calmer. Warm stone ground with white cards, a deep navy hero, softer shapes (12px cards, pill buttons), centred display headline with one accent phrase, arch line drawings instead of photos, no bottom tab bar on the website. The v1.4 look stays in git history (main at `446f486`) for the future app.
 
-This is the single source of truth for how the Mimaary website (currently served at mimaarlink.com) looks, reads and behaves. Follow it exactly. When something is not covered here, choose the calmer, clearer option and ask before inventing new visual patterns.
+This is the single source of truth for how the Mimaary website (www.mimaary.com) looks, reads and behaves. Follow it exactly. When something is not covered here, choose the calmer, clearer option and ask before inventing new visual patterns.
 
 Stack: Next.js, Tailwind CSS, Supabase, Vercel. The site is bilingual (English and Arabic, full RTL).
 

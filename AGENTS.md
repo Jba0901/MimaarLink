@@ -20,7 +20,7 @@ We cover a wide range of project activities, because the market demands it:
 2. For UI, copy, ads, landing pages or any visual work, read `brand/BRAND.md` (v1.6). It is the source of truth for colour, type, logo, layout, motion, components, copy and the homepage structure. Where older docs disagree, `brand/BRAND.md` wins.
 3. For strategy, outreach, ads, operations, pricing, provider acquisition or long-term planning, read `COMPANY-BRAIN.md` (one-page company picture and current status), then the linked file: `docs/operating-system.md` (how agents work for Mimaary), `docs/operations.md` (running a project by hand), `docs/strategy/10-year-moat.md`, `docs/playbooks/meta-ads-launch.md`. Files in `docs/archive/` are history only; do not follow them.
 
-`mimaarlink-design-system.md`, `mimaarlink-brand-theme-draft.md`, `mimaarlink-worker-design-brief.md` and `mimaarlink-mobile-web-app-design-roadmap.md` predate v1.4–v1.6. Their positioning and channel guidance is still useful; their name (MimaarLink), palette, fonts and logo rules are superseded.
+The pre-v1.4 design drafts now live in `docs/archive/pre-v1.4-*.md`: history only, their name, palette, fonts and logo rules are superseded. Supabase notes: `supabase-setup.md` and `supabase-security-fix.sql`.
 
 ## Recording decisions
 

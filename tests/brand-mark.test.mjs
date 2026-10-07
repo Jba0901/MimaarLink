@@ -46,7 +46,7 @@ test('served Mimaary logo files are byte-identical to the brand source', async (
 });
 
 test('the MimaarLink name and artwork are retired (brand v1.6: Mimaary / معماري)', async () => {
-  for (const dir of ['../brand/logo/', '../public/brand/logo/', '../public/', '../public/brand/']) {
+  for (const dir of ['../', '../brand/', '../brand/logo/', '../public/brand/logo/', '../public/', '../public/brand/']) {
     const names = await readdir(new URL(dir, import.meta.url));
     assert.deepEqual(names.filter((n) => /mimaarlink|^logo(-dark-transparent)?\.png$/i.test(n)), [], dir);
   }
