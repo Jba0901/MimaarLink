@@ -52,8 +52,7 @@ test('the MimaarLink name and artwork are retired (brand v1.6: Mimaary / معم�
   }
   for (const file of ['../lib/i18n.js', '../app/page.js', '../app/layout.js', '../app/manifest.js', '../app/privacy/page.js', '../components/AppShell.jsx']) {
     const source = await readFile(new URL(file, import.meta.url), 'utf8');
-    // Only the Instagram handle may still carry the old name until a new one exists.
-    assert.doesNotMatch(source.replace(/instagram\.com\/MimaarLink/g, ''), /mimaar ?link|معمار لينك/i, file);
+    assert.doesNotMatch(source, /mimaar ?link|معمار لينك/i, file);
   }
 });
 
@@ -65,4 +64,6 @@ test('public contact email is mimaary.qa@gmail.com (DECISIONS.md 2026-10-07)', a
   assert.match(privacy, /href="mailto:mimaary\.qa@gmail\.com"/);
   assert.match(privacy, /<bdi dir="ltr">mimaary\.qa@gmail\.com<\/bdi>/);
   for (const source of [shell, privacy]) assert.doesNotMatch(source, /MimaarLink@gmail\.com/i);
+  // Instagram is @mimaary.qa in the drawer and the footer.
+  assert.equal((shell.match(/https:\/\/instagram\.com\/mimaary\.qa/g) || []).length, 2);
 });
