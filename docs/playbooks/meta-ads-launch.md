@@ -90,7 +90,7 @@ Current technical state on 2026-07-10:
 - Objective: Leads.
 - Conversion location: Website.
 - Optimization event: `Lead`, triggered only after a successful project submission.
-- Destination: `https://mimaarlink.com/post-project`.
+- Destination: `https://www.mimaary.com/post-project`.
 - Geography: Qatar.
 - Age hypothesis: 25-60.
 - Gender: All.

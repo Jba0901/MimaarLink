@@ -4,7 +4,7 @@ Copy everything below the line into your coding agent, with this folder added to
 
 ---
 
-We are rebranding mimaarlink.com. The complete spec is in `/brand/BRAND.md`. Read it fully before changing anything, and treat it as the source of truth for colour, typography, logo, layout, motion, components, copy and the homepage structure.
+We are rebranding the Mimaary website (www.mimaary.com). The complete spec is in `/brand/BRAND.md`. Read it fully before changing anything, and treat it as the source of truth for colour, typography, logo, layout, motion, components, copy and the homepage structure.
 
 Work in this order and stop for my review after each step:
 

@@ -290,14 +290,14 @@ async function verifyCopies(source, destination) {
   const contractorIds = (await source.query('select id from contractors')).rows.map((row) => row.id);
   let liveContractorStatuses = 0;
   for (const id of contractorIds) {
-    const response = await fetch(`https://mimaarlink.com/api/contractor-status/${encodeURIComponent(id)}`);
+    const response = await fetch(`https://www.mimaary.com/api/contractor-status/${encodeURIComponent(id)}`);
     if (response.ok) liveContractorStatuses += 1;
   }
 
   let liveFileDownloads = 0;
   for (const object of sourceObjects) {
     const encodedPath = object.name.split('/').map(encodeURIComponent).join('/');
-    const response = await fetch(`https://mimaarlink.com/api/files/${encodedPath}`);
+    const response = await fetch(`https://www.mimaary.com/api/files/${encodedPath}`);
     if (response.ok) liveFileDownloads += 1;
   }
 

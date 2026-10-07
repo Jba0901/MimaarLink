@@ -2,6 +2,7 @@
 
 Decisions Jassim has made that are not about brand/design (`brand/BRAND.md`) or product rules (`AGENTS.md`). Newest first. One dated line each, short and factual. See "Recording decisions" in `AGENTS.md`.
 
+- 2026-10-07 · Main web address is www.mimaary.com (mimaary.com forwards to it). mimaarlink.com forwards there too; old links keep working.
 - 2026-10-07 · Official Instagram is @mimaary.qa (instagram.com/mimaary.qa), replacing @MimaarLink.
 - 2026-10-07 · Official contact email is mimaary.qa@gmail.com (replaces MimaarLink@gmail.com). Move to hello@mimaary.com later, once the domain email is set up.
 - 2026-10-07 · Homepage: navy hero with skyline, cool grey ground (#F6F8FB / #DCE3EA), larger type and wider content at ≥1280px.

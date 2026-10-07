@@ -1,4 +1,4 @@
-# MimaarLink Supabase Setup Notes
+# Mimaary Supabase Setup Notes
 
 The app now uses Supabase for production data and uploaded files.
 

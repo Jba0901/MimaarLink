@@ -4,7 +4,7 @@ The one-page picture of the company. Read this before any business, strategy, ou
 
 Last updated: 2026-10-07 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · Mimaary Digital Platform / منصة معماري الرقمية · CR 243332 (expires 22/05/2027)
 
-**Brand:** Mimaary / معماري (renamed from MimaarLink on 2026-10-07; logo, site and docs switched). Contact email: mimaary.qa@gmail.com · Instagram: @mimaary.qa. The site is still served at mimaarlink.com (mimaary.com is being connected).
+**Brand:** Mimaary / معماري (renamed from MimaarLink on 2026-10-07; logo, site and docs switched). Contact email: mimaary.qa@gmail.com · Instagram: @mimaary.qa. Website: www.mimaary.com (mimaary.com forwards to it; mimaarlink.com should forward too).
 
 ## 1. What we do
 
@@ -40,7 +40,7 @@ The July plans assumed a QAR 750 fee paid by the selected provider before handof
 
 | | Status |
 |---|---|
-| Website | Live at mimaarlink.com (v1.4 look, guided forms, owner status and offers pages). Mimaary rename + calmer redesign (brand v1.6) waiting in PR #9 |
+| Website | Live at www.mimaary.com: brand v1.6 (Mimaary name and logo, navy hero, grey ground), guided forms, owner status and offers pages |
 | Contractor applications | 3 (as of October 2026) |
 | Consultant applications | 0 known |
 | Real project requests | None confirmed; check `/admin` |
