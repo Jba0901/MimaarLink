@@ -50,9 +50,19 @@ test('the MimaarLink name and artwork are retired (brand v1.6: Mimaary / معم�
     const names = await readdir(new URL(dir, import.meta.url));
     assert.deepEqual(names.filter((n) => /mimaarlink|^logo(-dark-transparent)?\.png$/i.test(n)), [], dir);
   }
-  for (const file of ['../lib/i18n.js', '../app/page.js', '../app/layout.js', '../app/manifest.js', '../app/privacy/page.js']) {
+  for (const file of ['../lib/i18n.js', '../app/page.js', '../app/layout.js', '../app/manifest.js', '../app/privacy/page.js', '../components/AppShell.jsx']) {
     const source = await readFile(new URL(file, import.meta.url), 'utf8');
-    // Only the real contact address may still carry the old handle until a new one exists.
-    assert.doesNotMatch(source.replace(/MimaarLink@gmail\.com/g, ''), /mimaar ?link|معمار لينك/i, file);
+    // Only the Instagram handle may still carry the old name until a new one exists.
+    assert.doesNotMatch(source.replace(/instagram\.com\/MimaarLink/g, ''), /mimaar ?link|معمار لينك/i, file);
   }
+});
+
+test('public contact email is mimaary.qa@gmail.com (DECISIONS.md 2026-10-07)', async () => {
+  const shell = await readFile(new URL('../components/AppShell.jsx', import.meta.url), 'utf8');
+  const privacy = await readFile(new URL('../app/privacy/page.js', import.meta.url), 'utf8');
+  assert.match(shell, /href="mailto:mimaary\.qa@gmail\.com"/);
+  assert.match(shell, /'mimaary\.qa@gmail\.com', 'mailto:mimaary\.qa@gmail\.com'/);
+  assert.match(privacy, /href="mailto:mimaary\.qa@gmail\.com"/);
+  assert.match(privacy, /<bdi dir="ltr">mimaary\.qa@gmail\.com<\/bdi>/);
+  for (const source of [shell, privacy]) assert.doesNotMatch(source, /MimaarLink@gmail\.com/i);
 });

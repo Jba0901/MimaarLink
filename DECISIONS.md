@@ -2,6 +2,7 @@
 
 Decisions Jassim has made that are not about brand/design (`brand/BRAND.md`) or product rules (`AGENTS.md`). Newest first. One dated line each, short and factual. See "Recording decisions" in `AGENTS.md`.
 
+- 2026-10-07 · Official contact email is mimaary.qa@gmail.com (replaces MimaarLink@gmail.com). Move to hello@mimaary.com later, once the domain email is set up.
 - 2026-10-07 · Homepage: navy hero with skyline, cool grey ground (#F6F8FB / #DCE3EA), larger type and wider content at ≥1280px.
 - 2026-10-07 · Legal name changed to Mimaary Digital Platform / منصة معماري الرقمية (CR 243332 unchanged, individual establishment, update SR3003832). The site footer and trust section show the legal name.
 - 2026-10-07 · The brand is renamed from MimaarLink to Mimaary / معماري, everywhere at once. Logo set redrawn (arch mark unchanged, wordmark in IBM Plex Sans / IBM Plex Sans Arabic SemiBold); MimaarLink artwork deleted. Domain, email and Instagram keep the old handle until new ones exist.

@@ -50,7 +50,7 @@ export default function PrivacyPage() {
 
         <a
           className="group mt-5 flex min-h-[64px] items-center gap-3 rounded-[6px] border border-border bg-secondary/50 px-3.5 py-2.5 shadow-soft transition-colors hover:border-[#009F91]/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#009F91] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#07111D]"
-          href="mailto:MimaarLink@gmail.com"
+          href="mailto:mimaary.qa@gmail.com"
         >
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#EAF7F4] text-[#152B54] dark:bg-[#009F91]/15 dark:text-[#009F91]" aria-hidden="true">
             <Mail className="h-[18px] w-[18px]" />
@@ -58,7 +58,7 @@ export default function PrivacyPage() {
           <span className="min-w-0 flex-1">
             <span className="block text-[12px] font-semibold text-muted-foreground">{ar ? 'للتواصل' : 'Contact'}</span>
             <span className="mt-0.5 block break-all text-[13.5px] font-extrabold text-navy transition-colors group-hover:text-[#009F91]">
-              <bdi dir="ltr">MimaarLink@gmail.com</bdi>
+              <bdi dir="ltr">mimaary.qa@gmail.com</bdi>
             </span>
           </span>
         </a>
