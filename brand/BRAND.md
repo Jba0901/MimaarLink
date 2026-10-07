@@ -19,7 +19,8 @@ MimaarLink is a Qatar-based construction technology platform. A project owner su
 - **Brand line (EN):** The trusted start of every project in Qatar.
 - **Brand line (AR):** البداية الموثوقة لكل مشروع في قطر.
 - **Descriptor:** The project-sourcing platform for Qatar's built environment.
-- **Arabic name:** معمار لينك (confirmed against commercial registration CR No. 243332).
+- **Arabic name:** معمار لينك (until the rename below ships).
+- **Rename (decided 2026-10-07):** the brand becomes **Mimaary / معماري**, matching the commercial registration "Mimaary Digital Platform / منصة معماري الرقمية" (CR No. 243332). "Link" is dropped. Until a new logo and domain exist, the site keeps the MimaarLink logo and name; switch everything in one change, never half.
 
 ## 2. Personality and feeling
 
@@ -180,7 +181,7 @@ Build in this order. Each section has one job. Sections alternate navy and the w
 7. **Questions:** a short FAQ answered only with decided facts (see `DECISIONS.md`). No invented figures.
 8. **Close (navy):** one confident call to post a project, with WhatsApp as the alternative.
 
-Footer (navy): bilingual logo, one line, text links, contact as text, "Registered in Qatar · CR No. 243332". No bottom tab bar on the website (it may return in the app).
+Footer (navy): bilingual logo, one line, text links, contact as text, "Mimaary Digital Platform · CR No. 243332" (legal name and CR number only). No bottom tab bar on the website (it may return in the app).
 
 ## 11. Arabic and RTL
 

@@ -4,6 +4,29 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · new legal name on the redesign
+
+**What changed**
+- The commercial registration was updated: legal name **Mimaary Digital Platform / منصة معماري الرقمية**, CR **243332 unchanged** (individual establishment, update SR3003832, expires 22/05/2027).
+- Footer (`components/AppShell.jsx`): "Mimaary Digital Platform · CR No. 243332" / «منصة معماري الرقمية · سجل تجاري رقم 243332».
+- Homepage trust card "Registered in Qatar" (`app/page.js`, EN + AR) names the legal entity.
+- Recorded in `DECISIONS.md`, `brand/BRAND.md` §1 and §10 footer line, `COMPANY-BRAIN.md` header. Test guards the footer line in both languages.
+- Same decisions as branch `claude/sweet-noether-xhtfnc` (another session, built on the old v1.4 footer). This PR carries them on the redesign, so that branch is superseded and should not be merged on top.
+
+**Decided, not yet built: brand rename MimaarLink → Mimaary / معماري**
+- Do not rename strings piecemeal. The logo SVGs say MimaarLink and must not be retyped; the switch waits for a new logo set, domain, email and social handles from Jassim, then happens in one change.
+
+**Not published on purpose**
+- The CR printout includes Jassim's ID number. Only the legal name and CR number appear on the site.
+
+**Waiting on Jassim**
+- New logo, domain, contact handles. Confirm with MOCI that CR activity 479121 ("Digital Platform for Retail Trade Intermediation") covers construction/consulting service matching before paid ads.
+
+**Verified**
+- `npm run build` and `node --test tests/*.test.mjs` (49/49). Checked the Arabic footer at 390px.
+
+---
+
 ## 2026-10-05 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · website redesign, Phase 1 (homepage + shell)
 
 **What changed** (one commit each)

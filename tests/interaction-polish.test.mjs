@@ -54,7 +54,9 @@ test('shell stays calm: no arrow badges, no extra-bold, no bottom tab bar, foote
   assert.doesNotMatch(shell, /path-card/);
   assert.doesNotMatch(shell, /mobile-bottom-nav|function NavBtn/);
   assert.doesNotMatch(css, /mobile-bottom-nav|mobile-nav-main/);
-  assert.match(shell, /Registered in Qatar · CR No\. 243332/);
+  // Legal name and CR number only (DECISIONS.md 2026-10-07); no personal or ID details.
+  assert.match(shell, /Mimaary Digital Platform · CR No\. 243332/);
+  assert.match(shell, /منصة معماري الرقمية · سجل تجاري رقم 243332/);
   assert.match(shell, /data-over-hero=\{onNavy \|\| undefined\}/);
 });
 

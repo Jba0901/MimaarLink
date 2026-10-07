@@ -564,7 +564,7 @@ function SiteFooter({ flush = false }) {
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
           <p className="text-[12px] leading-relaxed text-white/60">
             &copy; {year} {t('appName')} &middot; {t('allRights')}
-            <span className="block">{rtl ? 'مسجلة في قطر · سجل تجاري رقم 243332' : 'Registered in Qatar · CR No. 243332'}</span>
+            <span className="block">{rtl ? 'منصة معماري الرقمية · سجل تجاري رقم 243332' : 'Mimaary Digital Platform · CR No. 243332'}</span>
           </p>
           <a
             href="https://instagram.com/MimaarLink"
