@@ -4,6 +4,24 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · new contact email and Instagram
+
+**What changed**
+- Official contact email is now `mimaary.qa@gmail.com` (Jassim; `MimaarLink@gmail.com` is retired). Updated the footer and drawer contact in `components/AppShell.jsx` and the mailto link and visible text on `app/privacy/page.js`.
+- Recorded in `DECISIONS.md` (move to hello@mimaary.com once domain email exists) and `COMPANY-BRAIN.md`.
+- `tests/brand-mark.test.mjs`: checks the new address on both pages and that the old one is gone; the old-name check now also covers `AppShell.jsx`.
+- The grey background asked for earlier was already merged in PR #9.
+
+- Instagram is now `@mimaary.qa` (drawer and footer links in `components/AppShell.jsx`); recorded in `DECISIONS.md`. No MimaarLink handle is left in site code.
+
+**Still on the old name**
+- The domain mimaarlink.com while mimaary.com is being connected in Vercel; Supabase bucket `mimaarlink-files` (internal).
+
+**Verified**
+- Build + tests (51/51). Checked footer, menu drawer and privacy page at 390px in EN and AR: all mailto links and visible text show mimaary.qa@gmail.com; the old address appears nowhere.
+
+---
+
 ## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · [PR #9](https://github.com/Jba0901/MimaarLink/pull/9) · back to cool grey ground
 
 **What changed**

@@ -429,10 +429,10 @@ function MenuDrawer({ open, onClose, copy, t, theme, isDark, rtl, onThemeToggle,
             </button>
 
             <div className="mt-2.5 grid grid-cols-2 gap-2 min-[264px]:grid-cols-4 min-[264px]:gap-2.5">
-              <ContactIcon href="mailto:MimaarLink@gmail.com" label={t('contactEmail')} icon={Mail} />
+              <ContactIcon href="mailto:mimaary.qa@gmail.com" label={t('contactEmail')} icon={Mail} />
               <ContactIcon href="https://wa.me/97466259219" label={t('contactWhatsapp')} icon={WhatsAppIcon} external />
               <ContactIcon href="tel:+97466259219" label={t('contactPhone')} icon={Phone} />
-              <ContactIcon href="https://instagram.com/MimaarLink" label={t('contactInstagram')} icon={Instagram} external />
+              <ContactIcon href="https://instagram.com/mimaary.qa" label={t('contactInstagram')} icon={Instagram} external />
             </div>
           </div>
         </div>
@@ -525,7 +525,7 @@ function SiteFooter({ flush = false }) {
     ['/privacy', t('privacyNotice')],
   ];
   const contacts = [
-    [t('contactEmail'), 'MimaarLink@gmail.com', 'mailto:MimaarLink@gmail.com'],
+    [t('contactEmail'), 'mimaary.qa@gmail.com', 'mailto:mimaary.qa@gmail.com'],
     [t('contactWhatsapp'), '+974 6625 9219', 'https://wa.me/97466259219'],
     [t('contactPhone'), '+974 6625 9219', 'tel:+97466259219'],
   ];
@@ -567,7 +567,7 @@ function SiteFooter({ flush = false }) {
             <span className="block">{rtl ? 'منصة معماري الرقمية · سجل تجاري رقم 243332' : 'Mimaary Digital Platform · CR No. 243332'}</span>
           </p>
           <a
-            href="https://instagram.com/MimaarLink"
+            href="https://instagram.com/mimaary.qa"
             target="_blank"
             rel="noreferrer"
             aria-label={t('contactInstagram')}
