@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { createHash } from 'node:crypto';
+import { readFile, readdir } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
@@ -32,28 +31,28 @@ test('brand logo rules never filter, glow, or shadow the official artwork', () =
 
 test('dark surfaces swap to the official dark artwork instead of altering the image', () => {
   assert.match(css, /\.dark \.brand-logo \.brand-logo-dark,\s+\.brand-logo-on-dark \.brand-logo-dark \{ display: block; \}/);
-  assert.match(shell, /\/brand\/logo\/mimaarlink-logo-\$\{script\}-dark\.svg/);
-  assert.match(shell, /src="\/brand\/logo\/mimaarlink-logo-bilingual-dark\.svg"/);
+  assert.match(shell, /\/brand\/logo\/mimaary-logo-\$\{script\}-dark\.svg/);
+  assert.match(shell, /src="\/brand\/logo\/mimaary-logo-bilingual-dark\.svg"/);
   // The wordmark is always the file, never typed in a font.
-  assert.doesNotMatch(shell, /<span style=\{\{ color: first \}\}>Mimaar<\/span>/);
+  assert.doesNotMatch(shell, /<span style=\{\{ color: first \}\}>Mimaar/);
 });
 
-test('served v1.4 logo files are byte-identical to the brand handoff', async () => {
-  for (const file of ['mimaarlink-logo-en.svg', 'mimaarlink-logo-en-dark.svg', 'mimaarlink-logo-ar.svg', 'mimaarlink-logo-ar-dark.svg', 'mimaarlink-logo-bilingual-dark.svg', 'mimaarlink-icon.svg', 'mimaarlink-icon-512.png', 'mimaarlink-icon-180.png']) {
+test('served Mimaary logo files are byte-identical to the brand source', async () => {
+  for (const file of ['mimaary-logo-en.svg', 'mimaary-logo-en-dark.svg', 'mimaary-logo-ar.svg', 'mimaary-logo-ar-dark.svg', 'mimaary-logo-bilingual-dark.svg', 'mimaary-icon.svg', 'mimaary-icon-512.png', 'mimaary-icon-180.png']) {
     const source = await readFile(new URL(`../brand/logo/${file}`, import.meta.url));
     const served = await readFile(new URL(`../public/brand/logo/${file}`, import.meta.url));
     assert.ok(source.equals(served), file);
   }
 });
 
-test('official logo assets retain the released binary hashes', async () => {
-  const expected = {
-    'logo.png': 'E76A13819E70220797B5B89BDE0C62C8832CDAF06401FCDFD630859F2C94D12C',
-    'logo-dark-transparent.png': 'E76A13819E70220797B5B89BDE0C62C8832CDAF06401FCDFD630859F2C94D12C',
-    'brand/mimaarlink-official-logo-source.png': '92C95529EAB180905E33D6A9809A13128E54FB40D7F59BEA73E20A96558EE261',
-  };
-  for (const [file, hash] of Object.entries(expected)) {
-    const data = await readFile(new URL(`../public/${file}`, import.meta.url));
-    assert.equal(createHash('sha256').update(data).digest('hex').toUpperCase(), hash, file);
+test('the MimaarLink name and artwork are retired (brand v1.6: Mimaary / معماري)', async () => {
+  for (const dir of ['../brand/logo/', '../public/brand/logo/', '../public/', '../public/brand/']) {
+    const names = await readdir(new URL(dir, import.meta.url));
+    assert.deepEqual(names.filter((n) => /mimaarlink|^logo(-dark-transparent)?\.png$/i.test(n)), [], dir);
+  }
+  for (const file of ['../lib/i18n.js', '../app/page.js', '../app/layout.js', '../app/manifest.js', '../app/privacy/page.js']) {
+    const source = await readFile(new URL(file, import.meta.url), 'utf8');
+    // Only the real contact address may still carry the old handle until a new one exists.
+    assert.doesNotMatch(source.replace(/MimaarLink@gmail\.com/g, ''), /mimaar ?link|معمار لينك/i, file);
   }
 });

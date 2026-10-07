@@ -29,7 +29,6 @@ export default function MarketingAttribution() {
   const isPrivate = PRIVATE_PREFIXES.some((prefix) => pathname.startsWith(prefix));
   const hasDedicatedSettings = pathname === '/privacy';
   const shouldPrompt = !isPrivate && !hasDedicatedSettings && (metaPixelConfigured() || hasTrackedMarketingParams(search));
-  const sitsAboveMobileNav = pathname === '/';
   const isForm = pathname === '/post-project' || pathname === '/contractor' || pathname === '/consultant';
 
   useEffect(() => {
@@ -79,9 +78,7 @@ export default function MarketingAttribution() {
       className={`marketing-consent-panel mx-auto rounded-[6px] border border-[#009F91]/25 bg-card p-2.5 ${
         isForm
           ? 'marketing-consent-inline relative mt-3 w-[calc(100%-2rem)] max-w-7xl shadow-soft sm:w-[calc(100%-3rem)] sm:p-3 lg:w-[calc(100%-4rem)]'
-          : `fixed inset-x-2.5 z-[100] max-w-xl overflow-y-auto overscroll-contain shadow-lift sm:inset-x-3 sm:rounded-[6px] sm:p-5 ${sitsAboveMobileNav
-            ? 'bottom-[calc(5.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_6.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))] lg:bottom-4 lg:max-h-[calc(100dvh_-_2rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'
-            : 'bottom-[calc(0.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_1.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]'}`
+          : `fixed inset-x-2.5 z-[100] max-w-xl overflow-y-auto overscroll-contain shadow-lift sm:inset-x-3 sm:rounded-[6px] sm:p-5 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] max-h-[calc(100dvh_-_1.5rem_-_env(safe-area-inset-top)_-_env(safe-area-inset-bottom))]`
       }`}
       dir={arabic ? 'rtl' : 'ltr'}
     >

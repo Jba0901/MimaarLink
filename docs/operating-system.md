@@ -1,4 +1,4 @@
-# How Agents Help Run MimaarLink
+# How Agents Help Run Mimaary
 
 Replaces the July "multi-agent operating system" and prompt library (both in `docs/archive/`). Read `COMPANY-BRAIN.md` first.
 
@@ -44,7 +44,7 @@ Pick the hat that fits the task; one agent can wear several. Each hat starts fro
 ## Shared brief to paste into any outside AI tool
 
 ```text
-MimaarLink is a Qatar platform that connects project owners with contractors and consultant offices.
+Mimaary is a Qatar platform that connects project owners with contractors and consultant offices.
 An owner describes a project; we turn it into a clear brief, send it to suitable providers,
 and the owner receives three to five comparable offers and chooses. Work is matched by hand for now.
 It is free for owners and providers at this stage.
@@ -56,7 +56,7 @@ Arabic first, professional and calm, WhatsApp-heavy market.
 Brand: navy #152B54 leads, teal #009F91 for actions only, pale teal #EAF7F4 panels.
 Never use amber or the old teal #00B59E.
 
-Never promise projects, quality, the lowest price or completion. MimaarLink connects;
+Never promise projects, quality, the lowest price or completion. Mimaary connects;
 the agreement is between owner and provider. Do not invent numbers or testimonials.
 
 End with: recommendation, reasoning, next action, main risk, when to stop.

@@ -624,7 +624,7 @@ export async function GET(request, { params }) {
     const db = await getPool();
     const url = new URL(request.url);
 
-    if (path === '' || path === 'health') return ok({ ok: true, name: 'MimaarLink API', database: 'supabase' });
+    if (path === '' || path === 'health') return ok({ ok: true, name: 'Mimaary API', database: 'supabase' });
 
     if (path === 'projects') {
       const adminError = requireAdmin(request);

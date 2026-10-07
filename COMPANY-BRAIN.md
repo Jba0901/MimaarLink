@@ -1,12 +1,14 @@
-# MimaarLink Company Brain
+# Mimaary Company Brain
 
 The one-page picture of the company. Read this before any business, strategy, outreach or product decision. Keep it short and current; details live in the linked files.
 
-Last updated: 2026-10-02 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · CR 243332
+Last updated: 2026-10-07 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · Mimaary Digital Platform / منصة معماري الرقمية · CR 243332 (expires 22/05/2027)
+
+**Brand:** Mimaary / معماري (renamed from MimaarLink on 2026-10-07; logo, site and docs switched). The site is still served at mimaarlink.com and the contact email and Instagram still use the old handle until new ones exist.
 
 ## 1. What we do
 
-MimaarLink connects project owners with contractors and consultants across Qatar's built environment. An owner describes a project; we turn it into a clear brief, send it to vetted providers, and the owner receives three to five comparable offers to choose from.
+Mimaary connects project owners with contractors and consultants across Qatar's built environment. An owner describes a project; we turn it into a clear brief, send it to vetted providers, and the owner receives three to five comparable offers to choose from.
 
 We accept the full range of real project work (fit-out, MEP, commercial, villas and residential, clinics and F&B, industrial, mixed-use, general contracting, specialist trades, and architecture / engineering / design / supervision / approvals / tendering). The full list is in `AGENTS.md`.
 
@@ -38,7 +40,7 @@ The July plans assumed a QAR 750 fee paid by the selected provider before handof
 
 | | Status |
 |---|---|
-| Website | Live at mimaarlink.com, brand v1.4, guided forms, owner status and offers pages |
+| Website | Live at mimaarlink.com (v1.4 look, guided forms, owner status and offers pages). Mimaary rename + calmer redesign (brand v1.6) waiting in PR #9 |
 | Contractor applications | 3 (as of October 2026) |
 | Consultant applications | 0 known |
 | Real project requests | None confirmed; check `/admin` |
@@ -70,7 +72,7 @@ Growth gates (adapted from the strategy file; "paid" becomes "successful" while 
 ## 8. Firm rules
 
 - Jassim alone decides on spending money, contacting people, publishing ads or posts, pricing, legal wording, and sharing private data.
-- No guarantees: not of projects for providers, nor of quality, lowest price or completion for owners. MimaarLink connects; the agreement is between owner and provider.
+- No guarantees: not of projects for providers, nor of quality, lowest price or completion for owners. Mimaary connects; the agreement is between owner and provider.
 - Never invent statistics, testimonials, client logos or counts.
 - Collect only the data needed; keep owner details private until the owner chooses a provider.
 - Never hold or process project funds.

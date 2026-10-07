@@ -67,7 +67,7 @@ test('choice labels may reflow when a reader increases text spacing', () => {
 });
 
 test('buttons keep breathing room around either script', () => {
-  assert.match(globals, /@layer components \{\s+\.btn \{ padding: 12px 20px; border-radius: var\(--ml-radius\); \}/);
+  assert.match(globals, /@layer components \{\s+\.btn \{ padding: 12px 20px; border-radius: var\(--ml-radius-pill\); \}/);
   assert.match(globals, /\.ml-flow-back \{ min-width: 6\.5rem; padding-inline: 16px; \}/);
 });
 
@@ -78,4 +78,16 @@ test('every shipped font licence is available in the public distribution', async
     assert.match(license, /Copyright/);
     assert.match(license, /PERMISSION & CONDITIONS/);
   }
+});
+
+test('brand tokens: cool grey ground, soft card corners, pill buttons, retired values stay gone', () => {
+  assert.match(tokens, /--ml-ground: #F6F8FB;/);
+  assert.match(tokens, /--ml-line: #DCE3EA;/);
+  assert.match(tokens, /--ml-radius-card: 12px;/);
+  assert.match(tokens, /--ml-radius-pill: 999px;/);
+  assert.match(tokens, /--ml-on-navy-accent: #0AC7CE;/);
+  // Sand ground (#F7F3EC / #E7E0D4) was tried in v1.5 and retired on 2026-10-07.
+  assert.doesNotMatch(tokens, /F7F3EC|E7E0D4|FFB638|00B59E|D0F2EE|\.ml-cut/i);
+  assert.match(globals, /--brand-soft: 216 38\.46% 97\.45%;/);
+  assert.match(globals, /--brand-border: 210 25% 89\.02%;/);
 });
