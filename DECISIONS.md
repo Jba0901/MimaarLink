@@ -2,7 +2,6 @@
 
 Decisions Jassim has made that are not about brand/design (`brand/BRAND.md`) or product rules (`AGENTS.md`). Newest first. One dated line each, short and factual. See "Recording decisions" in `AGENTS.md`.
 
-- 2026-10-07 · The company's official name is Mimaary (registered under CR 243332). The product brand MimaarLink stays unchanged until Jassim decides otherwise.
 - 2026-10-07 · Skip QSTP (XLR8 and the free zone) for now. Funding focus: first projects, then QBIC, then Startup Qatar START.
 - 2026-10-04 · Core advantage: MimaarLink records every request, invite, bid, choice and outcome in a structured way, making Qatar's project market clearer over time.
 - 2026-10-04 · Positioning for funders and long-term story: data and AI first (structured sourcing data, comparable offers), local business growth second.

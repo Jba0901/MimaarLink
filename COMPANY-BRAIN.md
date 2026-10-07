@@ -2,7 +2,7 @@
 
 The one-page picture of the company. Read this before any business, strategy, outreach or product decision. Keep it short and current; details live in the linked files.
 
-Last updated: 2026-10-07 · Company: Mimaary (official name; product brand MimaarLink) · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · CR 243332
+Last updated: 2026-10-07 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · CR 243332
 
 ## 1. What we do
 

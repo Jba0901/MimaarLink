@@ -24,7 +24,7 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 - 2026-10-05: new `docs/strategy/binaa.md` (QDB's Binaa platform: what it is, how MimaarLink differs, what it means for funding, villa marketing and provider supply, open questions). Linked from COMPANY-BRAIN.
 - 2026-10-05: added the Invest Qatar pitch summary and meeting prep to `docs/strategy/funding-options-2026.md`; COMPANY-BRAIN funding row updated.
 
-- 2026-10-07: two decisions recorded in `DECISIONS.md`: the company's official name is Mimaary (product brand MimaarLink unchanged for now; no site copy touched), and QSTP is skipped. COMPANY-BRAIN header and funding row, and the funding doc (QSTP row, Invest Qatar prep), updated. Waiting on Jassim: the Arabic spelling of Mimaary and whether the product brand will also change.
+- 2026-10-07: QSTP skipped (`DECISIONS.md`, COMPANY-BRAIN funding row, funding doc QSTP row and Invest Qatar referral note). The rename to Mimaary is owned by the brand work on main; this branch only follows it.
 
 **Verified**
 - Docs only; no code touched. `npm run build` and `node --test tests/*.test.mjs` run before commit.

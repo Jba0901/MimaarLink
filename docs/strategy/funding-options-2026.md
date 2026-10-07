@@ -21,7 +21,6 @@ Points to prepare before the meeting:
 - **Revenue.** The deck lists memberships, access fees and success fees. MimaarLink is free today and pricing is undecided; describe these as options being tested.
 - **AI.** Scoping, matching and bid comparison with AI are planned, not built. Say so.
 - **Referral route.** The pitch asks for a referral to "QSTP, QDB or similar". QSTP is now skipped, so steer the referral to QDB (Startup Qatar START) and QBIC.
-- **Company name.** The registered company is Mimaary; MimaarLink is the product. Say this once so the names do not confuse them.
 - **Founder line.** "Inside the economic-zones ecosystem" needs a one-sentence explanation ready.
 
 ## Programmes
