@@ -4,6 +4,25 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-10 · Claude Code · branch `claude/sharp-edison-g0om3c` · [PR #8](https://github.com/Jba0901/MimaarLink/pull/8) · Snoonu research (partner and funder)
+
+**What changed**
+- Docs only. New `docs/strategy/snoonu.md`: what Snoonu is (Jahez owns 76.56% since October 2025; services include S Laundry, Car Services and House Services; home services led its Kuwait launch), where Mimaary fits (bigger, brief-based jobs Snoonu's on-demand model does not serve, plus merchants opening branches), options ranked, the Snoonu Startup Factory (up to USD 50K/100K convertible loan, full-time at Snoonu HQ), risks, next steps and questions for Jassim.
+- `COMPANY-BRAIN.md` (funding status row, file table, open decisions) and `docs/strategy/funding-options-2026.md` (programme row) link to it.
+
+**Not confirmed**
+- The Al Rayes laundry deal Jassim mentioned: no public source found. What Qatar's House Services covers today: needs a look in the app (web pages show only a "New" tile).
+- Jahez results come from secondary summaries; the Tadawul filing was not reachable from here.
+
+**Waiting on Jassim**
+- Whether full-time at Snoonu HQ, a corporate convertible loan and a Snoonu-branded entry are acceptable; any warm route in (QDB led Snoonu's first two rounds). No decision recorded; nothing sent.
+- Counting Snoonu referrals reliably would need a "How did you hear about us?" choice on the request form (submission payload change, needs approval).
+
+**Verified**
+- Sources linked in the note; Snoonu's own pages read on 2026-10-10. Build + tests run before commit.
+
+---
+
 ## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · light mode and Arabic by default
 
 **What changed**
@@ -155,6 +174,33 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 **Verified**
 - `npm run build` + `node --test tests/*.test.mjs` (49/49) at every commit. Chromium screenshots at 390 (EN/AR, light/night), 768 (AR) and 1440 (EN); no horizontal scroll at 320/375/390/768/1024/1440 in both languages; scroll reveals confirmed on a real-paced scroll.
+
+---
+
+## 2026-10-04 · Claude Code · branch `claude/sharp-edison-g0om3c` · growth: positioning, funding research, classifieds outreach
+
+**What changed**
+- `DECISIONS.md`: three decisions from Jassim. The market record (structured data on every request, bid and outcome) is the core advantage. Positioning is data and AI first, local business growth second. First demand channel is calling owners who posted needs on public classifieds (Mzad first), posting on their behalf with consent.
+- New `docs/playbooks/classifieds-owner-outreach.md`: rules, which ads to pick, three call openers (Arabic and English), consent wording for posting on someone's behalf, follow-up message, what to log.
+- New `docs/strategy/funding-options-2026.md`: Startup Qatar Investment Program (START/GROW), QBIC, QRDI SBIG and Innovation Coupon, open questions for QDB, a pre-application checklist, and QDB's Binaa platform (housing-loan villas; must be addressed in any QDB application).
+- `COMPANY-BRAIN.md`: core advantage, Binaa note, status rows for owner outreach and funding, new open decision, links to the new files.
+
+**Risky or different**
+- Funding figures for QBIC and QRDI come from secondary sources; verify before using them in an application.
+- Housing-loan villa builds can only go to Binaa-registered firms (since June 2025). The playbook tells Jassim to invite only Binaa-registered providers in that case.
+- Automatic source tracking only works after cookie consent, so leads from classifieds must be logged by hand.
+
+**Waiting on Jassim**
+- What exactly was submitted to Invest Qatar, and its status.
+- Team (technical co-founder or developer?), how much equity he would give up, and the weekly outreach target (playbook suggests 20 ads).
+
+- 2026-10-05: new `docs/strategy/binaa.md` (QDB's Binaa platform: what it is, how MimaarLink differs, what it means for funding, villa marketing and provider supply, open questions). Linked from COMPANY-BRAIN.
+- 2026-10-05: added the Invest Qatar pitch summary and meeting prep to `docs/strategy/funding-options-2026.md`; COMPANY-BRAIN funding row updated.
+
+- 2026-10-07: QSTP skipped (`DECISIONS.md`, COMPANY-BRAIN funding row, funding doc QSTP row and Invest Qatar referral note). The rename to Mimaary is owned by the brand work on main; after merging main, this branch's own docs (playbook, funding, Binaa note, its DECISIONS/COMPANY-BRAIN lines) now say Mimaary / معماري and www.mimaary.com. Note: main has `public/qstp-application-2026/`; with QSTP skipped, Jassim decides whether to keep or remove it.
+
+**Verified**
+- Docs only; no code touched. `npm run build` and `node --test tests/*.test.mjs` run before commit.
 
 ---
 
