@@ -4,6 +4,25 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-10 · Claude Code · branch `claude/sharp-edison-g0om3c` · [PR #8](https://github.com/Jba0901/MimaarLink/pull/8) · Snoonu research (partner and funder)
+
+**What changed**
+- Docs only. New `docs/strategy/snoonu.md`: what Snoonu is (Jahez owns 76.56% since October 2025; services include S Laundry, Car Services and House Services; home services led its Kuwait launch), where Mimaary fits (bigger, brief-based jobs Snoonu's on-demand model does not serve, plus merchants opening branches), options ranked, the Snoonu Startup Factory (up to USD 50K/100K convertible loan, full-time at Snoonu HQ), risks, next steps and questions for Jassim.
+- `COMPANY-BRAIN.md` (funding status row, file table, open decisions) and `docs/strategy/funding-options-2026.md` (programme row) link to it.
+
+**Not confirmed**
+- The Al Rayes laundry deal Jassim mentioned: no public source found. What Qatar's House Services covers today: needs a look in the app (web pages show only a "New" tile).
+- Jahez results come from secondary summaries; the Tadawul filing was not reachable from here.
+
+**Waiting on Jassim**
+- Whether full-time at Snoonu HQ, a corporate convertible loan and a Snoonu-branded entry are acceptable; any warm route in (QDB led Snoonu's first two rounds). No decision recorded; nothing sent.
+- Counting Snoonu referrals reliably would need a "How did you hear about us?" choice on the request form (submission payload change, needs approval).
+
+**Verified**
+- Sources linked in the note; Snoonu's own pages read on 2026-10-10. Build + tests run before commit.
+
+---
+
 ## 2026-10-07 · Claude Code · branch `claude/beautiful-dirac-pjb9ld` · light mode and Arabic by default
 
 **What changed**

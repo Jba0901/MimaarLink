@@ -2,7 +2,7 @@
 
 The one-page picture of the company. Read this before any business, strategy, outreach or product decision. Keep it short and current; details live in the linked files.
 
-Last updated: 2026-10-07 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · Mimaary Digital Platform / منصة معماري الرقمية · CR 243332 (expires 22/05/2027)
+Last updated: 2026-10-10 · Owner: Jassim Abdulrahman Al-Anbari, Founder & CEO · Mimaary Digital Platform / منصة معماري الرقمية · CR 243332 (expires 22/05/2027)
 
 **Brand:** Mimaary / معماري (renamed from MimaarLink on 2026-10-07; logo, site and docs switched). Contact email: mimaary.qa@gmail.com · Instagram: @mimaary.qa. Website: www.mimaary.com (mimaary.com forwards to it; mimaarlink.com should forward too).
 
@@ -50,7 +50,7 @@ The July plans assumed a QAR 750 fee paid by the selected provider before handof
 | Real project requests | None confirmed; check `/admin` |
 | Paid ads | None run. Playbook ready, not launched |
 | Owner outreach | Starting: Jassim contacts owners from public classifieds (Mzad first); playbook ready |
-| Funding | Invest Qatar: 6-slide pitch submitted (asks for introductions to foreign firms entering Qatar, a referral to QSTP/QDB, and a point of contact); awaiting a meeting date. Startup Qatar START, QBIC and QRDI grants researched; none applied yet. QSTP skipped (decided 2026-10-07) |
+| Funding | Invest Qatar: 6-slide pitch submitted (asks for introductions to foreign firms entering Qatar, a referral to QSTP/QDB, and a point of contact); awaiting a meeting date. Startup Qatar START, QBIC and QRDI grants researched; none applied yet. QSTP skipped (decided 2026-10-07). Snoonu researched as a partner and funder (Startup Factory); no contact yet |
 | Outreach | July: 8 referral targets emailed (plus one follow-up each) and 2 WhatsApp leads answered; no qualified reply recorded. 12 more drafted first messages are held |
 | Pricing | Free; undecided |
 
@@ -98,6 +98,7 @@ Growth gates (adapted from the strategy file; "paid" becomes "successful" while 
 | Owner outreach from public classifieds | `docs/playbooks/classifieds-owner-outreach.md` |
 | Funding programmes, positioning, Invest Qatar pitch | `docs/strategy/funding-options-2026.md` |
 | Binaa (QDB's villa platform): what it is, how we differ | `docs/strategy/binaa.md` |
+| Snoonu: possible referral partner and Startup Factory funding | `docs/strategy/snoonu.md` |
 | Referral target lists (July research) | `docs/outreach/` |
 | Latest code changes and handoffs | `docs/HANDOFF.md` |
 | Old July plans (history only) | `docs/archive/` |
@@ -106,6 +107,7 @@ Growth gates (adapted from the strategy file; "paid" becomes "successful" while 
 
 - Pricing model and timing.
 - Which funding programme to apply to first, and how much equity to give up.
+- Whether and how to approach Snoonu: referral pilot, Startup Factory (requires full-time at Snoonu HQ), or neither yet.
 - Which marketing entry points to push first.
 - When to start paid ads.
 - How to handle unusual project types; to be learned from real cases.

@@ -33,6 +33,7 @@ Points to prepare before the meeting:
 | QRDI Council SBIG | Non-dilutive. Phase I up to QR 800k, Phase II up to QR 2.2M, cost-reimbursed against milestones | Qatar-HQ, under 250 staff, majority Qatari-owned, R&D-driven; priority sectors include smart cities and emerging digital tech | Needs a real R&D plan | Secondary sources ([Peninsula](https://thepeninsulaqatar.com/article/18/06/2025/qrdi-councils-sbig-now-open-for-applications)) |
 | QSTP (XLR8 accelerator, free zone) | 14-week pre-company accelerator; top teams incorporated at QSTP; free-zone ownership benefits | XLR8 is not open to already established companies (Mimaary is registered) | **Skipped** (decided 2026-10-07): poor fit for a registered marketplace with a Qatari founder | [QSTP](https://qstp.org.qa/?p=9189) |
 | QRDI Innovation Coupon | Up to 50% of the cost of solving one technical problem, up to 6 months | Qatar-based startups and SMEs | Small, quick | Secondary sources |
+| Snoonu Startup Factory | Convertible loan up to USD 50K (early) or 100K (growth, post-revenue), turning into shares at the next round at a 15–20% discount or cap; mentoring; in-app distribution only in the growth track | GCC-registered tech startup, MVP or early users, team of 2+ with a technical co-founder preferred, **full-time in person at Snoonu HQ** | After first projects, if the conditions suit Jassim. Details: `docs/strategy/snoonu.md` | [startups.snoonu.com](https://startups.snoonu.com) |
 
 ### Startup Qatar: unknowns to ask QDB
 
