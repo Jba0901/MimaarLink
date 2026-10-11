@@ -4,6 +4,17 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-11 · Claude Code · branch `claude/sharp-edison-g0om3c` · [PR #8](https://github.com/Jba0901/MimaarLink/pull/8) · no scheduled check-ins
+
+**What changed**
+- Jassim: do not schedule check-ins. New line in `AGENTS.md` (Workflow): no scheduled check-ins, reminders or routines unless Jassim asks; GitHub events on a watched PR are enough.
+- The three PR #8 check-ins from 2026-10-10 had already fired; no routine is left enabled.
+
+**Verified**
+- Build + tests run before commit.
+
+---
+
 ## 2026-10-10 · Claude Code · branch `claude/sharp-edison-g0om3c` · [PR #8](https://github.com/Jba0901/MimaarLink/pull/8) · Snoonu research (partner and funder)
 
 **What changed**
