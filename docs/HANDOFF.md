@@ -4,6 +4,26 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-11 · Claude Code · branch `claude/sharp-edison-g0om3c` · [PR #8](https://github.com/Jba0901/MimaarLink/pull/8) · Snoonu pilot lanes, contact channels, pitch deck
+
+**What changed**
+- `docs/strategy/snoonu.md` gains three things:
+  - Recommended pilot lanes: home renovation (from House Services) and shop, café and restaurant fit-out (from merchants), plus what stays out of the pilot.
+  - Snoonu's official contact channels and the order to use them.
+  - A link to the pitch deck.
+- The 12-slide pitch deck is a private claude.ai artifact: https://claude.ai/artifact/FADpResJwChgd4uFwCGnG7. It uses Mimaary colours, fonts and logo files.
+
+**Waiting on Jassim**
+- The lanes are a recommendation, not a decision.
+- Deck placeholders: date, phone, admin numbers, targets, start date, request cap.
+- Whether to apply to the Startup Factory, which needs him full-time at Snoonu HQ.
+- Nothing has been sent.
+
+**Verified**
+- Build + tests run before commit. The deck was not visually checked.
+
+---
+
 ## 2026-10-11 · Claude Code · branch `claude/sharp-edison-g0om3c` · [PR #8](https://github.com/Jba0901/MimaarLink/pull/8) · how we sell Mimaary to Snoonu
 
 **What changed**

@@ -128,6 +128,37 @@ We would like to run this for Snoonu as a "Snoonu Projects" entry, powered by Mi
 نقترح تقديم هذه الخدمة داخل سنونو باسم «مشاريع سنونو» بدعم من منصة معماري: مجانية للمستخدمين، ولا تحتاج منكم أي تطوير سوى رابط، ضمن تجربة لمدة 90 يوماً مع مشاركة النتائج شهرياً. هل يمكن ترتيب لقاء لمدة 20 دقيقة مع فريق الخدمات لديكم؟
 ```
 
+## Pilot categories (recommendation, not yet decided)
+
+Two lanes, one per entry point:
+
+| Lane | Entry point | Why it is good for Mimaary |
+|---|---|---|
+| **A. Home renovation and upgrades** (villas and apartments: kitchens, bathrooms, painting and flooring, majlis and interiors, outdoor areas) | House Services | Common, scopes compare well, decided in weeks: fast data. It fills the gap House Services leaves and leads naturally to move-in shopping |
+| **B. Shop, café and restaurant fit-out** (also salons and small offices) | Snoonu merchants | Higher project value, and business owners decide fast because rent is running. Chains open branches again and again, so customers repeat. Businesses are the likeliest to pay later, which makes this the best lane for future pricing. Snoonu's own interest (more branches mean more orders) is strongest here |
+
+**Out of the pilot:**
+- Small repairs and visits, and AC and MEP maintenance: they belong to House Services and its partners, and we must not compete with Snoonu's own supply.
+- New villa builds and housing-loan homes: Binaa's ground.
+- Structural extensions that need permits, clinics and licensed health spaces, and large commercial or industrial work: long cycles and higher risk under Snoonu's name.
+
+**Why this fits the strategy.** Growth gate 3 in `COMPANY-BRAIN.md` asks for "50 introductions in two repeatable categories". These two lanes are those two categories, each with its own demand source. Before launch, recruit about 10 qualified providers per lane (suggestion), so that every brief gets at least three offers.
+
+## How to reach Snoonu (official channels, checked 2026-10-11)
+
+| Channel | Use it for | Notes |
+|---|---|---|
+| Startup Factory application: [startups.snoonu.com](https://startups.snoonu.com) → "Apply Now" (form at join.snoonu.com) | The formal route to funding and to Snoonu's leadership. Mention the pilot in it | Free, rolling, reviewed by their Investment Committee. Only if you accept the full-time-at-HQ condition. The form is behind bot protection, so its questions could not be read from here; expect company, team, traction and track |
+| business@snoonu.com · +974 4430 2000 (Sun–Thu, 8:00–16:30) | The pilot proposal, with the deck attached | Listed as the contact on the Startup Factory site |
+| [partner.snoonu.com](https://partner.snoonu.com) | Not for us | Merchant sign-up for shops and restaurants only; there is no services category |
+| LinkedIn: Snoonu company page, and executives named on the Startup Factory site (for example the Chief Expansion Officer, or the Chief Strategy and Revenue Officer) | One short note pointing to the email or application | One person, one message, no chasing |
+| Warm introduction: QDB (led Snoonu's Series A and B), Invest Qatar, the Namaa or Alvarez & Marsal programmes | The strongest door | Ask anyone you know there for a single introduction |
+| Web Summit Qatar, 31 January to 3 February 2027, DECC | Meeting in person | Snoonu launched Snoonu Cloud at the 2026 edition |
+
+**Suggested order:** first fill the numbers in the deck from admin. Then send the email with the deck, and the application on the same day if you accept the HQ condition. Follow up once after 10 working days. If there is still no reply, send one LinkedIn note or ask for a warm introduction, then apply the stop rule.
+
+**Pitch deck:** [Mimaary × Snoonu pilot pitch](https://claude.ai/artifact/FADpResJwChgd4uFwCGnG7). It is private until shared, and has placeholders for numbers, dates, targets and a phone number.
+
 ## Startup Factory: details and fit
 
 From [startups.snoonu.com](https://startups.snoonu.com), checked 2026-10-10:
@@ -178,7 +209,7 @@ How much of the company a loan becomes depends on the terms. For illustration on
 - Could you work full-time from Snoonu HQ if accepted? It is a programme condition.
 - Is a convertible loan from Snoonu (owned by Jahez) acceptable, and what is the most of the company you would give for it?
 - For the Snoonu entry, invite only providers who passed every check?
-- Which categories go first in a pilot (suggestion: villa renovation, and shop or café fit-out)?
+- Agree the two pilot lanes recommended above (home renovation; shop, café and restaurant fit-out)?
 - Do you have a warm route in: Hamad Al-Hajri, the Startup Factory team, or QDB?
 
 ## Sources
