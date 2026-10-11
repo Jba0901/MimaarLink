@@ -70,6 +70,7 @@ If you can edit the repo, add it yourself in the same change and mention it in t
   - `npm run build`
   - `node --test tests/*.test.mjs` (source-level tests; when a deliberate design change breaks one, rewrite it to guard the new intent, never delete the guarantee)
 - Develop on a branch and open a PR; Vercel builds a preview for every branch. Merge to `main` only when Jassim says so.
+- Do not schedule check-ins, reminders or routines (for example PR safety-net check-ins) unless Jassim asks for one. GitHub events on a watched PR are enough (Jassim, 2026-10-11).
 - Work in small steps. For anything non-trivial, show Jassim a plan and wait for approval before changing code. Commit each step separately.
 - Tell Jassim before touching Supabase logic, auth or existing URLs (and add redirects if a URL must change).
 
