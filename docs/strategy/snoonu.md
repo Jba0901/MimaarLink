@@ -51,6 +51,83 @@ Three places where Snoonu meets project demand:
 
 Not a fit: Royal Club loyalty (we have nothing to discount while free); the merchant self-serve form (no services category).
 
+## How we sell Mimaary to Snoonu
+
+Jassim accepts a Snoonu-branded entry with Mimaary behind it (decided 2026-10-11, `DECISIONS.md`). "Snoonu Projects" below is a working name; Snoonu would choose its own.
+
+**The position in one line.** House Services fixes things; Snoonu Projects renovates, fits out and builds, powered by Mimaary.
+
+**The argument.** Snoonu's model serves jobs that take hours. Bigger jobs (a villa renovation, a café fit-out, a new branch) take weeks, need a clear scope and are decided on several comparable quotes. Snoonu would have to build that workflow and vet contractors from scratch. Mimaary already does it, and can run it under Snoonu's name with nothing to build on their side beyond a link.
+
+### Where we sit, in order
+
+1. **Inside House Services:** a "Bigger project? Get 3 to 5 offers" tile or banner. It opens a co-branded request page that we host. Mimaary writes the brief, invites providers and returns the offers. It moves into the app itself only if the pilot works.
+2. **Snoonu's merchants:** "Opening a new branch? Compare fit-out offers", placed in the merchant portal or raised by account managers. Restaurants, cafés, shops and pharmacies open faster, and Snoonu gets more orders.
+3. **After the project (later):** someone who has just renovated is about to buy furniture, appliances and décor. Snoonu can show Snoonu Market offers in its own app. It never gets owner data from us.
+4. **New markets (later, no promise):** the same request-and-offers module for Kuwait and Oman, once Qatar works.
+
+### What Snoonu gets (mapped to what it is pushing)
+
+| Snoonu's priority | What Mimaary adds |
+|---|---|
+| More services in one app | A high-value services category it does not have, without building quote workflows or vetting contractors |
+| Merchant growth | Faster branch openings, so more orders |
+| Bigger baskets | Move-in shopping after a project |
+| Startup Factory, "From Within" | A Qatari vertical marketplace, a named priority sector, with a working product |
+| Kuwait and Oman rollout | A module that can travel later |
+| Knowing its market | Counts by category and area of home and business project demand, never owner details |
+
+### What we bring (true today; never inflate)
+
+- A live, Arabic-first site with a guided request form, a project status page, a side-by-side offers page with shortlist, and an admin.
+- A provider application with commercial registration and document checks.
+- A written process for running each project by hand (`docs/operations.md`).
+- Early numbers. Update them from admin before any meeting: providers, requests, offers returned, introductions.
+
+### What we ask for
+
+- **A 90-day pilot:** one placement (House Services entry or a merchant note), a co-branded request page we build, and a monthly review of the numbers.
+- **A volume cap so quality holds.** Each project takes about two hours by hand, so start with one or two categories and a monthly limit. Suggestion: up to 20 requests a month at first.
+- **Later:** a Startup Factory conversation, using the pilot numbers.
+
+### What we do not offer
+
+- Guarantees of price, quality or completion.
+- Handling of payments.
+- Owner details.
+- Exclusivity.
+- Any commission or fee before the pilot shows real numbers (pricing is undecided).
+
+### Questions they will ask
+
+| Question | Answer |
+|---|---|
+| How much traction do you have? | The real numbers from admin. Early, but the product works end to end |
+| Who carries the risk if a contractor fails, under our name? | The owner chooses, and the agreement is between owner and provider, with no guarantees. For the Snoonu entry we can invite only providers who passed every check. That is a suggestion; Jassim decides |
+| What do we earn? | Free for users during the pilot. Commercial terms agreed after it, based on the data |
+| Why not build it ourselves? | You could. The slow part is the provider network, writing good briefs and the record of real projects; we already do that and can start within weeks |
+| Can you handle volume? | Start capped. Matching is by hand today and grows with the pilot |
+
+### Prepare before pitching
+
+- Screenshots of House Services in the app.
+- Current numbers from admin.
+- A mock-up of the co-branded request page. Building it is a new page on our site and needs Jassim's go-ahead. Never show Snoonu's name or logo on our site before Snoonu agrees in writing.
+
+### Pitch paragraph (for the first message or the Startup Factory application)
+
+```text
+Snoonu already lets people in Qatar order almost anything, including House Services. The jobs it cannot serve today are the bigger ones: a villa renovation, a café fit-out, a new branch. These need a clear scope and several comparable quotes, not a single visit.
+Mimaary does exactly that. One request becomes a clear brief, goes to qualified contractors and consultants, and the owner receives three to five comparable offers and chooses.
+We would like to run this for Snoonu as a "Snoonu Projects" entry, powered by Mimaary: free for users, nothing to build on your side beyond a link, and a 90-day pilot with results shared monthly. Could we have 20 minutes with your services team?
+```
+
+```text
+يتيح سنونو لأهل قطر طلب كل شيء تقريباً، ومنها خدمات المنزل. لكن هناك أعمالاً أكبر لا تناسبها الزيارة السريعة: تجديد فيلا، أو تجهيز مقهى، أو افتتاح فرع جديد. هذه الأعمال تحتاج نطاق عمل واضحاً وعدة عروض أسعار قابلة للمقارنة.
+وهذا ما تقدمه منصة معماري: طلب واحد يتحول إلى وصف واضح للمشروع، يُرسل إلى مقاولين واستشاريين مؤهلين، ويستلم صاحب المشروع من ثلاثة إلى خمسة عروض يقارن بينها ويختار.
+نقترح تقديم هذه الخدمة داخل سنونو باسم «مشاريع سنونو» بدعم من منصة معماري: مجانية للمستخدمين، ولا تحتاج منكم أي تطوير سوى رابط، ضمن تجربة لمدة 90 يوماً مع مشاركة النتائج شهرياً. هل يمكن ترتيب لقاء لمدة 20 دقيقة مع فريق الخدمات لديكم؟
+```
+
 ## Startup Factory: details and fit
 
 From [startups.snoonu.com](https://startups.snoonu.com), checked 2026-10-10:
@@ -80,7 +157,7 @@ How much of the company a loan becomes depends on the terms. For illustration on
 
 - **They build it themselves.** Snoonu already runs House Services and leads with home services in Kuwait. The idea is not secret; what is hard to copy is our provider network and the record of real projects. Share the model, never provider lists, briefs or data, and arrive with real projects.
 - **They pick someone else.** Syaanh (صيانة.كوم) is a Qatar app where maintenance companies already send priced offers on customer jobs (plumbing, electrical, paint, cleaning). Our case is the bigger, brief-based project work, plus consultants.
-- **Our brand disappears.** Snoonu runs services under its own names (S Laundry, My House). A "Snoonu Projects, powered by Mimaary" offer would bring volume but less visibility. Decide what you accept before any meeting.
+- **Our brand fades.** Snoonu runs services under its own names (S Laundry, My House). Jassim accepts a Snoonu-branded entry (2026-10-11). Keep "powered by Mimaary" on the entry and keep running the briefs, providers and offers ourselves, so the project record stays with Mimaary.
 - **Privacy.** Owner details stay with Mimaary. Snoonu gets counts, not names, unless an owner agrees (Qatar Law No. 13 of 2016).
 - **Money and pricing.** No fee, commission or revenue-share talk while pricing is undecided. Project money never passes through Mimaary or a Mimaary-branded checkout.
 - **Lock-in.** No exclusivity and no rights to our data in a pilot agreement.
@@ -100,7 +177,8 @@ How much of the company a loan becomes depends on the terms. For illustration on
 
 - Could you work full-time from Snoonu HQ if accepted? It is a programme condition.
 - Is a convertible loan from Snoonu (owned by Jahez) acceptable, and what is the most of the company you would give for it?
-- Would you accept a Snoonu-branded entry ("powered by Mimaary"), or only a Mimaary-branded referral?
+- For the Snoonu entry, invite only providers who passed every check?
+- Which categories go first in a pilot (suggestion: villa renovation, and shop or café fit-out)?
 - Do you have a warm route in: Hamad Al-Hajri, the Startup Factory team, or QDB?
 
 ## Sources

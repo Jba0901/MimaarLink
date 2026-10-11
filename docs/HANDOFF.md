@@ -4,6 +4,21 @@ Newest entry first. Every agent (Codex, Claude Code) adds an entry before finish
 
 ---
 
+## 2026-10-11 · Claude Code · branch `claude/sharp-edison-g0om3c` · [PR #8](https://github.com/Jba0901/MimaarLink/pull/8) · how we sell Mimaary to Snoonu
+
+**What changed**
+- Jassim accepts a Snoonu-branded entry ("powered by Mimaary"): recorded in `DECISIONS.md`.
+- `docs/strategy/snoonu.md` has a new section, "How we sell Mimaary to Snoonu": the one-line position, four placements in order, what Snoonu gets mapped to its priorities, what we bring, ask for and do not offer, answers to likely questions, prep list, and a pitch paragraph in English and Arabic. Risks and open questions updated.
+
+**Waiting on Jassim**
+- Nothing has been sent. Pilot categories, a monthly cap (suggested 20), whether only fully checked providers are invited for the Snoonu entry.
+- A co-branded request page would be a new page on the site: needs his go-ahead, and Snoonu's written consent before their name or logo appears.
+
+**Verified**
+- Build + tests run before commit.
+
+---
+
 ## 2026-10-11 · Claude Code · branch `claude/sharp-edison-g0om3c` · [PR #8](https://github.com/Jba0901/MimaarLink/pull/8) · no scheduled check-ins
 
 **What changed**
